@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="TitilliumWeb-SemiBold.ttf">
+            <string>TitilliumWeb-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="33s-KD-2Ic" customClass="LoadingDialog" customModule="pulse_eco" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreenBackground" translatesAutoresizingMaskIntoConstraints="NO" id="W7H-Do-GzG">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreenLogo" translatesAutoresizingMaskIntoConstraints="NO" id="cN2-Q9-IR3">
+                    <rect key="frame" x="99" y="300.5" width="177" height="66"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="177" id="4d2-en-YB3"/>
+                        <constraint firstAttribute="height" constant="66" id="LeK-CP-4PY"/>
+                    </constraints>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AvX-fM-kNV" customClass="LOTAnimationView">
+                    <rect key="frame" x="99.5" y="300.5" width="176" height="66"/>
+                    <color key="tintColor" red="0.33334008331052256" green="0.26432966195734853" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="66" id="3t5-LQ-vrL"/>
+                        <constraint firstAttribute="width" constant="176" id="RXp-nE-TmS"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading data..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3bs-ac-EqD">
+                    <rect key="frame" x="50" y="541" width="275" height="26"/>
+                    <fontDescription key="fontDescription" name="TitilliumWeb-SemiBold" family="Titillium Web" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="4gv-DM-xhz" firstAttribute="trailing" secondItem="3bs-ac-EqD" secondAttribute="trailing" constant="50" id="1zP-CL-TyV"/>
+                <constraint firstItem="3bs-ac-EqD" firstAttribute="leading" secondItem="4gv-DM-xhz" secondAttribute="leading" constant="50" id="4tZ-ae-kp6"/>
+                <constraint firstItem="cN2-Q9-IR3" firstAttribute="centerY" secondItem="33s-KD-2Ic" secondAttribute="centerY" id="9tb-S2-cTb"/>
+                <constraint firstItem="4gv-DM-xhz" firstAttribute="bottom" secondItem="3bs-ac-EqD" secondAttribute="bottom" constant="100" id="Jc1-Xe-3hE"/>
+                <constraint firstAttribute="bottom" secondItem="W7H-Do-GzG" secondAttribute="bottom" id="KaV-Ri-Gxy"/>
+                <constraint firstItem="cN2-Q9-IR3" firstAttribute="centerX" secondItem="33s-KD-2Ic" secondAttribute="centerX" id="Oy8-zc-Blo"/>
+                <constraint firstItem="W7H-Do-GzG" firstAttribute="leading" secondItem="33s-KD-2Ic" secondAttribute="leading" id="Yv8-Ov-PGk"/>
+                <constraint firstAttribute="trailing" secondItem="W7H-Do-GzG" secondAttribute="trailing" id="eid-a6-xrX"/>
+                <constraint firstItem="AvX-fM-kNV" firstAttribute="centerX" secondItem="33s-KD-2Ic" secondAttribute="centerX" id="faJ-KK-I9I"/>
+                <constraint firstItem="W7H-Do-GzG" firstAttribute="top" secondItem="33s-KD-2Ic" secondAttribute="top" id="lik-ke-BnQ"/>
+                <constraint firstItem="AvX-fM-kNV" firstAttribute="centerY" secondItem="33s-KD-2Ic" secondAttribute="centerY" id="pM2-88-CfT"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="4gv-DM-xhz"/>
+            <connections>
+                <outlet property="animationView" destination="AvX-fM-kNV" id="ssC-8O-FNh"/>
+                <outlet property="messageLabel" destination="3bs-ac-EqD" id="ifv-D5-71i"/>
+            </connections>
+            <point key="canvasLocation" x="39.200000000000003" y="46.326836581709152"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="launchScreenBackground" width="375" height="667"/>
+        <image name="launchScreenLogo" width="176" height="66"/>
+    </resources>
+</document>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0er-J9-58l">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--DisclaimerVC-->
+        <scene sceneID="OME-Bd-jxV">
+            <objects>
+                <viewController storyboardIdentifier="DisclaimerVC" title="DisclaimerVC" id="0er-J9-58l" customClass="DisclaimerVC" customModule="pulse_eco" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1iZ-C0-M97" customClass="Disclaimer" customModule="pulse_eco" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disclaimer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ph-yQ-Sve">
+                                <rect key="frame" x="20" y="347.5" width="374" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <color key="textColor" red="0.053299106659999998" green="0.03947218508" blue="0.26770469549999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c5W-uU-W86">
+                                <rect key="frame" x="364" y="64" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="A3v-du-wFg"/>
+                                    <constraint firstAttribute="width" constant="40" id="bvS-Pt-rB6"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="disclaimerClose"/>
+                                <connections>
+                                    <action selector="dismiss:" destination="0er-J9-58l" eventType="touchUpInside" id="oIQ-Qp-7az"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pVi-0g-esN">
+                                <rect key="frame" x="20" y="388" width="374" height="220"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="220" id="9Sj-Ac-Yoh"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">The data collected are not manipulated in any way. We do not guarantee of their correctness. The MOEPP sensor data are stored as receiver from their service, while the pulse.eco devices depend on the correctness of the used sensors: Nova PM SDS011/SDS021, DHT22 and Grove Sounds sensor. Please refer to their data sheets for details.</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.053299106657505035" green="0.039472185075283051" blue="0.26770469546318054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="15" name=".SFNSText"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disclaimerImage" translatesAutoresizingMaskIntoConstraints="NO" id="dtN-qm-9AF">
+                                <rect key="frame" x="175" y="253.5" width="64" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="eij-CD-OFz"/>
+                                    <constraint firstAttribute="width" constant="64" id="jR4-wE-9RC"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="9Ph-yQ-Sve" firstAttribute="leading" secondItem="vhh-mO-DMM" secondAttribute="leading" constant="20" id="DgP-aC-azy"/>
+                            <constraint firstItem="pVi-0g-esN" firstAttribute="top" secondItem="9Ph-yQ-Sve" secondAttribute="bottom" constant="20" id="GWP-lg-03v"/>
+                            <constraint firstItem="dtN-qm-9AF" firstAttribute="centerX" secondItem="1iZ-C0-M97" secondAttribute="centerX" id="Rt7-Nz-tbe"/>
+                            <constraint firstAttribute="trailing" secondItem="pVi-0g-esN" secondAttribute="trailing" constant="20" id="Uge-bE-2w7"/>
+                            <constraint firstItem="vhh-mO-DMM" firstAttribute="trailing" secondItem="c5W-uU-W86" secondAttribute="trailing" constant="10" id="Zs4-u2-dQ4"/>
+                            <constraint firstItem="pVi-0g-esN" firstAttribute="centerY" secondItem="1iZ-C0-M97" secondAttribute="centerY" constant="50" id="bik-er-eWc"/>
+                            <constraint firstItem="9Ph-yQ-Sve" firstAttribute="top" secondItem="dtN-qm-9AF" secondAttribute="bottom" constant="30" id="f3T-l6-zVN"/>
+                            <constraint firstItem="pVi-0g-esN" firstAttribute="centerX" secondItem="1iZ-C0-M97" secondAttribute="centerX" id="gex-Dh-eLL"/>
+                            <constraint firstItem="vhh-mO-DMM" firstAttribute="trailing" secondItem="9Ph-yQ-Sve" secondAttribute="trailing" constant="20" id="qqs-ht-F1V"/>
+                            <constraint firstItem="pVi-0g-esN" firstAttribute="leading" secondItem="vhh-mO-DMM" secondAttribute="leading" constant="20" id="tBM-gi-69P"/>
+                            <constraint firstItem="c5W-uU-W86" firstAttribute="top" secondItem="vhh-mO-DMM" secondAttribute="top" constant="20" id="zyt-BX-DZ0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="vhh-mO-DMM"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="b1B-b6-ues" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1628" y="133"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="disclaimerClose" width="28" height="28"/>
+        <image name="disclaimerImage" width="60" height="60.5"/>
+    </resources>
+</document>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MarkerView" customModule="pulse_eco" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="45" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M9N-CP-nU7">
+                    <rect key="frame" x="5" y="4" width="35" height="46"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="marker" translatesAutoresizingMaskIntoConstraints="NO" id="afS-Qn-TcE">
+                            <rect key="frame" x="0.0" y="0.0" width="35" height="46"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                    <real key="value" value="0.25"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                    <point key="value" x="0.0" y="3"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                    <real key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nyz-q8-7zj">
+                            <rect key="frame" x="3" y="10" width="29" height="14.5"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="9iM-F5-Hin"/>
+                        <constraint firstAttribute="trailing" secondItem="afS-Qn-TcE" secondAttribute="trailing" id="ArN-wk-lf9"/>
+                        <constraint firstAttribute="trailing" secondItem="nyz-q8-7zj" secondAttribute="trailing" constant="3" id="C4L-bA-4GX"/>
+                        <constraint firstAttribute="height" constant="46" id="EqZ-gd-pLw"/>
+                        <constraint firstAttribute="bottom" secondItem="afS-Qn-TcE" secondAttribute="bottom" id="I2c-c0-nz6"/>
+                        <constraint firstItem="nyz-q8-7zj" firstAttribute="leading" secondItem="M9N-CP-nU7" secondAttribute="leading" constant="3" id="T8s-Ia-cil"/>
+                        <constraint firstItem="afS-Qn-TcE" firstAttribute="leading" secondItem="M9N-CP-nU7" secondAttribute="leading" id="aLN-UZ-CO0"/>
+                        <constraint firstItem="nyz-q8-7zj" firstAttribute="top" secondItem="M9N-CP-nU7" secondAttribute="top" constant="10" id="eSO-db-Xoz"/>
+                        <constraint firstItem="afS-Qn-TcE" firstAttribute="top" secondItem="M9N-CP-nU7" secondAttribute="top" id="ubu-fw-pyE"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="M9N-CP-nU7" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-3" id="R4r-xA-LLz"/>
+                <constraint firstItem="M9N-CP-nU7" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="hg6-ti-lPP"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="contentView" destination="-1" id="KRh-84-ied"/>
+                <outlet property="markerImage" destination="afS-Qn-TcE" id="m8Z-zf-4vc"/>
+                <outlet property="valueLabel" destination="nyz-q8-7zj" id="f0Q-ab-anV"/>
+            </connections>
+            <point key="canvasLocation" x="-28" y="129"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="marker" width="43" height="59"/>
+    </resources>
+</document>

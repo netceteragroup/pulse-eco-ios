@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>75228486203-hrq4gnoiivqc607hqmeij0r1pubvm9cu.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.75228486203-hrq4gnoiivqc607hqmeij0r1pubvm9cu</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBPhJwlP9r3yNqVM6SPja4Tf2t3Z2A9o0Q</string>
+	<key>GCM_SENDER_ID</key>
+	<string>75228486203</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string></string>
+	<key>PROJECT_ID</key>
+	<string>skopjepulsemobile</string>
+	<key>STORAGE_BUCKET</key>
+	<string>skopjepulsemobile.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:75228486203:ios:0ec4b1f6e9a2c179</string>
+	<key>DATABASE_URL</key>
+	<string>https://skopjepulsemobile.firebaseio.com</string>
+</dict>
+</plist>
