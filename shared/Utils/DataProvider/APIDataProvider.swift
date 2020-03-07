@@ -13,7 +13,7 @@ class APIDataProvider {
             firstly {
                 URLSession.shared.dataTask(.promise, with: url).validate()
                 }.map {
-                    try JSONDecoder().decode([OverallValues].self, from: $0.data)
+                    try JSONDecoder().decode(OverallValues.self, from: $0.data)
                 }.done { result in
                     seal.fulfill(result)
                 }.catch { error in
