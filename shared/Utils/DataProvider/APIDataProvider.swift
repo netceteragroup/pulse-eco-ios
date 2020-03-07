@@ -4,14 +4,21 @@ import PromiseKit
 /// Provider for the data from API itself. If has some caching of values that
 /// make sense to cache it.
 class APIDataProvider {
-    private let promiseKitWrapper = PromiseKitWrapper()
     
     // MARK: - Overall
     func downloadOverallValues(for city: City) -> Promise<OverallValues> {
         let url = city.siteUrl.appendingPathComponent("rest/overall")
-        return promiseKitWrapper.getDataFromAPI(baseUrl: url).then { response -> Promise<OverallValues> in
-            let overallValueForCity = try JSONDecoder().decode(OverallValues.self, from: response)
-            return Promise.value(overallValueForCity)
+
+        return Promise { seal in
+            firstly {
+                URLSession.shared.dataTask(.promise, with: url).validate()
+                }.map {
+                    try JSONDecoder().decode([OverallValues].self, from: $0.data)
+                }.done { result in
+                    seal.fulfill(result)
+                }.catch { error in
+                    seal.reject(error)
+            }
         }
     }
     
@@ -35,12 +42,18 @@ class APIDataProvider {
     
     private func downloadMeasures() -> Promise<[Measure]> {
         let url = URL(string: "https://pulse.eco/rest/measures")!
-        return promiseKitWrapper.getDataFromAPI(baseUrl: url).then { response -> Promise<[Measure]> in
-            let measures = try JSONDecoder().decode([Measure].self, from: response)
-            self.measuresCached = measures
-            self.measuresUpdateDate = Date()
-            return Promise.value(measures)
-        }
+
+        return Promise { seal in
+            firstly {
+                URLSession.shared.dataTask(.promise, with: url).validate()
+                }.map {
+                    try JSONDecoder().decode([Measure].self, from: $0.data)
+                }.done { result in
+                    seal.fulfill(result)
+                }.catch { error in
+                    seal.reject(error)
+            }
+        }      
     }
 
     // MARK: - Cities
@@ -63,11 +76,19 @@ class APIDataProvider {
     
     private func downloadCities() -> Promise<[City]> {
         let url = URL(string: "https://bitola.pulse.eco/rest/city")!
-        return promiseKitWrapper.getDataFromAPI(baseUrl: url).then { response -> Promise<[City]> in
-            let cities = try JSONDecoder().decode([City].self, from: response)
-            self.citiesCached = cities
-            self.citiesUpdateDate = Date()
-            return Promise.value(cities)
+        
+        return Promise { seal in
+            firstly {
+                URLSession.shared.dataTask(.promise, with: url).validate()
+                }.map {
+                    try JSONDecoder().decode([City].self, from: $0.data)
+                }.done { result in
+                    self.citiesCached = result
+                    self.citiesUpdateDate = Date()
+                    seal.fulfill(result)
+                }.catch { error in
+                    seal.reject(error)
+            }
         }
     }
 }
