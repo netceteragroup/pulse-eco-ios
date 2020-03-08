@@ -1042,7 +1042,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 35;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = LAA69LK8PF;
 				INFOPLIST_FILE = widget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1051,7 +1051,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 3.3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1066,7 +1066,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 35;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = LAA69LK8PF;
 				INFOPLIST_FILE = widget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1075,7 +1075,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 3.3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1207,7 +1207,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 35;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = LAA69LK8PF;
 				INFOPLIST_FILE = "$(SRCROOT)/pulse.eco/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1215,7 +1215,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1231,7 +1231,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 35;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = LAA69LK8PF;
 				INFOPLIST_FILE = "$(SRCROOT)/pulse.eco/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1239,7 +1239,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
