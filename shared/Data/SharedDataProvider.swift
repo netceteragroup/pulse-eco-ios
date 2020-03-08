@@ -63,18 +63,19 @@ class SharedDataProvider {
         set {
             DispatchQueue.global(qos: .background).async {
                 self.storedMeasuresValuesCached = newValue
+                self.measuresValuesUpdateDate = Date()
             }
             measuresValuesCachedInMemory = newValue
         }
     }
     
+    @discardableResult
     func downloadMeasureValues() -> Promise<[MeasureValue]> {
         let city = selectedCity
         return firstly {
             return self.utilDataProvider.measureValues(for: city)
         }.then { resultMeasureValues -> Promise<[MeasureValue]> in
             self.measuresValuesCached = resultMeasureValues
-            self.measuresValuesUpdateDate = Date()
             return Promise.value(resultMeasureValues)
         }
     }
