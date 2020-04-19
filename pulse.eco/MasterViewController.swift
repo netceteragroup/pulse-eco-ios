@@ -59,6 +59,11 @@ class MasterViewController: UIViewController {
 		tappableVeiw.forEach { $0.delegate = self }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        sharedDataProvider.downloadMeasureValues()
+    }
+    
     func updateMeasures() {
         typeSelectorViewController.measureValues = sharedDataProvider.measuresValuesCached
     }
