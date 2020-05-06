@@ -13,7 +13,6 @@ target 'pulse.eco' do
 	pod 'GoogleMaps'
 	pod 'Charts'
 	pod 'lottie-ios', ' 2.5.3'
-	pod 'Firebase/Core'
 end
 
 target 'widget' do 

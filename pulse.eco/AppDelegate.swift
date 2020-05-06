@@ -1,6 +1,5 @@
 import UIKit
 import GoogleMaps
-import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
