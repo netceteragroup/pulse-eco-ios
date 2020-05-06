@@ -1,5 +1,4 @@
 language: swift
 xcode_workspace: pulse.eco.xcworkspace
 xcode_scheme: pulse.eco
-xcode_destination: platform=iOS Simulator, OS=13.1, name=iPhone X 
-
+xcode_destination: platform=iOS Simulator,OS=13.1,name=iPhone X 
