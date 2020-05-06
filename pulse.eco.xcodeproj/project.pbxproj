@@ -123,6 +123,7 @@
 		DEAF0982239D8049002A2BA7 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEAF0981239D8049002A2BA7 /* Entitlements.plist */; };
 		DEAF0984239D8052002A2BA7 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEAF0983239D8052002A2BA7 /* Entitlements.plist */; };
 		DED121C421D58E1F005CFE50 /* AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED121C321D58E1F005CFE50 /* AlertMessage.swift */; };
+		DED7069E24631782001823E9 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DED7069D24631782001823E9 /* Settings.bundle */; };
 		DEEFF494223D596000AFFF0A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEEFF493223D596000AFFF0A /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -257,6 +258,7 @@
 		DEAF0981239D8049002A2BA7 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		DEAF0983239D8052002A2BA7 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		DED121C321D58E1F005CFE50 /* AlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessage.swift; sourceTree = "<group>"; };
+		DED7069D24631782001823E9 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		DEEFF493223D596000AFFF0A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4944527193E10C0B70EBB69 /* Pods-tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-tests/Pods-tests.release.xcconfig"; sourceTree = "<group>"; };
 		F5D838647597CAAD4B7B0C71 /* Pods-widget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-widget/Pods-widget.debug.xcconfig"; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 				D0D18B5A235A9107007E37B0 /* widget */,
 				D0A5DD7A2381A95A00367261 /* tests */,
 				DE74432921AAA1010077A2F3 /* Products */,
+				DED7069D24631782001823E9 /* Settings.bundle */,
 				3D38DB236477CC15E465FCDC /* Pods */,
 				866D5666EF758DDFACA949A6 /* Frameworks */,
 			);
@@ -728,6 +731,7 @@
 				DE5C0CB121ADBFDF003191F7 /* OFL.txt in Resources */,
 				DE5C0CB521ADBFDF003191F7 /* TitilliumWeb-Light.ttf in Resources */,
 				DE74433621AAA1020077A2F3 /* LaunchScreen.storyboard in Resources */,
+				DED7069E24631782001823E9 /* Settings.bundle in Resources */,
 				DE74433321AAA1020077A2F3 /* Assets.xcassets in Resources */,
 				DE5C0CAC21ADBFDF003191F7 /* TitilliumWeb-Regular.ttf in Resources */,
 				32CE15FC21B46A1E006861F0 /* MarkerView.xib in Resources */,
