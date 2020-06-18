@@ -19,6 +19,9 @@
 		32CE15FC21B46A1E006861F0 /* MarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE15FA21B46A1E006861F0 /* MarkerView.xib */; };
 		32CE15FE21B481B8006861F0 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CE15FD21B481B8006861F0 /* AppColors.swift */; };
 		32D3698C21D947C900395DAB /* LimitLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D3698B21D947C900395DAB /* LimitLines.swift */; };
+		59EE444B249B6EFD0007826A /* SensorDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EE444A249B6EFD0007826A /* SensorDataTests.swift */; };
+		59EE4450249B71F20007826A /* SensorStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EE444F249B71F20007826A /* SensorStatus.swift */; };
+		59EE4451249B71F20007826A /* SensorStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EE444F249B71F20007826A /* SensorStatus.swift */; };
 		7160E82F509CE4D8BF924197 /* Pods_tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 251AE282DF26D61AFEAB2B85 /* Pods_tests.framework */; };
 		AE76849422A7BB60008E384A /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE76849322A7BB60008E384A /* Drawer.swift */; };
 		AECC158E228C0AB800243A7D /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECC158D228C0AB800243A7D /* SliderView.swift */; };
@@ -174,6 +177,8 @@
 		32D3698B21D947C900395DAB /* LimitLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitLines.swift; sourceTree = "<group>"; };
 		3C4F093CB46518F9D23E2BAE /* Pods-tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tests/Pods-tests.debug.xcconfig"; sourceTree = "<group>"; };
 		4CC5827990A8CC07E07F5CE0 /* Pods_widget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_widget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		59EE444A249B6EFD0007826A /* SensorDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataTests.swift; sourceTree = "<group>"; };
+		59EE444F249B71F20007826A /* SensorStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorStatus.swift; sourceTree = "<group>"; };
 		72C7FF70D43C84659E1A90AD /* Pods-widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widget.release.xcconfig"; path = "Pods/Target Support Files/Pods-widget/Pods-widget.release.xcconfig"; sourceTree = "<group>"; };
 		8478251F5EA81F0DF9A71068 /* Pods-pulse.eco.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pulse.eco.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pulse.eco/Pods-pulse.eco.debug.xcconfig"; sourceTree = "<group>"; };
 		AE76849322A7BB60008E384A /* Drawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
@@ -391,6 +396,7 @@
 			children = (
 				D0A5DD7B2381A95A00367261 /* UserDefaultPropertyWrapperTests.swift */,
 				D0A5DD7D2381A95A00367261 /* Info.plist */,
+				59EE444A249B6EFD0007826A /* SensorDataTests.swift */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -422,11 +428,11 @@
 		D0D4E366235C81600005839C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AED27AA8226720C100621AED /* Bounds.swift */,
 				DE3B2757223D0E730022A6A6 /* SensorTypes.swift */,
 				D03F09B0223E853E00312C9C /* Reading.swift */,
 				AED27AAC22687ACE00621AED /* SensorReading.swift */,
 				D03F09AC223E6C6000312C9C /* CLLocationCoordinate2DCodable.swift */,
+				AED27AA8226720C100621AED /* Bounds.swift */,
 				DE3B275B223D1B620022A6A6 /* City.swift */,
 				D0D4E347235B63860005839C /* Measure.swift */,
 				D0D4E34C235B85AF0005839C /* NewBand.swift */,
@@ -434,6 +440,7 @@
 				D0D4E361235C60570005839C /* MeasureValue.swift */,
 				AED27AAA226741A300621AED /* Coordinate.swift */,
 				D03F09AE223E817F00312C9C /* Sensor.swift */,
+				59EE444F249B71F20007826A /* SensorStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -863,6 +870,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59EE444B249B6EFD0007826A /* SensorDataTests.swift in Sources */,
 				D0A5DD7C2381A95A00367261 /* UserDefaultPropertyWrapperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -894,6 +902,7 @@
 				D0D4E34F235B85B50005839C /* Measure.swift in Sources */,
 				D0D4E359235BA9680005839C /* MeasureCell.swift in Sources */,
 				D0D4E36D235C82170005839C /* Reading.swift in Sources */,
+				59EE4451249B71F20007826A /* SensorStatus.swift in Sources */,
 				D0D4E376235C83110005839C /* UIViewExtension.swift in Sources */,
 				D0D4E373235C83110005839C /* Errors.swift in Sources */,
 				D0A5DD6423818BBE00367261 /* PromiseKitWrapper.swift in Sources */,
@@ -943,6 +952,7 @@
 				D0A5DD5B2381635800367261 /* PromiseKitWrapper.swift in Sources */,
 				DE527DD323CCDE130003EAF2 /* SharedDataProvider.swift in Sources */,
 				32CE15FE21B481B8006861F0 /* AppColors.swift in Sources */,
+				59EE4450249B71F20007826A /* SensorStatus.swift in Sources */,
 				D0D4E35C235BD7500005839C /* UserDefaultPropertyWrapper.swift in Sources */,
 				D0A5DD5D238163E300367261 /* APIDataProvider.swift in Sources */,
 				AED27AAB226741A300621AED /* Coordinate.swift in Sources */,
