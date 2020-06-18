@@ -8,13 +8,7 @@ struct Sensor {
     let type: SensorType
     let description: String
     let status: SensorStatus
-
-    enum SensorStatus: String, Codable {
-        case active = "ACTIVE"
-        case inactive = "INACTIVE"
-        case notClaimed = "NOT_CLAIMED"
-        case banned = "BANNED"
-    }
+   
 }
 
 extension Sensor: Codable {
@@ -38,9 +32,12 @@ extension Sensor: Codable {
         let sensorContainer = try decoder.container(keyedBy: SensorCodingKeys.self)
         id = try sensorContainer.decode(String.self, forKey: .id)
         comments = try sensorContainer.decode(String.self, forKey: .comments)
-        type = try sensorContainer.decode(SensorType.self, forKey: .type)
+        do { type = try sensorContainer.decode(SensorType.self, forKey: .type)
+        } catch {
+            type = .undefined
+        }
         description = try sensorContainer.decode(String.self, forKey: .description)
-        status = try sensorContainer.decode(SensorStatus.self, forKey: .status)
+        status = (try? sensorContainer.decode(SensorStatus.self, forKey: .status)) ?? .unknown
 
         let coordinatesString = try sensorContainer.decode(String.self, forKey: .coordinates)
         let coordinatesComponents = coordinatesString.split(separator: ",")
