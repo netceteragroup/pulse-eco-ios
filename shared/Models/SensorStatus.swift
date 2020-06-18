@@ -12,5 +12,5 @@ enum SensorStatus: String, Codable {
     //The sensor is registered, but so far not bound to an owner nor confirmed by the community lead
     case notClaimedUnconfirmed = "NOT_CLAIMED_UNCONFIRMED"
     case unknown = "UNKNOWN"
-   
+    
 }

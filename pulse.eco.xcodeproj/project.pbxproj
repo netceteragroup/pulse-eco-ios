@@ -19,13 +19,9 @@
 		32CE15FC21B46A1E006861F0 /* MarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE15FA21B46A1E006861F0 /* MarkerView.xib */; };
 		32CE15FE21B481B8006861F0 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CE15FD21B481B8006861F0 /* AppColors.swift */; };
 		32D3698C21D947C900395DAB /* LimitLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D3698B21D947C900395DAB /* LimitLines.swift */; };
-		59EE444B249B6EFD0007826A /* DecodingDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EE444A249B6EFD0007826A /* DecodingDataTests.swift */; };
-		59EE444C249B70CA0007826A /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03F09AE223E817F00312C9C /* Sensor.swift */; };
-		59EE444D249B71B50007826A /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED27AAA226741A300621AED /* Coordinate.swift */; };
-		59EE444E249B71BA0007826A /* SensorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3B2757223D0E730022A6A6 /* SensorTypes.swift */; };
+		59EE444B249B6EFD0007826A /* SensorDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EE444A249B6EFD0007826A /* SensorDataTests.swift */; };
 		59EE4450249B71F20007826A /* SensorStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EE444F249B71F20007826A /* SensorStatus.swift */; };
 		59EE4451249B71F20007826A /* SensorStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EE444F249B71F20007826A /* SensorStatus.swift */; };
-		59EE4452249B71F20007826A /* SensorStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EE444F249B71F20007826A /* SensorStatus.swift */; };
 		7160E82F509CE4D8BF924197 /* Pods_tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 251AE282DF26D61AFEAB2B85 /* Pods_tests.framework */; };
 		AE76849422A7BB60008E384A /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE76849322A7BB60008E384A /* Drawer.swift */; };
 		AECC158E228C0AB800243A7D /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECC158D228C0AB800243A7D /* SliderView.swift */; };
@@ -181,7 +177,7 @@
 		32D3698B21D947C900395DAB /* LimitLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitLines.swift; sourceTree = "<group>"; };
 		3C4F093CB46518F9D23E2BAE /* Pods-tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tests/Pods-tests.debug.xcconfig"; sourceTree = "<group>"; };
 		4CC5827990A8CC07E07F5CE0 /* Pods_widget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_widget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		59EE444A249B6EFD0007826A /* DecodingDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingDataTests.swift; sourceTree = "<group>"; };
+		59EE444A249B6EFD0007826A /* SensorDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataTests.swift; sourceTree = "<group>"; };
 		59EE444F249B71F20007826A /* SensorStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorStatus.swift; sourceTree = "<group>"; };
 		72C7FF70D43C84659E1A90AD /* Pods-widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widget.release.xcconfig"; path = "Pods/Target Support Files/Pods-widget/Pods-widget.release.xcconfig"; sourceTree = "<group>"; };
 		8478251F5EA81F0DF9A71068 /* Pods-pulse.eco.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pulse.eco.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pulse.eco/Pods-pulse.eco.debug.xcconfig"; sourceTree = "<group>"; };
@@ -400,7 +396,7 @@
 			children = (
 				D0A5DD7B2381A95A00367261 /* UserDefaultPropertyWrapperTests.swift */,
 				D0A5DD7D2381A95A00367261 /* Info.plist */,
-				59EE444A249B6EFD0007826A /* DecodingDataTests.swift */,
+				59EE444A249B6EFD0007826A /* SensorDataTests.swift */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -874,12 +870,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59EE444E249B71BA0007826A /* SensorTypes.swift in Sources */,
-				59EE4452249B71F20007826A /* SensorStatus.swift in Sources */,
-				59EE444B249B6EFD0007826A /* DecodingDataTests.swift in Sources */,
-				59EE444C249B70CA0007826A /* Sensor.swift in Sources */,
+				59EE444B249B6EFD0007826A /* SensorDataTests.swift in Sources */,
 				D0A5DD7C2381A95A00367261 /* UserDefaultPropertyWrapperTests.swift in Sources */,
-				59EE444D249B71B50007826A /* Coordinate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

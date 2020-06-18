@@ -32,10 +32,7 @@ extension Sensor: Codable {
         let sensorContainer = try decoder.container(keyedBy: SensorCodingKeys.self)
         id = try sensorContainer.decode(String.self, forKey: .id)
         comments = try sensorContainer.decode(String.self, forKey: .comments)
-        do { type = try sensorContainer.decode(SensorType.self, forKey: .type)
-        } catch {
-            type = .undefined
-        }
+        type = (try? sensorContainer.decode(SensorType.self, forKey: .type)) ?? .undefined
         description = try sensorContainer.decode(String.self, forKey: .description)
         status = (try? sensorContainer.decode(SensorStatus.self, forKey: .status)) ?? .unknown
 
