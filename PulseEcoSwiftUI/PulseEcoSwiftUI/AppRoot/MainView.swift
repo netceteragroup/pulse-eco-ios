@@ -1,11 +1,3 @@
-//
-//  MainView.swift
-//  PulseEcoSwiftUI
-//
-//  Created by Monika Dimitrova on 6/16/20.
-//  Copyright © 2020 Monika Dimitrova. All rights reserved.
-//
-
 import SwiftUI
 
 struct MainView: View {
@@ -28,13 +20,13 @@ struct MainView: View {
                         HStack {
                             Text(self.appVM.cityName.uppercased())
                                 .font(Font.custom("TitilliumWeb-SemiBold", size: 14))
-                                .foregroundColor(Color(AppColors.darkblue))
+                                .foregroundColor(Color(AppColors.darkBlue))
                                 
                             self.appVM.cityIcon
                         }
                     }.accentColor(Color.black), trailing: Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
                         .imageScale(.large)
-                        .padding(.trailing, (UIWidth)/2.6)
+                        .padding(.trailing, (UIScreen.main.bounds.width)/2.6)
                         .onTapGesture {
                             //action
                             if self.appVM.citySelectorClicked == false {
@@ -60,11 +52,8 @@ struct MainView_Previews: PreviewProvider {
     }
 }
 
-
 extension View {
     func navigationBarColor(_ backgroundColor: UIColor?) -> some View {
         self.modifier(NavigationBarModifier(backgroundColor: backgroundColor))
     }
 }
-
-

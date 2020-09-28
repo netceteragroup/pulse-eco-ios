@@ -2,30 +2,31 @@ import Foundation
 import UIKit
 
 struct AppColors {
-    static let darkred = UIColor(red: 177, green: 43, blue: 56)
+    static let darkRed = UIColor(red: 177, green: 43, blue: 56)
     static let red = UIColor(red: 214, green: 56, blue: 71)
     static let orange = UIColor(red: 255, green: 152, blue: 0)
     static let green = UIColor(red: 64, green: 151, blue: 87)
-    static let darkgreen = UIColor(red: 55, green: 128, blue: 75)
+    static let darkGreen = UIColor(red: 55, green: 128, blue: 75)
     static let blue = UIColor(red: 0, green: 105, blue: 192)
-    static let darkblue = UIColor(red: 14, green: 10, blue: 68)
+    static let darkBlue = UIColor(red: 14, green: 10, blue: 68)
     static let purple = UIColor(red: 54, green: 0, blue: 166)
 	static let indigo = UIColor(red: 55, green: 17, blue: 211)
     static let gray = UIColor(white: 0.5, alpha: 1.0)
     static let lightPurple = UIColor(red: 0.19, green: 0.20, blue: 0.42, alpha: 1.00)
+    
     static var allColors: [UIColor] {
-        return [blue, green, orange, purple, red, indigo, darkred, darkgreen]
+        return [blue, green, orange, purple, red, indigo, darkRed, darkGreen]
     }
     
     static func colorFrom(string: String) -> UIColor {
         switch string {
-        case "darkred": return darkred
+        case "darkred": return darkRed
         case "red": return red
         case "orange": return orange
         case "green": return green
-        case "darkgreen": return darkgreen
+        case "darkgreen": return darkGreen
         case "blue": return blue
-        case "darkblue": return darkblue
+        case "darkblue": return darkBlue
         case "purple": return purple
         case "indigo": return indigo
         default: return gray
@@ -34,13 +35,13 @@ struct AppColors {
     
     static func stringFrom(color: UIColor) -> String {
         switch color {
-        case darkred: return "darkred"
+        case darkRed: return "darkred"
         case red: return "red"
         case orange: return "orange"
         case green: return "green"
-        case darkgreen: return "darkgreen"
+        case darkGreen: return "darkgreen"
         case blue: return "blue"
-        case darkblue: return "darkblue"
+        case darkBlue: return "darkblue"
         case purple: return "purple"
         case indigo: return "indigo"
         default: return "gray"

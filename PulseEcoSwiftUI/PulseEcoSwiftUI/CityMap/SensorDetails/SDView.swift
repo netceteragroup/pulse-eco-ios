@@ -3,7 +3,7 @@ import Charts
 import Foundation
 
 struct SDView: View {
-    @State var offset = UIHeight / 3
+    @State var offset = UIScreen.main.bounds.height / 3
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
     @ObservedObject var viewModel: ExpandedVM
@@ -93,7 +93,7 @@ struct LineChartSwiftUI: UIViewRepresentable {
     func setUpChart() {
         lineChart.noDataText = "No Data Available"
         var dataSets = [IChartDataSet]()
-        let colors = [AppColors.purple, AppColors.blue, AppColors.darkred, AppColors.darkgreen, AppColors.red]
+        let colors = [AppColors.purple, AppColors.blue, AppColors.darkRed, AppColors.darkGreen, AppColors.red]
         var iterator = colors.makeIterator()
         
         var dataEntries: [ChartDataEntry] = []

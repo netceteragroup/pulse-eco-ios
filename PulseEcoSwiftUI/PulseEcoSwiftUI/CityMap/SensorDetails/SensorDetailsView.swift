@@ -19,7 +19,7 @@ struct SensorDetailsView: View {
             }
         }
         .background(RoundedCorners(tl: 40, tr: 40, bl: 0, br: 0).fill(Color.white))
-            .offset(y: self.isExpanded ? UIHeight/2 - (self.expandedViewSize.height) + self.collapsedViewSize.height/2 : UIHeight/2 - (self.collapsedViewSize.height))
+            .offset(y: self.isExpanded ? UIScreen.main.bounds.height/2 - (self.expandedViewSize.height) + self.collapsedViewSize.height/2 : UIScreen.main.bounds.height/2 - (self.collapsedViewSize.height))
             .animation(.easeIn)
             .transition(.slide)
             .gesture(

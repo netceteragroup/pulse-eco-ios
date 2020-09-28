@@ -54,7 +54,6 @@
 		59A35AD22498F1C800C07786 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A35AD12498F1C800C07786 /* AppColors.swift */; };
 		59A35AD62498F6AD00C07786 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A35AD52498F6AD00C07786 /* MapView.swift */; };
 		59A35AD82498F6E300C07786 /* MapVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A35AD72498F6E300C07786 /* MapVM.swift */; };
-		59A35ADA2499057C00C07786 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A35AD92499057C00C07786 /* Constants.swift */; };
 		59A3954E24A206F400D39D64 /* AppVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A3954D24A206F400D39D64 /* AppVM.swift */; };
 		59A4F68F247FD2150089D523 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A4F68E247FD2150089D523 /* AppDelegate.swift */; };
 		59A4F691247FD2150089D523 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A4F690247FD2150089D523 /* SceneDelegate.swift */; };
@@ -155,7 +154,6 @@
 		59A35AD12498F1C800C07786 /* AppColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		59A35AD52498F6AD00C07786 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		59A35AD72498F6E300C07786 /* MapVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVM.swift; sourceTree = "<group>"; };
-		59A35AD92499057C00C07786 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		59A3954D24A206F400D39D64 /* AppVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVM.swift; sourceTree = "<group>"; };
 		59A4F68B247FD2150089D523 /* PulseEcoSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PulseEcoSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59A4F68E247FD2150089D523 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -411,17 +409,16 @@
 				5997F73624A36F780035BEEB /* CityMap */,
 				59FAD1D02490BDBF00AC36A5 /* Models */,
 				59A35AD12498F1C800C07786 /* AppColors.swift */,
-				59E4990A24C5A2E000E89746 /* Titillium_Web */,
 				59A35ACC2498EDFC00C07786 /* AppRoot */,
 				59A4F68E247FD2150089D523 /* AppDelegate.swift */,
 				59A4F690247FD2150089D523 /* SceneDelegate.swift */,
 				59A4F694247FD2160089D523 /* Assets.xcassets */,
 				59A4F699247FD2160089D523 /* LaunchScreen.storyboard */,
 				59A4F69C247FD2160089D523 /* Info.plist */,
-				59A4F696247FD2160089D523 /* Preview Content */,
-				59A35AD92499057C00C07786 /* Constants.swift */,
 				59F01AD624AC7B1300AD2802 /* DataSource.swift */,
 				593C264224BC9E01005152BE /* UserSettings.swift */,
+				59A4F696247FD2160089D523 /* Preview Content */,
+				59E4990A24C5A2E000E89746 /* Titillium_Web */,
 			);
 			path = PulseEcoSwiftUI;
 			sourceTree = "<group>";
@@ -669,7 +666,6 @@
 				59A35AC72498ECFF00C07786 /* MeasureListView.swift in Sources */,
 				59504C1124B46BF100EA4AFF /* NavigationBarModifier.swift in Sources */,
 				593C263624BC8969005152BE /* CityRowView.swift in Sources */,
-				59A35ADA2499057C00C07786 /* Constants.swift in Sources */,
 				5924C5DA249A4792007E0D78 /* MeasureListVM.swift in Sources */,
 				59F01AD724AC7B1300AD2802 /* DataSource.swift in Sources */,
 				5908ADE224AF2DA500C79BC9 /* DateFormatterUtils.swift in Sources */,

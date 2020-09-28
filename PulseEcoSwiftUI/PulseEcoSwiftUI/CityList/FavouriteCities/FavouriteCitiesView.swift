@@ -9,8 +9,8 @@
 import SwiftUI
 import MapKit
 
-struct FavouriteCitiesView: View {
-    @ObservedObject var viewModel: FavouriteCitiesVM
+struct favoriteCitiesView: View {
+    @ObservedObject var viewModel: favoriteCitiesVM
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
     @ObservedObject var userSettings: UserSettings
@@ -58,8 +58,8 @@ struct FavouriteCitiesView: View {
     func delete(at offsets: IndexSet) {
         offsets.forEach {
             let delRow = self.viewModel.getCities()[$0]
-            if let city = self.userSettings.favouriteCities.first(where: { $0.cityName == delRow.cityName }) {
-                self.userSettings.favouriteCities.remove(city)
+            if let city = self.userSettings.favoriteCities.first(where: { $0.cityName == delRow.cityName }) {
+                self.userSettings.favoriteCities.remove(city)
             }
         }
     }

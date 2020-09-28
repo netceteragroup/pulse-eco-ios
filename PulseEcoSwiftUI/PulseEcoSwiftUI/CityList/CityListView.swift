@@ -36,7 +36,7 @@ struct CityListView: View {
                             }, id: \.id) { city in
                                 CityRowView(viewModel: city).onTapGesture {
                                     if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                                        self.userSettings.favouriteCities.insert(city)
+                                        self.userSettings.favoriteCities.insert(city)
                                         self.presentationMode.wrappedValue.dismiss()
                                     }
                                 }
@@ -47,7 +47,7 @@ struct CityListView: View {
                     self.listCities
                 }
             }
-        }.background(Color(AppColors.darkblue))
+        }.background(Color(AppColors.darkBlue))
             .edgesIgnoringSafeArea(.all)
     }
     
@@ -57,7 +57,7 @@ struct CityListView: View {
         }, id: \.id) { city in
             CityRowView(viewModel: city).onTapGesture {
                 if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                    self.userSettings.favouriteCities.insert(city)
+                    self.userSettings.favoriteCities.insert(city)
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }

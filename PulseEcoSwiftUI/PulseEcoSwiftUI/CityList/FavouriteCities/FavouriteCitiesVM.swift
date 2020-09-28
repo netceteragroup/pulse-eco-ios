@@ -9,14 +9,14 @@
 import Foundation
 import SwiftUI
 
-class FavouriteCitiesVM: ObservableObject {
+class favoriteCitiesVM: ObservableObject {
     @Published var cityList: [FavouriteCityRowVM] = []
     var selectedMeasure: String
 
-    init(selectedMeasure: String, favouriteCities: Set<CityModel>, cityValues: [CityOverallValues], measureList: [Measure]) {
+    init(selectedMeasure: String, favoriteCities: Set<CityModel>, cityValues: [CityOverallValues], measureList: [Measure]) {
         self.selectedMeasure = selectedMeasure
         var value: String? = nil
-        for city in favouriteCities {
+        for city in favoriteCities {
             value = nil
             if let cityValue = cityValues.last(where: { $0.cityName == city.cityName
             }) {

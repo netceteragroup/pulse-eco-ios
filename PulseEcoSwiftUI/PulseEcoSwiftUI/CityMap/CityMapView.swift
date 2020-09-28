@@ -53,7 +53,7 @@ struct CityMapView: View {
                 SDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
             }
             if self.appVM.citySelectorClicked {
-                FavouriteCitiesView(viewModel: FavouriteCitiesVM(selectedMeasure: self.appVM.selectedMeasure, favouriteCities: self.userSettings.favouriteCities, cityValues: self.userSettings.cityValues, measureList: self.dataSource.measures), userSettings: self.userSettings).overlay(
+                favoriteCitiesView(viewModel: favoriteCitiesVM(selectedMeasure: self.appVM.selectedMeasure, favoriteCities: self.userSettings.favoriteCities, cityValues: self.userSettings.cityValues, measureList: self.dataSource.measures), userSettings: self.userSettings).overlay(
                         BottomShadow()
                 )
             }
