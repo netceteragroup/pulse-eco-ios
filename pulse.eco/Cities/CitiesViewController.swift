@@ -17,7 +17,7 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let selectedCity = cities.first { $0.key == sharedDataProvider.selectedCity.key }
             cities.removeAll { $0.key == sharedDataProvider.selectedCity.key }
             var sorted = [City]()
-            sorted.append(selectedCity!)
+            if let selectedCity = selectedCity { sorted.append(selectedCity) }
             sorted.append(contentsOf: cities)
             cities = sorted
             return sorted
