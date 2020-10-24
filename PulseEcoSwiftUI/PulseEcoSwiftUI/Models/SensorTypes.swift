@@ -13,6 +13,7 @@ enum SensorType: String, Codable {
     case WifiV2 = "3"
     // Pulse.eco LoRaWAN based sensor. version 2
     case LoRaWANV2 = "4"
+    // TODO: Add Doc
     case Pengy = "20001"
     // URAD Monitor device
     case URAD = "20002"

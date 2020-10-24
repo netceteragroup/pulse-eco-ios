@@ -51,7 +51,8 @@ import UIKit
     func getFullImage() -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: bounds.size)
         return renderer.image { _ in
-            drawHierarchy(in: CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height), afterScreenUpdates: false)
+            drawHierarchy(in: CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height),
+                          afterScreenUpdates: false)
         }
     }
 }

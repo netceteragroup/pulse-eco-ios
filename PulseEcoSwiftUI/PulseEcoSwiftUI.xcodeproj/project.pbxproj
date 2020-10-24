@@ -86,6 +86,7 @@
 		59FAD1D62490D76200AC36A5 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* Sensor.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
 		B273DFB12A0BE2703C2F38D3 /* libPods-PulseEcoSwiftUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */; };
+		DED1D2C6254428F200E11BD8 /* View+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED1D2C5254428F200E11BD8 /* View+Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +193,7 @@
 		59FAD1D52490D76200AC36A5 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
 		9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PulseEcoSwiftUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DED1D2C5254428F200E11BD8 /* View+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Utils.swift"; sourceTree = "<group>"; };
 		F5D1BBA3F006FE8F999EF2CF /* Pods-PulseEcoSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PulseEcoSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-PulseEcoSwiftUI/Pods-PulseEcoSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -402,6 +404,7 @@
 		59A4F68D247FD2150089D523 /* PulseEcoSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				DED1D2C4254428E100E11BD8 /* Utils */,
 				59504C0D24B46B7600EA4AFF /* CustomViews */,
 				59103A9E24A4B62F00ED9617 /* Disclamer */,
 				5997F73A24A370EF0035BEEB /* TypeSelector */,
@@ -480,6 +483,14 @@
 				5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		DED1D2C4254428E100E11BD8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DED1D2C5254428F200E11BD8 /* View+Utils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -687,6 +698,7 @@
 				59A35AC22498EBB600C07786 /* MainView.swift in Sources */,
 				591642A92499FE9F000A4F7C /* AverageVM.swift in Sources */,
 				593C263A24BC8B59005152BE /* CityListVM.swift in Sources */,
+				DED1D2C6254428F200E11BD8 /* View+Utils.swift in Sources */,
 				3288687724B51F5E009CC56D /* MarkerView.swift in Sources */,
 				593D8C9E249A17C1006B88AC /* FavouriteCitiesVM.swift in Sources */,
 				59E4992624C5C15C00E89746 /* SDView.swift in Sources */,

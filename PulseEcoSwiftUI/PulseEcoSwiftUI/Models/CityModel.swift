@@ -1,21 +1,7 @@
-//
-//  City1.swift
-//  PulseEcoSwiftUI
-//
-//  Created by Monika Dimitrova on 6/10/20.
-//  Copyright © 2020 Monika Dimitrova. All rights reserved.
-//
-
 import Foundation
 
-
-// Mark - Results
-
-
-
-// MARK: - CityModel
 struct CityModel: Codable, Identifiable, Hashable {
-   
+    
     var id: String { return cityName }
     let cityName, siteName, siteTitle: String
     let siteURL: String
@@ -24,27 +10,30 @@ struct CityModel: Codable, Identifiable, Hashable {
     let cityLocation: CityCoordinates
     let cityBorderPoints: [CityCoordinates]
     let intialZoomLevel: Int
-
+    
     enum CodingKeys: String, CodingKey {
         case cityName, siteName, siteTitle
         case siteURL = "siteUrl"
         case countryCode, countryName, cityLocation, cityBorderPoints, intialZoomLevel
     }
+    
     static func == (lhs: CityModel, rhs: CityModel) -> Bool {
-            lhs.id == rhs.id
+        lhs.id == rhs.id
     }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
+    
     init(cityName: String = "skopje",
          siteName: String = "Skopje",
          siteTitle: String = "Skopje @ CityPulse",
          siteURL: String = "https://skopje.pulse.eco",
          countryCode: String = "MK",
          countryName: String = "Macedonia",
-        cityLocation: CityCoordinates = CityCoordinates(latitude: "42.0016", longitute: "21.4302"),
-        cityBorderPoints: [CityCoordinates] = [],
-        intialZoomLevel: Int = 15) {
+         cityLocation: CityCoordinates = CityCoordinates(latitude: "42.0016", longitute: "21.4302"),
+         cityBorderPoints: [CityCoordinates] = [],
+         intialZoomLevel: Int = 15) {
         self.cityName = cityName
         self.siteName = siteName
         self.siteTitle = siteTitle
@@ -54,10 +43,9 @@ struct CityModel: Codable, Identifiable, Hashable {
         self.cityBorderPoints = cityBorderPoints
         self.cityLocation = cityLocation
         self.intialZoomLevel = intialZoomLevel
-        
     }
+    
     static func defaultCity() -> CityModel {
-        
         let cityBorderPoints = [CityCoordinates(latitude: "42.04602", longitute: "21.4383023"),
                                 CityCoordinates(latitude: "42.055145", longitute: "21.376596"),
                                 CityCoordinates(latitude: "42.052561",longitute: "21.3379023"),
@@ -85,6 +73,3 @@ struct CityModel: Codable, Identifiable, Hashable {
 struct CityCoordinates: Codable {
     let latitude, longitute: String
 }
-
-
-

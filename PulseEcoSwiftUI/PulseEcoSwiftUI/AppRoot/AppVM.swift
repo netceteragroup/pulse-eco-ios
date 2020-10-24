@@ -1,11 +1,10 @@
-import Foundation
 import SwiftUI
+
 class AppVM: ObservableObject {
    
     @Published var selectedMeasure: String = "pm10"
     @Published var citySelectorClicked: Bool = false {
         didSet {
-//            cityIcon = citySelectorClicked ? Image(uiImage: UIImage(named: "Triangle-up") ?? UIImage()) : Image(uiImage: UIImage(named: "Triangle") ?? UIImage())
              cityIcon = citySelectorClicked ? Image(systemName: "chevron.up") : Image(systemName: "chevron.down")
         }
     }

@@ -16,5 +16,4 @@ class MarkerView: UIView {
         self.markerImage.tintColor = color
         self.valueLabel.text = String(format: "%.0f", value)
     }
-
 }
