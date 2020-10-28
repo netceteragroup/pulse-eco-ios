@@ -82,13 +82,15 @@
 		59FAD1D42490C82600AC36A5 /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* CityModel.swift */; };
 		59FAD1D62490D76200AC36A5 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* Sensor.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
-		B273DFB12A0BE2703C2F38D3 /* libPods-PulseEcoSwiftUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */; };
+		B0BE2E98D9E1881C3698F87B /* libPods-pulse.eco.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F48AA1DACCE36E990FD3310 /* libPods-pulse.eco.a */; };
 		DE8310F7254868F6004901C3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59504C1224B46C2D00EA4AFF /* LoadingView.swift */; };
 		DED1D2C6254428F200E11BD8 /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED1D2C5254428F200E11BD8 /* ViewUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1C58AE0F686C04609FEE1C79 /* Pods-PulseEcoSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PulseEcoSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-PulseEcoSwiftUI/Pods-PulseEcoSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
+		2117A02148CA7C67C0756307 /* Pods-pulse.eco.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pulse.eco.release.xcconfig"; path = "Target Support Files/Pods-pulse.eco/Pods-pulse.eco.release.xcconfig"; sourceTree = "<group>"; };
+		2E84EBD98C666C5AEEF6581D /* Pods-pulse.eco.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pulse.eco.debug.xcconfig"; path = "Target Support Files/Pods-pulse.eco/Pods-pulse.eco.debug.xcconfig"; sourceTree = "<group>"; };
 		3288686C24B513DA009CC56D /* LocationAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotationView.swift; sourceTree = "<group>"; };
 		3288687024B51F5E009CC56D /* SelectedSensorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedSensorView.xib; sourceTree = "<group>"; };
 		3288687124B51F5E009CC56D /* SelectedSensorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedSensorView.swift; sourceTree = "<group>"; };
@@ -137,7 +139,7 @@
 		59A35AD52498F6AD00C07786 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		59A35AD72498F6E300C07786 /* MapVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVM.swift; sourceTree = "<group>"; };
 		59A3954D24A206F400D39D64 /* AppVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVM.swift; sourceTree = "<group>"; };
-		59A4F68B247FD2150089D523 /* PulseEcoSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PulseEcoSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		59A4F68B247FD2150089D523 /* pulse.eco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pulse.eco.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59A4F68E247FD2150089D523 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59A4F690247FD2150089D523 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		59A4F694247FD2160089D523 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -167,7 +169,7 @@
 		59FAD1D32490C82600AC36A5 /* CityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityModel.swift; sourceTree = "<group>"; };
 		59FAD1D52490D76200AC36A5 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
-		9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PulseEcoSwiftUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F48AA1DACCE36E990FD3310 /* libPods-pulse.eco.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-pulse.eco.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DED1D2C5254428F200E11BD8 /* ViewUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewUtils.swift; sourceTree = "<group>"; };
 		F5D1BBA3F006FE8F999EF2CF /* Pods-PulseEcoSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PulseEcoSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-PulseEcoSwiftUI/Pods-PulseEcoSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,7 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B273DFB12A0BE2703C2F38D3 /* libPods-PulseEcoSwiftUI.a in Frameworks */,
+				B0BE2E98D9E1881C3698F87B /* libPods-pulse.eco.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +210,7 @@
 		3835A225C2A2B59F6745C35F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */,
+				7F48AA1DACCE36E990FD3310 /* libPods-pulse.eco.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -218,6 +220,8 @@
 			children = (
 				F5D1BBA3F006FE8F999EF2CF /* Pods-PulseEcoSwiftUI.debug.xcconfig */,
 				1C58AE0F686C04609FEE1C79 /* Pods-PulseEcoSwiftUI.release.xcconfig */,
+				2E84EBD98C666C5AEEF6581D /* Pods-pulse.eco.debug.xcconfig */,
+				2117A02148CA7C67C0756307 /* Pods-pulse.eco.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -337,7 +341,7 @@
 		59A4F68C247FD2150089D523 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				59A4F68B247FD2150089D523 /* PulseEcoSwiftUI.app */,
+				59A4F68B247FD2150089D523 /* pulse.eco.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -467,9 +471,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		59A4F68A247FD2150089D523 /* PulseEcoSwiftUI */ = {
+		59A4F68A247FD2150089D523 /* pulse.eco */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 59A4F6B5247FD2160089D523 /* Build configuration list for PBXNativeTarget "PulseEcoSwiftUI" */;
+			buildConfigurationList = 59A4F6B5247FD2160089D523 /* Build configuration list for PBXNativeTarget "pulse.eco" */;
 			buildPhases = (
 				EAE471DDE3169270E1B4E500 /* [CP] Check Pods Manifest.lock */,
 				59A4F687247FD2150089D523 /* Sources */,
@@ -480,9 +484,9 @@
 			);
 			dependencies = (
 			);
-			name = PulseEcoSwiftUI;
+			name = pulse.eco;
 			productName = PulseEcoSwiftUI;
-			productReference = 59A4F68B247FD2150089D523 /* PulseEcoSwiftUI.app */;
+			productReference = 59A4F68B247FD2150089D523 /* pulse.eco.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -513,7 +517,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				59A4F68A247FD2150089D523 /* PulseEcoSwiftUI */,
+				59A4F68A247FD2150089D523 /* pulse.eco */,
 			);
 		};
 /* End PBXProject section */
@@ -561,7 +565,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PulseEcoSwiftUI-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-pulse.eco-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -768,10 +772,11 @@
 		};
 		59A4F6B6247FD2160089D523 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F5D1BBA3F006FE8F999EF2CF /* Pods-PulseEcoSwiftUI.debug.xcconfig */;
+			baseConfigurationReference = 2E84EBD98C666C5AEEF6581D /* Pods-pulse.eco.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 40;
 				DEVELOPMENT_ASSET_PATHS = "\"PulseEcoSwiftUI/SupportingFiles/Preview Content\"";
 				DEVELOPMENT_TEAM = LAA69LK8PF;
 				ENABLE_PREVIEWS = YES;
@@ -780,8 +785,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.PulseEcoSwiftUI;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 4.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse;
+				PRODUCT_NAME = pulse.eco;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -789,10 +795,11 @@
 		};
 		59A4F6B7247FD2160089D523 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1C58AE0F686C04609FEE1C79 /* Pods-PulseEcoSwiftUI.release.xcconfig */;
+			baseConfigurationReference = 2117A02148CA7C67C0756307 /* Pods-pulse.eco.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 40;
 				DEVELOPMENT_ASSET_PATHS = "\"PulseEcoSwiftUI/SupportingFiles/Preview Content\"";
 				DEVELOPMENT_TEAM = LAA69LK8PF;
 				ENABLE_PREVIEWS = YES;
@@ -801,8 +808,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.PulseEcoSwiftUI;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 4.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse;
+				PRODUCT_NAME = pulse.eco;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -820,7 +828,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		59A4F6B5247FD2160089D523 /* Build configuration list for PBXNativeTarget "PulseEcoSwiftUI" */ = {
+		59A4F6B5247FD2160089D523 /* Build configuration list for PBXNativeTarget "pulse.eco" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				59A4F6B6247FD2160089D523 /* Debug */,

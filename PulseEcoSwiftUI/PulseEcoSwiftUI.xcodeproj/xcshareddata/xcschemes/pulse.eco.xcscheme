@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "59A4F68A247FD2150089D523"
-               BuildableName = "PulseEcoSwiftUI.app"
-               BlueprintName = "PulseEcoSwiftUI"
+               BuildableName = "pulse.eco.app"
+               BlueprintName = "pulse.eco"
                ReferencedContainer = "container:PulseEcoSwiftUI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -79,8 +79,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "59A4F68A247FD2150089D523"
-            BuildableName = "PulseEcoSwiftUI.app"
-            BlueprintName = "PulseEcoSwiftUI"
+            BuildableName = "pulse.eco.app"
+            BlueprintName = "pulse.eco"
             ReferencedContainer = "container:PulseEcoSwiftUI.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -96,8 +96,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "59A4F68A247FD2150089D523"
-            BuildableName = "PulseEcoSwiftUI.app"
-            BlueprintName = "PulseEcoSwiftUI"
+            BuildableName = "pulse.eco.app"
+            BlueprintName = "pulse.eco"
             ReferencedContainer = "container:PulseEcoSwiftUI.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
