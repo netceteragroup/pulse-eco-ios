@@ -7,18 +7,24 @@ struct SDView: View {
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
     @ObservedObject var viewModel: ExpandedVM
+    @State var isExpanded: Bool = false
+    @State var isClickedOnMap: Bool = false
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
+        VStack{
         GeometryReader { geo in
             VStack(spacing: 20) {
                 CollapsedView(viewModel:
                     SensorDetailsVM(sensor: self.appVM.selectedSensor ?? SensorVM(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure)
                     )
                 ).padding(.top, 5)
+                    .padding(.bottom, 10)
+                
                 VStack {
                     LineChartSwiftUI(viewModel:
                         ChartVM(sensor: self.appVM.selectedSensor ?? SensorVM(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure)
                         )
-                    ).frame(width: 350,height: 200)
+                    ).frame(width: 350, height: 200 )
                     Text(self.viewModel.disclaimerMessage)
                         .font(.system(size: 11, weight: .light))
                         .foregroundColor(self.viewModel.color)
@@ -47,34 +53,54 @@ struct SDView: View {
                             if value.translation.height < 0 {
                                 if (self.offset > 0 )
                                 {
-                                    if (self.offset + value.translation.height) > 0 {
-                                        self.offset += value.translation.height
-                                    }
-                                    else {
-                                        self.offset += value.translation.height  - (self.offset + value.translation.height)
-                                    }
+                                    /*if (self.offset + value.translation.height) > 0 {
+                                     self.offset += value.translation.height
+                                     }
+                                     else {
+                                     self.offset += value.translation.height  - (self.offset + value.translation.height)
+                                     }*/
+                                    self.offset += value.translation.height
+                                    
                                 }
                             } else {
-                                if (self.offset < geo.size.height/3 )
-                                {
-                                    if (value.translation.height + self.offset) < geo.size.height/3 {
-                                        self.offset += value.translation.height
-                                    }
-                                }
+                                /*if (self.offset < geo.size.height/3 )
+                                 {
+                                 if (value.translation.height + self.offset) < geo.size.height/3 {
+                                 self.offset += value.translation.height
+                                 }
+                                 }*/
+                                self.offset += value.translation.height
                             }
                     }
                     .onEnded { value in
                         if value.translation.height < 0 {
                             self.offset = CGSize.zero.height - geo.size.height/7
+                            //self.isExpanded = true
+                            self.appVM.isExpanded = true
                         } else {
                             self.offset = geo.size.height/3
+                            self.isExpanded = false
+                            self.appVM.isExpanded = true
                         }
                     }
             )
                 .onAppear {
                     self.offset = geo.size.height/3
             }
-        }
+            Button("Go Back", action: {
+                self.presentationMode.wrappedValue.dismiss()
+                //self.isExpanded = false
+                self.appVM.isExpanded = false
+                self.offset = geo.size.height/3
+                
+            })
+        }.background(self.appVM.isExpanded ? Color(UIColor(red: 0.29, green: 0.29, blue: 0.29, alpha: 0.6)) : Color.clear)
+        }.gesture(TapGesture().onEnded{
+            self.presentationMode.wrappedValue.dismiss()
+            //self.isExpanded = false
+            self.appVM.isExpanded = false
+            //self.offset = len
+        })
     }
 }
 
