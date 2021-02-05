@@ -40,13 +40,16 @@ struct SenDetView: View {
             .gesture(
                 DragGesture()
                     .onEnded { value in
-                        if value.translation.height < 0 {
+                        if value.translation.height < -50 {
                             self.isSheetShown = .expanded
-                            self.isExpanded = true
-                        } else {
-                            self.isExpanded = false
+                            //self.isExpanded = true
+                        } else if value.translation.height < 30 {
+                            //self.isExpanded = false
                             self.isSheetShown = .partial
                             
+                        }else{
+                            //self.isExpanded = false
+                            self.isSheetShown = .hidden
                         }
                 }
         )

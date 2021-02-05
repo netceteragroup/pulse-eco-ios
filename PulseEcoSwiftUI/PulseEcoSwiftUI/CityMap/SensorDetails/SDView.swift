@@ -76,11 +76,11 @@ struct SDView: View {
                         if value.translation.height < 0 {
                             self.offset = CGSize.zero.height - geo.size.height/7
                             //self.isExpanded = true
-                            self.appVM.isExpanded = true
+                            self.isExpanded = true
                         } else {
                             self.offset = geo.size.height/3
                             self.isExpanded = false
-                            self.appVM.isExpanded = true
+                            self.isExpanded = true
                         }
                     }
             )
@@ -90,15 +90,15 @@ struct SDView: View {
             Button("Go Back", action: {
                 self.presentationMode.wrappedValue.dismiss()
                 //self.isExpanded = false
-                self.appVM.isExpanded = false
+                self.isExpanded = false
                 self.offset = geo.size.height/3
                 
             })
-        }.background(self.appVM.isExpanded ? Color(UIColor(red: 0.29, green: 0.29, blue: 0.29, alpha: 0.6)) : Color.clear)
+        }.background(self.isExpanded ? Color(UIColor(red: 0.29, green: 0.29, blue: 0.29, alpha: 0.6)) : Color.clear)
         }.gesture(TapGesture().onEnded{
             self.presentationMode.wrappedValue.dismiss()
             //self.isExpanded = false
-            self.appVM.isExpanded = false
+            self.isExpanded = false
             //self.offset = len
         })
     }

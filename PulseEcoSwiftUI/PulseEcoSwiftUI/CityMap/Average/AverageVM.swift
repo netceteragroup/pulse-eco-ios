@@ -23,7 +23,8 @@ class AverageVM: ObservableObject {
     var currBand: BandVM = BandVM()
     var measureBandsWidth: Double
     var selectedMeasure: Measure = Measure.empty()
-    
+    var shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
+
     init(measure: String, cityName: String, measuresList: [Measure], cityValues: CityOverallValues?) {
         if let averageValue = cityValues?.values[measure.lowercased()] {
             if let floatValue = Float(averageValue) {

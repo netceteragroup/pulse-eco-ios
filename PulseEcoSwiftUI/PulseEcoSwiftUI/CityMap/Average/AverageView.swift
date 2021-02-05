@@ -9,7 +9,7 @@ struct AverageView: View {
                     NoReadingsView()
                 }
                 else {
-                    ExpandableView(viewModel: self.viewModel, geometry: geo)
+                    ExpandableView(viewModel: self.viewModel, geometry: geo).animation(.easeInOut)
                 }
             }
         }

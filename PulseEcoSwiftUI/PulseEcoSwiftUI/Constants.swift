@@ -11,3 +11,6 @@ import SwiftUI
 
 let UIWidth = UIScreen.main.bounds.width
 let UIHeight = UIScreen.main.bounds.height
+let privacyPolicyLink = "https://www.netcetera.com/home/privacy-policy.html"
+
+

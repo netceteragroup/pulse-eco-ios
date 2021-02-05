@@ -63,7 +63,8 @@ struct CityMapView: View {
                     .overlay(BottomShadow())
                     
             }
-        }.sheet(isPresented: self.$appVM.showSheet) {
+        }.addPartialSheet()
+        .sheet(isPresented: self.$appVM.showSheet) {
             if self.appVM.activeSheet == .disclaimerView {
                 DisclaimerView()
                     .environment(\.managedObjectContext, self.moc)
@@ -71,7 +72,7 @@ struct CityMapView: View {
                 CityListView(viewModel: CityListVM(cities: self.dataSource.cities), userSettings: self.userSettings).environment(\.managedObjectContext, self.moc)
             }
         }
-        .addPartialSheet()
+        
     }
 }
 

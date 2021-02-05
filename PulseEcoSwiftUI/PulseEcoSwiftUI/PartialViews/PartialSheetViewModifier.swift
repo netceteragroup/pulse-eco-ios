@@ -183,7 +183,6 @@ extension PartialSheet {
                     // This is the little rounded bar (HANDLER) on top of the sheet
                     VStack {
                         Spacer()
-                      
                         RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.0)
                             .frame(width: 40, height: 3.0)
                             .foregroundColor(self.style.handlerBarColor)
@@ -246,7 +245,7 @@ extension PartialSheet {
     /// The method called when the drag ends. It moves the sheet in the correct position based on the last drag gesture
     private func onDragEnded(drag: DragGesture.Value) {
         /// The drag direction
-//        let verticalDirection = drag.predictedEndLocation.y - drag.location.y
+        //        let verticalDirection = drag.predictedEndLocation.y - drag.location.y
         
         // Set the correct anchor point based on the vertical direction of the drag
         if drag.translation.height < -50 {
@@ -281,7 +280,6 @@ extension PartialSheet {
                     self.manager.isPresented = .expanded
                 } else {
                     self.manager.isPresented = .partial
-
                 }
                 if manager.isPresented == .hidden {
                     manager.onDismiss?()
@@ -369,7 +367,7 @@ struct PartialSheetAddView<Base: View, InnerContent: View>: View {
     
     func updateContent() {
         partialSheetManager.updatePartialSheet(isPresented: isPresented, content: content, onDismiss: {
-            self.isPresented = .partial
+            self.isPresented = .expanded
         })
     }
     

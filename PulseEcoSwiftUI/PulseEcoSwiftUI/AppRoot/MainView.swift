@@ -23,7 +23,9 @@ struct MainView: View {
                     ])
                 }.navigationBarTitle("", displayMode: .inline)
                     .navigationBarItems(leading: Button(action: {
-                        self.appVM.citySelectorClicked.toggle()
+                        withAnimation(.easeInOut(duration: 0.2)){
+                          self.appVM.citySelectorClicked.toggle()
+                        }
                     }) {
                         HStack {
                             Text(self.appVM.cityName.uppercased())

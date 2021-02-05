@@ -10,6 +10,8 @@ struct MeasureButtonView: View {
                 self.appVM.selectedMeasure = self.viewModel.id
                 self.appVM.updateMapRegion = false
                 self.appVM.updateMapAnnotations = true
+                self.appVM.showSensorDetails = false
+                self.appVM.selectedSensor = self.appVM.selectedSensor
             }) {
                 Text(self.viewModel.title)
                     .font(Font.custom("TitilliumWeb-Regular", size: 13))
@@ -21,7 +23,7 @@ struct MeasureButtonView: View {
             Rectangle()
                 .frame(height: 2.0)
                 .foregroundColor(self.viewModel.underlineColor)
-        }
+        }.fixedSize(horizontal: true, vertical: true)
     }
 }
 

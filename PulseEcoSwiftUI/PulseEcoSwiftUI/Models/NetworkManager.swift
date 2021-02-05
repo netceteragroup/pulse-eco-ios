@@ -62,5 +62,7 @@ class NetworkManager: ObservableObject {
                    .receive(on: RunLoop.main)
                    .eraseToAnyPublisher()
     }
+    // https://{cityName}.pulse.eco/rest/avgData/week?sensorId={sensorId}&type={valueType}&from={fromDateTime}&to={toDateTime}
+
 }
 

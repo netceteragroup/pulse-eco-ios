@@ -16,6 +16,8 @@ class LocationAnnotationView: MKAnnotationView {
     var pin: SensorVM?
     var markerView: MarkerView?
     var selectedSensor: SelectedSensorView?
+    @EnvironmentObject var appVM: AppVM
+
 
     // MARK: Initialization
 
@@ -62,6 +64,7 @@ class LocationAnnotationView: MKAnnotationView {
             return
         }
         selectedSensorView.removeFromSuperview()
+       // self.appVM.isExpanded = false
     }
     
 }
