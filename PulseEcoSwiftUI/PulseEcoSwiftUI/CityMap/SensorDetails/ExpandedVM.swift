@@ -12,7 +12,6 @@ class ExpandedVM: ObservableObject{
     
     init(sensorData24h: [Sensor]) {
         self.sensorData24h = sensorData24h
-       
     }
     
    

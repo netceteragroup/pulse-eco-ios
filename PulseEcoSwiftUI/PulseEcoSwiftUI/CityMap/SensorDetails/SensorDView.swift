@@ -30,6 +30,10 @@ struct SensorDView: View {
                     ChartVM(sensor: self.appVM.selectedSensor ?? SensorVM(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure)
                     )
                 ).frame(width: 350, height: 200 )
+                
+                 WeeklyView(viewModel: WeeklyVM(appVM: appVM, dataSource: dataSource))
+                    .padding(.bottom, 20)
+                
                 Text(self.viewModel.disclaimerMessage)
                     .font(.system(size: 11, weight: .light))
                     .foregroundColor(self.viewModel.color)

@@ -7,6 +7,7 @@ class DataSource: ObservableObject {
     @Published var cityOverall: CityOverallValues?
     @Published var userSettings: UserSettings = UserSettings()
     @Published var sensorsData: [Sensor] = []
+    @Published var sensorsDailyAverageData: [Sensor] = []
     @Published var sensorsData24h: [Sensor] = []
     @Published var cities: [CityModel] = []
     @Published var cancellationTokens: [AnyCancellable] = []
@@ -19,6 +20,8 @@ class DataSource: ObservableObject {
     private var cancellableSensorData: AnyCancellable?
     private var cancellableSensorData24h: AnyCancellable?
     private var cancellableCities: AnyCancellable?
+    private var cancellableSensorsDailyAverageData: AnyCancellable?
+
     var subscripiton: AnyCancellable?
     init() {
        // getCities()
@@ -91,5 +94,16 @@ class DataSource: ObservableObject {
     }
     func getCurrentMeasure(selectedMeasure: String) -> Measure {
         return measures.filter{ $0.id.lowercased() == selectedMeasure.lowercased()}.first ?? Measure.empty()
+    }
+    func getDailyAverageDataForSensor(cityName: String,
+                                      measureType: String,
+                                      sensorId: String) -> [Sensor] {
+        self.cancellableSensorsDailyAverageData = NetworkManager()
+            .downloadDailyAverageDataForSensor(cityName: cityName, measureType: measureType, sensorId: sensorId)
+            .sink(receiveCompletion: { _ in }, receiveValue: { sensors in
+            self.sensorsDailyAverageData = sensors
+        })
+        
+        return sensorsDailyAverageData
     }
 }

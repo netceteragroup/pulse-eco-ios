@@ -87,8 +87,12 @@
 		59FAD1D62490D76200AC36A5 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* Sensor.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
 		B273DFB12A0BE2703C2F38D3 /* libPods-PulseEcoSwiftUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */; };
+		BA00D30F25D2B59600FA2C26 /* WeeklyVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D30E25D2B59600FA2C26 /* WeeklyVM.swift */; };
+		BA00D31125D2B5A000FA2C26 /* DailyVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D31025D2B5A000FA2C26 /* DailyVM.swift */; };
 		BA1A88EE25C2B99400AA8B3F /* SenDetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A88ED25C2B99400AA8B3F /* SenDetView.swift */; };
 		BA483A2425B06E3400D4E178 /* lightMap.json in Resources */ = {isa = PBXBuildFile; fileRef = BA483A2325B06E3400D4E178 /* lightMap.json */; };
+		BA5C405025D3D1E80010291F /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5C404F25D3D1E80010291F /* DailyView.swift */; };
+		BA5C405225D3D25D0010291F /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5C405125D3D25D0010291F /* WeeklyView.swift */; };
 		BA718F0D25BED6B100EC87E0 /* SensorDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA718F0C25BED6B100EC87E0 /* SensorDView.swift */; };
 		BAE48F2625C0308900D0E9A2 /* PartialSheetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2525C0308900D0E9A2 /* PartialSheetManager.swift */; };
 		BAE48F2825C0314C00D0E9A2 /* BlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2725C0314C00D0E9A2 /* BlurEffectView.swift */; };
@@ -203,8 +207,12 @@
 		59FAD1D52490D76200AC36A5 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
 		9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PulseEcoSwiftUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA00D30E25D2B59600FA2C26 /* WeeklyVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyVM.swift; sourceTree = "<group>"; };
+		BA00D31025D2B5A000FA2C26 /* DailyVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVM.swift; sourceTree = "<group>"; };
 		BA1A88ED25C2B99400AA8B3F /* SenDetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenDetView.swift; sourceTree = "<group>"; };
 		BA483A2325B06E3400D4E178 /* lightMap.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = lightMap.json; path = ../../../pulse.eco/Assets/lightMap.json; sourceTree = "<group>"; };
+		BA5C404F25D3D1E80010291F /* DailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyView.swift; sourceTree = "<group>"; };
+		BA5C405125D3D25D0010291F /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
 		BA718F0C25BED6B100EC87E0 /* SensorDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDView.swift; sourceTree = "<group>"; };
 		BAE48F2525C0308900D0E9A2 /* PartialSheetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialSheetManager.swift; sourceTree = "<group>"; };
 		BAE48F2725C0314C00D0E9A2 /* BlurEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurEffectView.swift; sourceTree = "<group>"; };
@@ -519,6 +527,10 @@
 		BAA04E2525C8156700B503A1 /* WeeklyAverage */ = {
 			isa = PBXGroup;
 			children = (
+				BA00D30E25D2B59600FA2C26 /* WeeklyVM.swift */,
+				BA00D31025D2B5A000FA2C26 /* DailyVM.swift */,
+				BA5C404F25D3D1E80010291F /* DailyView.swift */,
+				BA5C405125D3D25D0010291F /* WeeklyView.swift */,
 			);
 			path = WeeklyAverage;
 			sourceTree = "<group>";
@@ -721,10 +733,12 @@
 				59504C1524B46C7A00EA4AFF /* SliderCircle.swift in Sources */,
 				BAE48F2A25C0318500D0E9A2 /* PartialSheetStyle.swift in Sources */,
 				59504C0A24B45ECF00EA4AFF /* MeasureButtonVM.swift in Sources */,
+				BA00D30F25D2B59600FA2C26 /* WeeklyVM.swift in Sources */,
 				59A35AC72498ECFF00C07786 /* MeasureListView.swift in Sources */,
 				59504C1124B46BF100EA4AFF /* NavigationBarModifier.swift in Sources */,
 				BAE48F3025C0330000D0E9A2 /* View+PartialSheetModifier.swift in Sources */,
 				593C263624BC8969005152BE /* CityRowView.swift in Sources */,
+				BA00D31125D2B5A000FA2C26 /* DailyVM.swift in Sources */,
 				59A35ADA2499057C00C07786 /* Constants.swift in Sources */,
 				5924C5DA249A4792007E0D78 /* MeasureListVM.swift in Sources */,
 				59F01AD724AC7B1300AD2802 /* DataSource.swift in Sources */,
@@ -761,6 +775,7 @@
 				59A3954E24A206F400D39D64 /* AppVM.swift in Sources */,
 				BAE48F2625C0308900D0E9A2 /* PartialSheetManager.swift in Sources */,
 				59A4F691247FD2150089D523 /* SceneDelegate.swift in Sources */,
+				BA5C405025D3D1E80010291F /* DailyView.swift in Sources */,
 				592201AB24AA55D900025F1F /* ExpandableView.swift in Sources */,
 				59FAD1D22490C27200AC36A5 /* NetworkManager.swift in Sources */,
 				592201A924AA3F7600025F1F /* ExpandedView.swift in Sources */,
@@ -776,6 +791,7 @@
 				593C264324BC9E01005152BE /* UserSettings.swift in Sources */,
 				596619372492703800DACF67 /* Measure.swift in Sources */,
 				593D8C9A249A170F006B88AC /* FavouriteCitiesView.swift in Sources */,
+				BA5C405225D3D25D0010291F /* WeeklyView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
