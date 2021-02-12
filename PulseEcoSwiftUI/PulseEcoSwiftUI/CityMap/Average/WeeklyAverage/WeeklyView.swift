@@ -17,11 +17,12 @@ struct WeeklyView: View {
         VStack{
             Text(viewModel.title)
                 .bold()
-                .frame(width: 327, height: 17, alignment: .center).padding(.bottom, 20)
+                .frame(width: 327, height: 17, alignment: .center)
+                .padding(.bottom, 20)
             HStack{
                 ForEach(viewModel.dailyAverageSensorValues, id: \.id) { sensor in
                     VStack {
-                        DailyView(viewModel: DailyVM(sensor: sensor, dataSource: self.dataSource))
+                        DailyView(viewModel: DailyVM(sensor: sensor, appVM: self.appVM, dataSource: self.dataSource))
                     }
                 }
             }

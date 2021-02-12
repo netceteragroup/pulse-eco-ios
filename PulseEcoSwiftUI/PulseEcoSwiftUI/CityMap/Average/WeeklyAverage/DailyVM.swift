@@ -13,20 +13,22 @@ class DailyVM {
     
     @EnvironmentObject var dataSource: DataSource
     
-    var value: String = ""
     var foregroundColor: Color = Color(AppColors.gray)
-    let sensor: Sensor
+    let sensor: DailyInfoSensor
+    var value: String {
+        sensor.value
+    }
+
     let constNumber = -1000000000000
     
     var dayOfWeek: String {
-        let date = DateFormatter.iso8601Full.date(from: sensor.stamp)
+        let date = DateFormatter.iso8601Full.date(from: sensor.dayOfWeek)
         let dateString = DateFormatter.getDay.string(from: date!)
         return String(dateString.prefix(3))
     }    
-    init(sensor: Sensor, dataSource: DataSource) {
+    init(sensor: DailyInfoSensor, appVM: AppVM, dataSource: DataSource) {
         self.sensor = sensor
-        self.value = sensor.value
-        self.foregroundColor = colorForValue(type: sensor.type, value: value, measures: dataSource.measures)
+        self.foregroundColor = colorForValue(type: appVM.selectedMeasure, value: sensor.value, measures: dataSource.measures)
     }
     
     func colorForValue(type: String, value: String, measures: [Measure] ) -> Color {
