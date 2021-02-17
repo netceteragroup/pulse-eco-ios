@@ -9,9 +9,11 @@ class ExpandedVM: ObservableObject{
     
     
     @Published var sensorData24h: [Sensor]
-    
-    init(sensorData24h: [Sensor]) {
+    @Published var dailyAverages: [Sensor]
+
+    init(sensorData24h: [Sensor], dailyAverages: [Sensor]) {
         self.sensorData24h = sensorData24h
+        self.dailyAverages = dailyAverages
     }
     
    

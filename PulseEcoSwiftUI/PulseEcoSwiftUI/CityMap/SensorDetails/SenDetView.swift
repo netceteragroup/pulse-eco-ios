@@ -26,10 +26,15 @@ struct SenDetView: View {
             
             ChildSizeReader(size: self.$collapsedViewSize) {
                 
-                CollapsedView(viewModel: SensorDetailsVM(sensor: self.appVM.selectedSensor ?? SensorVM(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure))).padding(.top, 5)
+                CollapsedView(viewModel: SensorDetailsVM(sensor: self.appVM.selectedSensor ?? SensorVM(),
+                                                         sensorsData: self.dataSource.sensorsData24h,
+                                                         selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure)))
+                    .padding(.top, 5)
                     .padding(.bottom, 40)
                     .partialSheet(isPresented: self.$isSheetShown) {
-                        SensorDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h)).padding(.bottom, 30)
+                        SensorDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h,
+                                                          dailyAverages: self.dataSource.sensorsDailyAverageData))
+                            .padding(.bottom, 30)
                 }
                 
             }

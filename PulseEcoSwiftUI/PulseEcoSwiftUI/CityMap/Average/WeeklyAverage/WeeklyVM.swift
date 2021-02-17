@@ -17,49 +17,39 @@ class WeeklyVM: ObservableObject{
     var title: String = ""
     @Published var dailyAverageSensorValues: [DailyInfoSensor] = []
     
-    init(appVM: AppVM, dataSource: DataSource){
-        self.title = "Past week " + "(\(dataSource.getCurrentMeasure(selectedMeasure: appVM.selectedMeasure).unit))"
-        let averages = dataSource.getDailyAverageDataForSensor(cityName: appVM.cityName, measureType: appVM.selectedMeasure, sensorId: appVM.selectedSensor?.sensorID ?? "")
-        
+    init(appVM: AppVM, dataSource: DataSource, averages: [Sensor]){
+        self.title = "Past week " + "(\(dataSource.getCurrentMeasure(selectedMeasure: appVM.selectedMeasure).unit))"        
         self.dailyAverageSensorValues = dailyAverages(averages: averages)
     }
     
     func dailyAverages(averages: [Sensor]) -> [DailyInfoSensor] {
         
         var allAverages: [DailyInfoSensor] = []
-        var tmpAverages = averages
-        let week = (-7...(-1)).compactMap {
-                       DateFormatter.iso8601Full.string(from: Calendar.current.date(byAdding: .day, value: $0, to: Date())!)
-                   }
+        let time = DateFormatter.getTime.string(from: Date())
+        var earliestDate: Int {
+            time >= "13:00" ? -6 : -7
+        }
+        var latestDate: Int {
+            time >= "13:00" ? 0 : -1
+        }
         
-        if averages.count == 7 {
-            for sensor in averages {
-                let dailySensor = DailyInfoSensor(dayOfWeek: sensor.stamp, value: sensor.value)
-                allAverages.append(dailySensor)
-            }
-            return allAverages
+        let week = (earliestDate...(latestDate)).compactMap {
+            DateFormatter.iso8601Full.string(from: Calendar.current.date(byAdding: .day,
+                                                                         value: $0,
+                                                                         to: Date())!)
         }
-            
-        else {
-            for date in week {
-                if tmpAverages.count == 0 {
-                       let dailySensor = DailyInfoSensor(dayOfWeek: date, value: "N/A")
-                       allAverages.append(dailySensor)
-                   }
-                for sensor in tmpAverages {
-                    if date.prefix(10) == sensor.stamp.prefix(10) {
-                        let dailySensor = DailyInfoSensor(dayOfWeek: sensor.stamp, value: sensor.value)
-                        allAverages.append(dailySensor)
-                        tmpAverages.removeFirst()
-                        break
-                    }
-                    let dailySensor = DailyInfoSensor(dayOfWeek: date, value: "N/A")
-                    allAverages.append(dailySensor)
-                    break
-                }
+        
+        for date in week {
+            var matchingDays = averages.filter({$0.stamp.prefix(10) == date.prefix(10)})
+            if matchingDays.isEmpty {
+                allAverages.append(DailyInfoSensor(dayOfWeek: date, value: "N/A"))
             }
-             return allAverages
+            else {
+                let sensor = matchingDays.popLast()!
+                allAverages.append(DailyInfoSensor(dayOfWeek: sensor.stamp, value: sensor.value))
+            }
         }
+        return allAverages
     }
 }
 

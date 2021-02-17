@@ -18,7 +18,10 @@ struct SensorDView: View {
         VStack {
             VStack(spacing: 20) {
                 CollapsedView(viewModel:
-                    SensorDetailsVM(sensor: self.appVM.selectedSensor ?? SensorVM(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure)
+                    SensorDetailsVM(sensor: self.appVM.selectedSensor ?? SensorVM(),
+                                    sensorsData: self.dataSource.sensorsData24h,
+                                    selectedMeasure: self.dataSource
+                                        .getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure)
                     )
                 ) .padding(.top, 5)
                     //.padding(.bottom, 10)
@@ -31,7 +34,7 @@ struct SensorDView: View {
                     )
                 ).frame(width: 350, height: 200 )
                 
-                 WeeklyView(viewModel: WeeklyVM(appVM: appVM, dataSource: dataSource))
+                WeeklyView(viewModel: WeeklyVM(appVM: appVM, dataSource: dataSource, averages: self.viewModel.dailyAverages))
                     .padding(.bottom, 20)
                 
                 Text(self.viewModel.disclaimerMessage)

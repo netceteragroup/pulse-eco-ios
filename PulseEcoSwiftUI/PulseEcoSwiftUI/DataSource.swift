@@ -97,13 +97,11 @@ class DataSource: ObservableObject {
     }
     func getDailyAverageDataForSensor(cityName: String,
                                       measureType: String,
-                                      sensorId: String) -> [Sensor] {
+                                      sensorId: String) {
         self.cancellableSensorsDailyAverageData = NetworkManager()
             .downloadDailyAverageDataForSensor(cityName: cityName, measureType: measureType, sensorId: sensorId)
             .sink(receiveCompletion: { _ in }, receiveValue: { sensors in
-            self.sensorsDailyAverageData = sensors
-        })
-        
-        return sensorsDailyAverageData
+                self.sensorsDailyAverageData = sensors
+            })
     }
 }
