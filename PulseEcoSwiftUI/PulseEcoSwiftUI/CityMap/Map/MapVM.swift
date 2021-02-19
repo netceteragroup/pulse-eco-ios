@@ -29,16 +29,16 @@ class MapVM: ObservableObject {
         self.intialZoomLevel = city.intialZoomLevel
         self.sensors = combine(sensors: sensors, sensorsData: sensorsData, selectedMeasure: measure).map {
             sensor in
-            let coordinates = sensor.sensorModel.position.split(separator: ",")
-            return SensorVM(title: sensor.sensorModel.description,
-                            sensorID: sensor.sensorData.sensorID,
-                            value: sensor.sensorData.value,
+            let coordinates = sensor.position.split(separator: ",")
+            return SensorVM(title: sensor.description,
+                            sensorID: sensor.sensorID,
+                            value: sensor.value,
                             coordinate: CLLocationCoordinate2D(latitude: Double(coordinates[0]) ?? 0, longitude: Double(coordinates[1]) ?? 0),
-                            type: sensor.sensorModel.type,
+                            type: sensor.type,
                             color:  AppColors.colorFrom(string: selectedMeasure.bands.first{ band in
-                                Int(sensor.sensorData.value) ?? 0 >= band.from && Int(sensor.sensorData.value) ?? 0 <= band.to
+                                Int(sensor.value) ?? 0 >= band.from && Int(sensor.value) ?? 0 <= band.to
                                 }?.legendColor ?? "gray"),
-                            stamp: sensor.sensorData.stamp
+                            stamp: sensor.stamp
             )
         }
         self.measure = measure
@@ -46,26 +46,34 @@ class MapVM: ObservableObject {
     
 }
 
-class SensorReadings {
-    var sensorModel: SensorModel
-    var sensorData: Sensor
-    init(sensorModel: SensorModel, sensorData: Sensor) {
-        self.sensorModel = sensorModel
-        self.sensorData = sensorData
-    }
-}
-
-func combine(sensors: [SensorModel], sensorsData: [Sensor], selectedMeasure: String) -> [SensorReadings] {
-
-    let sensorDataIds = sensorsData.filter { sensor in
+func combine(sensors: [SensorModel], sensorsData: [Sensor], selectedMeasure: String) -> [SensorPin] {
+    var commonSensors = [SensorPin]()
+    let selectedMeasureSensors = sensorsData.filter { sensor in
         sensor.type.lowercased() == selectedMeasure.lowercased()
     }
-
-    let commonSensors = sensors.filter { sensor in
-        sensorDataIds.contains{
-        data in
-        data.sensorID == sensor.id
+    
+    let _ = sensors.filter { sensor in
+        selectedMeasureSensors.contains{ selectedMeasureSensor in
+            if (selectedMeasureSensor.sensorID == sensor.sensorID) {
+                commonSensors.append(SensorPin(sensorID: sensor.sensorID,
+                                               stamp: selectedMeasureSensor .stamp,
+                                               type: sensor.type,
+                                               position: sensor.position,
+                                               value: selectedMeasureSensor.value,
+                                               description: sensor.description))
+            }
+            return false
         }
     }
-    return zip(commonSensors, sensorDataIds).map { SensorReadings(sensorModel: $0, sensorData: $1) }
+    return commonSensors
+}
+
+struct SensorPin: Codable, Identifiable {
+    let id = UUID()
+    let sensorID: String
+    let stamp: String
+    let type: String
+    let position: String
+    let value: String
+    let description: String
 }
