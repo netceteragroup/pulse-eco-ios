@@ -20,7 +20,7 @@ class DailyAverageViewModel: Identifiable {
     /* constNumber is a value that it is used when the value recieved from the sensor is N/A
        constNumber is set to a very small number so no value can be smaller
        setting constNumber to a very small value is used when setting range color for the value */
-    let constNumber = -1000000000000
+    let invalidSensorValueIndicator = -1000000000000
     var dayOfWeek: String {
         let date = DateFormatter.iso8601Full.date(from: sensor.dayOfWeek) ?? Date()
         let dateString = DateFormatter.getDay.string(from: date)
@@ -35,14 +35,13 @@ class DailyAverageViewModel: Identifiable {
     }
     
     func colorForValue(type: String, value: String, measures: [Measure] ) -> Color {
-        let valueNum = Int(value) ?? constNumber
-        var color: Color = Color(AppColors.gray)
-
+        let valueNumber = Int(value) ?? invalidSensorValueIndicator
+        
         for measure in measures where (measure.id == type) {
-            for band in measure.bands where (valueNum >= band.from && valueNum <= band.to) {
-                color =  Color(AppColors.colorFrom(string: band.markerColor))
+            for band in measure.bands where (valueNumber >= band.from && valueNumber <= band.to) {
+                return Color(AppColors.colorFrom(string: band.markerColor))
            }
         }
-        return color
+        return Color(AppColors.gray)
     }
 }

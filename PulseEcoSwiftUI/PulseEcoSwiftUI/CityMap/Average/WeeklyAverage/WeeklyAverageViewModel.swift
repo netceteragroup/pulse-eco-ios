@@ -25,9 +25,8 @@ class WeeklyAverageViewModel: ObservableObject{
     func transformInfoSensorToViewModel(appVM: AppVM, dataSource: DataSource,
                                         averages: [Sensor]) -> [DailyAverageViewModel] {
         let dailyAverageSensorValues = dailyAverages(averages: averages)
-        let dailyAverageViewModels =  dailyAverageSensorValues.compactMap{
+        return dailyAverageSensorValues.compactMap {
             DailyAverageViewModel(sensor: $0, appVM: appVM, dataSource: dataSource)}
-        return dailyAverageViewModels
     }
     
     func dailyAverages(averages: [Sensor]) -> [DailyInfoSensor] {
