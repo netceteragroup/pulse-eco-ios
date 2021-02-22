@@ -8,9 +8,9 @@
 
 import SwiftUI
 
-struct DailyView: View {
+struct DailyAverageView: View {
     
-    var viewModel: DailyVM 
+    var viewModel: DailyAverageViewModel 
     
     var body: some View {
         VStack{

@@ -8,11 +8,11 @@
 
 import SwiftUI
 
-struct WeeklyView: View {
+struct WeeklyAverageView: View {
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
     
-    var viewModel: WeeklyVM
+    var viewModel: WeeklyAverageViewModel
     var body: some View {
         VStack{
             Text(viewModel.title)
@@ -22,7 +22,7 @@ struct WeeklyView: View {
             HStack{
                 ForEach(viewModel.dailyAverageSensorValues, id: \.id) { sensor in
                     VStack {
-                        DailyView(viewModel: DailyVM(sensor: sensor, appVM: self.appVM, dataSource: self.dataSource))
+                        DailyAverageView(viewModel: DailyAverageViewModel(sensor: sensor, appVM: self.appVM, dataSource: self.dataSource))
                     }
                 }
             }

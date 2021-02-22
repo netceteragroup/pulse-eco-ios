@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-class WeeklyVM: ObservableObject{
+class WeeklyAverageViewModel: ObservableObject{
     
     @EnvironmentObject var dataSource: DataSource
     @EnvironmentObject var appVM: AppVM

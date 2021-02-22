@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-class DailyVM {
+class DailyAverageViewModel {
     
     @EnvironmentObject var dataSource: DataSource
     
