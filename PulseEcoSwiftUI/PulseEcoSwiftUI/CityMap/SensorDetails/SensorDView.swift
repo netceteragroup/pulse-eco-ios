@@ -34,7 +34,9 @@ struct SensorDView: View {
                     )
                 ).frame(width: 350, height: 200 )
                 
-                WeeklyView(viewModel: WeeklyVM(appVM: appVM, dataSource: dataSource, averages: self.viewModel.dailyAverages))
+                WeeklyAverageView(viewModel: WeeklyAverageViewModel(appVM: appVM,
+                                                                    dataSource: dataSource,
+                                                                    averages: self.viewModel.dailyAverages))
                     .padding(.bottom, 20)
                 
                 Text(self.viewModel.disclaimerMessage)

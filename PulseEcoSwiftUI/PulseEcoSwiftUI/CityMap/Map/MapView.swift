@@ -33,12 +33,10 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
             return
         }
         annotationView.showCallout()
-        
         mapViewController.appVM.showSensorDetails = true
         mapViewController.appVM.selectedSensor = annotationView.pin ?? SensorVM()
         mapViewController.appVM.updateMapRegion = false
         mapViewController.appVM.updateMapAnnotations = false
-        
         mapViewController.dataSource.getDailyAverageDataForSensor(cityName: mapViewController.appVM.cityName,
                                                                   measureType: mapViewController.appVM.selectedMeasure,
                                                                   sensorId: mapViewController.appVM.selectedSensor?.sensorID ?? "")
@@ -61,7 +59,6 @@ struct MapView: UIViewRepresentable {
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
     
-   
     func makeCoordinator() -> MapViewCoordinator {
         MapViewCoordinator(self)
     }

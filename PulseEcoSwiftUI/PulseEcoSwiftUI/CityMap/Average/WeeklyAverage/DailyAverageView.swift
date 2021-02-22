@@ -16,8 +16,10 @@ struct DailyAverageView: View {
         VStack{
             Text(viewModel.dayOfWeek)
             Rectangle()
-                .frame(height: 4) .foregroundColor(viewModel.foregroundColor).opacity(0.5)
-            Text(viewModel.value)
+                .frame(height: 4)
+                .foregroundColor(viewModel.foregroundColor)
+                .opacity(0.5)
+            Text(viewModel.sensorValue)
                 .bold()
                 .foregroundColor(viewModel.foregroundColor)
         }
