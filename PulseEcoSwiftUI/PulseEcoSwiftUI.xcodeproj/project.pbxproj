@@ -101,6 +101,7 @@
 		BAE48F2C25C031CC00D0E9A2 /* PartialSheetViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2B25C031CC00D0E9A2 /* PartialSheetViewModifier.swift */; };
 		BAE48F2E25C0326200D0E9A2 /* DragState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2D25C0326200D0E9A2 /* DragState.swift */; };
 		BAE48F3025C0330000D0E9A2 /* View+PartialSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2F25C0330000D0E9A2 /* View+PartialSheetModifier.swift */; };
+		BAC09D8525E5183400F794F9 /* SensorPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC09D8425E5183400F794F9 /* SensorPin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -222,6 +223,7 @@
 		BAE48F2B25C031CC00D0E9A2 /* PartialSheetViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialSheetViewModifier.swift; sourceTree = "<group>"; };
 		BAE48F2D25C0326200D0E9A2 /* DragState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragState.swift; sourceTree = "<group>"; };
 		BAE48F2F25C0330000D0E9A2 /* View+PartialSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+PartialSheetModifier.swift"; sourceTree = "<group>"; };
+		BAC09D8425E5183400F794F9 /* SensorPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorPin.swift; sourceTree = "<group>"; };
 		F5D1BBA3F006FE8F999EF2CF /* Pods-PulseEcoSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PulseEcoSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-PulseEcoSwiftUI/Pods-PulseEcoSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -331,6 +333,7 @@
 				59F5EFDB249CC5A40095FE71 /* SensorVM.swift */,
 				59A35AD52498F6AD00C07786 /* MapView.swift */,
 				59A35AD72498F6E300C07786 /* MapVM.swift */,
+				BAC09D8425E5183400F794F9 /* SensorPin.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -759,6 +762,7 @@
 				59F5EFDC249CC5A40095FE71 /* SensorVM.swift in Sources */,
 				5999C7FE24ADFAC40038EED7 /* SensorTypes.swift in Sources */,
 				59D5951C24B5D1C3004A1823 /* ExpandedVM.swift in Sources */,
+				BAC09D8525E5183400F794F9 /* SensorPin.swift in Sources */,
 				5964349F24B4853300943978 /* NoReadingsVM.swift in Sources */,
 				59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */,
 				59A35AC22498EBB600C07786 /* MainView.swift in Sources */,
