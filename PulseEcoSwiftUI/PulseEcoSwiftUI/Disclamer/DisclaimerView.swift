@@ -19,7 +19,7 @@ struct DisclaimerView: View {
             HStack {
                 Spacer()
                 Button(action: {
-                                self.presentationMode.wrappedValue.dismiss()
+                    self.presentationMode.wrappedValue.dismiss()
                 }) {
                     Image(uiImage: self.viewModel.disclaimerCloseImage)
                         .padding([.top, .trailing], 26.0)

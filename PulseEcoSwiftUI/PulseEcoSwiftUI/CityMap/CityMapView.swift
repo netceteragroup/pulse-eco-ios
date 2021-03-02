@@ -14,19 +14,22 @@ struct CityMapView: View {
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
     @ObservedObject var userSettings: UserSettings
+    @State var collapsedViewSize: CGSize = .zero
+    @State var expandedViewSize: CGSize = .zero
+    @State var offset: CGSize = .zero
+    @State var isExpanded: Bool = true
+    
     var body: some View {
-        ZStack {
+        ZStack (alignment: Alignment.top) {
             MapView(viewModel: MapVM(measure: self.appVM.selectedMeasure,
-                    cityName: self.appVM.cityName,
-                    sensors: self.dataSource.citySensors,
-                    sensorsData: self.dataSource.sensorsData,
-                    measures: self.dataSource.measures,
-                    city: self.dataSource.cities.first{ $0.cityName == self.appVM.cityName} ?? CityModel.defaultCity()))
+                                     cityName: self.appVM.cityName,
+                                     sensors: self.dataSource.citySensors,
+                                     sensorsData: self.dataSource.sensorsData,
+                                     measures: self.dataSource.measures,
+                                     city: self.dataSource.cities.first{ $0.cityName == self.appVM.cityName} ?? CityModel.defaultCity()))
                 .edgesIgnoringSafeArea(.all)
-                .overlay(
-                    BottomShadow()
-            )
-               // .overlay(self.viewModel.backgroundColor)
+                .overlay(BottomShadow())
+                // .overlay(self.viewModel.backgroundColor)
                 .animation(.default)
             VStack(alignment: .trailing) {
                 Spacer()
@@ -48,14 +51,53 @@ struct CityMapView: View {
             }
             AverageView(viewModel: AverageVM(measure: self.appVM.selectedMeasure, cityName: self.appVM.cityName, measuresList: self.dataSource.measures, cityValues: self.dataSource.cityOverall))
             if self.appVM.showSensorDetails {
-//                SensorDetailsView()
-//                    .edgesIgnoringSafeArea(.bottom)
-                SDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
+                
+                //                SensorDetailsView()
+                //                    .edgesIgnoringSafeArea(.bottom)
+                
+                SlideOverCard {
+                        VStack {
+                            CollapsedView(viewModel:
+                                SensorDetailsVM(sensor: self.appVM.selectedSensor ?? SensorVM(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure)
+                                )
+                            ).padding(.top, 10)
+                            if self.appVM.isExpanded {
+                                
+                                ExpandedView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
+                                Spacer()
+                                
+                            }
+                        }
+                 
+                    
+                    
+                }.frame(height: .leastNonzeroMagnitude)
+                
+                //                            SenDetView(viewModel:  ExpandedVM(sensorData24h: self.dataSource.sensorsData24h
+                //                        ))
+                
+                //                    VStack {
+                //                        CollapsedView(viewModel:
+                //                            SensorDetailsVM(sensor: self.appVM.selectedSensor ?? SensorVM(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure)
+                //                            )
+                //                        ).padding(.top, 5)
+                //                        if self.appVM.isExpanded {
+                //
+                //                            ExpandedView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
+                //                            Spacer()
+                //
+                //                        }
+                //                    }                    }
+                //                    .frame(height: 10)
+                //                    .offset(y: self.appVM.isExpanded ?  100 : 10)
+                //
+                //
+                
             }
+            
+            
             if self.appVM.citySelectorClicked {
-                FavouriteCitiesView(viewModel: FavouriteCitiesVM(selectedMeasure: self.appVM.selectedMeasure, favouriteCities: self.userSettings.favouriteCities, cityValues: self.userSettings.cityValues, measureList: self.dataSource.measures), userSettings: self.userSettings).overlay(
-                        BottomShadow()
-                )
+                FavouriteCitiesView(viewModel: FavouriteCitiesVM(selectedMeasure: self.appVM.selectedMeasure, favouriteCities: self.userSettings.favouriteCities, cityValues: self.userSettings.cityValues, measureList: self.dataSource.measures), userSettings: self.userSettings).overlay(BottomShadow())
             }
         }.sheet(isPresented: self.$appVM.showSheet) {
             if self.appVM.activeSheet == .disclaimerView {
