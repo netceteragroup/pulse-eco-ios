@@ -30,7 +30,8 @@ struct SensorModel: Codable  {
 
 
 // MARK: - Welcome
-struct Sensor: Codable {
+struct Sensor: Codable, Identifiable {
+    let id = UUID()
     let sensorID: String
     let stamp: String
     let type: String

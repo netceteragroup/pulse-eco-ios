@@ -9,30 +9,34 @@
 import SwiftUI
 
 struct CityMapView: View {
+    
     @Environment(\.managedObjectContext) var moc
     @ObservedObject var viewModel: CityMapVM
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
-    @ObservedObject var userSettings: UserSettings
+    @ObservedObject var userSettings: UserSettings    
     var body: some View {
+        
         ZStack {
+            
             MapView(viewModel: MapVM(measure: self.appVM.selectedMeasure,
-                    cityName: self.appVM.cityName,
-                    sensors: self.dataSource.citySensors,
-                    sensorsData: self.dataSource.sensorsData,
-                    measures: self.dataSource.measures,
-                    city: self.dataSource.cities.first{ $0.cityName == self.appVM.cityName} ?? CityModel.defaultCity()))
+                                     cityName: self.appVM.cityName,
+                                     sensors: self.dataSource.citySensors,
+                                     sensorsData: self.dataSource.sensorsData,
+                                     measures: self.dataSource.measures,
+                                     city: self.dataSource.cities.first{ $0.cityName == self.appVM.cityName} ?? CityModel.defaultCity()))
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
                     BottomShadow()
             )
-               // .overlay(self.viewModel.backgroundColor)
+                //.overlay(self.viewModel.backgroundColor)
                 .animation(.default)
+ 
             VStack(alignment: .trailing) {
                 Spacer()
                 HStack {
                     Spacer()
-                    RoundedRectangle(cornerRadius: 5, style: .continuous)
+                    RoundedRectangle(cornerRadius: 5.0, style: .continuous)
                         .fill(self.viewModel.disclaimerIconColor)
                         .frame(width: self.viewModel.disclaimerIconSize.width, height: self.viewModel.disclaimerIconSize.height)
                         .overlay(Text(self.viewModel.disclaimerIconText)
@@ -44,20 +48,23 @@ struct CityMapView: View {
                             self.appVM.activeSheet = .disclaimerView
                     }
                     
-                }.padding(.trailing, 15)
+                }.padding(.trailing, 15.0)
             }
             AverageView(viewModel: AverageVM(measure: self.appVM.selectedMeasure, cityName: self.appVM.cityName, measuresList: self.dataSource.measures, cityValues: self.dataSource.cityOverall))
+            
             if self.appVM.showSensorDetails {
-//                SensorDetailsView()
-//                    .edgesIgnoringSafeArea(.bottom)
-                SDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
+                //SensorDetailsView().edgesIgnoringSafeArea(.bottom)
+                SenDetView().edgesIgnoringSafeArea(.bottom)
+                //SDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
+                //SensorDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
             }
             if self.appVM.citySelectorClicked {
-                FavouriteCitiesView(viewModel: FavouriteCitiesVM(selectedMeasure: self.appVM.selectedMeasure, favouriteCities: self.userSettings.favouriteCities, cityValues: self.userSettings.cityValues, measureList: self.dataSource.measures), userSettings: self.userSettings).overlay(
-                        BottomShadow()
-                )
+                FavouriteCitiesView(viewModel: FavouriteCitiesVM(selectedMeasure: self.appVM.selectedMeasure, favouriteCities: self.userSettings.favouriteCities, cityValues: self.userSettings.cityValues, measureList: self.dataSource.measures), userSettings: self.userSettings)
+                    .overlay(BottomShadow())
+                    
             }
-        }.sheet(isPresented: self.$appVM.showSheet) {
+        }.addPartialSheet()
+        .sheet(isPresented: self.$appVM.showSheet) {
             if self.appVM.activeSheet == .disclaimerView {
                 DisclaimerView()
                     .environment(\.managedObjectContext, self.moc)
@@ -65,6 +72,7 @@ struct CityMapView: View {
                 CityListView(viewModel: CityListVM(cities: self.dataSource.cities), userSettings: self.userSettings).environment(\.managedObjectContext, self.moc)
             }
         }
+        
     }
 }
 

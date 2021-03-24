@@ -19,53 +19,58 @@ class MapVM: ObservableObject {
     var sensors = [SensorVM]()
     var measure: String
     
-    init(measure: String, cityName: String, sensors: [SensorModel], sensorsData: [Sensor], measures: [Measure], city: CityModel) {
-        let selectedMeasure = measures.filter{ $0.id.lowercased() == measure.lowercased()}.first ?? Measure.empty()
+    init(measure: String, cityName: String, sensors: [SensorModel], sensorsData: [Sensor],
+         measures: [Measure], city: CityModel) {
+        let selectedMeasure = measures.filter{ $0.id.lowercased() == measure.lowercased()}
+            .first ?? Measure.empty()
         self.cityName = cityName
-        self.coordinates = CLLocationCoordinate2D(latitude: Double(city.cityLocation.latitude) ?? 0.0, longitude: Double(city.cityLocation.longitute) ?? 0.0)
+        self.coordinates = CLLocationCoordinate2D(latitude: Double(city.cityLocation.latitude) ?? 0.0,
+                                                  longitude: Double(city.cityLocation.longitute) ?? 0.0)
         for border in city.cityBorderPoints {
-            self.cityBorderPoints.append(CLLocationCoordinate2D(latitude: Double(border.latitude) ?? 0.0, longitude:  Double(border.longitute) ?? 0.0))
+            self.cityBorderPoints.append(CLLocationCoordinate2D(latitude: Double(border.latitude) ?? 0.0,
+                                                                longitude:  Double(border.longitute) ?? 0.0))
         }
         self.intialZoomLevel = city.intialZoomLevel
         self.sensors = combine(sensors: sensors, sensorsData: sensorsData, selectedMeasure: measure).map {
             sensor in
-            let coordinates = sensor.sensorModel.position.split(separator: ",")
-            return SensorVM(title: sensor.sensorModel.description,
-                            sensorID: sensor.sensorData.sensorID,
-                            value: sensor.sensorData.value,
-                            coordinate: CLLocationCoordinate2D(latitude: Double(coordinates[0]) ?? 0, longitude: Double(coordinates[1]) ?? 0),
-                            type: sensor.sensorModel.type,
-                            color:  AppColors.colorFrom(string: selectedMeasure.bands.first{ band in
-                                Int(sensor.sensorData.value) ?? 0 >= band.from && Int(sensor.sensorData.value) ?? 0 <= band.to
-                                }?.legendColor ?? "gray"),
-                            stamp: sensor.sensorData.stamp
+            let coordinates = sensor.position.split(separator: ",")
+            return SensorVM(title: sensor.description,
+                            sensorID: sensor.sensorID,
+                            value: sensor.value,
+                            coordinate: CLLocationCoordinate2D(latitude: Double(coordinates[0]) ?? 0,
+                                                               longitude: Double(coordinates[1]) ?? 0),
+                            type: sensor.type,
+                            color: pinColorForSensorValue(selectedMeasure: selectedMeasure,
+                                                          sensorValue: sensor.value),
+                            stamp: sensor.stamp
             )
         }
         self.measure = measure
     }
-    
 }
 
-class SensorReadings {
-    var sensorModel: SensorModel
-    var sensorData: Sensor
-    init(sensorModel: SensorModel, sensorData: Sensor) {
-        self.sensorModel = sensorModel
-        self.sensorData = sensorData
-    }
+func pinColorForSensorValue(selectedMeasure: Measure, sensorValue: String) -> UIColor {
+    return AppColors.colorFrom(string: selectedMeasure.bands.first{ band in
+        Int(sensorValue) ?? 0 >= band.from && Int(sensorValue) ?? 0 <= band.to
+        }?.legendColor ?? "gray")
 }
 
-func combine(sensors: [SensorModel], sensorsData: [Sensor], selectedMeasure: String) -> [SensorReadings] {
-
-    let sensorDataIds = sensorsData.filter { sensor in
+func combine(sensors: [SensorModel], sensorsData: [Sensor], selectedMeasure: String) -> [SensorPin] {
+    var commonSensors = [SensorPin]()
+    let selectedMeasureSensors = sensorsData.filter { sensor in
         sensor.type.lowercased() == selectedMeasure.lowercased()
     }
-
-    let commonSensors = sensors.filter { sensor in
-        sensorDataIds.contains{
-        data in
-        data.sensorID == sensor.id
+    let _ = sensors.compactMap{ sensor in
+        selectedMeasureSensors.compactMap{ selectedMeasureSensor in
+            if selectedMeasureSensor.sensorID == sensor.sensorID {
+                commonSensors.append(SensorPin(sensorID: sensor.sensorID,
+                                               stamp: selectedMeasureSensor.stamp,
+                                               type: sensor.type,
+                                               position: sensor.position,
+                                               value: selectedMeasureSensor.value,
+                                               description: sensor.description))
+            }
         }
     }
-    return zip(commonSensors, sensorDataIds).map { SensorReadings(sensorModel: $0, sensorData: $1) }
+    return commonSensors
 }

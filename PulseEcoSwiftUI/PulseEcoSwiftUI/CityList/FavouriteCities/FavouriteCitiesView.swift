@@ -10,6 +10,8 @@ import SwiftUI
 import MapKit
 
 struct FavouriteCitiesView: View {
+    
+    //@State private var faveCities: [CityModel]
     @ObservedObject var viewModel: FavouriteCitiesVM
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
@@ -36,6 +38,7 @@ struct FavouriteCitiesView: View {
                                 self.appVM.updateMapAnnotations = true
                             }
                         }.onDelete(perform: self.delete)
+                            //.onMove(perform: self.move)
                     }
                     HStack {
                         Spacer()

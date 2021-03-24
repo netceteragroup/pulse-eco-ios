@@ -87,6 +87,21 @@
 		59FAD1D62490D76200AC36A5 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* Sensor.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
 		B273DFB12A0BE2703C2F38D3 /* libPods-PulseEcoSwiftUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */; };
+		BA00D30F25D2B59600FA2C26 /* WeeklyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */; };
+		BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */; };
+		BA1A88EE25C2B99400AA8B3F /* SenDetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A88ED25C2B99400AA8B3F /* SenDetView.swift */; };
+		BA483A2425B06E3400D4E178 /* lightMap.json in Resources */ = {isa = PBXBuildFile; fileRef = BA483A2325B06E3400D4E178 /* lightMap.json */; };
+		BA5C405025D3D1E80010291F /* DailyAverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5C404F25D3D1E80010291F /* DailyAverageView.swift */; };
+		BA5C405225D3D25D0010291F /* WeeklyAverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5C405125D3D25D0010291F /* WeeklyAverageView.swift */; };
+		BA718F0D25BED6B100EC87E0 /* SensorDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA718F0C25BED6B100EC87E0 /* SensorDView.swift */; };
+		BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA692F525E3E7C6002E0B2F /* DailyInfoSensor.swift */; };
+		BAE48F2625C0308900D0E9A2 /* PartialSheetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2525C0308900D0E9A2 /* PartialSheetManager.swift */; };
+		BAE48F2825C0314C00D0E9A2 /* BlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2725C0314C00D0E9A2 /* BlurEffectView.swift */; };
+		BAE48F2A25C0318500D0E9A2 /* PartialSheetStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2925C0318500D0E9A2 /* PartialSheetStyle.swift */; };
+		BAE48F2C25C031CC00D0E9A2 /* PartialSheetViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2B25C031CC00D0E9A2 /* PartialSheetViewModifier.swift */; };
+		BAE48F2E25C0326200D0E9A2 /* DragState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2D25C0326200D0E9A2 /* DragState.swift */; };
+		BAE48F3025C0330000D0E9A2 /* View+PartialSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2F25C0330000D0E9A2 /* View+PartialSheetModifier.swift */; };
+		BAC09D8525E5183400F794F9 /* SensorPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC09D8425E5183400F794F9 /* SensorPin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +209,21 @@
 		59FAD1D52490D76200AC36A5 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
 		9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PulseEcoSwiftUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageViewModel.swift; sourceTree = "<group>"; };
+		BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageViewModel.swift; sourceTree = "<group>"; };
+		BA1A88ED25C2B99400AA8B3F /* SenDetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenDetView.swift; sourceTree = "<group>"; };
+		BA483A2325B06E3400D4E178 /* lightMap.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = lightMap.json; path = ../../../pulse.eco/Assets/lightMap.json; sourceTree = "<group>"; };
+		BA5C404F25D3D1E80010291F /* DailyAverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageView.swift; sourceTree = "<group>"; };
+		BA5C405125D3D25D0010291F /* WeeklyAverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageView.swift; sourceTree = "<group>"; };
+		BA718F0C25BED6B100EC87E0 /* SensorDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDView.swift; sourceTree = "<group>"; };
+		BAA692F525E3E7C6002E0B2F /* DailyInfoSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyInfoSensor.swift; sourceTree = "<group>"; };
+		BAE48F2525C0308900D0E9A2 /* PartialSheetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialSheetManager.swift; sourceTree = "<group>"; };
+		BAE48F2725C0314C00D0E9A2 /* BlurEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurEffectView.swift; sourceTree = "<group>"; };
+		BAE48F2925C0318500D0E9A2 /* PartialSheetStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialSheetStyle.swift; sourceTree = "<group>"; };
+		BAE48F2B25C031CC00D0E9A2 /* PartialSheetViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialSheetViewModifier.swift; sourceTree = "<group>"; };
+		BAE48F2D25C0326200D0E9A2 /* DragState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragState.swift; sourceTree = "<group>"; };
+		BAE48F2F25C0330000D0E9A2 /* View+PartialSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+PartialSheetModifier.swift"; sourceTree = "<group>"; };
+		BAC09D8425E5183400F794F9 /* SensorPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorPin.swift; sourceTree = "<group>"; };
 		F5D1BBA3F006FE8F999EF2CF /* Pods-PulseEcoSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PulseEcoSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-PulseEcoSwiftUI/Pods-PulseEcoSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -303,6 +333,7 @@
 				59F5EFDB249CC5A40095FE71 /* SensorVM.swift */,
 				59A35AD52498F6AD00C07786 /* MapView.swift */,
 				59A35AD72498F6E300C07786 /* MapVM.swift */,
+				BAC09D8425E5183400F794F9 /* SensorPin.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -323,6 +354,7 @@
 		5997F73724A36F8F0035BEEB /* Average */ = {
 			isa = PBXGroup;
 			children = (
+				BAA04E2525C8156700B503A1 /* WeeklyAverage */,
 				591642A82499FE9F000A4F7C /* AverageVM.swift */,
 				591642A62499FE4C000A4F7C /* AverageView.swift */,
 				592201AA24AA55D900025F1F /* ExpandableView.swift */,
@@ -342,6 +374,8 @@
 				59D5951B24B5D1C3004A1823 /* ExpandedVM.swift */,
 				59E4992524C5C15C00E89746 /* SDView.swift */,
 				59B0018D24C9BC6A006EA796 /* ChartVM.swift */,
+				BA718F0C25BED6B100EC87E0 /* SensorDView.swift */,
+				BA1A88ED25C2B99400AA8B3F /* SenDetView.swift */,
 			);
 			path = SensorDetails;
 			sourceTree = "<group>";
@@ -404,6 +438,7 @@
 		59A4F68D247FD2150089D523 /* PulseEcoSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				BAE48F2425C014E300D0E9A2 /* PartialViews */,
 				59504C0D24B46B7600EA4AFF /* CustomViews */,
 				59103A9E24A4B62F00ED9617 /* Disclamer */,
 				5997F73A24A370EF0035BEEB /* TypeSelector */,
@@ -411,11 +446,10 @@
 				5997F73624A36F780035BEEB /* CityMap */,
 				59FAD1D02490BDBF00AC36A5 /* Models */,
 				59A35AD12498F1C800C07786 /* AppColors.swift */,
-				59E4990A24C5A2E000E89746 /* Titillium_Web */,
 				59A35ACC2498EDFC00C07786 /* AppRoot */,
 				59A4F68E247FD2150089D523 /* AppDelegate.swift */,
 				59A4F690247FD2150089D523 /* SceneDelegate.swift */,
-				59A4F694247FD2160089D523 /* Assets.xcassets */,
+				BA483A2225B06E1300D4E178 /* Assets */,
 				59A4F699247FD2160089D523 /* LaunchScreen.storyboard */,
 				59A4F69C247FD2160089D523 /* Info.plist */,
 				59A4F696247FD2160089D523 /* Preview Content */,
@@ -483,6 +517,41 @@
 				5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		BA483A2225B06E1300D4E178 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				59E4990A24C5A2E000E89746 /* Titillium_Web */,
+				59A4F694247FD2160089D523 /* Assets.xcassets */,
+				BA483A2325B06E3400D4E178 /* lightMap.json */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		BAA04E2525C8156700B503A1 /* WeeklyAverage */ = {
+			isa = PBXGroup;
+			children = (
+				BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */,
+				BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */,
+				BA5C404F25D3D1E80010291F /* DailyAverageView.swift */,
+				BA5C405125D3D25D0010291F /* WeeklyAverageView.swift */,
+				BAA692F525E3E7C6002E0B2F /* DailyInfoSensor.swift */,
+			);
+			path = WeeklyAverage;
+			sourceTree = "<group>";
+		};
+		BAE48F2425C014E300D0E9A2 /* PartialViews */ = {
+			isa = PBXGroup;
+			children = (
+				BAE48F2525C0308900D0E9A2 /* PartialSheetManager.swift */,
+				BAE48F2725C0314C00D0E9A2 /* BlurEffectView.swift */,
+				BAE48F2925C0318500D0E9A2 /* PartialSheetStyle.swift */,
+				BAE48F2B25C031CC00D0E9A2 /* PartialSheetViewModifier.swift */,
+				BAE48F2D25C0326200D0E9A2 /* DragState.swift */,
+				BAE48F2F25C0330000D0E9A2 /* View+PartialSheetModifier.swift */,
+			);
+			path = PartialViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -593,6 +662,7 @@
 				59E4991F24C5A2E000E89746 /* TitilliumWeb-SemiBoldItalic.ttf in Resources */,
 				59E4992124C5A2E000E89746 /* TitilliumWeb-Italic.ttf in Resources */,
 				59A4F69B247FD2160089D523 /* LaunchScreen.storyboard in Resources */,
+				BA483A2425B06E3400D4E178 /* lightMap.json in Resources */,
 				59E4991D24C5A2E000E89746 /* TitilliumWeb-ExtraLightItalic.ttf in Resources */,
 				59E4991B24C5A2E000E89746 /* TitilliumWeb-ExtraLight.ttf in Resources */,
 				59E4992024C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf in Resources */,
@@ -657,18 +727,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				593D8C9C249A171E006B88AC /* FavouriteCityRowView.swift in Sources */,
+				BAE48F2C25C031CC00D0E9A2 /* PartialSheetViewModifier.swift in Sources */,
 				3288687524B51F5E009CC56D /* SelectedSensorView.swift in Sources */,
 				596434A124B49AF400943978 /* SensorDetailsView.swift in Sources */,
 				592201AD24AA656A00025F1F /* NoReadingsView.swift in Sources */,
+				BA1A88EE25C2B99400AA8B3F /* SenDetView.swift in Sources */,
 				59A35AD82498F6E300C07786 /* MapVM.swift in Sources */,
 				59FAD1D62490D76200AC36A5 /* Sensor.swift in Sources */,
 				59A4F68F247FD2150089D523 /* AppDelegate.swift in Sources */,
 				59504C1B24B46CE500EA4AFF /* SizePreferenceKey.swift in Sources */,
 				59504C1524B46C7A00EA4AFF /* SliderCircle.swift in Sources */,
+				BAE48F2A25C0318500D0E9A2 /* PartialSheetStyle.swift in Sources */,
 				59504C0A24B45ECF00EA4AFF /* MeasureButtonVM.swift in Sources */,
+				BA00D30F25D2B59600FA2C26 /* WeeklyAverageViewModel.swift in Sources */,
 				59A35AC72498ECFF00C07786 /* MeasureListView.swift in Sources */,
 				59504C1124B46BF100EA4AFF /* NavigationBarModifier.swift in Sources */,
+				BAE48F3025C0330000D0E9A2 /* View+PartialSheetModifier.swift in Sources */,
 				593C263624BC8969005152BE /* CityRowView.swift in Sources */,
+				BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */,
 				59A35ADA2499057C00C07786 /* Constants.swift in Sources */,
 				5924C5DA249A4792007E0D78 /* MeasureListVM.swift in Sources */,
 				59F01AD724AC7B1300AD2802 /* DataSource.swift in Sources */,
@@ -686,12 +762,14 @@
 				59F5EFDC249CC5A40095FE71 /* SensorVM.swift in Sources */,
 				5999C7FE24ADFAC40038EED7 /* SensorTypes.swift in Sources */,
 				59D5951C24B5D1C3004A1823 /* ExpandedVM.swift in Sources */,
+				BAC09D8525E5183400F794F9 /* SensorPin.swift in Sources */,
 				5964349F24B4853300943978 /* NoReadingsVM.swift in Sources */,
 				59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */,
 				59A35AC22498EBB600C07786 /* MainView.swift in Sources */,
 				591642A92499FE9F000A4F7C /* AverageVM.swift in Sources */,
 				593C263A24BC8B59005152BE /* CityListVM.swift in Sources */,
 				3288687724B51F5E009CC56D /* MarkerView.swift in Sources */,
+				BA718F0D25BED6B100EC87E0 /* SensorDView.swift in Sources */,
 				593D8C9E249A17C1006B88AC /* FavouriteCitiesVM.swift in Sources */,
 				59E4992624C5C15C00E89746 /* SDView.swift in Sources */,
 				591642A72499FE4C000A4F7C /* AverageView.swift in Sources */,
@@ -702,7 +780,10 @@
 				59504C0F24B46B9F00EA4AFF /* RoundedCorners.swift in Sources */,
 				591EA1D224C99D5500CA61AE /* BottomShadow.swift in Sources */,
 				59A3954E24A206F400D39D64 /* AppVM.swift in Sources */,
+				BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */,
+				BAE48F2625C0308900D0E9A2 /* PartialSheetManager.swift in Sources */,
 				59A4F691247FD2150089D523 /* SceneDelegate.swift in Sources */,
+				BA5C405025D3D1E80010291F /* DailyAverageView.swift in Sources */,
 				592201AB24AA55D900025F1F /* ExpandableView.swift in Sources */,
 				59FAD1D22490C27200AC36A5 /* NetworkManager.swift in Sources */,
 				592201A924AA3F7600025F1F /* ExpandedView.swift in Sources */,
@@ -713,9 +794,12 @@
 				59FAD1D42490C82600AC36A5 /* CityModel.swift in Sources */,
 				59A35AD22498F1C800C07786 /* AppColors.swift in Sources */,
 				593C264524BCAD19005152BE /* SearchBar.swift in Sources */,
+				BAE48F2E25C0326200D0E9A2 /* DragState.swift in Sources */,
+				BAE48F2825C0314C00D0E9A2 /* BlurEffectView.swift in Sources */,
 				593C264324BC9E01005152BE /* UserSettings.swift in Sources */,
 				596619372492703800DACF67 /* Measure.swift in Sources */,
 				593D8C9A249A170F006B88AC /* FavouriteCitiesView.swift in Sources */,
+				BA5C405225D3D25D0010291F /* WeeklyAverageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

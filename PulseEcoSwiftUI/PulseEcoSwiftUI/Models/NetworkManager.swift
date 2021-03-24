@@ -62,5 +62,19 @@ class NetworkManager: ObservableObject {
                    .receive(on: RunLoop.main)
                    .eraseToAnyPublisher()
     }
+    func downloadDailyAverageDataForSensor(cityName: String,
+                                           measureType: String,
+                                           sensorId: String) -> AnyPublisher<[Sensor], Error> {
+        
+        let from = DateFormatter.iso8601Full.string(from: Calendar.current.date(byAdding: .day, value: -7, to: Date())!)
+        let to = DateFormatter.iso8601Full.string(from: Date())
+        let requestString = "https://\(cityName).pulse.eco/rest/avgData/day?sensorId=\(sensorId)&type=\(measureType)&from=\(from)&to=\(to)"
+        let formattedRequest = requestString.replacingOccurrences(of: "+", with: "%2b")
+        let url = URL(string: formattedRequest)!
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .map(\.data)
+            .decode(type: [Sensor].self, decoder: JSONDecoder())
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
 }
-

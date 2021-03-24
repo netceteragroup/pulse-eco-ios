@@ -5,9 +5,9 @@ struct CollapsedView: View {
     var viewModel: SensorDetailsVM
     var body: some View {
         VStack {
-            Rectangle()
-                .frame(width: 50, height: 3.0, alignment: .bottom)
-                .foregroundColor(Color.gray).padding(.top, 10)
+            //Rectangle()
+                //.frame(width: 50, height: 3.0, alignment: .bottom)
+                //.foregroundColor(Color.gray).padding(.top, 10)
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 1) {
                     HStack {
@@ -19,13 +19,13 @@ struct CollapsedView: View {
                         Text(self.viewModel.value).font(.system(size: 40))
                         Text(self.viewModel.unit).padding(.top, 10)
                         Spacer()
-                        VStack (alignment: .leading) {
+                        VStack (alignment: .trailing) {
                             Text("\(self.viewModel.time)")
                             Text("\(self.viewModel.date)").foregroundColor(Color.gray)
                         }
-                        Image(uiImage: UIImage(named: "unselectedFavorites") ?? UIImage())
+                        // Image(uiImage: UIImage(named: "unselectedFavorites") ?? UIImage())
                     }
-                   // Spacer().frame(height: 10)
+                   //Spacer().frame(height: 10)
                 }
             }.padding([.horizontal], 20)
         }
