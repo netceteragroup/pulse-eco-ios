@@ -89,19 +89,24 @@
 		B273DFB12A0BE2703C2F38D3 /* libPods-PulseEcoSwiftUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */; };
 		BA00D30F25D2B59600FA2C26 /* WeeklyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */; };
 		BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */; };
+		BA12EB0E2611E3FE005BC654 /* Trema.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB0D2611E3FE005BC654 /* Trema.swift */; };
+		BA12EB102611E503005BC654 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB0F2611E503005BC654 /* Country.swift */; };
+		BA12EB122611E520005BC654 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB112611E520005BC654 /* Countries.swift */; };
+		BA12EB142611E5BA005BC654 /* LanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB132611E5BA005BC654 /* LanguageView.swift */; };
+		BA12EB162611E7BC005BC654 /* translations.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA12EB152611E7BC005BC654 /* translations.plist */; };
 		BA1A88EE25C2B99400AA8B3F /* SenDetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A88ED25C2B99400AA8B3F /* SenDetView.swift */; };
 		BA483A2425B06E3400D4E178 /* lightMap.json in Resources */ = {isa = PBXBuildFile; fileRef = BA483A2325B06E3400D4E178 /* lightMap.json */; };
 		BA5C405025D3D1E80010291F /* DailyAverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5C404F25D3D1E80010291F /* DailyAverageView.swift */; };
 		BA5C405225D3D25D0010291F /* WeeklyAverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5C405125D3D25D0010291F /* WeeklyAverageView.swift */; };
 		BA718F0D25BED6B100EC87E0 /* SensorDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA718F0C25BED6B100EC87E0 /* SensorDView.swift */; };
 		BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA692F525E3E7C6002E0B2F /* DailyInfoSensor.swift */; };
+		BAC09D8525E5183400F794F9 /* SensorPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC09D8425E5183400F794F9 /* SensorPin.swift */; };
 		BAE48F2625C0308900D0E9A2 /* PartialSheetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2525C0308900D0E9A2 /* PartialSheetManager.swift */; };
 		BAE48F2825C0314C00D0E9A2 /* BlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2725C0314C00D0E9A2 /* BlurEffectView.swift */; };
 		BAE48F2A25C0318500D0E9A2 /* PartialSheetStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2925C0318500D0E9A2 /* PartialSheetStyle.swift */; };
 		BAE48F2C25C031CC00D0E9A2 /* PartialSheetViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2B25C031CC00D0E9A2 /* PartialSheetViewModifier.swift */; };
 		BAE48F2E25C0326200D0E9A2 /* DragState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2D25C0326200D0E9A2 /* DragState.swift */; };
 		BAE48F3025C0330000D0E9A2 /* View+PartialSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE48F2F25C0330000D0E9A2 /* View+PartialSheetModifier.swift */; };
-		BAC09D8525E5183400F794F9 /* SensorPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC09D8425E5183400F794F9 /* SensorPin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,19 +216,24 @@
 		9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PulseEcoSwiftUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageViewModel.swift; sourceTree = "<group>"; };
 		BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageViewModel.swift; sourceTree = "<group>"; };
+		BA12EB0D2611E3FE005BC654 /* Trema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trema.swift; sourceTree = "<group>"; };
+		BA12EB0F2611E503005BC654 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		BA12EB112611E520005BC654 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
+		BA12EB132611E5BA005BC654 /* LanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageView.swift; sourceTree = "<group>"; };
+		BA12EB152611E7BC005BC654 /* translations.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = translations.plist; sourceTree = "<group>"; };
 		BA1A88ED25C2B99400AA8B3F /* SenDetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenDetView.swift; sourceTree = "<group>"; };
 		BA483A2325B06E3400D4E178 /* lightMap.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = lightMap.json; path = ../../../pulse.eco/Assets/lightMap.json; sourceTree = "<group>"; };
 		BA5C404F25D3D1E80010291F /* DailyAverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageView.swift; sourceTree = "<group>"; };
 		BA5C405125D3D25D0010291F /* WeeklyAverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageView.swift; sourceTree = "<group>"; };
 		BA718F0C25BED6B100EC87E0 /* SensorDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDView.swift; sourceTree = "<group>"; };
 		BAA692F525E3E7C6002E0B2F /* DailyInfoSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyInfoSensor.swift; sourceTree = "<group>"; };
+		BAC09D8425E5183400F794F9 /* SensorPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorPin.swift; sourceTree = "<group>"; };
 		BAE48F2525C0308900D0E9A2 /* PartialSheetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialSheetManager.swift; sourceTree = "<group>"; };
 		BAE48F2725C0314C00D0E9A2 /* BlurEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurEffectView.swift; sourceTree = "<group>"; };
 		BAE48F2925C0318500D0E9A2 /* PartialSheetStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialSheetStyle.swift; sourceTree = "<group>"; };
 		BAE48F2B25C031CC00D0E9A2 /* PartialSheetViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialSheetViewModifier.swift; sourceTree = "<group>"; };
 		BAE48F2D25C0326200D0E9A2 /* DragState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragState.swift; sourceTree = "<group>"; };
 		BAE48F2F25C0330000D0E9A2 /* View+PartialSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+PartialSheetModifier.swift"; sourceTree = "<group>"; };
-		BAC09D8425E5183400F794F9 /* SensorPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorPin.swift; sourceTree = "<group>"; };
 		F5D1BBA3F006FE8F999EF2CF /* Pods-PulseEcoSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PulseEcoSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-PulseEcoSwiftUI/Pods-PulseEcoSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -449,6 +459,7 @@
 				59A35ACC2498EDFC00C07786 /* AppRoot */,
 				59A4F68E247FD2150089D523 /* AppDelegate.swift */,
 				59A4F690247FD2150089D523 /* SceneDelegate.swift */,
+				BA12EB0C2611E198005BC654 /* LanguageChange */,
 				BA483A2225B06E1300D4E178 /* Assets */,
 				59A4F699247FD2160089D523 /* LaunchScreen.storyboard */,
 				59A4F69C247FD2160089D523 /* Info.plist */,
@@ -456,6 +467,7 @@
 				59A35AD92499057C00C07786 /* Constants.swift */,
 				59F01AD624AC7B1300AD2802 /* DataSource.swift */,
 				593C264224BC9E01005152BE /* UserSettings.swift */,
+				BA12EB152611E7BC005BC654 /* translations.plist */,
 			);
 			path = PulseEcoSwiftUI;
 			sourceTree = "<group>";
@@ -517,6 +529,17 @@
 				5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		BA12EB0C2611E198005BC654 /* LanguageChange */ = {
+			isa = PBXGroup;
+			children = (
+				BA12EB0D2611E3FE005BC654 /* Trema.swift */,
+				BA12EB0F2611E503005BC654 /* Country.swift */,
+				BA12EB112611E520005BC654 /* Countries.swift */,
+				BA12EB132611E5BA005BC654 /* LanguageView.swift */,
+			);
+			path = LanguageChange;
 			sourceTree = "<group>";
 		};
 		BA483A2225B06E1300D4E178 /* Assets */ = {
@@ -664,6 +687,7 @@
 				59A4F69B247FD2160089D523 /* LaunchScreen.storyboard in Resources */,
 				BA483A2425B06E3400D4E178 /* lightMap.json in Resources */,
 				59E4991D24C5A2E000E89746 /* TitilliumWeb-ExtraLightItalic.ttf in Resources */,
+				BA12EB162611E7BC005BC654 /* translations.plist in Resources */,
 				59E4991B24C5A2E000E89746 /* TitilliumWeb-ExtraLight.ttf in Resources */,
 				59E4992024C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf in Resources */,
 				59E4991C24C5A2E000E89746 /* TitilliumWeb-BoldItalic.ttf in Resources */,
@@ -754,11 +778,13 @@
 				593C263824BC89BE005152BE /* CityRowVM.swift in Sources */,
 				59504C0C24B4625400EA4AFF /* FavouriteCityRowVM.swift in Sources */,
 				59A35AD62498F6AD00C07786 /* MapView.swift in Sources */,
+				BA12EB142611E5BA005BC654 /* LanguageView.swift in Sources */,
 				3288687924B5C053009CC56D /* UIViewExtension.swift in Sources */,
 				593C263024BC75BF005152BE /* CityListView.swift in Sources */,
 				59504C0624B45B8900EA4AFF /* DisclaimerVM.swift in Sources */,
 				591642A52499FD70000A4F7C /* CityMapView.swift in Sources */,
 				59504C1324B46C2D00EA4AFF /* LoadingView.swift in Sources */,
+				BA12EB122611E520005BC654 /* Countries.swift in Sources */,
 				59F5EFDC249CC5A40095FE71 /* SensorVM.swift in Sources */,
 				5999C7FE24ADFAC40038EED7 /* SensorTypes.swift in Sources */,
 				59D5951C24B5D1C3004A1823 /* ExpandedVM.swift in Sources */,
@@ -785,10 +811,12 @@
 				59A4F691247FD2150089D523 /* SceneDelegate.swift in Sources */,
 				BA5C405025D3D1E80010291F /* DailyAverageView.swift in Sources */,
 				592201AB24AA55D900025F1F /* ExpandableView.swift in Sources */,
+				BA12EB0E2611E3FE005BC654 /* Trema.swift in Sources */,
 				59FAD1D22490C27200AC36A5 /* NetworkManager.swift in Sources */,
 				592201A924AA3F7600025F1F /* ExpandedView.swift in Sources */,
 				59B0018E24C9BC6A006EA796 /* ChartVM.swift in Sources */,
 				3288686D24B513DA009CC56D /* LocationAnnotationView.swift in Sources */,
+				BA12EB102611E503005BC654 /* Country.swift in Sources */,
 				591642DB249A04F7000A4F7C /* CityMapVM.swift in Sources */,
 				59B0019024C9C269006EA796 /* ChartsDateValueFormatter.swift in Sources */,
 				59FAD1D42490C82600AC36A5 /* CityModel.swift in Sources */,

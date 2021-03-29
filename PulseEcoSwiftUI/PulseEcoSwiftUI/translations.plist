@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>You have selected the same language!</key>
+        <dict>
+            <key>en</key>
+            <string>You have selected the same language!</string>
+            <key>mk</key>
+            <string>Избран е истиот јазик!</string>
+            <key>de</key>
+            <string>Sie haben die gleiche Sprache gewählt!</string>
+        </dict>
+        <key>OK</key>
+        <dict>
+            <key>en</key>
+            <string>OK</string>
+            <key>mk</key>
+            <string>Во ред</string>
+            <key>de</key>
+            <string>ОК</string>
+        </dict>
+        <key>Change language message</key>
+        <dict>
+            <key>en</key>
+            <string>Applying this setting will change the language of the app to %@ and will refresh the app.</string>
+            <key>de</key>
+            <string>Durch Anwenden dieser Einstellung wird die Sprache der App in %@ geändert und die App neu gestartet.</string>
+            <key>mk</key>
+            <string>Примената на оваа поставка ќе го промени јазикот во %@ и ќе ја освежи апликацијата.</string>
+        </dict>
+        <key>Change App Language</key>
+        <dict>
+            <key>en</key>
+            <string>Change App Language</string>
+            <key>mk</key>
+            <string>Промена на јазик</string>
+            <key>de</key>
+            <string>App-Sprache ändern</string>
+        </dict>
+        <key>Proceed</key>
+        <dict>
+            <key>mk</key>
+            <string>Продолжи</string>
+            <key>en</key>
+            <string>Proceed</string>
+            <key>de</key>
+            <string>Vorgehen</string>
+        </dict>
+        <key>German</key>
+        <dict>
+            <key>en</key>
+            <string>German</string>
+            <key>mk</key>
+            <string>Германски</string>
+            <key>de</key>
+            <string>Deutsche</string>
+        </dict>
+        <key>Macedonian</key>
+        <dict>
+            <key>de</key>
+            <string>Mazedonisches</string>
+            <key>en</key>
+            <string>Macedonian</string>
+            <key>mk</key>
+            <string>Македонски</string>
+        </dict>
+        <key>English</key>
+        <dict>
+            <key>de</key>
+            <string>Englisch</string>
+            <key>mk</key>
+            <string>Англиски</string>
+            <key>en</key>
+            <string>English</string>
+        </dict>
+        <key>Done</key>
+        <dict>
+            <key>de</key>
+            <string>Getan</string>
+            <key>mk</key>
+            <string>Готово</string>
+            <key>en</key>
+            <string>Done</string>
+        </dict>
+        <key>Cancel</key>
+        <dict>
+            <key>de</key>
+            <string>Stornieren</string>
+            <key>mk</key>
+            <string>Затвори</string>
+            <key>en</key>
+            <string>Cancel</string>
+        </dict>
+        <key>Average</key>
+        <dict>
+            <key>de</key>
+            <string>Durchschnittlich</string>
+            <key>en</key>
+            <string>Average</string>
+            <key>mk</key>
+            <string>Просечно</string>
+        </dict>
+    </dict>
+</plist>
