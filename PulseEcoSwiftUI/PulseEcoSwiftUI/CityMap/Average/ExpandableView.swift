@@ -2,10 +2,12 @@ import SwiftUI
 import Combine
 
 struct ExpandableView: View {
+    @EnvironmentObject var appVM: AppVM
     @State var isExpanded = false
     @State var width: CGFloat = 115
     var viewModel: AverageVM
     @State var geometry: GeometryProxy
+
     var body: some View {
         HStack {
             VStack {
@@ -13,11 +15,11 @@ struct ExpandableView: View {
                     RoundedCorners(tl: 8, tr: 8, bl: 0, br: 0)
                         .fill(Color(UIColor(white: 0, alpha: 0.3)))
                         .frame(height:  20)
-                        .overlay( Text("Average")
+                        .overlay( Text(Trema.text(for: "Average", lang: self.appVM.appLanguage))
                             .font(.system(size: 13))
                             .foregroundColor(Color.white)
                             .padding(.leading, 10), alignment: .leading
-                        )
+                    )
                     HStack(alignment: .top) {
                         VStack {
                             HStack(spacing: 3) {
@@ -52,10 +54,10 @@ struct ExpandableView: View {
                         ZStack(alignment: .leading) {
                             HStack(alignment: .bottom, spacing: 0) {
                                 if self.viewModel.bands.count != 0 {
-                                        ForEach(0...self.viewModel.bands.count - 1, id: \.self) { indx in
-                                                RoundedCorners(tl: 0, tr: 0, bl: indx == 0 ? 8 : 0, br: indx == self.viewModel.bands.count - 1 ? 8 : 0) .fill(Color(self.viewModel.bands[indx].legendColor))
-                                                    .frame(width: CGFloat((self.viewModel.bands[indx].width) * Double(self.width) / 100), height: 6, alignment: .bottom)
-                                        }
+                                    ForEach(0...self.viewModel.bands.count - 1, id: \.self) { indx in
+                                        RoundedCorners(tl: 0, tr: 0, bl: indx == 0 ? 8 : 0, br: indx == self.viewModel.bands.count - 1 ? 8 : 0) .fill(Color(self.viewModel.bands[indx].legendColor))
+                                            .frame(width: CGFloat((self.viewModel.bands[indx].width) * Double(self.width) / 100), height: 6, alignment: .bottom)
+                                    }
                                 }
                             }.frame(height: 6)
                             SliderCircle()

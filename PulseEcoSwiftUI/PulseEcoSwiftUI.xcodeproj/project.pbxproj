@@ -87,6 +87,12 @@
 		59FAD1D62490D76200AC36A5 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* Sensor.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
 		B273DFB12A0BE2703C2F38D3 /* libPods-PulseEcoSwiftUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */; };
+		BA5378B1260B7CFC00C3FB7E /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5378B0260B7CFC00C3FB7E /* Countries.swift */; };
+		BA77BD6C26089C6600B10E57 /* translations.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA77BD6B26089C6600B10E57 /* translations.plist */; };
+		BA77BD6F26089DC200B10E57 /* Trema.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA77BD6E26089DC200B10E57 /* Trema.swift */; };
+		BA77BD712608A9E700B10E57 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA77BD702608A9E700B10E57 /* Country.swift */; };
+		BA96CFC22600DB660061DF58 /* LanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA96CFC12600DB660061DF58 /* LanguageView.swift */; };
+		BAE2C3EC25F78E6E003252A8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BAE2C3EE25F78E6E003252A8 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +200,14 @@
 		59FAD1D52490D76200AC36A5 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
 		9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PulseEcoSwiftUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA5378B0260B7CFC00C3FB7E /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
+		BA77BD6B26089C6600B10E57 /* translations.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = translations.plist; sourceTree = "<group>"; };
+		BA77BD6E26089DC200B10E57 /* Trema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trema.swift; sourceTree = "<group>"; };
+		BA77BD702608A9E700B10E57 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		BA96CFC12600DB660061DF58 /* LanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageView.swift; sourceTree = "<group>"; };
+		BAE2C3ED25F78E6E003252A8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BAE2C3EF25F78E85003252A8 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BAE2C3F025F78EDD003252A8 /* mk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mk; path = mk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F5D1BBA3F006FE8F999EF2CF /* Pods-PulseEcoSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PulseEcoSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-PulseEcoSwiftUI/Pods-PulseEcoSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -382,6 +396,8 @@
 		59A4F682247FD2150089D523 = {
 			isa = PBXGroup;
 			children = (
+				BA77BD6B26089C6600B10E57 /* translations.plist */,
+				BAE2C3EE25F78E6E003252A8 /* Localizable.strings */,
 				59A4F68D247FD2150089D523 /* PulseEcoSwiftUI */,
 				59A4F6A4247FD2160089D523 /* PulseEcoSwiftUITests */,
 				59A4F6AF247FD2160089D523 /* PulseEcoSwiftUIUITests */,
@@ -415,6 +431,7 @@
 				59A35ACC2498EDFC00C07786 /* AppRoot */,
 				59A4F68E247FD2150089D523 /* AppDelegate.swift */,
 				59A4F690247FD2150089D523 /* SceneDelegate.swift */,
+				BA77BD6D26089CE900B10E57 /* LanguageChange */,
 				59A4F694247FD2160089D523 /* Assets.xcassets */,
 				59A4F699247FD2160089D523 /* LaunchScreen.storyboard */,
 				59A4F69C247FD2160089D523 /* Info.plist */,
@@ -483,6 +500,17 @@
 				5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		BA77BD6D26089CE900B10E57 /* LanguageChange */ = {
+			isa = PBXGroup;
+			children = (
+				BA96CFC12600DB660061DF58 /* LanguageView.swift */,
+				BA77BD6E26089DC200B10E57 /* Trema.swift */,
+				BA77BD702608A9E700B10E57 /* Country.swift */,
+				BA5378B0260B7CFC00C3FB7E /* Countries.swift */,
+			);
+			path = LanguageChange;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -572,6 +600,8 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
+				mk,
 			);
 			mainGroup = 59A4F682247FD2150089D523;
 			productRefGroup = 59A4F68C247FD2150089D523 /* Products */;
@@ -595,6 +625,7 @@
 				59A4F69B247FD2160089D523 /* LaunchScreen.storyboard in Resources */,
 				59E4991D24C5A2E000E89746 /* TitilliumWeb-ExtraLightItalic.ttf in Resources */,
 				59E4991B24C5A2E000E89746 /* TitilliumWeb-ExtraLight.ttf in Resources */,
+				BA77BD6C26089C6600B10E57 /* translations.plist in Resources */,
 				59E4992024C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf in Resources */,
 				59E4991C24C5A2E000E89746 /* TitilliumWeb-BoldItalic.ttf in Resources */,
 				3288687424B51F5E009CC56D /* SelectedSensorView.xib in Resources */,
@@ -603,6 +634,7 @@
 				59E4991A24C5A2E000E89746 /* TitilliumWeb-SemiBold.ttf in Resources */,
 				59E4991E24C5A2E000E89746 /* OFL.txt in Resources */,
 				59E4992224C5A2E000E89746 /* TitilliumWeb-Light.ttf in Resources */,
+				BAE2C3EC25F78E6E003252A8 /* Localizable.strings in Resources */,
 				59A4F698247FD2160089D523 /* Preview Assets.xcassets in Resources */,
 				59A4F695247FD2160089D523 /* Assets.xcassets in Resources */,
 				59E4991924C5A2E000E89746 /* TitilliumWeb-Regular.ttf in Resources */,
@@ -659,6 +691,7 @@
 				593D8C9C249A171E006B88AC /* FavouriteCityRowView.swift in Sources */,
 				3288687524B51F5E009CC56D /* SelectedSensorView.swift in Sources */,
 				596434A124B49AF400943978 /* SensorDetailsView.swift in Sources */,
+				BA77BD712608A9E700B10E57 /* Country.swift in Sources */,
 				592201AD24AA656A00025F1F /* NoReadingsView.swift in Sources */,
 				59A35AD82498F6E300C07786 /* MapVM.swift in Sources */,
 				59FAD1D62490D76200AC36A5 /* Sensor.swift in Sources */,
@@ -671,6 +704,7 @@
 				593C263624BC8969005152BE /* CityRowView.swift in Sources */,
 				59A35ADA2499057C00C07786 /* Constants.swift in Sources */,
 				5924C5DA249A4792007E0D78 /* MeasureListVM.swift in Sources */,
+				BA96CFC22600DB660061DF58 /* LanguageView.swift in Sources */,
 				59F01AD724AC7B1300AD2802 /* DataSource.swift in Sources */,
 				5908ADE224AF2DA500C79BC9 /* DateFormatterUtils.swift in Sources */,
 				59103AA024A4B64C00ED9617 /* DisclaimerView.swift in Sources */,
@@ -692,6 +726,7 @@
 				591642A92499FE9F000A4F7C /* AverageVM.swift in Sources */,
 				593C263A24BC8B59005152BE /* CityListVM.swift in Sources */,
 				3288687724B51F5E009CC56D /* MarkerView.swift in Sources */,
+				BA5378B1260B7CFC00C3FB7E /* Countries.swift in Sources */,
 				593D8C9E249A17C1006B88AC /* FavouriteCitiesVM.swift in Sources */,
 				59E4992624C5C15C00E89746 /* SDView.swift in Sources */,
 				591642A72499FE4C000A4F7C /* AverageView.swift in Sources */,
@@ -706,6 +741,7 @@
 				592201AB24AA55D900025F1F /* ExpandableView.swift in Sources */,
 				59FAD1D22490C27200AC36A5 /* NetworkManager.swift in Sources */,
 				592201A924AA3F7600025F1F /* ExpandedView.swift in Sources */,
+				BA77BD6F26089DC200B10E57 /* Trema.swift in Sources */,
 				59B0018E24C9BC6A006EA796 /* ChartVM.swift in Sources */,
 				3288686D24B513DA009CC56D /* LocationAnnotationView.swift in Sources */,
 				591642DB249A04F7000A4F7C /* CityMapVM.swift in Sources */,
@@ -759,6 +795,16 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		BAE2C3EE25F78E6E003252A8 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BAE2C3ED25F78E6E003252A8 /* en */,
+				BAE2C3EF25F78E85003252A8 /* de */,
+				BAE2C3F025F78EDD003252A8 /* mk */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -766,6 +812,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -826,6 +873,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
