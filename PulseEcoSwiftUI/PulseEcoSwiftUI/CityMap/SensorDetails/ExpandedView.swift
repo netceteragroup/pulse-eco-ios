@@ -22,9 +22,14 @@ struct ExpandedView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20).fixedSize(horizontal: false, vertical: true)
                 HStack {
-                    Text("Details").font(.system(size: 13, weight: .medium))
-                    Text("|").font(.system(size: 13, weight: .medium))
-                    Text("Privacy Policy").font(.system(size: 13, weight: .medium))
+                    Text(Trema.text(for: "details",
+                                    lang: UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en"))
+                        .font(.system(size: 13, weight: .medium))
+                    Text("|")
+                        .font(.system(size: 13, weight: .medium))
+                    Text(Trema.text(for: "privacy_policy",
+                    lang: UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en"))
+                        .font(.system(size: 13, weight: .medium))
                 }.foregroundColor(self.viewModel.color).padding(.top, 10)
                 Spacer().frame(height: 40).padding(.bottom, 30)
         }

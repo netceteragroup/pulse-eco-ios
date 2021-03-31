@@ -16,7 +16,7 @@ class WeeklyAverageViewModel: ObservableObject{
     var dailyAverageViewModels: [DailyAverageViewModel] = []
     
     init(appVM: AppVM, dataSource: DataSource, averages: [Sensor]){
-        title = "Past week " + "(\(dataSource.getCurrentMeasure(selectedMeasure: appVM.selectedMeasure).unit))"
+        title = Trema.text(for: "past_week", lang: UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en") + "(\(dataSource.getCurrentMeasure(selectedMeasure: appVM.selectedMeasure).unit))"
         dailyAverageViewModels = transformInfoSensorToViewModel(appVM: appVM,
                                                                 dataSource: dataSource,
                                                                 averages: averages)

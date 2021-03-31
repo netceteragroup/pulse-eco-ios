@@ -24,7 +24,7 @@ struct SensorDView: View {
                                         .getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure)
                     )
                 ) .padding(.top, 5)
-                    //.padding(.bottom, 10)
+                //.padding(.bottom, 10)
             }
             
             //if isExpanded {
@@ -48,11 +48,13 @@ struct SensorDView: View {
                 Spacer()
                 
                 HStack {
-                    Text("Details")
+                    Text(Trema.text(for: "details",
+                                    lang: UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en"))
                         .font(.system(size: 13, weight: .medium))
                     Text("|")
                         .font(.system(size: 13, weight: .medium))
-                    Text("Privacy Policy")
+                    Text(Trema.text(for: "privacy_policy",
+                                    lang: UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en"))
                         .font(.system(size: 13, weight: .medium))
                 }.foregroundColor(self.viewModel.color)
             }.scaledToFit()

@@ -117,7 +117,7 @@ struct LineChartSwiftUI: UIViewRepresentable {
     }
     
     func setUpChart() {
-        lineChart.noDataText = "No Data Available"
+        lineChart.noDataText = Trema.text(for: "no_data_availabe", lang: UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en")
         var dataSets = [IChartDataSet]()
         let colors = [AppColors.purple, AppColors.blue, AppColors.darkred, AppColors.darkgreen, AppColors.red]
         var iterator = colors.makeIterator()
@@ -136,7 +136,7 @@ struct LineChartSwiftUI: UIViewRepresentable {
             dataEntry = ChartDataEntry(x: x, y: y)
             dataEntries.append(dataEntry)
         }
-        let sensorName = self.viewModel.sensor.title ?? "Unknown"
+        let sensorName = self.viewModel.sensor.title ?? Trema.text(for: "unknown", lang: UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en")
         let lineChartDataSet = LineChartDataSet(entries: dataEntries, label: sensorName)
         
         lineChartDataSet.setColor(iterator.next()!)

@@ -1,105 +1,285 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>You have selected the same language!</key>
-        <dict>
-            <key>en</key>
-            <string>You have selected the same language!</string>
-            <key>mk</key>
-            <string>Избран е истиот јазик!</string>
-            <key>de</key>
-            <string>Sie haben die gleiche Sprache gewählt!</string>
-        </dict>
-        <key>OK</key>
-        <dict>
-            <key>en</key>
-            <string>OK</string>
-            <key>mk</key>
-            <string>Во ред</string>
-            <key>de</key>
-            <string>ОК</string>
-        </dict>
-        <key>Change language message</key>
-        <dict>
-            <key>en</key>
-            <string>Applying this setting will change the language of the app to %@ and will refresh the app.</string>
-            <key>de</key>
-            <string>Durch Anwenden dieser Einstellung wird die Sprache der App in %@ geändert und die App neu gestartet.</string>
-            <key>mk</key>
-            <string>Примената на оваа поставка ќе го промени јазикот во %@ и ќе ја освежи апликацијата.</string>
-        </dict>
-        <key>Change App Language</key>
-        <dict>
-            <key>en</key>
-            <string>Change App Language</string>
-            <key>mk</key>
-            <string>Промена на јазик</string>
-            <key>de</key>
-            <string>App-Sprache ändern</string>
-        </dict>
-        <key>Proceed</key>
-        <dict>
-            <key>mk</key>
-            <string>Продолжи</string>
-            <key>en</key>
-            <string>Proceed</string>
-            <key>de</key>
-            <string>Vorgehen</string>
-        </dict>
-        <key>German</key>
-        <dict>
-            <key>en</key>
-            <string>German</string>
-            <key>mk</key>
-            <string>Германски</string>
-            <key>de</key>
-            <string>Deutsche</string>
-        </dict>
-        <key>Macedonian</key>
-        <dict>
-            <key>de</key>
-            <string>Mazedonisches</string>
-            <key>en</key>
-            <string>Macedonian</string>
-            <key>mk</key>
-            <string>Македонски</string>
-        </dict>
-        <key>English</key>
-        <dict>
-            <key>de</key>
-            <string>Englisch</string>
-            <key>mk</key>
-            <string>Англиски</string>
-            <key>en</key>
-            <string>English</string>
-        </dict>
-        <key>Done</key>
-        <dict>
-            <key>de</key>
-            <string>Getan</string>
-            <key>mk</key>
-            <string>Готово</string>
-            <key>en</key>
-            <string>Done</string>
-        </dict>
-        <key>Cancel</key>
-        <dict>
-            <key>de</key>
-            <string>Stornieren</string>
-            <key>mk</key>
-            <string>Затвори</string>
-            <key>en</key>
-            <string>Cancel</string>
-        </dict>
-        <key>Average</key>
-        <dict>
-            <key>de</key>
-            <string>Durchschnittlich</string>
-            <key>en</key>
-            <string>Average</string>
-            <key>mk</key>
-            <string>Просечно</string>
-        </dict>
-    </dict>
+<dict>
+	<key>mon</key>
+	<dict>
+		<key>de</key>
+		<string>Mo</string>
+		<key>mk</key>
+		<string>Пон</string>
+		<key>en</key>
+		<string>Mon</string>
+	</dict>
+	<key>tue</key>
+	<dict>
+		<key>de</key>
+		<string>Di</string>
+		<key>mk</key>
+		<string>Вто</string>
+		<key>en</key>
+		<string>Tue</string>
+	</dict>
+	<key>wed</key>
+	<dict>
+		<key>de</key>
+		<string>Mi</string>
+		<key>mk</key>
+		<string>Сре</string>
+		<key>en</key>
+		<string>Wed</string>
+	</dict>
+	<key>thu</key>
+	<dict>
+		<key>de</key>
+		<string>Do</string>
+		<key>mk</key>
+		<string>Чет</string>
+		<key>en</key>
+		<string>Thu</string>
+	</dict>
+	<key>fri</key>
+	<dict>
+		<key>de</key>
+		<string>Fr</string>
+		<key>mk</key>
+		<string>Пет</string>
+		<key>en</key>
+		<string>Fri</string>
+	</dict>
+	<key>sat</key>
+	<dict>
+		<key>de</key>
+		<string>Sa</string>
+		<key>mk</key>
+		<string>Саб</string>
+		<key>en</key>
+		<string>Sat</string>
+	</dict>
+	<key>sun</key>
+	<dict>
+		<key>de</key>
+		<string>So</string>
+		<key>mk</key>
+		<string>Нед</string>
+		<key>en</key>
+		<string>Sun</string>
+	</dict>
+	<key>crowdsourced_sensor_data</key>
+	<dict>
+		<key>de</key>
+		<string>Crowdsourced-Sensordaten</string>
+		<key>mk</key>
+		<string>Податоци од заедницата</string>
+		<key>en</key>
+		<string>Crowdsourced sensor data</string>
+	</dict>
+	<key>no_readings</key>
+	<dict>
+		<key>de</key>
+		<string>Keine Lesungen</string>
+		<key>mk</key>
+		<string>Нема читања</string>
+		<key>en</key>
+		<string>No readings</string>
+	</dict>
+	<key>past_week</key>
+	<dict>
+		<key>de</key>
+		<string>Letzte Woche </string>
+		<key>mk</key>
+		<string>Минатата недела </string>
+		<key>en</key>
+		<string>Past week </string>
+	</dict>
+	<key>unknown</key>
+	<dict>
+		<key>de</key>
+		<string>Unbekannt</string>
+		<key>mk</key>
+		<string>Непознато</string>
+		<key>en</key>
+		<string>Unknown</string>
+	</dict>
+	<key>disclaimer_short_message</key>
+	<dict>
+		<key>de</key>
+		<string> Die angezeigten Daten stammen direkt von den verwendeten Sensoren. Wir übernehmen keine Garantie für deren Richtigkeit. </string>
+		<key>mk</key>
+		<string>Прикажаните податоци потекнуваат директно од самите сензори. Не гарантираме за нивната точност. </string>
+		<key>en</key>
+		<string>Disclaimer: The data shown comes directly from the used sensors. We do not guarantee of their correctness.</string>
+	</dict>
+	<key>privacy_policy</key>
+	<dict>
+		<key>de</key>
+		<string>Datenschutz-Bestimmungen</string>
+		<key>mk</key>
+		<string>Политика за приватност</string>
+		<key>en</key>
+		<string>Privacy Policy</string>
+	</dict>
+	<key>details</key>
+	<dict>
+		<key>de</key>
+		<string>Einzelheiten</string>
+		<key>mk</key>
+		<string>Детали</string>
+		<key>en</key>
+		<string>Details</string>
+	</dict>
+	<key>results</key>
+	<dict>
+		<key>de</key>
+		<string>Ergebnisse</string>
+		<key>mk</key>
+		<string>Резултати</string>
+		<key>en</key>
+		<string>Results</string>
+	</dict>
+	<key>suggested</key>
+	<dict>
+		<key>de</key>
+		<string>Empfohlen</string>
+		<key>mk</key>
+		<string>Предложени</string>
+		<key>en</key>
+		<string>Suggested</string>
+	</dict>
+	<key>search_city_or_choose_suggested</key>
+	<dict>
+		<key>de</key>
+		<string>Suche nach Stadt oder wähle vorgeschlagen</string>
+		<key>mk</key>
+		<string>Пребарувајте град или изберете од предложените</string>
+		<key>en</key>
+		<string>Search city, or choose suggested</string>
+	</dict>
+	<key>search_city_or_country</key>
+	<dict>
+		<key>de</key>
+		<string>Suche Stadt oder Land</string>
+		<key>mk</key>
+		<string>Пребарување по град или земја</string>
+		<key>en</key>
+		<string>Search City or Country</string>
+	</dict>
+	<key>no_data_available</key>
+	<dict>
+		<key>de</key>
+		<string>Keine Daten verfügbar. Versuchen Sie es später erneut.</string>
+		<key>mk</key>
+		<string>Нема достапни податоци. Обидете се повторно подоцна.</string>
+		<key>en</key>
+		<string>No data available. Try again later.</string>
+	</dict>
+	<key>disclaimer_message</key>
+	<dict>
+		<key>de</key>
+		<string>Die gesammelten Daten werden in keiner Weise manipuliert. Wir übernehmen keine Garantie für die Richtigkeit. Die MOEPP-Sensordaten werden als Empfänger von ihrem Dienst gespeichert, während die puls.eco-Geräte von der Richtigkeit der verwendeten Sensoren abhängen: Nova PM SDS011 / SDS021, DHT22 und Grove Sounds-Sensor. Einzelheiten entnehmen Sie bitte den Datenblättern.</string>
+		<key>mk</key>
+		<string>Собраните податоци не се манипулирани на никаков начин. Не гарантираме за нивната коректност. Податоците за MOEPP сензорот се зачувуваат онака како што се примени од нивниот серис, додека pulse.eco уредите зависат од исправноста на користените сензори: сензорот Nova PM SDS011 / SDS021, DHT22 и Grove Sounds. За повеќе детали, погледнете ги нивните документации.</string>
+		<key>en</key>
+		<string>The data collected are not manipulated in any way. We do not guarantee of their correctness. The MOEPP sensor data are stored as receiver from their service, while the pulse.eco devices depend on the correctness of the used sensors: Nova PM SDS011/SDS021, DHT22 and Grove Sounds sensor. Please refer to their data sheets for details.</string>
+	</dict>
+	<key>disclaimer</key>
+	<dict>
+		<key>de</key>
+		<string>Haftungsausschluss</string>
+		<key>mk</key>
+		<string>Забелешка</string>
+		<key>en</key>
+		<string>Disclaimer</string>
+	</dict>
+	<key>ok</key>
+	<dict>
+		<key>de</key>
+		<string>ОК</string>
+		<key>mk</key>
+		<string>Во ред</string>
+		<key>en</key>
+		<string>OK</string>
+	</dict>
+	<key>change_language_message</key>
+	<dict>
+		<key>de</key>
+		<string>Durch Anwenden dieser Einstellung wird die Sprache der App in %@ geändert und die App neu gestartet.</string>
+		<key>mk</key>
+		<string>Примената на оваа поставка ќе го промени јазикот во %@ и ќе ја освежи апликацијата.</string>
+		<key>en</key>
+		<string>Applying this setting will change the language of the app to %@ and will refresh the app.</string>
+	</dict>
+	<key>change_app_language</key>
+	<dict>
+		<key>de</key>
+		<string>App-Sprache ändern</string>
+		<key>mk</key>
+		<string>Промена на јазик</string>
+		<key>en</key>
+		<string>Change App Language</string>
+	</dict>
+	<key>proceed</key>
+	<dict>
+		<key>de</key>
+		<string>Vorgehen</string>
+		<key>mk</key>
+		<string>Продолжи</string>
+		<key>en</key>
+		<string>Proceed</string>
+	</dict>
+	<key>german</key>
+	<dict>
+		<key>de</key>
+		<string>Deutsche</string>
+		<key>mk</key>
+		<string>Германски</string>
+		<key>en</key>
+		<string>German</string>
+	</dict>
+	<key>macedonian</key>
+	<dict>
+		<key>de</key>
+		<string>Mazedonisches</string>
+		<key>mk</key>
+		<string>Македонски</string>
+		<key>en</key>
+		<string>Macedonian</string>
+	</dict>
+	<key>english</key>
+	<dict>
+		<key>de</key>
+		<string>Englisch</string>
+		<key>mk</key>
+		<string>Англиски</string>
+		<key>en</key>
+		<string>English</string>
+	</dict>
+	<key>done</key>
+	<dict>
+		<key>de</key>
+		<string>Getan</string>
+		<key>mk</key>
+		<string>Готово</string>
+		<key>en</key>
+		<string>Done</string>
+	</dict>
+	<key>cancel</key>
+	<dict>
+		<key>de</key>
+		<string>Stornieren</string>
+		<key>mk</key>
+		<string>Затвори</string>
+		<key>en</key>
+		<string>Cancel</string>
+	</dict>
+	<key>average</key>
+	<dict>
+		<key>de</key>
+		<string>Durchschnittlich</string>
+		<key>mk</key>
+		<string>Просечно</string>
+		<key>en</key>
+		<string>Average</string>
+	</dict>
+</dict>
 </plist>

@@ -23,12 +23,12 @@ struct LanguageView: View {
             VStack(spacing: 0) {
                 Spacer()
                 HStack{
-                    Button(Trema.text(for: "Cancel", lang: self.appVM.appLanguage)) {
+                    Button(Trema.text(for: "cancel", lang: self.appVM.appLanguage)) {
                         self.showPicker = false
                     }.padding(.leading, 20)
                     Spacer()
                         .padding([.leading], 30)
-                    Button(Trema.text(for: "Done", lang: self.appVM.appLanguage)) {
+                    Button(Trema.text(for: "done", lang: self.appVM.appLanguage)) {
                         if (self.selectedCountry.shortName != self.appVM.appLanguage) {
                             self.showAlert = true
                         } else {
@@ -36,15 +36,15 @@ struct LanguageView: View {
                         }
                     }.padding(.trailing, 20)
                         .alert(isPresented: $showAlert) {
-                            return Alert(title: Text(Trema.text(for: "Change App Language", lang: self.appVM.appLanguage)),
-                                         message: Text(String(format: Trema.text(for: "Change language message",
+                            return Alert(title: Text(Trema.text(for: "change_app_language", lang: self.appVM.appLanguage)),
+                                         message: Text(String(format: Trema.text(for: "change_language_message",
                                                                                  lang: self.appVM.appLanguage),
                                                               selectedCountry.languageName)),
                                          primaryButton: .destructive(
-                                            Text(Trema.text(for: "Cancel", lang: self.appVM.appLanguage)),
+                                            Text(Trema.text(for: "cancel", lang: self.appVM.appLanguage)),
                                             action: { self.showAlert = false}),
                                          secondaryButton: .default (
-                                            Text(Trema.text(for: "Proceed", lang: self.appVM.appLanguage)),
+                                            Text(Trema.text(for: "proceed", lang: self.appVM.appLanguage)),
                                             action: {
                                                 withAnimation(Animation.linear.delay(1)){
                                                     self.changeLanguage(toLanguage: self.selectedCountry.shortName)
