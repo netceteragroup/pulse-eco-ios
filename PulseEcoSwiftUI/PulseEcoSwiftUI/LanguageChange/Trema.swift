@@ -11,11 +11,11 @@ import SwiftUI
 
 class Trema {
     
-    static func text(for key: String, lang: String) -> String {
+    static func text(for key: String, language: String) -> String {
         if let path = Bundle.main.path(forResource: "translations", ofType: "plist"),
             let dict = NSDictionary(contentsOfFile: path) as? [String: Any] {
             let translations = dict[key] as? [String:String]
-            return translations?[lang] ?? key
+            return translations?[language] ?? key
         }
         return key
     }

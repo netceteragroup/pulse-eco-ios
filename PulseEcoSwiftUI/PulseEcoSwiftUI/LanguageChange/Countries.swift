@@ -12,13 +12,13 @@ class Countries {
     
     static func countries(language: String) -> [Country] {
         return  [Country(flagImageName: "🇬🇧",
-                         languageName: Trema.text(for: "english", lang: language),
+                         languageName: Trema.text(for: "english", language: language),
                          shortName: "en"),
                  Country(flagImageName: "🇲🇰",
-                         languageName: Trema.text(for: "macedonian", lang: language),
+                         languageName: Trema.text(for: "macedonian", language: language),
                          shortName: "mk"),
                  Country(flagImageName: "🇩🇪",
-                         languageName: Trema.text(for: "german", lang: language),
+                         languageName: Trema.text(for: "german", language: language),
                          shortName: "de")]
     }
     

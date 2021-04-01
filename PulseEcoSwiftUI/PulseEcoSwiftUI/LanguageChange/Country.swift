@@ -8,7 +8,6 @@
 
 import Foundation
 struct Country: Hashable {
-    
     var flagImageName: String
     var languageName: String
     var shortName: String

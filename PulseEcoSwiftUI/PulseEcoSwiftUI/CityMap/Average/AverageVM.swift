@@ -39,7 +39,7 @@ class AverageVM: ObservableObject {
             self.value = 0
         }
         self.measureBandsWidth = 100
-        self.message = Trema.text(for: "no_data_available", lang: UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en")
+        self.message = Trema.text(for: "no_data_available", language: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en")
         self.measure = measure
         self.unit = "µq/m3"
         self.cityName = cityName
@@ -160,7 +160,7 @@ class BandVM: Identifiable {
          legendColor: UIColor = AppColors.gray,
          markerColor: UIColor = AppColors.gray,
          shortGrade: String = "--",
-         grade: String = Trema.text(for: "no_data_available", lang: UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en"),
+         grade: String = Trema.text(for: "no_data_available", language: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en"),
          suggestion: String = "--",
          width: Double = 0.0) {
         self.from = from

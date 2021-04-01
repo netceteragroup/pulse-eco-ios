@@ -14,8 +14,8 @@ struct LanguageView: View {
     @EnvironmentObject var dataSource: DataSource
     @Binding var showPicker: Bool
     @State private var showAlert = false
-    @State var selectedCountry = Countries.selectedCountry(for: UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en")
-    var countries = Countries.countries(language: UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en")
+    @State var selectedCountry = Countries.selectedCountry(for: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en")
+    var countries = Countries.countries(language: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en")
     
     var body: some View {
         
@@ -23,12 +23,12 @@ struct LanguageView: View {
             VStack(spacing: 0) {
                 Spacer()
                 HStack{
-                    Button(Trema.text(for: "cancel", lang: self.appVM.appLanguage)) {
+                    Button(Trema.text(for: "cancel", language: self.appVM.appLanguage)) {
                         self.showPicker = false
                     }.padding(.leading, 20)
                     Spacer()
                         .padding([.leading], 30)
-                    Button(Trema.text(for: "done", lang: self.appVM.appLanguage)) {
+                    Button(Trema.text(for: "done", language: self.appVM.appLanguage)) {
                         if (self.selectedCountry.shortName != self.appVM.appLanguage) {
                             self.showAlert = true
                         } else {
@@ -36,15 +36,15 @@ struct LanguageView: View {
                         }
                     }.padding(.trailing, 20)
                         .alert(isPresented: $showAlert) {
-                            return Alert(title: Text(Trema.text(for: "change_app_language", lang: self.appVM.appLanguage)),
+                            return Alert(title: Text(Trema.text(for: "change_app_language", language: self.appVM.appLanguage)),
                                          message: Text(String(format: Trema.text(for: "change_language_message",
-                                                                                 lang: self.appVM.appLanguage),
+                                                                                 language: self.appVM.appLanguage),
                                                               selectedCountry.languageName)),
                                          primaryButton: .destructive(
-                                            Text(Trema.text(for: "cancel", lang: self.appVM.appLanguage)),
+                                            Text(Trema.text(for: "cancel", language: self.appVM.appLanguage)),
                                             action: { self.showAlert = false}),
                                          secondaryButton: .default (
-                                            Text(Trema.text(for: "proceed", lang: self.appVM.appLanguage)),
+                                            Text(Trema.text(for: "proceed", language: self.appVM.appLanguage)),
                                             action: {
                                                 withAnimation(Animation.linear.delay(1)){
                                                     self.changeLanguage(toLanguage: self.selectedCountry.shortName)
@@ -77,8 +77,10 @@ struct LanguageView: View {
         self.showPicker = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.appVM.appLanguage = toLanguage
-            UserDefaults.standard.set(toLanguage, forKey: "AppleLanguage")
+            UserDefaults.standard.set(toLanguage, forKey: "AppLanguage")
+            self.dataSource.loadingCityData = true
             self.dataSource.getMeasures()
+            self.dataSource.getValuesForCity(cityName: self.appVM.cityName)
         }
     }
     

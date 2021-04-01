@@ -12,10 +12,10 @@ import Combine
 class NetworkManager: ObservableObject {
    
      // MARK: - New
-    let language = "lang=\(UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en")"
+    let language = "lang=\(UserDefaults.standard.string(forKey: "AppLanguage") ?? "en")"
     
     func downloadMeasures() -> AnyPublisher<[Measure], Error> {
-            let url = URL(string: "https://pulse.eco/rest/measures?" + language)!
+            let url = URL(string: "https://pulse.eco/rest/measures?\(language)")!
             return URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: [Measure].self, decoder: JSONDecoder())

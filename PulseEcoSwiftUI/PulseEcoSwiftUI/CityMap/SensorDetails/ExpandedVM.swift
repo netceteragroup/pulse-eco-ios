@@ -3,7 +3,7 @@ import SwiftUI
 
 class ExpandedVM: ObservableObject{
 
-    var disclaimerMessage = Trema.text(for: "disclaimer_short_message", lang: UserDefaults.standard.string(forKey: "AppleLanguage") ?? "en")
+    var disclaimerMessage = Trema.text(for: "disclaimer_short_message", language: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en")
     var color = Color(AppColors.darkblue)
     let url  =  "https://www.netcetera.com/home/privacy-policy.html"
     
