@@ -18,7 +18,6 @@ struct CityMapView: View {
     var body: some View {
         
         ZStack {
-            
             MapView(viewModel: MapVM(measure: self.appVM.selectedMeasure,
                                      cityName: self.appVM.cityName,
                                      sensors: self.dataSource.citySensors,
@@ -51,26 +50,29 @@ struct CityMapView: View {
                 }.padding(.trailing, 15.0)
             }
             AverageView(viewModel: AverageVM(measure: self.appVM.selectedMeasure, cityName: self.appVM.cityName, measuresList: self.dataSource.measures, cityValues: self.dataSource.cityOverall))
-            
-            if self.appVM.showSensorDetails {
-                //SensorDetailsView().edgesIgnoringSafeArea(.bottom)
-                SenDetView().edgesIgnoringSafeArea(.bottom)
-                //SDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
-                //SensorDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
-            }
             if self.appVM.citySelectorClicked {
                 FavouriteCitiesView(viewModel: FavouriteCitiesVM(selectedMeasure: self.appVM.selectedMeasure, favouriteCities: self.userSettings.favouriteCities, cityValues: self.userSettings.cityValues, measureList: self.dataSource.measures), userSettings: self.userSettings)
                     .overlay(BottomShadow())
                     
             }
-        }.addPartialSheet()
-        .sheet(isPresented: self.$appVM.showSheet) {
-            if self.appVM.activeSheet == .disclaimerView {
-                DisclaimerView()
-                    .environment(\.managedObjectContext, self.moc)
-            } else {
-                CityListView(viewModel: CityListVM(cities: self.dataSource.cities), userSettings: self.userSettings).environment(\.managedObjectContext, self.moc)
-            }
+            
+//            if self.appVM.showSensorDetails {
+//                //SensorDetailsView().edgesIgnoringSafeArea(.bottom)
+////                SenDetView().edgesIgnoringSafeArea(.bottom)
+//                SlideOverCard {
+//                    Text("marko")
+//                }
+//                //SDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
+//                //SensorDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
+//            }
+//        }.addPartialSheet()
+//        .sheet(isPresented: self.$appVM.showSheet) {
+//            if self.appVM.activeSheet == .disclaimerView {
+//                DisclaimerView()
+//                    .environment(\.managedObjectContext, self.moc)
+//            } else {
+//                CityListView(viewModel: CityListVM(cities: self.dataSource.cities), userSettings: self.userSettings).environment(\.managedObjectContext, self.moc)
+//            }
         }
         
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32479108261A6F7200E97C56 /* SlideOverCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32479107261A6F7200E97C56 /* SlideOverCard.swift */; };
 		3288686D24B513DA009CC56D /* LocationAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288686C24B513DA009CC56D /* LocationAnnotationView.swift */; };
 		3288687424B51F5E009CC56D /* SelectedSensorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3288687024B51F5E009CC56D /* SelectedSensorView.xib */; };
 		3288687524B51F5E009CC56D /* SelectedSensorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288687124B51F5E009CC56D /* SelectedSensorView.swift */; };
@@ -128,6 +129,7 @@
 
 /* Begin PBXFileReference section */
 		1C58AE0F686C04609FEE1C79 /* Pods-PulseEcoSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PulseEcoSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-PulseEcoSwiftUI/Pods-PulseEcoSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
+		32479107261A6F7200E97C56 /* SlideOverCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverCard.swift; sourceTree = "<group>"; };
 		3288686C24B513DA009CC56D /* LocationAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotationView.swift; sourceTree = "<group>"; };
 		3288687024B51F5E009CC56D /* SelectedSensorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedSensorView.xib; sourceTree = "<group>"; };
 		3288687124B51F5E009CC56D /* SelectedSensorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedSensorView.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 				59504C1A24B46CE500EA4AFF /* SizePreferenceKey.swift */,
 				591EA1D124C99D5500CA61AE /* BottomShadow.swift */,
 				59B0018F24C9C269006EA796 /* ChartsDateValueFormatter.swift */,
+				32479107261A6F7200E97C56 /* SlideOverCard.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -817,6 +820,7 @@
 				59B0018E24C9BC6A006EA796 /* ChartVM.swift in Sources */,
 				3288686D24B513DA009CC56D /* LocationAnnotationView.swift in Sources */,
 				BA12EB102611E503005BC654 /* Country.swift in Sources */,
+				32479108261A6F7200E97C56 /* SlideOverCard.swift in Sources */,
 				591642DB249A04F7000A4F7C /* CityMapVM.swift in Sources */,
 				59B0019024C9C269006EA796 /* ChartsDateValueFormatter.swift in Sources */,
 				59FAD1D42490C82600AC36A5 /* CityModel.swift in Sources */,

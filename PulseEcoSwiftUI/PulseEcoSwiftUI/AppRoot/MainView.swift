@@ -78,6 +78,19 @@ struct MainView: View {
                                 .transition(.move(edge: .bottom))
                                 .animation(.spring())
                         }
+                        
+                        if self.appVM.showSensorDetails {
+                            //SensorDetailsView().edgesIgnoringSafeArea(.bottom)
+            //                SenDetView().edgesIgnoringSafeArea(.bottom)
+                            SlideOverCard {
+//                                    Text("Marko")
+                                SDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h,
+                                                             dailyAverages: self.dataSource.sensorsDailyAverageData))
+                                
+                            }
+                            //SDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
+                            //SensorDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
+                        }
                     }.padding(.top, 40)
             )
         }
