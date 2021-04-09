@@ -15,7 +15,7 @@ class FavouriteCityRowVM: ObservableObject, Identifiable {
     var noReadingsImage: UIImage = UIImage(named: "exclamation") ?? UIImage()
 
     init(city: CityModel = CityModel(),
-         message: String = "No data available. Try again later.",
+         message: String = Trema.text(for: "no_data_available", language: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en"),
          value: String? = "3",
          unit: String = "µq/m3",
          color: Color = Color.gray) {

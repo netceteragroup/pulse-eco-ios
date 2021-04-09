@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-class SensorDetailsVM {
+class SensorDetailsViewModel: ObservableObject {
     var sensorID: String
     var sensorType: SensorType
     var title: String
@@ -18,7 +18,13 @@ class SensorDetailsVM {
     var time: String
     var date: String
     var image: UIImage
-    init(sensor: SensorVM, sensorsData: [Sensor], selectedMeasure: Measure) {
+    var disclaimerMessage = Trema.text(for: "disclaimer_short_message",
+                                       language: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en")
+    var color = Color(AppColors.darkblue)
+    @Published var sensorData24h: [Sensor]
+    @Published var dailyAverages: [Sensor]
+
+    init(sensor: SensorVM, sensorsData: [Sensor], selectedMeasure: Measure, sensorData24h: [Sensor], dailyAverages: [Sensor]) {
         self.sensorID = sensor.sensorID
         self.sensorType = sensor.type
         self.title = sensor.title ?? "Sensor"
@@ -28,5 +34,7 @@ class SensorDetailsVM {
         self.date = DateFormatter.getDate.string(from: date)
         self.time = DateFormatter.getTime.string(from: date)
         self.image = sensorType.imageForType ?? UIImage()
+        self.sensorData24h = sensorData24h
+        self.dailyAverages = dailyAverages
     }
 }
