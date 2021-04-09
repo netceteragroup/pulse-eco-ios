@@ -31,20 +31,8 @@ class WeeklyAverageViewModel: ObservableObject{
     
     func dailyAverages(averages: [Sensor]) -> [DailyInfoSensor] {
         var allAverages: [DailyInfoSensor] = []
-        let time = DateFormatter.getTime.string(from: Date())
-        /* the request returns timestamps for the average data records exactly at noon GMT of the target day
-        i.e exactly at 13:00 */
-        /* when earliestDay and latestDay are set to -7 and -1 respectively, the days in the week are
-         seven days from yesterday because before 13h we don't have records for today's average value */
-        /* otherwise, when earliestDay and latestDay are set to -6 and 0 respectively,
-         the days from the week are seven days from today, including today's value */
-        var earliestDate: Int {
-            time >= "13:00" ? -6 : -7
-        }
-        var latestDate: Int {
-            time >= "13:00" ? 0 : -1
-        }
-        let week = (earliestDate...(latestDate)).compactMap {
+     
+        let week = (-7...(-1)).compactMap {
             DateFormatter.iso8601Full
                 .string(from: Calendar.current.date(byAdding: .day, value: $0, to: Date()) ?? Date())
         }
