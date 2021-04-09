@@ -1,6 +1,6 @@
 import Foundation
 
-class ChartVM: ObservableObject {
+class ChartViewModel: ObservableObject {
     @Published var sensor: SensorVM
     @Published var sensorsData24h: [Sensor]
     @Published var selectedMeasure: Measure

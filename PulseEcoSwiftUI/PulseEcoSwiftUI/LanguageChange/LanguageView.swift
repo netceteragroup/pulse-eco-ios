@@ -69,18 +69,22 @@ struct LanguageView: View {
                     .background(Color(AppColors.lightGray))
                     .edgesIgnoringSafeArea(.bottom)
             }.animation(.easeInOut(duration: 0.5))
-            .edgesIgnoringSafeArea(.bottom)
+                .edgesIgnoringSafeArea(.bottom)
         }
     }
     
     func changeLanguage(toLanguage: String) {
+        self.showPicker = false
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            UserDefaults.standard.set(toLanguage, forKey: "AppLanguage")
             self.dataSource.loadingCityData = true
             self.dataSource.getMeasures()
             self.dataSource.getValuesForCity(cityName: self.appVM.cityName)
+            self.appVM.updateMapAnnotations = true
+            self.appVM.updateMapRegion = true
             self.appVM.appLanguage = toLanguage
-            UserDefaults.standard.set(toLanguage, forKey: "AppLanguage")
-            self.showPicker = false
+
         }
     }
     

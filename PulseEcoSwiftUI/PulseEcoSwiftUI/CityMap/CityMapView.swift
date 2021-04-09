@@ -30,7 +30,7 @@ struct CityMapView: View {
             )
                 //.overlay(self.viewModel.backgroundColor)
                 .animation(.default)
- 
+            
             VStack(alignment: .trailing) {
                 Spacer()
                 HStack {
@@ -53,26 +53,15 @@ struct CityMapView: View {
             if self.appVM.citySelectorClicked {
                 FavouriteCitiesView(viewModel: FavouriteCitiesVM(selectedMeasure: self.appVM.selectedMeasure, favouriteCities: self.userSettings.favouriteCities, cityValues: self.userSettings.cityValues, measureList: self.dataSource.measures), userSettings: self.userSettings)
                     .overlay(BottomShadow())
-                    
             }
-            
-//            if self.appVM.showSensorDetails {
-//                //SensorDetailsView().edgesIgnoringSafeArea(.bottom)
-////                SenDetView().edgesIgnoringSafeArea(.bottom)
-//                SlideOverCard {
-//                    Text("marko")
-//                }
-//                //SDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
-//                //SensorDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
-//            }
-//        }.addPartialSheet()
-//        .sheet(isPresented: self.$appVM.showSheet) {
-//            if self.appVM.activeSheet == .disclaimerView {
-//                DisclaimerView()
-//                    .environment(\.managedObjectContext, self.moc)
-//            } else {
-//                CityListView(viewModel: CityListVM(cities: self.dataSource.cities), userSettings: self.userSettings).environment(\.managedObjectContext, self.moc)
-//            }
+        }
+            .sheet(isPresented: self.$appVM.showSheet) {
+                if self.appVM.activeSheet == .disclaimerView {
+                    DisclaimerView()
+                        .environment(\.managedObjectContext, self.moc)
+                } else {
+                    CityListView(viewModel: CityListVM(cities: self.dataSource.cities), userSettings: self.userSettings).environment(\.managedObjectContext, self.moc)
+                }
         }
         
     }

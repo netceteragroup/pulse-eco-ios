@@ -46,7 +46,7 @@ struct MainView: View {
                             trailing: HStack {
                                 Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
                                     .imageScale(.large)
-                                    .padding(.trailing, (UIWidth)/4)
+                                    .padding(.trailing, (UIWidth)/3.7)
                                     .onTapGesture {
                                         //action
                                         if self.appVM.citySelectorClicked == false {
@@ -61,38 +61,41 @@ struct MainView: View {
                                         }
                                 }
                                 Button(action: {
-                                    withAnimation(Animation.linear.delay(1)){
+                                    withAnimation(){
+                                        self.appVM.showSensorDetails = false
+                                        self.appVM.updateMapRegion = true
+                                        self.appVM.updateMapAnnotations = true
                                         self.showPicker = true
+                                        
                                     }
                                 }) {
                                     Text(Countries.selectedCountry(for: self.appVM.appLanguage).flagImageName)
                                         .font(.title)
                                 }
-                            })
+                        })
                 }
             }.navigationBarColor(UIColor.white)
                 .overlay(
-                    VStack{
+                    ZStack{
+                        
                         if self.showPicker {
+                            
                             LanguageView(showPicker: self.$showPicker)
                                 .transition(.move(edge: .bottom))
                                 .animation(.spring())
+                                .zIndex(1)
                         }
-                        
                         if self.appVM.showSensorDetails {
-                            //SensorDetailsView().edgesIgnoringSafeArea(.bottom)
-            //                SenDetView().edgesIgnoringSafeArea(.bottom)
                             SlideOverCard {
-//                                    Text("Marko")
-                                SDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h,
-                                                             dailyAverages: self.dataSource.sensorsDailyAverageData))
-                                
+                                SensorDetailsView(viewModel: SensorDetailsViewModel(
+                                    sensor: self.appVM.selectedSensor ?? SensorVM(),
+                                    sensorsData: self.dataSource.sensorsData24h,
+                                    selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure:self.appVM.selectedMeasure),
+                                    sensorData24h: self.dataSource.sensorsData24h,
+                                    dailyAverages: self.dataSource.sensorsDailyAverageData))
                             }
-                            //SDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
-                            //SensorDView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h))
                         }
-                    }.padding(.top, 40)
-            )
+                })
         }
     }
 }

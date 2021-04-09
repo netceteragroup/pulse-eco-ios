@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SlideOverCard<Content: View> : View {
     @GestureState private var dragState = DragState.inactive
-    @State var position: CGFloat = CardPos.bot
+    @State var position: CGFloat = CardPosition.middle
     
     var content: () -> Content
     var body: some View {
@@ -13,13 +13,13 @@ struct SlideOverCard<Content: View> : View {
             .onEnded(onDragEnded)
         
         return Group {
-            Spacer()
-            Handle()
+//            Spacer()
+//            Handle()
             self.content()
         }
         .frame(height: UIScreen.main.bounds.height)
-        .background(Color.blue)
-        .cornerRadius(10.0)
+        .background(Color.white)
+        .cornerRadius(30.0)
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
         .offset(y: self.position + self.dragState.translation.height)
         .animation(self.dragState.isDragging ? nil : .interpolatingSpring(stiffness: 250, damping: 30.0, initialVelocity: 10))
@@ -33,12 +33,12 @@ struct SlideOverCard<Content: View> : View {
         let positionBelow: CGFloat
         let closestPosition: CGFloat
         
-        if cardTopEdgeLocation <= CardPos.mid {
-            positionAbove = CardPos.top
-            positionBelow = CardPos.mid
+        if cardTopEdgeLocation <= CardPosition.middle {
+            positionAbove = CardPosition.top
+            positionBelow = CardPosition.middle
         } else {
-            positionAbove = CardPos.mid
-            positionBelow = CardPos.bot
+            positionAbove = CardPosition.middle
+            positionBelow = CardPosition.middle //.bottom
         }
         
         if (cardTopEdgeLocation - positionAbove) < (positionBelow - cardTopEdgeLocation) {
@@ -63,10 +63,10 @@ struct SlideOverCard<Content: View> : View {
 //    case bottom = 650
 //}
 
-struct CardPos {
-    static let top: CGFloat = UIScreen.main.bounds.height - 550
-    static let mid: CGFloat = UIScreen.main.bounds.height - 350
-    static let bot: CGFloat = UIScreen.main.bounds.height - 150
+struct CardPosition {
+    static let top: CGFloat = UIScreen.main.bounds.height - 575// - 550
+    static let middle: CGFloat = UIScreen.main.bounds.height - 130 //- 350
+    static let bottom: CGFloat = UIScreen.main.bounds.height + 100 //- 150
 }
 
 //enum CardPosition: CGFloat {
@@ -99,12 +99,3 @@ enum DragState {
     }
 }
 
-struct Handle : View {
-    private let handleThickness = CGFloat(5.0)
-    var body: some View {
-        RoundedRectangle(cornerRadius: handleThickness / 2.0)
-            .frame(width: 40, height: handleThickness)
-            .foregroundColor(Color.secondary)
-            .padding(5)
-    }
-}
