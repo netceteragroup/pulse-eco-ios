@@ -58,7 +58,13 @@ struct ExpandableView: View {
                         }
                         
                         if self.isExpanded {
-                            bar
+                            bar.transition(.asymmetric(
+                                            insertion:
+                                                .opacity.animation(.default.delay(0.19)),
+                                            removal:
+                                                .opacity.animation(.default.speed(7))
+                            ))
+                            
                         }
                         
                     }
