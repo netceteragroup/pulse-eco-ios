@@ -10,10 +10,10 @@ struct CityListView: View {
     var body: some View {
         VStack {
             VStack(spacing: 5) {
-                Text(Trema.text(for: "search_city_or_choose_suggested", language: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en"))
+                Text(Trema.text(for: "search_city_or_choose_suggested"))
                     .foregroundColor(Color.white).multilineTextAlignment(.center)
                 SearchBar(text: self.$viewModel.searchText,
-                          placeholder: Trema.text(for: "search_city_or_country", language: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en"))
+                          placeholder: Trema.text(for: "search_city_or_country"))
                     .padding(.horizontal, 10)
                 Text(self.viewModel.text).font(.headline).foregroundColor(Color.white)
             }.padding(.top, 10)

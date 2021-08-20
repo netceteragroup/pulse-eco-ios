@@ -14,8 +14,8 @@ struct LanguageView: View {
     @EnvironmentObject var dataSource: DataSource
     @Binding var showPicker: Bool
     @State private var showAlert = false
-    @State var selectedCountry = Countries.selectedCountry(for: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en")
-    var countries = Countries.countries(language: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en")
+    @State var selectedCountry = Countries.selectedCountry(for: Trema.appLanguage)
+    var countries = Countries.countries(language: Trema.appLanguage)
     
     var body: some View {
         

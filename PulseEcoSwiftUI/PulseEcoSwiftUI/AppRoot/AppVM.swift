@@ -18,5 +18,5 @@ class AppVM: ObservableObject {
     @Published var blurBackground: Bool = false
     @Published var showSheet: Bool = false
     @Published var activeSheet: ActiveSheet = .disclaimerView
-    @Published var appLanguage: String = UserDefaults.standard.string(forKey: "AppLanguage") ?? "en"
+    @Published var appLanguage: String = Trema.appLanguage
 }

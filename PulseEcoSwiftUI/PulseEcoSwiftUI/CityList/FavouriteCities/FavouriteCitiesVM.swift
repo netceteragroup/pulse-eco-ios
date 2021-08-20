@@ -27,7 +27,7 @@ class FavouriteCitiesVM: ObservableObject {
                 }
             }
             let selMeasure = measureList.filter{ $0.id.lowercased() == selectedMeasure.lowercased()}.first ?? Measure.empty()
-            var message = Trema.text(for: "no_data_available", language: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en")
+            var message = Trema.text(for: "no_data_available")
             var color = Color.gray
             
             if let val = Float(value ?? "") {

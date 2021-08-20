@@ -12,7 +12,7 @@ import Combine
 class NetworkManager: ObservableObject {
     
     // MARK: - New
-    let language = "lang=\(UserDefaults.standard.string(forKey: "AppLanguage") ?? "en")"
+    let language = "lang=\(Trema.appLanguage)"
     
     func downloadMeasures() -> AnyPublisher<[Measure], Error> {
         let url = URL(string: "https://pulse.eco/rest/measures?\(language)")!

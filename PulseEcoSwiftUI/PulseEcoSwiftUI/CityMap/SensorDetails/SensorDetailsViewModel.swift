@@ -18,8 +18,7 @@ class SensorDetailsViewModel: ObservableObject {
     var time: String
     var date: String
     var image: UIImage
-    var disclaimerMessage = Trema.text(for: "disclaimer_short_message",
-                                       language: UserDefaults.standard.string(forKey: "AppLanguage") ?? "en")
+    var disclaimerMessage = Trema.text(for: "disclaimer_short_message")
     var color = Color(AppColors.darkblue)
     @Published var sensorData24h: [Sensor]
     @Published var dailyAverages: [Sensor]

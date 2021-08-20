@@ -11,7 +11,12 @@ import SwiftUI
 
 class Trema {
     
-    static func text(for key: String, language: String) -> String {
+    static var appLanguage: String {
+        UserDefaults.standard.string(forKey: "AppLanguage") ?? "en"
+    }
+    
+    static func text(for key: String,
+                     language: String = appLanguage) -> String {
         if let path = Bundle.main.path(forResource: "translations", ofType: "plist"),
             let dict = NSDictionary(contentsOfFile: path) as? [String: Any] {
             let translations = dict[key] as? [String:String]
@@ -19,4 +24,5 @@ class Trema {
         }
         return key
     }
+    
 }
