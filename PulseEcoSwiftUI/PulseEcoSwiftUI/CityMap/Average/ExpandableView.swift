@@ -18,12 +18,11 @@ struct ExpandableView: View {
                         RoundedCorners(tl: 8, tr: 8, bl: 0, br: 0)
                             .fill(Color(UIColor(white: 0, alpha: 0.3)))
                             .frame(height:  20)
-                            .overlay(Text("Average"))
+                            .overlay(Text("Average")
                                         .font(.system(size: 13))
                                         .foregroundColor(Color.white)
                                         .padding(.leading, 10), alignment: .leading
                             )
-                        
                         HStack(alignment: .top) {
                             
                             VStack {
