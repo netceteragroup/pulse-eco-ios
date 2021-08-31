@@ -29,16 +29,18 @@ struct FavouriteCitiesView: View {
                 VStack {
                     List {
                         ForEach(self.viewModel.getCities(), id: \.id) { city in
-                            FavouriteCityRowView(viewModel: city).onTapGesture {
-                                self.appVM.citySelectorClicked = false
-                                self.appVM.cityName = city.cityName
-                                self.dataSource.loadingCityData = true
-                                self.dataSource.getValuesForCity(cityName: city.cityName)
-                                self.appVM.updateMapRegion = true
-                                self.appVM.updateMapAnnotations = true
-                            }
+                            FavouriteCityRowView(viewModel: city)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    self.appVM.citySelectorClicked = false
+                                    self.appVM.cityName = city.cityName
+                                    self.dataSource.loadingCityData = true
+                                    self.dataSource.getValuesForCity(cityName: city.cityName)
+                                    self.appVM.updateMapRegion = true
+                                    self.appVM.updateMapAnnotations = true
+                                }
                         }.onDelete(perform: self.delete)
-                            //.onMove(perform: self.move)
+                        //.onMove(perform: self.move)
                     }
                     HStack {
                         Spacer()
@@ -49,8 +51,8 @@ struct FavouriteCitiesView: View {
                             .onTapGesture {
                                 self.appVM.showSheet = true
                                 self.appVM.activeSheet = .cityListView
-                        }
-                        .padding([.bottom, .trailing], 20)
+                            }
+                            .padding([.bottom, .trailing], 20)
                     }
                 }.background(Color.white)
             }
