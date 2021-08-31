@@ -33,6 +33,14 @@ struct MainView: View {
                             leading: Button(action: {
                                 withAnimation(.easeInOut(duration: 0.2)){
                                     self.appVM.citySelectorClicked.toggle()
+                                    if self.showPicker == true {
+                                        self.showPicker = false
+                                    }
+                                    if self.appVM.showSensorDetails == true{
+                                        self.appVM.showSensorDetails = false
+                                        self.appVM.selectedSensor = nil
+                                        self.appVM.updateMapAnnotations = true
+                                    }
                                 }
                             }) {
                                 HStack {
@@ -58,6 +66,7 @@ struct MainView: View {
                                             self.dataSource.getMeasures()
                                             self.dataSource.loadingCityData = true
                                             self.dataSource.getValuesForCity(cityName: self.appVM.cityName)
+                                            self.showPicker = false
                                         }
                                 }
                                 Button(action: {
@@ -85,7 +94,7 @@ struct MainView: View {
                                 .animation(.spring())
                                 .zIndex(1)
                         }
-                        if self.appVM.showSensorDetails {
+                        else if self.appVM.showSensorDetails {
                             SlideOverCard {
                                 SensorDetailsView(viewModel: SensorDetailsViewModel(
                                     sensor: self.appVM.selectedSensor ?? SensorVM(),
