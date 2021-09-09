@@ -90,7 +90,6 @@
 		BA12EB102611E503005BC654 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB0F2611E503005BC654 /* Country.swift */; };
 		BA12EB122611E520005BC654 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB112611E520005BC654 /* Countries.swift */; };
 		BA12EB142611E5BA005BC654 /* LanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB132611E5BA005BC654 /* LanguageView.swift */; };
-		BA12EB162611E7BC005BC654 /* translations.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA12EB152611E7BC005BC654 /* translations.plist */; };
 		BA483A2425B06E3400D4E178 /* lightMap.json in Resources */ = {isa = PBXBuildFile; fileRef = BA483A2325B06E3400D4E178 /* lightMap.json */; };
 		BA5C405025D3D1E80010291F /* DailyAverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5C404F25D3D1E80010291F /* DailyAverageView.swift */; };
 		BA5C405225D3D25D0010291F /* WeeklyAverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5C405125D3D25D0010291F /* WeeklyAverageView.swift */; };
@@ -207,7 +206,6 @@
 		BA12EB0F2611E503005BC654 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		BA12EB112611E520005BC654 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		BA12EB132611E5BA005BC654 /* LanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageView.swift; sourceTree = "<group>"; };
-		BA12EB152611E7BC005BC654 /* translations.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = translations.plist; sourceTree = "<group>"; };
 		BA483A2325B06E3400D4E178 /* lightMap.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = lightMap.json; path = ../../../pulse.eco/Assets/lightMap.json; sourceTree = "<group>"; };
 		BA5C404F25D3D1E80010291F /* DailyAverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageView.swift; sourceTree = "<group>"; };
 		BA5C405125D3D25D0010291F /* WeeklyAverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageView.swift; sourceTree = "<group>"; };
@@ -442,7 +440,6 @@
 				59A35AD92499057C00C07786 /* Constants.swift */,
 				59F01AD624AC7B1300AD2802 /* DataSource.swift */,
 				593C264224BC9E01005152BE /* UserSettings.swift */,
-				BA12EB152611E7BC005BC654 /* translations.plist */,
 			);
 			path = PulseEcoSwiftUI;
 			sourceTree = "<group>";
@@ -547,6 +544,7 @@
 			buildConfigurationList = 59A4F6B5247FD2160089D523 /* Build configuration list for PBXNativeTarget "PulseEcoSwiftUI" */;
 			buildPhases = (
 				EAE471DDE3169270E1B4E500 /* [CP] Check Pods Manifest.lock */,
+				74B053EB26E9F8BF0067B6E3 /* Run Trema Script */,
 				59A4F687247FD2150089D523 /* Sources */,
 				59A4F688247FD2150089D523 /* Frameworks */,
 				59A4F689247FD2150089D523 /* Resources */,
@@ -649,7 +647,6 @@
 				59A4F69B247FD2160089D523 /* LaunchScreen.storyboard in Resources */,
 				BA483A2425B06E3400D4E178 /* lightMap.json in Resources */,
 				59E4991D24C5A2E000E89746 /* TitilliumWeb-ExtraLightItalic.ttf in Resources */,
-				BA12EB162611E7BC005BC654 /* translations.plist in Resources */,
 				59E4991B24C5A2E000E89746 /* TitilliumWeb-ExtraLight.ttf in Resources */,
 				59E4992024C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf in Resources */,
 				59E4991C24C5A2E000E89746 /* TitilliumWeb-BoldItalic.ttf in Resources */,
@@ -683,6 +680,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		74B053EB26E9F8BF0067B6E3 /* Run Trema Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Trema Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}\"/PulseEcoSwiftUI/trema/trema.rb \"${SRCROOT}/PulseEcoSwiftUI/trema/translations.trm\" \"${CODESIGNING_FOLDER_PATH}\"\n";
+		};
 		EAE471DDE3169270E1B4E500 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

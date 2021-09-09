@@ -17,12 +17,17 @@ class Trema {
     
     static func text(for key: String,
                      language: String = appLanguage) -> String {
-        if let path = Bundle.main.path(forResource: "translations", ofType: "plist"),
-            let dict = NSDictionary(contentsOfFile: path) as? [String: Any] {
-            let translations = dict[key] as? [String:String]
-            return translations?[language] ?? key
-        }
-        return key
+        key.localizedFor(language)
     }
-    
+}
+
+private extension String {
+    func localizedFor(_ language: String) -> String {
+        guard let path = Bundle.main.path(forResource: language, ofType: "lproj") else {
+            return self
+        }
+        let bundle = Bundle(path: path)
+        bundle?.load()
+        return bundle?.localizedString(forKey: self, value: nil, table: "messages") ?? self
+    }
 }
