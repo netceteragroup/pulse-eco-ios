@@ -34,9 +34,6 @@ struct LineChartSwiftUI: UIViewRepresentable {
             var dataEntry = ChartDataEntry()
             let date = DateFormatter.iso8601Full.date(from: i.stamp) ?? Date()
             let valuedate = date.timeIntervalSince1970
-            let currdate = Date().timeIntervalSince1970
-            print(currdate)
-            print(valuedate)
             let x =  valuedate
             let y = Double(i.value)!
             dataEntry = ChartDataEntry(x: x, y: y)
