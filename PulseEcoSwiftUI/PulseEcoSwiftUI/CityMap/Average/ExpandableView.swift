@@ -2,6 +2,7 @@ import SwiftUI
 import Combine
 
 struct ExpandableView: View {
+    @EnvironmentObject var appVM: AppVM
     @State var isExpanded = false
     @State var width: CGFloat = 115
     var viewModel: AverageVM
@@ -18,11 +19,12 @@ struct ExpandableView: View {
                         RoundedCorners(tl: 8, tr: 8, bl: 0, br: 0)
                             .fill(Color(UIColor(white: 0, alpha: 0.3)))
                             .frame(height:  20)
-                            .overlay(Text("Average")
+                            .overlay(Text(Trema.text(for: "average"))
                                         .font(.system(size: 13))
                                         .foregroundColor(Color.white)
                                         .padding(.leading, 10), alignment: .leading
                             )
+                        
                         HStack(alignment: .top) {
                             
                             VStack {

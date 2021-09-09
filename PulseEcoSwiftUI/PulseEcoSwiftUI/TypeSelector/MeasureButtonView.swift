@@ -9,7 +9,8 @@ struct MeasureButtonView: View {
             Button(action:  {
                 self.appVM.selectedMeasure = self.viewModel.id
                 self.appVM.updateMapRegion = false
-                self.appVM.updateMapAnnotations = true
+                //self.appVM.updateMapAnnotations = true
+                self.appVM.getNewSensors = true
                 self.appVM.showSensorDetails = false
                 self.appVM.selectedSensor = self.appVM.selectedSensor
             }) {

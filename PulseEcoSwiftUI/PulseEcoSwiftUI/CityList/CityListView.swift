@@ -10,8 +10,10 @@ struct CityListView: View {
     var body: some View {
         VStack {
             VStack(spacing: 5) {
-                Text("Search city, or choose suggested").foregroundColor(Color.white)
-                SearchBar(text: self.$viewModel.searchText, placeholder: "Search City or Country")
+                Text(Trema.text(for: "search_city_or_choose_suggested"))
+                    .foregroundColor(Color.white).multilineTextAlignment(.center)
+                SearchBar(text: self.$viewModel.searchText,
+                          placeholder: Trema.text(for: "search_city_or_country"))
                     .padding(.horizontal, 10)
                 Text(self.viewModel.text).font(.headline).foregroundColor(Color.white)
             }.padding(.top, 10)

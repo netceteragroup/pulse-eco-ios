@@ -55,6 +55,17 @@ class LocationAnnotationView: MKAnnotationView {
         let calloutViewFrame = markerView.frame;
 
         selectedSensorView.frame = CGRect(x: -(selectedSensorView.frame.width - calloutViewFrame.size.width)/2, y: -calloutViewFrame.size.height + 5, width: selectedSensorView.frame.width, height: selectedSensorView.frame.height)
+        let scaleTransform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+        UIView.animate(withDuration: 0.2, animations: {
+            selectedSensorView.transform = scaleTransform
+            selectedSensorView.layoutIfNeeded()
+        }) { (isCompleted) in
+            UIView.animate(withDuration: 0.08, animations: {
+                selectedSensorView.alpha = 1.0
+                selectedSensorView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                selectedSensorView.layoutIfNeeded()
+            })
+        }
         
         markerView.addSubview(selectedSensorView)
         self.selectedSensor = selectedSensorView

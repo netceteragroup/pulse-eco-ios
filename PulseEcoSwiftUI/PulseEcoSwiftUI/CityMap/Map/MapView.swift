@@ -22,6 +22,17 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
             return nil
         }
         let annotationView = LocationAnnotationView(annotation: annotation, reuseIdentifier: "customView")
+        let scaleTransform = CGAffineTransform(scaleX: 0.0, y: 0.0)  // Scale
+        UIView.animate(withDuration: 0.2, animations: {
+            annotationView.transform = scaleTransform
+            annotationView.layoutIfNeeded()
+        }) { (isCompleted) in
+            UIView.animate(withDuration: 0.08, animations: {
+                annotationView.alpha = 1.0
+                annotationView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                annotationView.layoutIfNeeded()
+            })
+        }
 
         return annotationView
         
@@ -37,6 +48,7 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         mapViewController.appVM.selectedSensor = annotationView.pin ?? SensorVM()
         mapViewController.appVM.updateMapRegion = false
         mapViewController.appVM.updateMapAnnotations = false
+        mapViewController.appVM.getNewSensors = false
         mapViewController.dataSource.getDailyAverageDataForSensor(cityName: mapViewController.appVM.cityName,
                                                                   measureType: mapViewController.appVM.selectedMeasure,
                                                                   sensorId: mapViewController.appVM.selectedSensor?.sensorID ?? "")
@@ -50,6 +62,7 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         mapViewController.appVM.showSensorDetails = false
         mapViewController.appVM.updateMapRegion = false
         mapViewController.appVM.updateMapAnnotations = false
+        mapViewController.appVM.getNewSensors = false
     }
 }
 
@@ -75,11 +88,43 @@ struct MapView: UIViewRepresentable {
 //        let span = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
 //        let region = MKCoordinateRegion(center: coordinate, span: span)
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
-        if self.appVM.updateMapAnnotations {
-            uiView.removeAnnotations(uiView.annotations)
+        //var newAnnotationList: [SensorVM] = []
+        var newAnnotationListSensorIds: [String] = []
+        let currentAnnotations = uiView.annotations as! [SensorVM]
+        let currentAnnotationsSensorIds = currentAnnotations.map{$0.sensorID}
+        let selectedAnnotations = uiView.selectedAnnotations
+        if self.appVM.updateMapAnnotations { 
+            for pin in self.viewModel.sensors {
+                //newAnnotationList.append(pin) // add all the needed sensors to a list
+                newAnnotationListSensorIds.append(pin.sensorID) // add the ids of the sensors to a list
+                if !currentAnnotationsSensorIds.contains(pin.sensorID){ // check if theres a new sensor
+                    uiView.addAnnotation(pin) // add the sensor if theres a new one
+                }
+                else /*if currentAnnotationsSensorIds.contains(pin.sensorID)*/{
+                    let foundSensor = currentAnnotations.filter{$0.sensorID == pin.sensorID }.first
+                    if foundSensor?.stamp != pin.stamp{
+                        uiView.addAnnotation(pin)
+                        uiView.removeAnnotation(foundSensor!)
+                    }
+                }
+            }
+            for pin in currentAnnotations{ // check the list of current sensors (before adding the new ones)
+                if !newAnnotationListSensorIds.contains(pin.sensorID){ // check if theres a removed sensor
+                    uiView.removeAnnotation(pin) // delete that sensor from the view
+                }
+            }
+            if let item = selectedAnnotations[safe: 0] { // check if theres a sensor selected
+                uiView.deselectAnnotation(item, animated: true) // deselect the sensor
+            }
+            
+        }
+        
+        if self.appVM.getNewSensors{
             for pin in self.viewModel.sensors {
                 uiView.addAnnotation(pin)
             }
+            uiView.removeAnnotations(currentAnnotations)
+            self.appVM.getNewSensors = false
         }
                
         if self.appVM.updateMapRegion {
@@ -93,5 +138,11 @@ struct MapView: UIViewRepresentable {
         uiView.setCameraZoomRange(zoomRange, animated: true)
 //        let tapGestureRecognizer = UITapGestureRecognizer(target: context.coordinator, action:#selector(Coordinator.triggerTouchAction(tapGestureRecognizer:)))
         //uiView.addGestureRecognizer(tapGestureRecognizer)
+    }
+}
+
+extension Collection {
+    subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
     }
 }

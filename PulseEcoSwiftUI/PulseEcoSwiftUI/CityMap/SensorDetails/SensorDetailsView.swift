@@ -1,52 +1,80 @@
+//
+//  SensorDView.swift
+//  PulseEcoSwiftUI
+//
+//  Created by Maja Mitreska on 1/25/21.
+//  Copyright © 2021 Monika Dimitrova. All rights reserved.
+//
+
 import SwiftUI
 
 struct SensorDetailsView: View {
-    @State var isExpanded: Bool = true
+    
     @EnvironmentObject var appVM: AppVM
-    @State var collapsedViewSize: CGSize = .zero
-    @State var expandedViewSize: CGSize = .zero
     @EnvironmentObject var dataSource: DataSource
-    @EnvironmentObject var partialSheet : PartialSheetManager
-    @State var isSheetShown = false
-    
-    
+    @ObservedObject var viewModel: SensorDetailsViewModel
+    @State var isExpanded: Bool = false
     var body: some View {
         VStack {
-            ChildSizeReader(size: self.$collapsedViewSize) {
-                CollapsedView(viewModel: SensorDetailsVM(sensor: self.appVM.selectedSensor ?? SensorVM(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure))).padding(.top, 5)
-                    .padding(.bottom, 30)
-                /* .partialSheet(isPresented: self.$isSheetShown) {
-                 if self.isExpanded {
-                 ChildSizeReader(size: self.$expandedViewSize) {
-                 ExpandedView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h)).padding(.vertical, 50)
-                 }
-                 }
-                 
-                 }*/
-            }
-            if self.isExpanded {
-                ChildSizeReader(size: self.$expandedViewSize) {
-                    ExpandedView(viewModel: ExpandedVM(sensorData24h: self.dataSource.sensorsData24h, dailyAverages: self.dataSource.sensorsDailyAverageData))
-                }
-            }
-        }
-        .background(RoundedCorners(tl: 40, tr: 40, bl: 0, br: 0).fill(Color.white))
-        .offset(y: self.isExpanded ? UIHeight/2 - (self.expandedViewSize.height) + self.collapsedViewSize.height/2 : UIHeight/2 - (self.collapsedViewSize.height))
-        .animation(.easeIn)
-        .transition(.slide)
-        .gesture(
-            DragGesture()
-                .onEnded { value in
-                    if value.translation.height < 0 {
-                        self.isSheetShown = true
-                        self.isExpanded = true
-                        self.appVM.blurBackground = true
-                    } else {
-                        self.isExpanded = false
-                        self.isSheetShown = false
-                        self.appVM.blurBackground = false
+            // Handler
+            RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.0)
+                .frame(width: 40, height: 3.0)
+                .foregroundColor(Color(UIColor.systemGray2))
+                .padding([.top, .bottom], 10)
+            // Collapsed View
+            VStack {
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 1) {
+                        HStack {
+                            Image(uiImage: self.viewModel.image)//.animation(.none)
+                            Text("\(self.viewModel.title)").foregroundColor(Color.gray)
+                                .font(.system(size: 13))//.animation(.none)
+                        }
+                        HStack {
+                            Text(self.viewModel.value).font(.system(size: 40))
+                            Text(self.viewModel.unit).padding(.top, 10)
+                            Spacer()
+                            VStack (alignment: .trailing) {
+                                Text("\(self.viewModel.time)")
+                                Text("\(self.viewModel.date)").foregroundColor(Color.gray)
+                            }
+                        }
                     }
+                }.padding([.horizontal], 20)
             }
-        )
+            // Expanded View
+            VStack {
+                LineChartSwiftUI(viewModel:
+                    ChartViewModel(sensor: self.appVM.selectedSensor ?? SensorVM(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure)
+                    )
+                ).frame(width: 350, height: 200 )
+                
+                WeeklyAverageView(viewModel: WeeklyAverageViewModel(appVM: appVM,
+                                                                    dataSource: dataSource,
+                                                                    averages: self.viewModel.dailyAverages))
+                    .padding(.bottom, 20)
+                
+                Text(self.viewModel.disclaimerMessage)
+                    .font(.system(size: 11, weight: .light))
+                    .foregroundColor(self.viewModel.color)
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.center)
+                    .padding([.horizontal, .bottom], 15).fixedSize(horizontal: false, vertical: true)
+                
+                HStack {
+                    Text(Trema.text(for: "details"))
+                        .font(.system(size: 13, weight: .medium))
+                    Text("|")
+                        .font(.system(size: 13, weight: .medium))
+                    Text(Trema.text(for: "privacy_policy"))
+                        .font(.system(size: 13, weight: .medium))
+                }.foregroundColor(self.viewModel.color)
+                    .padding(.bottom, 15)
+            }.scaledToFit()
+            Spacer()
+        }
     }
 }
+
+
+

@@ -31,12 +31,13 @@ struct LoadingView<Content>: View where Content: View {
 struct LoadingDialog: View {
     var body: some View {
         ZStack(alignment: .center) {
-        Image(uiImage: UIImage(named: "launchScreenBackground") ?? UIImage()).resizable().scaledToFill()//.overlay(
+        Image(uiImage: UIImage(named: "launchScreenBackground") ?? UIImage()).resizable()//.scaledToFill()
+            .overlay(
             VStack {
                 Image(uiImage: UIImage(named: "launchScreenLogo") ?? UIImage())
                 Image(uiImage: UIImage(named: "launchScreenName") ?? UIImage())
             }.scaledToFit()
-            //, alignment: .center)
+           , alignment: .center)
         }.edgesIgnoringSafeArea(.all)
     }
 }

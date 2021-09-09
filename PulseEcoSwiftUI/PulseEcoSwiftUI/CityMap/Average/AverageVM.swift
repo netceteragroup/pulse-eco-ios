@@ -39,7 +39,7 @@ class AverageVM: ObservableObject {
             self.value = 0
         }
         self.measureBandsWidth = 100
-        self.message = "No data available. Try again later."
+        self.message = Trema.text(for: "no_data_available")
         self.measure = measure
         self.unit = "µq/m3"
         self.cityName = cityName
@@ -160,7 +160,7 @@ class BandVM: Identifiable {
          legendColor: UIColor = AppColors.gray,
          markerColor: UIColor = AppColors.gray,
          shortGrade: String = "--",
-         grade: String = "No data available. Try again later.",
+         grade: String = Trema.text(for: "no_data_available"),
          suggestion: String = "--",
          width: Double = 0.0) {
         self.from = from

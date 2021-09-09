@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trema masterLang="de" noNamespaceSchemaLocation="http://software.group.nca/trema/schema/trema-1.0.xsd">
+    <!--region Application-->
+    <text key="mon">
+        <context></context>
+        <value lang="en" status="translated">Mon</value>
+        <value lang="mk" status="translated">Пон</value>
+        <value lang="de" status="translated">Mo</value>
+    </text>
+    <text key="tue">
+        <context></context>
+        <value lang="en" status="translated">Tue</value>
+        <value lang="mk" status="translated">Вто</value>
+        <value lang="de" status="translated">Di</value>
+    </text>
+    <text key="wed">
+        <context></context>
+        <value lang="en" status="translated">Wed</value>
+        <value lang="mk" status="translated">Сре</value>
+        <value lang="de" status="translated">Mi</value>
+    </text>
+    <text key="thu">
+        <context></context>
+        <value lang="en" status="translated">Thu</value>
+        <value lang="mk" status="translated">Чет</value>
+        <value lang="de" status="translated">Do</value>
+    </text>
+    <text key="fri">
+        <context></context>
+        <value lang="en" status="translated">Fri</value>
+        <value lang="mk" status="translated">Пет</value>
+        <value lang="de" status="translated">Fr</value>
+    </text>
+    <text key="sat">
+        <context></context>
+        <value lang="en" status="translated">Sat</value>
+        <value lang="mk" status="translated">Саб</value>
+        <value lang="de" status="translated">Sa</value>
+    </text>
+    <text key="sun">
+        <context></context>
+        <value lang="en" status="translated">Sun</value>
+        <value lang="mk" status="translated">Нед</value>
+        <value lang="de" status="translated">So</value>
+    </text>
+    <text key="crowdsourced_sensor_data">
+        <context></context>
+        <value lang="en" status="translated">Crowdsourced sensor data</value>
+        <value lang="mk" status="translated">Податоци од заедницата</value>
+        <value lang="de" status="translated">Crowdsourced-Sensordaten</value>
+    </text>
+    <text key="no_readings">
+        <context></context>
+        <value lang="en" status="translated">No readings</value>
+        <value lang="mk" status="translated">Нема читања</value>
+        <value lang="de" status="translated">Keine Lesungen</value>
+    </text>
+    <text key="past_week">
+        <context></context>
+        <value lang="en" status="translated">Past week</value>
+        <value lang="mk" status="translated">Минатата недела</value>
+        <value lang="de" status="translated">Letzte Woche</value>
+    </text>
+    <text key="unknown">
+        <context></context>
+        <value lang="en" status="translated">Unknown</value>
+        <value lang="mk" status="translated">Непознато</value>
+        <value lang="de" status="translated">Unbekannt</value>
+    </text>
+    <text key="disclaimer_short_message">
+        <context></context>
+        <value lang="en" status="translated">Disclaimer: The data shown comes directly from the used sensors. We do not guarantee of their correctness.</value>
+        <value lang="mk" status="translated">Прикажаните податоци потекнуваат директно од самите сензори. Не гарантираме за нивната точност.</value>
+        <value lang="de" status="translated">Die angezeigten Daten stammen direkt von den verwendeten Sensoren. Wir übernehmen keine Garantie für deren Richtigkeit.</value>
+    </text>
+    <text key="privacy_policy">
+        <context></context>
+        <value lang="en" status="translated">Privacy Policy</value>
+        <value lang="mk" status="translated">Политика за приватност</value>
+        <value lang="de" status="translated">Datenschutz-Bestimmungen</value>
+    </text>
+    <text key="details">
+        <context></context>
+        <value lang="en" status="translated">Details</value>
+        <value lang="mk" status="translated">Детали</value>
+        <value lang="de" status="translated">Einzelheiten</value>
+    </text>
+    <text key="results">
+        <context></context>
+        <value lang="en" status="translated">Results</value>
+        <value lang="mk" status="translated">Резултати</value>
+        <value lang="de" status="translated">Ergebnisse</value>
+    </text>
+    <text key="suggested">
+        <context></context>
+        <value lang="en" status="translated">Suggested</value>
+        <value lang="mk" status="translated">Предложени</value>
+        <value lang="de" status="translated">Empfohlen</value>
+    </text>
+    <text key="search_city_or_choose_suggested">
+        <context></context>
+        <value lang="en" status="translated">Search city, or choose suggested</value>
+        <value lang="mk" status="translated">Пребарувајте град или изберете од предложените</value>
+        <value lang="de" status="translated">Suche nach Stadt oder wähle vorgeschlagen</value>
+    </text>
+    <text key="search_city_or_country">
+        <context></context>
+        <value lang="en" status="translated">Search City or Country</value>
+        <value lang="mk" status="translated">Пребарување по град или земја</value>
+        <value lang="de" status="translated">Suche Stadt oder Land</value>
+    </text>
+    <text key="no_data_available">
+        <context></context>
+        <value lang="en" status="translated">No data available. Try again later.</value>
+        <value lang="mk" status="translated">Нема достапни податоци. Обидете се повторно подоцна.</value>
+        <value lang="de" status="translated">Keine Daten verfügbar. Versuchen Sie es später erneut.</value>
+    </text>
+    <text key="disclaimer_message">
+        <context></context>
+        <value lang="en" status="translated">The data collected are not manipulated in any way. We do not guarantee of their correctness. The MOEPP sensor data are stored as receiver from their service, while the pulse.eco devices depend on the correctness of the used sensors: Nova PM SDS011/SDS021, DHT22 and Grove Sounds sensor. Please refer to their data sheets for details.</value>
+        <value lang="mk" status="translated">Собраните податоци не се манипулирани на никаков начин. Не гарантираме за нивната коректност. Податоците за MOEPP сензорот се зачувуваат онака како што се примени од нивниот серис, додека pulse.eco уредите зависат од исправноста на користените сензори: сензорот Nova PM SDS011 / SDS021, DHT22 и Grove Sounds. За повеќе детали, погледнете ги нивните документации.</value>
+        <value lang="de" status="translated">Die gesammelten Daten werden in keiner Weise manipuliert. Wir übernehmen keine Garantie für die Richtigkeit. Die MOEPP-Sensordaten werden als Empfänger von ihrem Dienst gespeichert, während die puls.eco-Geräte von der Richtigkeit der verwendeten Sensoren abhängen: Nova PM SDS011 / SDS021, DHT22 und Grove Sounds-Sensor. Einzelheiten entnehmen Sie bitte den Datenblättern.</value>
+    </text>
+    <text key="disclaimer">
+        <context></context>
+        <value lang="en" status="translated">Disclaimer</value>
+        <value lang="mk" status="translated">Забелешка</value>
+        <value lang="de" status="translated">Haftungsausschluss</value>
+    </text>
+    <text key="ok">
+        <context></context>
+        <value lang="en" status="translated">OK</value>
+        <value lang="mk" status="translated">Во ред</value>
+        <value lang="de" status="translated">ОК</value>
+    </text>
+    <text key="change_language_message">
+        <context></context>
+        <value lang="en" status="translated">Applying this setting will change the language of the app to %@ and will refresh the app.</value>
+        <value lang="mk" status="translated">Примената на оваа поставка ќе го промени јазикот во %@ и ќе ја освежи апликацијата.</value>
+        <value lang="de" status="translated">Durch Anwenden dieser Einstellung wird die Sprache der App in %@ geändert und die App neu gestartet.</value>
+    </text>
+    <text key="change_app_language">
+        <context></context>
+        <value lang="en" status="translated">Change App Language</value>
+        <value lang="mk" status="translated">Промена на јазик</value>
+        <value lang="de" status="translated">App-Sprache ändern</value>
+    </text>
+    <text key="proceed">
+        <context></context>
+        <value lang="en" status="translated">Proceed</value>
+        <value lang="mk" status="translated">Продолжи</value>
+        <value lang="de" status="translated">Vorgehen</value>
+    </text>
+    <text key="german">
+        <context></context>
+        <value lang="en" status="translated">Deutsche</value>
+        <value lang="mk" status="translated">Deutsche</value>
+        <value lang="de" status="translated">Deutsche</value>
+    </text>
+    <text key="macedonian">
+        <context></context>
+        <value lang="en" status="translated">Македонски</value>
+        <value lang="mk" status="translated">Македонски</value>
+        <value lang="de" status="translated">Македонски</value>
+    </text>
+    <text key="english">
+        <context></context>
+        <value lang="en" status="translated">English</value>
+        <value lang="mk" status="translated">English</value>
+        <value lang="de" status="translated">English</value>
+    </text>
+    <text key="done">
+        <context></context>
+        <value lang="en" status="translated">Done</value>
+        <value lang="mk" status="translated">Готово</value>
+        <value lang="de" status="translated">Getan</value>
+    </text>
+    <text key="cancel">
+        <context></context>
+        <value lang="en" status="translated">Cancel</value>
+        <value lang="mk" status="translated">Затвори</value>
+        <value lang="de" status="translated">Stornieren</value>
+    </text>
+    <text key="average">
+        <context></context>
+        <value lang="en" status="translated">Average</value>
+        <value lang="mk" status="translated">Просечно</value>
+        <value lang="de" status="translated">Durchschnittlich</value>
+    </text>
+</trema>

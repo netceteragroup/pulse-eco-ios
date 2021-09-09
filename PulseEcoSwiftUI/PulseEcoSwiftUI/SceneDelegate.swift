@@ -19,8 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Create the SwiftUI view that provides the window contents.
         //let contentView = ContentView()
-         let sheetManager: PartialSheetManager = PartialSheetManager()
-        let rootView = MainView()        .environmentObject(sheetManager)
+          
+        let rootView = MainView()        //.environmentObject(sheetManager)
         let state = AppVM()
         let dataSource = DataSource()
         // Use a UIHostingController as window root view controller.
@@ -30,6 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
         }
+    
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

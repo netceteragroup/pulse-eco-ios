@@ -6,7 +6,7 @@ class CityListVM: ObservableObject {
     @Published var cityModel: [CityModel] = []
     @Published var searchText : String = ""
     var text: String {
-        return searchText == "" ? "Suggested" : "Results"
+        return searchText == "" ? Trema.text(for: "suggested") : Trema.text(for: "results")
     }
     @Published var countries = Set<String>()
     
