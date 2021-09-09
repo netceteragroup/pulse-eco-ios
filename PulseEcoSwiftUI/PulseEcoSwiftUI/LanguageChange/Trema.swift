@@ -12,7 +12,12 @@ import SwiftUI
 class Trema {
     
     static var appLanguage: String {
-        UserDefaults.standard.string(forKey: "AppLanguage") ?? "en"
+        get {
+            UserDefaults.standard.string(forKey: "AppLanguage") ?? "en"
+        }
+        set (toLanguage) {
+            UserDefaults.standard.set(toLanguage, forKey: "AppLanguage")
+        }
     }
     
     static func text(for key: String,
@@ -27,7 +32,6 @@ private extension String {
             return self
         }
         let bundle = Bundle(path: path)
-        bundle?.load()
         return bundle?.localizedString(forKey: self, value: nil, table: "messages") ?? self
     }
 }

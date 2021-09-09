@@ -19,7 +19,7 @@ struct ExpandableView: View {
                         RoundedCorners(tl: 8, tr: 8, bl: 0, br: 0)
                             .fill(Color(UIColor(white: 0, alpha: 0.3)))
                             .frame(height:  20)
-                            .overlay(Text(Trema.text(for: "average", language: self.appVM.appLanguage))
+                            .overlay(Text(Trema.text(for: "average"))
                                         .font(.system(size: 13))
                                         .foregroundColor(Color.white)
                                         .padding(.leading, 10), alignment: .leading

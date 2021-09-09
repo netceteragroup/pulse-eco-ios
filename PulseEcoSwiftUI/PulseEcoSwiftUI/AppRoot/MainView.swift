@@ -78,7 +78,7 @@ struct MainView: View {
                                         
                                     }
                                 }) {
-                                    Text(Countries.selectedCountry(for: self.appVM.appLanguage).flagImageName)
+                                    Text(Countries.selectedCountry(for: Trema.appLanguage).flagImageName)
                                         .font(.title)
                                 }
                         })

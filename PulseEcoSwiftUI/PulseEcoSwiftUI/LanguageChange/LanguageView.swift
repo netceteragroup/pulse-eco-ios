@@ -23,28 +23,27 @@ struct LanguageView: View {
             VStack(spacing: 0) {
                 Spacer()
                 HStack{
-                    Button(Trema.text(for: "cancel", language: self.appVM.appLanguage)) {
+                    Button(Trema.text(for: "cancel")) {
                         self.showPicker = false
                     }.padding(.leading, 20)
                     Spacer()
                         .padding([.leading], 30)
-                    Button(Trema.text(for: "done", language: self.appVM.appLanguage)) {
-                        if (self.selectedCountry.shortName != self.appVM.appLanguage) {
+                    Button(Trema.text(for: "done")) {
+                        if (self.selectedCountry.shortName != Trema.appLanguage) {
                             self.showAlert = true
                         } else {
                             self.showPicker = false
                         }
                     }.padding(.trailing, 20)
                         .alert(isPresented: $showAlert) {
-                            return Alert(title: Text(Trema.text(for: "change_app_language", language: self.appVM.appLanguage)),
-                                         message: Text(String(format: Trema.text(for: "change_language_message",
-                                                                                 language: self.appVM.appLanguage),
+                            return Alert(title: Text(Trema.text(for: "change_app_language")),
+                                         message: Text(String(format: Trema.text(for: "change_language_message"),
                                                               selectedCountry.languageName)),
                                          primaryButton: .destructive(
-                                            Text(Trema.text(for: "cancel", language: self.appVM.appLanguage)),
+                                            Text(Trema.text(for: "cancel")),
                                             action: { self.showAlert = false}),
                                          secondaryButton: .default (
-                                            Text(Trema.text(for: "proceed", language: self.appVM.appLanguage)),
+                                            Text(Trema.text(for: "proceed")),
                                             action: {
                                                 withAnimation(Animation.linear.delay(1)){
                                                     self.changeLanguage(toLanguage: self.selectedCountry.shortName)
@@ -77,14 +76,13 @@ struct LanguageView: View {
         self.showPicker = false
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            UserDefaults.standard.set(toLanguage, forKey: "AppLanguage")
+            Trema.appLanguage = toLanguage
             self.dataSource.loadingCityData = true
             self.dataSource.getMeasures()
             self.dataSource.getValuesForCity(cityName: self.appVM.cityName)
             self.appVM.updateMapAnnotations = true
             self.appVM.updateMapRegion = true
-            self.appVM.appLanguage = toLanguage
-
+            self.appVM.selectedLanguage = toLanguage
         }
     }
     

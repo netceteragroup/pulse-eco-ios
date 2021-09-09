@@ -18,6 +18,6 @@ class AppVM: ObservableObject {
     @Published var blurBackground: Bool = false
     @Published var showSheet: Bool = false
     @Published var activeSheet: ActiveSheet = .disclaimerView
-    @Published var appLanguage: String = Trema.appLanguage
+    @Published var selectedLanguage: String = Trema.appLanguage
     @Published var getNewSensors: Bool = false
 }
