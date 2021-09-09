@@ -1,6 +1,6 @@
 import Foundation
 import Charts
-class ChartsDateValueFormatter: DateFormatter, IAxisValueFormatter {
+class ChartsDateValueFormatter: DateFormatter, AxisValueFormatter {
 
     override init() {
         super.init()

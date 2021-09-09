@@ -24,7 +24,7 @@ struct LineChartSwiftUI: UIViewRepresentable {
     
     func setUpChart() {
         lineChart.noDataText = Trema.text(for: "no_data_availabe")
-        var dataSets = [IChartDataSet]()
+        var dataSets = [ChartDataSet]()
         let colors = [AppColors.purple, AppColors.blue, AppColors.darkred, AppColors.darkgreen, AppColors.red]
         var iterator = colors.makeIterator()
         
@@ -104,7 +104,7 @@ class LimitLines {
         for limitLine in limitLines {
             limitLine.lineWidth = 1
             limitLine.lineDashLengths = [5, 5]
-            limitLine.labelPosition = .bottomRight
+            limitLine.labelPosition = .rightBottom
             limitLine.valueFont = .systemFont(ofSize: 8)
         }
         return limitLines

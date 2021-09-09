@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -82,7 +82,7 @@
 		59FAD1D42490C82600AC36A5 /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* CityModel.swift */; };
 		59FAD1D62490D76200AC36A5 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* Sensor.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
-		B273DFB12A0BE2703C2F38D3 /* libPods-PulseEcoSwiftUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */; };
+		740574C426EA2ED300C04568 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 740574C326EA2ED300C04568 /* Charts */; };
 		BA00D30F25D2B59600FA2C26 /* WeeklyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */; };
 		BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */; };
 		BA013FE8261C8E500057A343 /* LineChartSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */; };
@@ -96,6 +96,7 @@
 		BA718F0D25BED6B100EC87E0 /* SensorDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA718F0C25BED6B100EC87E0 /* SensorDetailsView.swift */; };
 		BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA692F525E3E7C6002E0B2F /* DailyInfoSensor.swift */; };
 		BAC09D8525E5183400F794F9 /* SensorPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC09D8425E5183400F794F9 /* SensorPin.swift */; };
+		DE461D9726E3B2150084E85B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = DE461D9626E3B2150084E85B /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,8 +116,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		DE461D9226E3B1E10084E85B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		1C58AE0F686C04609FEE1C79 /* Pods-PulseEcoSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PulseEcoSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-PulseEcoSwiftUI/Pods-PulseEcoSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
 		32479107261A6F7200E97C56 /* SlideOverCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverCard.swift; sourceTree = "<group>"; };
 		3288686C24B513DA009CC56D /* LocationAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotationView.swift; sourceTree = "<group>"; };
 		3288687024B51F5E009CC56D /* SelectedSensorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedSensorView.xib; sourceTree = "<group>"; };
@@ -198,7 +211,6 @@
 		59FAD1D32490C82600AC36A5 /* CityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityModel.swift; sourceTree = "<group>"; };
 		59FAD1D52490D76200AC36A5 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
-		9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PulseEcoSwiftUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageViewModel.swift; sourceTree = "<group>"; };
 		BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageViewModel.swift; sourceTree = "<group>"; };
 		BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartSwiftUI.swift; sourceTree = "<group>"; };
@@ -212,7 +224,6 @@
 		BA718F0C25BED6B100EC87E0 /* SensorDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDetailsView.swift; sourceTree = "<group>"; };
 		BAA692F525E3E7C6002E0B2F /* DailyInfoSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyInfoSensor.swift; sourceTree = "<group>"; };
 		BAC09D8425E5183400F794F9 /* SensorPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorPin.swift; sourceTree = "<group>"; };
-		F5D1BBA3F006FE8F999EF2CF /* Pods-PulseEcoSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PulseEcoSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-PulseEcoSwiftUI/Pods-PulseEcoSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,7 +231,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B273DFB12A0BE2703C2F38D3 /* libPods-PulseEcoSwiftUI.a in Frameworks */,
+				DE461D9726E3B2150084E85B /* Lottie in Frameworks */,
+				740574C426EA2ED300C04568 /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,23 +272,6 @@
 				3288687824B5C053009CC56D /* UIViewExtension.swift */,
 			);
 			path = Markers;
-			sourceTree = "<group>";
-		};
-		3835A225C2A2B59F6745C35F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9C0A2C720954048EC787E6B6 /* libPods-PulseEcoSwiftUI.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3E1CD7BA7AB820208248E7DA /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F5D1BBA3F006FE8F999EF2CF /* Pods-PulseEcoSwiftUI.debug.xcconfig */,
-				1C58AE0F686C04609FEE1C79 /* Pods-PulseEcoSwiftUI.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		59103A9E24A4B62F00ED9617 /* Disclamer */ = {
@@ -404,8 +399,6 @@
 				59A4F6A4247FD2160089D523 /* PulseEcoSwiftUITests */,
 				59A4F6AF247FD2160089D523 /* PulseEcoSwiftUIUITests */,
 				59A4F68C247FD2150089D523 /* Products */,
-				3E1CD7BA7AB820208248E7DA /* Pods */,
-				3835A225C2A2B59F6745C35F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -543,17 +536,21 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59A4F6B5247FD2160089D523 /* Build configuration list for PBXNativeTarget "PulseEcoSwiftUI" */;
 			buildPhases = (
-				EAE471DDE3169270E1B4E500 /* [CP] Check Pods Manifest.lock */,
 				74B053EB26E9F8BF0067B6E3 /* Run Trema Script */,
 				59A4F687247FD2150089D523 /* Sources */,
 				59A4F688247FD2150089D523 /* Frameworks */,
 				59A4F689247FD2150089D523 /* Resources */,
+				DE461D9226E3B1E10084E85B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = PulseEcoSwiftUI;
+			packageProductDependencies = (
+				DE461D9626E3B2150084E85B /* Lottie */,
+				740574C326EA2ED300C04568 /* Charts */,
+			);
 			productName = PulseEcoSwiftUI;
 			productReference = 59A4F68B247FD2150089D523 /* PulseEcoSwiftUI.app */;
 			productType = "com.apple.product-type.application";
@@ -626,6 +623,10 @@
 				Base,
 			);
 			mainGroup = 59A4F682247FD2150089D523;
+			packageReferences = (
+				DE461D9526E3B2150084E85B /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				740574C226EA2ED300C04568 /* XCRemoteSwiftPackageReference "Charts" */,
+			);
 			productRefGroup = 59A4F68C247FD2150089D523 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -697,28 +698,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}\"/PulseEcoSwiftUI/trema/trema.rb \"${SRCROOT}/PulseEcoSwiftUI/trema/translations.trm\" \"${CODESIGNING_FOLDER_PATH}\"\n";
-		};
-		EAE471DDE3169270E1B4E500 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PulseEcoSwiftUI-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -957,7 +936,6 @@
 		};
 		59A4F6B6247FD2160089D523 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F5D1BBA3F006FE8F999EF2CF /* Pods-PulseEcoSwiftUI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -978,7 +956,6 @@
 		};
 		59A4F6B7247FD2160089D523 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1C58AE0F686C04609FEE1C79 /* Pods-PulseEcoSwiftUI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1117,6 +1094,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		740574C226EA2ED300C04568 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
+		DE461D9526E3B2150084E85B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		740574C326EA2ED300C04568 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 740574C226EA2ED300C04568 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+		DE461D9626E3B2150084E85B /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE461D9526E3B2150084E85B /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 59A4F683247FD2150089D523 /* Project object */;
 }
