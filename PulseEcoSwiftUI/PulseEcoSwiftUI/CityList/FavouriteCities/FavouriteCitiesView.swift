@@ -15,6 +15,7 @@ struct FavouriteCitiesView: View {
     @ObservedObject var viewModel: FavouriteCitiesVM
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
+    @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var userSettings: UserSettings
     var body: some View {
         VStack() {
@@ -35,6 +36,7 @@ struct FavouriteCitiesView: View {
                                     self.appVM.citySelectorClicked = false
                                     self.appVM.cityName = city.cityName
                                     self.dataSource.loadingCityData = true
+                                    self.refreshService.updateRefreshDate()
                                     self.dataSource.getValuesForCity(cityName: city.cityName)
                                     self.appVM.updateMapRegion = true
                                     self.appVM.updateMapAnnotations = true

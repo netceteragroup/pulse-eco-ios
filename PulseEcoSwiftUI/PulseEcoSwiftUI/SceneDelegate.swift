@@ -27,13 +27,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let appViewModel = AppVM()
         let dataSource = DataSource()
         self.refreshService = RefreshService(appViewModel: appViewModel, appDataSource: dataSource)
-        let rootView = MainView(refreshService: refreshService)
+        let rootView = MainView()
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: rootView
                                                                 .environmentObject(appViewModel)
-                                                                .environmentObject(dataSource))
+                                                                .environmentObject(dataSource)
+                                                                .environmentObject(refreshService))
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -65,41 +66,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-    }
-    
-    
-}
-
-class RefreshService {
-    let appViewModel: AppVM
-    let appDataSource: DataSource
-    private var refreshDate: Date = Date()
-    
-    init(appViewModel: AppVM, appDataSource: DataSource) {
-        self.appViewModel = appViewModel
-        self.appDataSource = appDataSource
-    }
-    
-    func refreshDataIfNeeded() {
-        if let diff = Calendar.current.dateComponents([.second], from: refreshDate, to: Date()).second, diff > 5 {
-            refreshData()
-        }
-    }
-
-    func updateRefreshDate() {
-        refreshDate = Date()
-    }
-    
-    func refreshData() {
-        updateRefreshDate()
-        self.appViewModel.showSensorDetails = false
-        self.appViewModel.selectedSensor = nil
-        self.appViewModel.updateMapAnnotations = true
-        self.appViewModel.updateMapRegion = true
-        self.appDataSource.loadingMeasures = true
-        self.appDataSource.getMeasures()
-        self.appDataSource.loadingCityData = true
-        self.appDataSource.getValuesForCity(cityName: self.appViewModel.cityName)
     }
     
     

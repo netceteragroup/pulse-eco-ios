@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MainView: View {
-    let refreshService: RefreshService 
+    @EnvironmentObject var refreshService: RefreshService 
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
     @ObservedObject var userSettings = UserSettings()
