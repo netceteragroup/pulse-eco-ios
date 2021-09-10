@@ -20,7 +20,7 @@ class RefreshService: ObservableObject {
     }
     
     func refreshDataIfNeeded() {
-        if let diff = Calendar.current.dateComponents([.second], from: refreshDate, to: Date()).second, diff >= 5 {
+        if let diff = Calendar.current.dateComponents([.minute], from: refreshDate, to: Date()).minute, diff >= 15 {
             refreshData()
         }
     }
