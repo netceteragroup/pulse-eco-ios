@@ -12,6 +12,9 @@ import SwiftUI
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
+
+    private (set) var refreshService: RefreshService!
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -20,13 +23,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         //let contentView = ContentView()
           
-        let rootView = MainView()        //.environmentObject(sheetManager)
-        let state = AppVM()
+             //.environmentObject(sheetManager)
+        let appViewModel = AppVM()
         let dataSource = DataSource()
+        self.refreshService = RefreshService(appViewModel: appViewModel, appDataSource: dataSource)
+        let rootView = MainView(refreshService: refreshService)
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: rootView.environmentObject(state).environmentObject(dataSource))
+            window.rootViewController = UIHostingController(rootView: rootView
+                                                                .environmentObject(appViewModel)
+                                                                .environmentObject(dataSource))
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -51,8 +58,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
+        refreshService.refreshDataIfNeeded()
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -64,3 +70,37 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
 }
 
+class RefreshService {
+    let appViewModel: AppVM
+    let appDataSource: DataSource
+    private var refreshDate: Date = Date()
+    
+    init(appViewModel: AppVM, appDataSource: DataSource) {
+        self.appViewModel = appViewModel
+        self.appDataSource = appDataSource
+    }
+    
+    func refreshDataIfNeeded() {
+        if let diff = Calendar.current.dateComponents([.second], from: refreshDate, to: Date()).second, diff > 5 {
+            refreshData()
+        }
+    }
+
+    func updateRefreshDate() {
+        refreshDate = Date()
+    }
+    
+    func refreshData() {
+        updateRefreshDate()
+        self.appViewModel.showSensorDetails = false
+        self.appViewModel.selectedSensor = nil
+        self.appViewModel.updateMapAnnotations = true
+        self.appViewModel.updateMapRegion = true
+        self.appDataSource.loadingMeasures = true
+        self.appDataSource.getMeasures()
+        self.appDataSource.loadingCityData = true
+        self.appDataSource.getValuesForCity(cityName: self.appViewModel.cityName)
+    }
+    
+    
+}
