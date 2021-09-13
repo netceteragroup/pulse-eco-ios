@@ -15,6 +15,7 @@ struct FavouriteCitiesView: View {
     @ObservedObject var viewModel: FavouriteCitiesVM
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
+    @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var userSettings: UserSettings
     var body: some View {
         VStack() {
@@ -26,35 +27,43 @@ struct FavouriteCitiesView: View {
                     }
                 }
             } else {
-                VStack {
-                    List {
-                        ForEach(self.viewModel.getCities(), id: \.id) { city in
-                            FavouriteCityRowView(viewModel: city)
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    self.appVM.citySelectorClicked = false
-                                    self.appVM.cityName = city.cityName
-                                    self.dataSource.loadingCityData = true
-                                    self.dataSource.getValuesForCity(cityName: city.cityName)
-                                    self.appVM.updateMapRegion = true
-                                    self.appVM.updateMapAnnotations = true
-                                }
-                        }.onDelete(perform: self.delete)
-                        //.onMove(perform: self.move)
+                ZStack {
+                    VStack{
+                        List {
+                            ForEach(self.viewModel.getCities(), id: \.id) { city in
+                                FavouriteCityRowView(viewModel: city)
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        self.appVM.citySelectorClicked = false
+                                        self.appVM.cityName = city.cityName
+                                        self.dataSource.loadingCityData = true
+                                        self.refreshService.updateRefreshDate()
+                                        self.dataSource.getValuesForCity(cityName: city.cityName)
+                                        self.appVM.updateMapRegion = true
+                                        self.appVM.updateMapAnnotations = true
+                                    }
+                            }.onDelete(perform: self.delete)
+                        }
                     }
-                    HStack {
+                    VStack{
                         Spacer()
-                        Image(systemName: "plus.circle")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(Color(AppColors.purple))
-                            .onTapGesture {
-                                self.appVM.showSheet = true
-                                self.appVM.activeSheet = .cityListView
-                            }
-                            .padding([.bottom, .trailing], 20)
+                        HStack {
+                            Spacer()
+                            Image(systemName: "plus.circle")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(Color(AppColors.purple))
+                                .onTapGesture {
+                                    self.appVM.showSheet = true
+                                    self.appVM.activeSheet = .cityListView
+                                }
+                                .padding(.trailing, 25)
+                        }
+                        .padding(.bottom, 25)
+                        .edgesIgnoringSafeArea(.bottom)
                     }
-                }.background(Color.white)
+                    .edgesIgnoringSafeArea(.bottom)
+                }.background(Color.clear)
             }
         }
         .background(Color.white)

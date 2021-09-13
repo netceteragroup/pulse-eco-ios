@@ -12,6 +12,7 @@ struct LanguageView: View {
     
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
+    @EnvironmentObject var refreshService: RefreshService
     @Binding var showPicker: Bool
     @State private var showAlert = false
     @State var selectedCountry = Countries.selectedCountry(for: Trema.appLanguage)
@@ -79,6 +80,7 @@ struct LanguageView: View {
             Trema.appLanguage = toLanguage
             self.dataSource.loadingCityData = true
             self.dataSource.getMeasures()
+            self.refreshService.updateRefreshDate()
             self.dataSource.getValuesForCity(cityName: self.appVM.cityName)
             self.appVM.updateMapAnnotations = true
             self.appVM.updateMapRegion = true

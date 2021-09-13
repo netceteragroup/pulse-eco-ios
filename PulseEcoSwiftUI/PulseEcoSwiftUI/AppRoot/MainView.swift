@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct MainView: View {
+    @EnvironmentObject var refreshService: RefreshService 
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
     @ObservedObject var userSettings = UserSettings()
@@ -58,14 +59,7 @@ struct MainView: View {
                                     .onTapGesture {
                                         //action
                                         if self.appVM.citySelectorClicked == false {
-                                            self.appVM.showSensorDetails = false
-                                            self.appVM.selectedSensor = nil
-                                            self.appVM.updateMapAnnotations = true
-                                            self.appVM.updateMapRegion = true
-                                            self.dataSource.loadingMeasures = true
-                                            self.dataSource.getMeasures()
-                                            self.dataSource.loadingCityData = true
-                                            self.dataSource.getValuesForCity(cityName: self.appVM.cityName)
+                                            self.refreshService.refreshData()
                                             self.showPicker = false
                                         }
                                 }
@@ -106,12 +100,6 @@ struct MainView: View {
                         }
                 })
         }
-    }
-}
-
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
     }
 }
 
