@@ -21,7 +21,7 @@ struct SlideOverCard<Content: View> : View {
         .background(Color.white)
         .cornerRadius(30.0)
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
-        .offset(y: self.position + self.dragState.translation.height)
+        .offset(y: max(self.position + self.dragState.translation.height, CardPosition.top - 120))
         .animation(self.dragState.isDragging ? nil : .interpolatingSpring(stiffness: 250, damping: 30.0, initialVelocity: 10))
         .gesture(drag)
     }
