@@ -700,7 +700,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}\"/BuildScripts/trema.rb \"${SRCROOT}/trema/mobile/translations.trm\" \"${CODESIGNING_FOLDER_PATH}\"\n";
+			shellScript = "\"${SRCROOT}\"/BuildScripts/trema.rb \"${SRCROOT}/pulse-eco-i18n/mobile/translations.trm\" \"${CODESIGNING_FOLDER_PATH}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
