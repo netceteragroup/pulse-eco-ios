@@ -20,8 +20,8 @@ struct WeeklyAverageView: View {
                 .frame(width: 327, height: 17, alignment: .center)
                 .padding(.bottom, 20)
             HStack{
-                ForEach(viewModel.dailyAverageViewModels, id: \.id) { dailyAverageViewModel in
-                    DailyAverageView(viewModel: dailyAverageViewModel)
+                ForEach(0..<viewModel.dailyAverageViewModels.count) { i in
+                    DailyAverageView(viewModel: viewModel.dailyAverageViewModels[i])
                 }
             }
         }.padding(.horizontal, 20)
