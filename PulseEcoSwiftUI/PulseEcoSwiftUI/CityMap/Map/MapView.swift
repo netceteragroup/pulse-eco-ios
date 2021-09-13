@@ -71,7 +71,6 @@ struct MapView: UIViewRepresentable {
     @ObservedObject var viewModel: MapVM
     @EnvironmentObject var appVM: AppVM
     @EnvironmentObject var dataSource: DataSource
-    //@EnvironmentObject var refreshService: RefreshService
     
     func makeCoordinator() -> MapViewCoordinator {
         MapViewCoordinator(self)
@@ -116,7 +115,6 @@ struct MapView: UIViewRepresentable {
             if let item = selectedAnnotations[safe: 0] { // check if theres a sensor selected
                 uiView.deselectAnnotation(item, animated: true) // deselect the sensor
             }
-            //refreshService.updateRefreshDate()
         }
         
         if self.appVM.getNewSensors{
@@ -125,7 +123,6 @@ struct MapView: UIViewRepresentable {
             }
             uiView.removeAnnotations(currentAnnotations)
             self.appVM.getNewSensors = false
-            //refreshService.updateRefreshDate()
         }
                
         if self.appVM.updateMapRegion {

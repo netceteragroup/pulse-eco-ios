@@ -3,7 +3,6 @@
 //  PulseEcoSwiftUI
 //
 //  Created by Darko Skerlevski on 10.9.21.
-//  Copyright © 2021 Monika Dimitrova. All rights reserved.
 //
 
 import Foundation
