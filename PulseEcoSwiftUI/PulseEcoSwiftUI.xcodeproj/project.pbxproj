@@ -697,7 +697,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}\"/PulseEcoSwiftUI/trema/trema.rb \"${SRCROOT}/PulseEcoSwiftUI/trema/translations.trm\" \"${CODESIGNING_FOLDER_PATH}\"\n";
+			shellScript = "\"${SRCROOT}\"/BuildScripts/trema.rb \"${SRCROOT}/trema/mobile/translations.trm\" \"${CODESIGNING_FOLDER_PATH}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
