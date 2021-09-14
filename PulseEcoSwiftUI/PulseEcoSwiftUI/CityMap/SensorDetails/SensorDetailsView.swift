@@ -61,15 +61,15 @@ struct SensorDetailsView: View {
                     .multilineTextAlignment(.center)
                     .padding([.horizontal, .bottom], 15).fixedSize(horizontal: false, vertical: true)
                 
-                HStack {
-                    Text(Trema.text(for: "details"))
-                        .font(.system(size: 13, weight: .medium))
-                    Text("|")
-                        .font(.system(size: 13, weight: .medium))
-                    Text(Trema.text(for: "privacy_policy"))
-                        .font(.system(size: 13, weight: .medium))
-                }.foregroundColor(self.viewModel.color)
-                    .padding(.bottom, 15)
+//                HStack {
+//                    Text(Trema.text(for: "details"))
+//                        .font(.system(size: 13, weight: .medium))
+//                    Text("|")
+//                        .font(.system(size: 13, weight: .medium))
+//                    Text(Trema.text(for: "privacy_policy"))
+//                        .font(.system(size: 13, weight: .medium))
+//                }.foregroundColor(self.viewModel.color)
+//                    .padding(.bottom, 15)
             }.scaledToFit()
             Spacer()
         }

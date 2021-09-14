@@ -60,10 +60,10 @@ struct ExpandableView: View {
                         
                         if self.isExpanded {
                             bar.transition(.asymmetric(
-                                            insertion:
-                                                .opacity.animation(.default.delay(0.19)),
-                                            removal:
-                                                .opacity.animation(.default.speed(7))
+                                insertion:
+                                    .opacity.animation(.default.delay(0.19)),
+                                removal:
+                                    .opacity.animation(.default.speed(7))
                             ))
                             
                         }
@@ -78,15 +78,15 @@ struct ExpandableView: View {
                     }
                     .padding(.top, 10)
                     .padding(.leading, 10)
-                    // .animation(.easeInOut(duration: 0.3))
+                    .animation(.easeInOut(duration: 0.3),
+                               value: isExpanded)
                     Spacer()
                 }
                 
                 Spacer()
-            }
-            
+            }            
         }
-        .animation(.easeInOut(duration:0.3))
+        
     }
     
     var bar: some View {

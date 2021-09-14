@@ -64,7 +64,7 @@ struct SlideOverCard<Content: View> : View {
 //}
 
 struct CardPosition {
-    static let top: CGFloat = UIScreen.main.bounds.height - 575// - 550
+    static let top: CGFloat = UIScreen.main.bounds.height - 550// - 550
     static let middle: CGFloat = UIScreen.main.bounds.height - 130 //- 350
     static let bottom: CGFloat = UIScreen.main.bounds.height + 100 //- 150
 }

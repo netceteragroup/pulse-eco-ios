@@ -28,8 +28,6 @@ struct CityMapView: View {
                 .overlay(
                     BottomShadow()
             )
-                //.overlay(self.viewModel.backgroundColor)
-                .animation(.default)
             
             VStack(alignment: .trailing) {
                 Spacer()
