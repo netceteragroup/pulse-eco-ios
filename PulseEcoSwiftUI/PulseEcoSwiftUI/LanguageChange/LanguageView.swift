@@ -40,7 +40,7 @@ struct LanguageView: View {
                             return Alert(title: Text(Trema.text(for: "change_app_language")),
                                          message: Text(String(format: Trema.text(for: "change_language_message"),
                                                               selectedCountry.languageName)),
-                                         primaryButton: .destructive(
+                                         primaryButton: .cancel(
                                             Text(Trema.text(for: "cancel")),
                                             action: { self.showAlert = false}),
                                          secondaryButton: .default (
