@@ -14,7 +14,7 @@ class CityMapVM: ObservableObject {
     @Published var showSensorDetails: Bool
     @Published var citySelectorClicked: Bool
     var backgroundColor: Color = Color.clear
-    var disclaimerIconColor: Color = Color(UIColor(red: 0.96, green: 0.85, blue: 0.62, alpha: 1.00))
+    var disclaimerIconColor: Color = Color(UIColor(red: 0.96, green: 0.93, blue: 0.86, alpha: 1.00))
         //Color(UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1.00))
     var disclaimerIconSize: CGSize = CGSize(width: 220, height: 25)
     var disclaimerIconText: String = Trema.text(for: "crowdsourced_sensor_data")

@@ -26,12 +26,12 @@ struct CityListView: View {
                                 .padding()
                             Spacer()
                         }.frame(height: 30)
-                            .background(Color(AppColors.lightPurple))
-                            .listRowInsets(EdgeInsets(
-                                top: 0,
-                                leading: 0,
-                                bottom: 0,
-                                trailing: 0))
+                        .background(Color(AppColors.lightPurple))
+                        .listRowInsets(EdgeInsets(
+                                        top: 0,
+                                        leading: 0,
+                                        bottom: 0,
+                                        trailing: 0))
                         ) {
                             ForEach(self.viewModel.getCities().filter {
                                 elem == $0.countryName
@@ -49,8 +49,10 @@ struct CityListView: View {
                     self.listCities
                 }
             }
-        }.background(Color(AppColors.darkblue))
-            .edgesIgnoringSafeArea(.all)
+            .resignKeyboardOnDragGesture()
+        }
+        .background(Color(AppColors.darkblue))
+        .edgesIgnoringSafeArea(.all)
     }
     
     var listCities: some View {
