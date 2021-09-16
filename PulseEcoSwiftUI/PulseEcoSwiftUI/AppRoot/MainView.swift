@@ -15,20 +15,37 @@ struct MainView: View {
     @ObservedObject var userSettings = UserSettings()
     @State var showPicker: Bool = false
     
+    private let backgroundColor: Color = Color.white
+    private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
+    
     var body: some View {
         LoadingView(isShowing: .constant(self.dataSource.loadingCityData), loadingMeasures: .constant(self.dataSource.loadingMeasures)) {
             NavigationView {
                 ZStack{
-                    VStack(alignment: .center, spacing: 0) {
+                    ZStack {
+                     
+                        CityMapView(viewModel: CityMapVM(blurBackground: self.appVM.blurBackground),
+                                    userSettings: self.dataSource.userSettings)
+                            .edgesIgnoringSafeArea([.horizontal,.bottom
+                            ])
+                            .padding(.top, 36)
+                        
+                        VStack {
+                            Rectangle()
+                                .frame(height: 36)
+                                    .foregroundColor(backgroundColor)
+                                    .shadow(color: shadow, radius: 0.8, x: 0, y: 0)
+                            Spacer()
+                        }
+                        
+                        VStack {
                         MeasureListView(viewModel: MeasureListVM(selectedMeasure: self.appVM.selectedMeasure,
                                                                  cityName: self.appVM.cityName,
                                                                  measuresList: self.dataSource.measures,
                                                                  cityValues: self.dataSource.cityOverall,
                                                                  citySelectorClicked: self.appVM.citySelectorClicked))
-                        CityMapView(viewModel: CityMapVM(blurBackground: self.appVM.blurBackground),
-                                    userSettings: self.dataSource.userSettings)
-                            .edgesIgnoringSafeArea([.horizontal,.bottom
-                            ])
+                         Spacer()
+                        }
                     }.navigationBarTitle("", displayMode: .inline)
                         .navigationBarItems(
                             leading: Button(action: {

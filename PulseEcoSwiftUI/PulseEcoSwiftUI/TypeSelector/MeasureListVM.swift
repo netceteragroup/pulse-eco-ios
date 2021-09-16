@@ -13,9 +13,7 @@ import SwiftUI
 class MeasureListVM: ObservableObject {
     @Published var measures: [MeasureButtonVM] = []
     @Published var selectedMeasure: String
-    var backgroundColor: Color = Color.white
-    var shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
-    
+
     init(selectedMeasure: String, cityName: String, measuresList: [Measure], cityValues: CityOverallValues?, citySelectorClicked: Bool) {
         self.selectedMeasure = selectedMeasure
         for measure in measuresList {
