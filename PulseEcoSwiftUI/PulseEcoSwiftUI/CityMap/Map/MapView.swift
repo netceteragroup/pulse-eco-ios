@@ -23,6 +23,7 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         }
         let annotationView = LocationAnnotationView(annotation: annotation, reuseIdentifier: "customView")
         let scaleTransform = CGAffineTransform(scaleX: 0.0, y: 0.0)  // Scale
+        annotationView.centerOffset = CGPoint(x: 0, y: -annotationView.frame.size.height/2)
         UIView.animate(withDuration: 0.2, animations: {
             annotationView.transform = scaleTransform
             annotationView.layoutIfNeeded()
