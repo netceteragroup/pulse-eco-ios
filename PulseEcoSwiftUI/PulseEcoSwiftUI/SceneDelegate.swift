@@ -24,8 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //let contentView = ContentView()
           
              //.environmentObject(sheetManager)
-        let appViewModel = AppVM()
-        let dataSource = DataSource()
+        let appViewModel = AppState()
+        let dataSource = AppDataSource()
         self.refreshService = RefreshService(appViewModel: appViewModel, appDataSource: dataSource)
         let rootView = MainView()
         // Use a UIHostingController as window root view controller.

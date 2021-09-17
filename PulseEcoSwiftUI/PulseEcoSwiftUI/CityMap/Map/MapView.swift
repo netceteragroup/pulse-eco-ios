@@ -18,7 +18,7 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         
-        guard let annotation = annotation as? SensorVM else {
+        guard let annotation = annotation as? SensorViewModel else {
             return nil
         }
         let annotationView = LocationAnnotationView(annotation: annotation, reuseIdentifier: "customView")
@@ -45,14 +45,14 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
             return
         }
         annotationView.showCallout()
-        mapViewController.appVM.showSensorDetails = true
-        mapViewController.appVM.selectedSensor = annotationView.pin ?? SensorVM()
-        mapViewController.appVM.updateMapRegion = false
-        mapViewController.appVM.updateMapAnnotations = false
-        mapViewController.appVM.getNewSensors = false
-        mapViewController.dataSource.getDailyAverageDataForSensor(cityName: mapViewController.appVM.cityName,
-                                                                  measureType: mapViewController.appVM.selectedMeasure,
-                                                                  sensorId: mapViewController.appVM.selectedSensor?.sensorID ?? "")
+        mapViewController.appState.showSensorDetails = true
+        mapViewController.appState.selectedSensor = annotationView.pin ?? SensorViewModel()
+        mapViewController.appState.updateMapRegion = false
+        mapViewController.appState.updateMapAnnotations = false
+        mapViewController.appState.getNewSensors = false
+        mapViewController.dataSource.getDailyAverageDataForSensor(cityName: mapViewController.appState.cityName,
+                                                                  measureType: mapViewController.appState.selectedMeasure,
+                                                                  sensorId: mapViewController.appState.selectedSensor?.sensorID ?? "")
     }
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView)
     {
@@ -60,18 +60,18 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
             return
         }
         annotationView.hideCallout()
-        mapViewController.appVM.showSensorDetails = false
-        mapViewController.appVM.updateMapRegion = false
-        mapViewController.appVM.updateMapAnnotations = false
-        mapViewController.appVM.getNewSensors = false
+        mapViewController.appState.showSensorDetails = false
+        mapViewController.appState.updateMapRegion = false
+        mapViewController.appState.updateMapAnnotations = false
+        mapViewController.appState.getNewSensors = false
     }
 }
 
 struct MapView: UIViewRepresentable {
     
-    @ObservedObject var viewModel: MapVM
-    @EnvironmentObject var appVM: AppVM
-    @EnvironmentObject var dataSource: DataSource
+    @ObservedObject var viewModel: MapViewModel
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var dataSource: AppDataSource
     
     func makeCoordinator() -> MapViewCoordinator {
         MapViewCoordinator(self)
@@ -90,10 +90,10 @@ struct MapView: UIViewRepresentable {
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
         //var newAnnotationList: [SensorVM] = []
         var newAnnotationListSensorIds: [String] = []
-        let currentAnnotations = uiView.annotations as! [SensorVM]
+        let currentAnnotations = uiView.annotations as! [SensorViewModel]
         let currentAnnotationsSensorIds = currentAnnotations.map{$0.sensorID}
         let selectedAnnotations = uiView.selectedAnnotations
-        if self.appVM.updateMapAnnotations { 
+        if self.appState.updateMapAnnotations { 
             for pin in self.viewModel.sensors {
                 //newAnnotationList.append(pin) // add all the needed sensors to a list
                 newAnnotationListSensorIds.append(pin.sensorID) // add the ids of the sensors to a list
@@ -118,15 +118,15 @@ struct MapView: UIViewRepresentable {
             }
         }
         
-        if self.appVM.getNewSensors{
+        if self.appState.getNewSensors{
             for pin in self.viewModel.sensors {
                 uiView.addAnnotation(pin)
             }
             uiView.removeAnnotations(currentAnnotations)
-            self.appVM.getNewSensors = false
+            self.appState.getNewSensors = false
         }
                
-        if self.appVM.updateMapRegion {
+        if self.appState.updateMapRegion {
             uiView.setRegion(region, animated: true)
         }
        

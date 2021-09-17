@@ -1,5 +1,5 @@
 //
-//  CityMapVM.swift
+//  CityMapViewModel.swift
 //  PulseEcoSwiftUI
 //
 //  Created by Monika Dimitrova on 6/17/20.
@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-class CityMapVM: ObservableObject {
+class CityMapViewModel: ObservableObject {
     
     @Published var showSensorDetails: Bool
     @Published var citySelectorClicked: Bool

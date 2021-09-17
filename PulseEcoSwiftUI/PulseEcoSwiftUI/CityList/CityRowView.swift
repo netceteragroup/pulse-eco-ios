@@ -4,7 +4,7 @@ import SwiftUI
 
 struct CityRowView: View {
     
-    var viewModel: CityRowVM
+    var viewModel: CityRowViewModel
     
     var body: some View {
         VStack(alignment: .leading) {

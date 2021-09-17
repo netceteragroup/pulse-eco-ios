@@ -11,19 +11,19 @@ import MapKit
 
 struct FavouriteCitiesView: View {
     
-    //@State private var faveCities: [CityModel]
-    @ObservedObject var viewModel: FavouriteCitiesVM
-    @EnvironmentObject var appVM: AppVM
-    @EnvironmentObject var dataSource: DataSource
+    @ObservedObject var viewModel: FavouriteCitiesViewModel
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var userSettings: UserSettings
+
     var body: some View {
         VStack() {
             if self.viewModel.cityList.count == 0 {
                 VStack {
                     Text("").onAppear {
-                        self.appVM.showSheet = true
-                        self.appVM.activeSheet = .cityListView
+                        self.appState.showSheet = true
+                        self.appState.activeSheet = .cityListView
                     }
                 }
             } else {
@@ -34,13 +34,13 @@ struct FavouriteCitiesView: View {
                                 FavouriteCityRowView(viewModel: city)
                                     .contentShape(Rectangle())
                                     .onTapGesture {
-                                        self.appVM.citySelectorClicked = false
-                                        self.appVM.cityName = city.cityName
+                                        self.appState.citySelectorClicked = false
+                                        self.appState.cityName = city.cityName
                                         self.dataSource.loadingCityData = true
                                         self.refreshService.updateRefreshDate()
                                         self.dataSource.getValuesForCity(cityName: city.cityName)
-                                        self.appVM.updateMapRegion = true
-                                        self.appVM.updateMapAnnotations = true
+                                        self.appState.updateMapRegion = true
+                                        self.appState.updateMapAnnotations = true
                                     }
                             }.onDelete(perform: self.delete)
                         }
@@ -54,8 +54,8 @@ struct FavouriteCitiesView: View {
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(Color(AppColors.purple))
                                 .onTapGesture {
-                                    self.appVM.showSheet = true
-                                    self.appVM.activeSheet = .cityListView
+                                    self.appState.showSheet = true
+                                    self.appState.activeSheet = .cityListView
                                 }
                                 .padding(.trailing, 25)
                         }

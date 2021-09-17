@@ -1,5 +1,5 @@
 //
-//  AverageVM.swift
+//  AverageViewModel.swift
 //  PulseEcoSwiftUI
 //
 //  Created by Monika Dimitrova on 6/17/20.
@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class AverageVM: ObservableObject {
+class AverageViewModel: ObservableObject {
     var value: Float
     var unit: String
     var message: String

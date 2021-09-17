@@ -2,10 +2,10 @@ import SwiftUI
 import Combine
 
 struct ExpandableView: View {
-    @EnvironmentObject var appVM: AppVM
+    @EnvironmentObject var appState: AppState
     @State var isExpanded = false
     @State var width: CGFloat = 115
-    var viewModel: AverageVM
+    var viewModel: AverageViewModel
     @State var geometry: GeometryProxy
     var body: some View {
         VStack {

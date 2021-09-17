@@ -2,7 +2,7 @@
 import Foundation
 import SwiftUI
 
-class DisclaimerVM {
+class DisclaimerViewModel {
     var title: String = Trema.text(for: "disclaimer")
     var message: String = Trema.text(for: "disclaimer_message")
 

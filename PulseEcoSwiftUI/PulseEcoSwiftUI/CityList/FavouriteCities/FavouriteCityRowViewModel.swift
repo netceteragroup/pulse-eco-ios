@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-class FavouriteCityRowVM: ObservableObject, Identifiable {
+class FavouriteCityRowViewModel: ObservableObject, Identifiable {
     var id: String { return cityName }
     var cityName: String
     var siteName: String
@@ -14,7 +14,7 @@ class FavouriteCityRowVM: ObservableObject, Identifiable {
     var noReadings: Bool
     var noReadingsImage: UIImage = UIImage(named: "exclamation") ?? UIImage()
 
-    init(city: CityModel = CityModel(),
+    init(city: City = City(),
          message: String = Trema.text(for: "no_data_available"),
          value: String? = "3",
          unit: String = "µq/m3",

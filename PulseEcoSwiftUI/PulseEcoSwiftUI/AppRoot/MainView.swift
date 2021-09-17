@@ -10,8 +10,8 @@ import SwiftUI
 
 struct MainView: View {
     @EnvironmentObject var refreshService: RefreshService 
-    @EnvironmentObject var appVM: AppVM
-    @EnvironmentObject var dataSource: DataSource
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var dataSource: AppDataSource
     @ObservedObject var userSettings = UserSettings()
     @State var showPicker: Bool = false
     
@@ -24,7 +24,7 @@ struct MainView: View {
                 ZStack{
                     ZStack {
                      
-                        CityMapView(viewModel: CityMapVM(blurBackground: self.appVM.blurBackground),
+                        CityMapView(viewModel: CityMapViewModel(blurBackground: self.appState.blurBackground),
                                     userSettings: self.dataSource.userSettings)
                             .edgesIgnoringSafeArea([.horizontal,.bottom
                             ])
@@ -39,34 +39,34 @@ struct MainView: View {
                         }
                         
                         VStack {
-                        MeasureListView(viewModel: MeasureListVM(selectedMeasure: self.appVM.selectedMeasure,
-                                                                 cityName: self.appVM.cityName,
+                        MeasureListView(viewModel: MeasureListViewModel(selectedMeasure: self.appState.selectedMeasure,
+                                                                 cityName: self.appState.cityName,
                                                                  measuresList: self.dataSource.measures,
                                                                  cityValues: self.dataSource.cityOverall,
-                                                                 citySelectorClicked: self.appVM.citySelectorClicked))
+                                                                 citySelectorClicked: self.appState.citySelectorClicked))
                          Spacer()
                         }
                     }.navigationBarTitle("", displayMode: .inline)
                         .navigationBarItems(
                             leading: Button(action: {
                                 withAnimation(.easeInOut(duration: 0.2)){
-                                    self.appVM.citySelectorClicked.toggle()
+                                    self.appState.citySelectorClicked.toggle()
                                     if self.showPicker == true {
                                         self.showPicker = false
                                     }
-                                    if self.appVM.showSensorDetails == true{
-                                        self.appVM.showSensorDetails = false
-                                        self.appVM.selectedSensor = nil
-                                        self.appVM.updateMapAnnotations = true
+                                    if self.appState.showSensorDetails == true{
+                                        self.appState.showSensorDetails = false
+                                        self.appState.selectedSensor = nil
+                                        self.appState.updateMapAnnotations = true
                                     }
                                 }
                             }) {
                                 HStack {
-                                    Text(self.appVM.cityName.uppercased())
+                                    Text(self.appState.cityName.uppercased())
                                         .font(Font.custom("TitilliumWeb-SemiBold", size: 14))
                                         .foregroundColor(Color(AppColors.darkblue))
                                     
-                                    self.appVM.cityIcon
+                                    self.appState.cityIcon
                                 }
                             }.accentColor(Color.black),
                             trailing: HStack {
@@ -75,16 +75,16 @@ struct MainView: View {
                                     .padding(.trailing, (UIWidth)/3.7)
                                     .onTapGesture {
                                         //action
-                                        if self.appVM.citySelectorClicked == false {
+                                        if self.appState.citySelectorClicked == false {
                                             self.refreshService.refreshData()
                                             self.showPicker = false
                                         }
                                 }
                                 Button(action: {
                                     withAnimation(){
-                                        self.appVM.showSensorDetails = false
-                                        self.appVM.updateMapRegion = true
-                                        self.appVM.updateMapAnnotations = true
+                                        self.appState.showSensorDetails = false
+                                        self.appState.updateMapRegion = true
+                                        self.appState.updateMapAnnotations = true
                                         self.showPicker = true
                                         
                                     }
@@ -105,12 +105,12 @@ struct MainView: View {
                                 .animation(.spring())
                                 .zIndex(1)
                         }
-                        else if self.appVM.showSensorDetails {
+                        else if self.appState.showSensorDetails {
                             SlideOverCard {
                                 SensorDetailsView(viewModel: SensorDetailsViewModel(
-                                    sensor: self.appVM.selectedSensor ?? SensorVM(),
+                                    sensor: self.appState.selectedSensor ?? SensorViewModel(),
                                     sensorsData: self.dataSource.sensorsData24h,
-                                    selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure:self.appVM.selectedMeasure),
+                                    selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure:self.appState.selectedMeasure),
                                     sensorData24h: self.dataSource.sensorsData24h,
                                     dailyAverages: self.dataSource.sensorsDailyAverageData))
                             }

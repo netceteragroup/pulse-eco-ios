@@ -4,8 +4,8 @@ import SwiftUI
 struct CityListView: View {
     
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var dataSource: DataSource
-    @ObservedObject var viewModel: CityListVM
+    @EnvironmentObject var dataSource: AppDataSource
+    @ObservedObject var viewModel: CityListViewModel
     @ObservedObject var userSettings: UserSettings
     var body: some View {
         VStack {

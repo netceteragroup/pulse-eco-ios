@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct NoReadingsView: View {
-    private var viewModel = NoReadingsVM()
+    private var viewModel = NoReadingsViewModel()
     var body: some View {
         HStack {
             VStack {

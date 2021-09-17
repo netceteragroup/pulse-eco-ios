@@ -1,12 +1,12 @@
 import Foundation
 
 class ChartViewModel: ObservableObject {
-    @Published var sensor: SensorVM
+    @Published var sensor: SensorViewModel
     @Published var sensorsData24h: [SensorData]
     @Published var selectedMeasure: Measure
     @Published var sensorReadings: [SensorData]
     
-     init(sensor: SensorVM, sensorsData: [SensorData], selectedMeasure: Measure) {
+     init(sensor: SensorViewModel, sensorsData: [SensorData], selectedMeasure: Measure) {
         self.sensor = sensor
         self.sensorsData24h = sensorsData
         self.selectedMeasure = selectedMeasure

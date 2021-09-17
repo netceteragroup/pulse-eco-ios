@@ -2,7 +2,7 @@
 import Foundation
 
 class UserSettings: ObservableObject {
-    @Published var favouriteCities: Set<CityModel> {
+    @Published var favouriteCities: Set<City> {
         didSet {
            save()
         }
@@ -14,7 +14,7 @@ class UserSettings: ObservableObject {
     }
     init() {
         if let data = UserDefaults.standard.data(forKey: "FavouriteCities") {
-            if let decoded = try? JSONDecoder().decode(Set<CityModel>.self, from: data) {
+            if let decoded = try? JSONDecoder().decode(Set<City>.self, from: data) {
                 self.favouriteCities = decoded
                 //return
             } else {

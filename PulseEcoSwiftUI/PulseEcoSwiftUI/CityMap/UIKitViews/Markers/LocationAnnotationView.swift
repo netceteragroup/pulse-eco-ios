@@ -13,17 +13,17 @@ import SwiftUI
 
 class LocationAnnotationView: MKAnnotationView {
 
-    var pin: SensorVM?
+    var pin: SensorViewModel?
     var markerView: MarkerView?
     var selectedSensor: SelectedSensorView?
-    @EnvironmentObject var appVM: AppVM
+    @EnvironmentObject var appState: AppState
 
 
     // MARK: Initialization
 
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        guard let pin = annotation as? SensorVM else {
+        guard let pin = annotation as? SensorViewModel else {
             return
         }
         self.pin = pin
@@ -78,7 +78,7 @@ class LocationAnnotationView: MKAnnotationView {
             return
         }
         selectedSensorView.removeFromSuperview()
-       // self.appVM.isExpanded = false
+       // self.appState.isExpanded = false
     }
     
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AverageView: View {
-    var viewModel: AverageVM
+    var viewModel: AverageViewModel
     var body: some View {
         GeometryReader { geo in
             VStack {

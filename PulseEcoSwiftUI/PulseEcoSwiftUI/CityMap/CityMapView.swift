@@ -11,19 +11,19 @@ import SwiftUI
 struct CityMapView: View {
     
     @Environment(\.managedObjectContext) var moc
-    @ObservedObject var viewModel: CityMapVM
-    @EnvironmentObject var appVM: AppVM
-    @EnvironmentObject var dataSource: DataSource
+    @ObservedObject var viewModel: CityMapViewModel
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var dataSource: AppDataSource
     @ObservedObject var userSettings: UserSettings    
     var body: some View {
         
         ZStack {
-            MapView(viewModel: MapVM(measure: self.appVM.selectedMeasure,
-                                     cityName: self.appVM.cityName,
+            MapView(viewModel: MapViewModel(measure: self.appState.selectedMeasure,
+                                     cityName: self.appState.cityName,
                                      sensors: self.dataSource.citySensors,
                                      sensorsData: self.dataSource.sensorsData,
                                      measures: self.dataSource.measures,
-                                     city: self.dataSource.cities.first{ $0.cityName == self.appVM.cityName} ?? CityModel.defaultCity()))
+                                     city: self.dataSource.cities.first{ $0.cityName == self.appState.cityName} ?? City.defaultCity()))
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
                     BottomShadow()
@@ -41,27 +41,27 @@ struct CityMapView: View {
                         )
                         .padding(.bottom, 35)
                         .onTapGesture {
-                            self.appVM.showSheet = true
-                            self.appVM.activeSheet = .disclaimerView
+                            self.appState.showSheet = true
+                            self.appState.activeSheet = .disclaimerView
                         }
                     
                 }.padding(.trailing, 15.0)
             }
-            AverageView(viewModel: AverageVM(measure: self.appVM.selectedMeasure, cityName: self.appVM.cityName, measuresList: self.dataSource.measures, cityValues: self.dataSource.cityOverall))
-            if self.appVM.citySelectorClicked {
-                FavouriteCitiesView(viewModel: FavouriteCitiesVM(selectedMeasure: self.appVM.selectedMeasure, favouriteCities: self.userSettings.favouriteCities, cityValues: self.userSettings.cityValues, measureList: self.dataSource.measures), userSettings: self.userSettings)
+            AverageView(viewModel: AverageViewModel(measure: self.appState.selectedMeasure, cityName: self.appState.cityName, measuresList: self.dataSource.measures, cityValues: self.dataSource.cityOverall))
+            if self.appState.citySelectorClicked {
+                FavouriteCitiesView(viewModel: FavouriteCitiesViewModel(selectedMeasure: self.appState.selectedMeasure, favouriteCities: self.userSettings.favouriteCities, cityValues: self.userSettings.cityValues, measureList: self.dataSource.measures), userSettings: self.userSettings)
                     .overlay(BottomShadow())
             }
         }
-        .sheet(isPresented: self.$appVM.showSheet, onDismiss: {
-                self.appVM.showSheet = false
-                self.appVM.citySelectorClicked = false}) {
+        .sheet(isPresented: self.$appState.showSheet, onDismiss: {
+                self.appState.showSheet = false
+                self.appState.citySelectorClicked = false}) {
             
-            if self.appVM.activeSheet == .disclaimerView {
+            if self.appState.activeSheet == .disclaimerView {
                 DisclaimerView()
                     .environment(\.managedObjectContext, self.moc)
             } else {
-                CityListView(viewModel: CityListVM(cities: self.dataSource.cities), userSettings: self.userSettings).environment(\.managedObjectContext, self.moc)
+                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities), userSettings: self.userSettings).environment(\.managedObjectContext, self.moc)
             }
         }
         

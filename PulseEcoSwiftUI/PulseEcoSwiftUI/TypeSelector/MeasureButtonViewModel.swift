@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-class MeasureButtonVM: ObservableObject {
+class MeasureButtonViewModel: ObservableObject {
     var id: String
     var title: String
     var selectedMeasure: String

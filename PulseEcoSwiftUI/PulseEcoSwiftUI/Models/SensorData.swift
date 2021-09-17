@@ -8,7 +8,6 @@
 
 import Foundation
 import MapKit
-// MARK: - SensorModel
 
 struct Sensor: Codable  {
     var id: String { return sensorID }
@@ -28,8 +27,6 @@ struct Sensor: Codable  {
     }
 }
 
-
-// MARK: - Welcome
 struct SensorData: Codable, Identifiable {
     let id = UUID()
     let sensorID: String

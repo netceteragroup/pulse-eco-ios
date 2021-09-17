@@ -1,28 +1,30 @@
 import Foundation
 import Combine
 
-class DataSource: ObservableObject {
-    @Published var measures: [Measure] = [Measure.empty("PM10"),Measure.empty("PM25"),Measure.empty("Noise"),Measure.empty("Temperature"),Measure.empty("Humidity"),Measure.empty("Pressure"), Measure.empty("NO2"), Measure.empty("O3")]
+class AppDataSource: ObservableObject {
+    @Published var measures: [Measure] = [Measure.empty("PM10"),
+                                          Measure.empty("PM25"),
+                                          Measure.empty("Noise"),
+                                          Measure.empty("Temperature"),
+                                          Measure.empty("Humidity"),
+                                          Measure.empty("Pressure"),
+                                          Measure.empty("NO2"),
+                                          Measure.empty("O3")]
     @Published var citySensors: [Sensor] = []
     @Published var cityOverall: CityOverallValues?
     @Published var userSettings: UserSettings = UserSettings()
     @Published var sensorsData: [SensorData] = []
     @Published var sensorsDailyAverageData: [SensorData] = []
     @Published var sensorsData24h: [SensorData] = []
-    @Published var cities: [CityModel] = []
+    @Published var cities: [City] = []
     @Published var cancellationTokens: [AnyCancellable] = []
     @Published var loadingCityData: Bool = true
     @Published var loadingMeasures: Bool = true
-    private var cancellableMeasures: AnyCancellable?
-    private var cancellableOverallValues: AnyCancellable?
-    private var cancellableOverallValuesList: AnyCancellable?
-    private var cancellableSensors: AnyCancellable?
-    private var cancellableSensorData: AnyCancellable?
-    private var cancellableSensorData24h: AnyCancellable?
-    private var cancellableCities: AnyCancellable?
-    private var cancellableSensorsDailyAverageData: AnyCancellable?
     
+    var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
+    private let networkService = NetworkService()
+    
     init() {
         // getCities()
         getMeasures()
@@ -35,11 +37,12 @@ class DataSource: ObservableObject {
     }
     
     func getMeasures() {
-        self.cancellableMeasures = NetworkManager().downloadMeasures().sink(receiveCompletion: { _ in
+        networkService.downloadMeasures().sink(receiveCompletion: { _ in
             self.loadingMeasures = false
         }, receiveValue: { measures in
             self.measures = measures
         })
+        .store(in: &cancelables)
     }
     
     func getValuesForCity(cityName: String = "Skopje") {
@@ -48,49 +51,60 @@ class DataSource: ObservableObject {
         getCurrentDataForSensors(city: cityName)
         get24hDataForSensors(city: cityName) 
     }
+    
     func getOverallValues(city: String) {
-        self.cancellableOverallValues = NetworkManager().downloadOverallValuesForCity(cityName: city).sink(receiveCompletion: { _ in  }, receiveValue: { values in
+        networkService.downloadOverallValuesForCity(cityName: city).sink(receiveCompletion: { _ in  }, receiveValue: { values in
             self.cityOverall = values
         })
+        .store(in: &cancelables)
     }
     
     func getOverallValuesForFavoriteCities(city: String = "Skopje") {
         
         self.cities.forEach { city in
-            self.cancellableOverallValuesList = NetworkManager().downloadOverallValuesForCity(cityName: city.cityName).sink(receiveCompletion: { _ in  }, receiveValue: { values in
+            networkService.downloadOverallValuesForCity(cityName: city.cityName).sink(receiveCompletion: { _ in  }, receiveValue: { values in
                 self.userSettings.cityValues.append(values)
             })
+            .store(in: &cancelables)
         }
     }
     
     func emptyCityOverallValueList() {
         self.userSettings.cityValues.removeAll()
     }
+    
     func getSensors(city: String) {
-        self.cancellableSensors = NetworkManager().downloadSensors(cityName: city).sink(receiveCompletion: { _ in  self.loadingCityData = false }, receiveValue: { sensors in
+        networkService.downloadSensors(cityName: city).sink(receiveCompletion: { _ in  self.loadingCityData = false }, receiveValue: { sensors in
             self.citySensors = sensors
         })
+        .store(in: &cancelables)
     }
+    
     func getCurrentDataForSensors(city: String) {
-        self.cancellableSensorData = NetworkManager().downloadCurrentDataForSensors(cityName: city).sink(receiveCompletion: { _ in }, receiveValue: { sensors in
+        networkService.downloadCurrentDataForSensors(cityName: city).sink(receiveCompletion: { _ in }, receiveValue: { sensors in
             self.sensorsData = sensors
         })
+        .store(in: &cancelables)
     }
+    
     func get24hDataForSensors(city: String) {
-        self.cancellableSensorData24h = NetworkManager().download24hDataForSensors(cityName: city).sink(receiveCompletion: { _ in }, receiveValue: { sensors in
+        networkService.download24hDataForSensors(cityName: city).sink(receiveCompletion: { _ in }, receiveValue: { sensors in
             self.sensorsData24h = sensors
         })
+        .store(in: &cancelables)
     }
+    
     func getCities() {
-        self.cancellableCities = NetworkManager().downloadCities().sink(receiveCompletion: { _ in
+        networkService.downloadCities().sink(receiveCompletion: { _ in
             self.cities.forEach { city in
-                self.cancellationTokens.append(NetworkManager().downloadOverallValuesForCity(cityName: city.cityName).sink(receiveCompletion: { _ in }, receiveValue: { values in
+                self.cancellationTokens.append(NetworkService().downloadOverallValuesForCity(cityName: city.cityName).sink(receiveCompletion: { _ in }, receiveValue: { values in
                     self.userSettings.cityValues.append(values)
                 }))
             }
         }, receiveValue: { cities in
             self.cities = cities
         })
+       .store(in: &cancelables)
     }
     
     func getCurrentMeasure(selectedMeasure: String) -> Measure {
@@ -100,7 +114,7 @@ class DataSource: ObservableObject {
     func getDailyAverageDataForSensor(cityName: String,
                                       measureType: String,
                                       sensorId: String) {
-        self.cancellableSensorsDailyAverageData = NetworkManager()
+        networkService
             .downloadDailyAverageDataForSensor(cityName: cityName,
                                                measureType: measureType,
                                                sensorId: sensorId)
@@ -108,5 +122,6 @@ class DataSource: ObservableObject {
                   receiveValue: { dailyAverage in
                     self.sensorsDailyAverageData = dailyAverage
                   })
+            .store(in: &cancelables)
     }
 }

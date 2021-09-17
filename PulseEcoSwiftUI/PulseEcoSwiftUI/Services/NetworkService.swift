@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class NetworkManager: ObservableObject {
+class NetworkService {
     
     // MARK: - New
     let language = "lang=\(Trema.appLanguage)"
@@ -60,11 +60,11 @@ class NetworkManager: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    func downloadCities() -> AnyPublisher<[CityModel], Error> {
+    func downloadCities() -> AnyPublisher<[City], Error> {
         let url = URL(string: "https://skopje.pulse.eco/rest/city")!
         return URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
-            .decode(type: [CityModel].self, decoder: JSONDecoder())
+            .decode(type: [City].self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }

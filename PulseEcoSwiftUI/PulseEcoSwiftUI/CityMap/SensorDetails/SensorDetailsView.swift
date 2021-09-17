@@ -10,8 +10,8 @@ import SwiftUI
 
 struct SensorDetailsView: View {
     
-    @EnvironmentObject var appVM: AppVM
-    @EnvironmentObject var dataSource: DataSource
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var dataSource: AppDataSource
     @ObservedObject var viewModel: SensorDetailsViewModel
     @State var isExpanded: Bool = false
     var body: some View {
@@ -45,11 +45,11 @@ struct SensorDetailsView: View {
             // Expanded View
             VStack {
                 LineChartSwiftUI(viewModel:
-                    ChartViewModel(sensor: self.appVM.selectedSensor ?? SensorVM(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure)
+                    ChartViewModel(sensor: self.appState.selectedSensor ?? SensorViewModel(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appState.selectedMeasure)
                     )
                 ).frame(width: 350, height: 200 )
                 
-                WeeklyAverageView(viewModel: WeeklyAverageViewModel(appVM: appVM,
+                WeeklyAverageView(viewModel: WeeklyAverageViewModel(appState: appState,
                                                                     dataSource: dataSource,
                                                                     averages: self.viewModel.dailyAverages))
                     .padding(.bottom, 20)

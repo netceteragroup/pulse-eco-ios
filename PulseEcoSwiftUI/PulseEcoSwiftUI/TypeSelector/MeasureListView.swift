@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MeasureListView: View {
-    @ObservedObject var viewModel: MeasureListVM
+    @ObservedObject var viewModel: MeasureListViewModel
     
     var body: some View {
         ScrollView (.horizontal, showsIndicators: false) {

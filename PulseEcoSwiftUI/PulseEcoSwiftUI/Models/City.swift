@@ -8,13 +8,7 @@
 
 import Foundation
 
-
-// Mark - Results
-
-
-
-// MARK: - CityModel
-struct CityModel: Codable, Identifiable, Hashable {
+struct City: Codable, Identifiable, Hashable {
    
     var id: String { return cityName }
     let cityName, siteName, siteTitle: String
@@ -30,7 +24,7 @@ struct CityModel: Codable, Identifiable, Hashable {
         case siteURL = "siteUrl"
         case countryCode, countryName, cityLocation, cityBorderPoints, intialZoomLevel
     }
-    static func == (lhs: CityModel, rhs: CityModel) -> Bool {
+    static func == (lhs: City, rhs: City) -> Bool {
             lhs.id == rhs.id
     }
     func hash(into hasher: inout Hasher) {
@@ -56,7 +50,7 @@ struct CityModel: Codable, Identifiable, Hashable {
         self.intialZoomLevel = intialZoomLevel
         
     }
-    static func defaultCity() -> CityModel {
+    static func defaultCity() -> City {
         
         let cityBorderPoints = [CityCoordinates(latitude: "42.04602", longitute: "21.4383023"),
                                 CityCoordinates(latitude: "42.055145", longitute: "21.376596"),
@@ -76,12 +70,11 @@ struct CityModel: Codable, Identifiable, Hashable {
                                 CityCoordinates(latitude: "41.914643492538715",longitute: "21.665725708007816"),
                                 CityCoordinates(latitude: "41.93993104859892",longitute: "21.695251464843754")]
         
-        return CityModel(cityBorderPoints: cityBorderPoints)
+        return City(cityBorderPoints: cityBorderPoints)
     }
     
 }
 
-// MARK: - CityCoordinates
 struct CityCoordinates: Codable {
     let latitude, longitute: String
 }
