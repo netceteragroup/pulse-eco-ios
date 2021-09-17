@@ -10,7 +10,7 @@ import SwiftUI
 import CoreLocation
 
 struct FavouriteCityRowView: View {
-    var viewModel: FavouriteCityRowVM
+    var viewModel: FavouriteCityRowViewModel
     
     var body: some View {
         VStack {

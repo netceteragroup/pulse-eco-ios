@@ -12,7 +12,7 @@ import SwiftUI
 struct DisclaimerView: View {
     
     @Environment(\.presentationMode) var presentationMode
-    private var viewModel = DisclaimerVM()
+    private var viewModel = DisclaimerViewModel()
     
     var body: some View {
         VStack(alignment: .center) {

@@ -9,11 +9,12 @@ import Foundation
 import SwiftUI
 
 class RefreshService: ObservableObject {
-    let appViewModel: AppVM
-    let appDataSource: DataSource
+    
+    let appViewModel: AppState
+    let appDataSource: AppDataSource
     private var refreshDate: Date = Date()
     
-    init(appViewModel: AppVM, appDataSource: DataSource) {
+    init(appViewModel: AppState, appDataSource: AppDataSource) {
         self.appViewModel = appViewModel
         self.appDataSource = appDataSource
     }

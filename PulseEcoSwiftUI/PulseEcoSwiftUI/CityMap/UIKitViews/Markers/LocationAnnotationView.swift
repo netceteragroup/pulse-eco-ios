@@ -13,17 +13,17 @@ import SwiftUI
 
 class LocationAnnotationView: MKAnnotationView {
 
-    var pin: SensorVM?
+    var pin: SensorPinModel?
     var markerView: MarkerView?
     var selectedSensor: SelectedSensorView?
-    @EnvironmentObject var appVM: AppVM
+    @EnvironmentObject var appState: AppState
 
 
     // MARK: Initialization
 
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        guard let pin = annotation as? SensorVM else {
+        guard let pin = annotation as? SensorPinModel else {
             return
         }
         self.pin = pin
@@ -54,9 +54,12 @@ class LocationAnnotationView: MKAnnotationView {
 
         let calloutViewFrame = markerView.frame;
 
-        selectedSensorView.frame = CGRect(x: -(selectedSensorView.frame.width - calloutViewFrame.size.width)/2, y: -calloutViewFrame.size.height + 5, width: selectedSensorView.frame.width, height: selectedSensorView.frame.height)
+        selectedSensorView.frame = CGRect(x: -(selectedSensorView.frame.width - calloutViewFrame.size.width)/2,
+                                          y: -calloutViewFrame.size.height + 5,
+                                          width: selectedSensorView.frame.width,
+                                          height: selectedSensorView.frame.height)
         let scaleTransform = CGAffineTransform(scaleX: 0.0, y: 0.0)
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.1, animations: {
             selectedSensorView.transform = scaleTransform
             selectedSensorView.layoutIfNeeded()
         }) { (isCompleted) in
@@ -75,7 +78,7 @@ class LocationAnnotationView: MKAnnotationView {
             return
         }
         selectedSensorView.removeFromSuperview()
-       // self.appVM.isExpanded = false
+       // self.appState.isExpanded = false
     }
     
 }

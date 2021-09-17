@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 import Combine
 
-class SensorVM: NSObject, MKAnnotation {
+class SensorPinModel: NSObject, MKAnnotation {
     var title: String?
     var sensorID: String
     var value: String

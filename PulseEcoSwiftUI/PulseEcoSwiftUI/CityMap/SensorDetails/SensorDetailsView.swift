@@ -10,8 +10,8 @@ import SwiftUI
 
 struct SensorDetailsView: View {
     
-    @EnvironmentObject var appVM: AppVM
-    @EnvironmentObject var dataSource: DataSource
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var dataSource: AppDataSource
     @ObservedObject var viewModel: SensorDetailsViewModel
     @State var isExpanded: Bool = false
     var body: some View {
@@ -45,11 +45,11 @@ struct SensorDetailsView: View {
             // Expanded View
             VStack {
                 LineChartSwiftUI(viewModel:
-                    ChartViewModel(sensor: self.appVM.selectedSensor ?? SensorVM(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appVM.selectedMeasure)
+                    ChartViewModel(sensor: self.appState.selectedSensor ?? SensorPinModel(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appState.selectedMeasure)
                     )
                 ).frame(width: 350, height: 200 )
                 
-                WeeklyAverageView(viewModel: WeeklyAverageViewModel(appVM: appVM,
+                WeeklyAverageView(viewModel: WeeklyAverageViewModel(appState: appState,
                                                                     dataSource: dataSource,
                                                                     averages: self.viewModel.dailyAverages))
                     .padding(.bottom, 20)
@@ -61,15 +61,15 @@ struct SensorDetailsView: View {
                     .multilineTextAlignment(.center)
                     .padding([.horizontal, .bottom], 15).fixedSize(horizontal: false, vertical: true)
                 
-                HStack {
-                    Text(Trema.text(for: "details"))
-                        .font(.system(size: 13, weight: .medium))
-                    Text("|")
-                        .font(.system(size: 13, weight: .medium))
-                    Text(Trema.text(for: "privacy_policy"))
-                        .font(.system(size: 13, weight: .medium))
-                }.foregroundColor(self.viewModel.color)
-                    .padding(.bottom, 15)
+//                HStack {
+//                    Text(Trema.text(for: "details"))
+//                        .font(.system(size: 13, weight: .medium))
+//                    Text("|")
+//                        .font(.system(size: 13, weight: .medium))
+//                    Text(Trema.text(for: "privacy_policy"))
+//                        .font(.system(size: 13, weight: .medium))
+//                }.foregroundColor(self.viewModel.color)
+//                    .padding(.bottom, 15)
             }.scaledToFit()
             Spacer()
         }

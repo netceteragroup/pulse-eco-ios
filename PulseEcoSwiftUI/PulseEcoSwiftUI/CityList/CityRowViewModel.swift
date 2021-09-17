@@ -1,7 +1,7 @@
 
 import Foundation
 
-class CityRowVM: ObservableObject, Identifiable {
+class CityRowViewModel: ObservableObject, Identifiable {
     var id: String { return cityName }
     var cityName: String
     var siteName: String

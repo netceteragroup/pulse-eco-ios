@@ -1,19 +1,19 @@
 
 import Foundation
 
-class CityListVM: ObservableObject {
-    @Published var cities: [CityRowVM] = []
-    @Published var cityModel: [CityModel] = []
+class CityListViewModel: ObservableObject {
+    @Published var cities: [CityRowViewModel] = []
+    @Published var cityModel: [City] = []
     @Published var searchText : String = ""
     var text: String {
         return searchText == "" ? Trema.text(for: "suggested") : Trema.text(for: "results")
     }
     @Published var countries = Set<String>()
     
-    init(cities: [CityModel]) {
+    init(cities: [City]) {
         self.cityModel = cities
         for city in cities {
-            self.cities.append(CityRowVM(cityName: city.cityName, siteName: city.siteName, countryName: city.countryName, countryCode: city.countryCode))
+            self.cities.append(CityRowViewModel(cityName: city.cityName, siteName: city.siteName, countryName: city.countryName, countryCode: city.countryCode))
             self.countries.insert(city.countryName)
             }
     }
@@ -22,7 +22,7 @@ class CityListVM: ObservableObject {
             $0 < $1
         }
     }
-    func getCities() -> [CityRowVM]{
+    func getCities() -> [CityRowViewModel]{
         return self.cities.sorted {
             $0.siteName < $1.siteName
         }

@@ -20,10 +20,10 @@ class SensorDetailsViewModel: ObservableObject {
     var image: UIImage
     var disclaimerMessage = Trema.text(for: "disclaimer_short_message")
     var color = Color(AppColors.darkblue)
-    @Published var sensorData24h: [Sensor]
-    @Published var dailyAverages: [Sensor]
+    @Published var sensorData24h: [SensorData]
+    @Published var dailyAverages: [SensorData]
 
-    init(sensor: SensorVM, sensorsData: [Sensor], selectedMeasure: Measure, sensorData24h: [Sensor], dailyAverages: [Sensor]) {
+    init(sensor: SensorPinModel, sensorsData: [SensorData], selectedMeasure: Measure, sensorData24h: [SensorData], dailyAverages: [SensorData]) {
         self.sensorID = sensor.sensorID
         self.sensorType = sensor.type
         self.title = sensor.title ?? "Sensor"

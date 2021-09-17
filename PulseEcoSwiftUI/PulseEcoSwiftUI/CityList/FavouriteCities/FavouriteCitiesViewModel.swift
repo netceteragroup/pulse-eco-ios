@@ -9,11 +9,11 @@
 import Foundation
 import SwiftUI
 
-class FavouriteCitiesVM: ObservableObject {
-    @Published var cityList: [FavouriteCityRowVM] = []
+class FavouriteCitiesViewModel: ObservableObject {
+    @Published var cityList: [FavouriteCityRowViewModel] = []
     var selectedMeasure: String
 
-    init(selectedMeasure: String, favouriteCities: Set<CityModel>, cityValues: [CityOverallValues], measureList: [Measure]) {
+    init(selectedMeasure: String, favouriteCities: Set<City>, cityValues: [CityOverallValues], measureList: [Measure]) {
         self.selectedMeasure = selectedMeasure
         var value: String? = nil
         for city in favouriteCities {
@@ -48,7 +48,7 @@ class FavouriteCitiesVM: ObservableObject {
                 }
             }
             
-            self.cityList.append(FavouriteCityRowVM(city: city, message: message, value: value, unit: selMeasure.unit, color: color))
+            self.cityList.append(FavouriteCityRowViewModel(city: city, message: message, value: value, unit: selMeasure.unit, color: color))
         }
     }
     
@@ -56,7 +56,7 @@ class FavouriteCitiesVM: ObservableObject {
         return Int(value) >= from && Int(value) <= to
     }
     
-    func getCities() -> [FavouriteCityRowVM] {
+    func getCities() -> [FavouriteCityRowViewModel] {
         return self.cityList.sorted { $0.siteName < $1.siteName}
     }
 }

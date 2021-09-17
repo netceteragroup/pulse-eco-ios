@@ -8,9 +8,6 @@
 
 import Foundation
 
-
-// MARK: - CityOverallValues
-
 struct CityOverallValues: Codable {
     let cityName: String
     var values: [String: String]

@@ -9,9 +9,7 @@
 import Foundation
 import SwiftUI
 
-// MARK: - WelcomeElement
 struct Measure: Codable, Identifiable {
-    
     
     let id: String
     let buttonTitle: String
@@ -32,7 +30,6 @@ struct Measure: Codable, Identifiable {
         case showMin, showMax, legendMin, legendMax, unit, showMessages, bands
     }
     
-    
     static func empty(_ title: String = "--") -> Measure {
         return Measure(id: "--",
                        buttonTitle: title,
@@ -49,7 +46,6 @@ struct Measure: Codable, Identifiable {
     }
 }
 
-// MARK: - Band
 struct Band: Codable {
     let from: Int
     let to: Int
@@ -74,5 +70,3 @@ struct Band: Codable {
                        suggestion: "--")
     }
 }
-
-

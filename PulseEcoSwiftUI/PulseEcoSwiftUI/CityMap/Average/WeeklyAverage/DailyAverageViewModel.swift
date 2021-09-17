@@ -11,7 +11,7 @@ import SwiftUI
 
 class DailyAverageViewModel: Identifiable {
    
-    @EnvironmentObject var dataSource: DataSource
+    @EnvironmentObject var dataSource: AppDataSource
     var foregroundColor: Color = Color(AppColors.gray)
     let sensor: DailyInfoSensor
     var sensorValue: String {
@@ -27,9 +27,9 @@ class DailyAverageViewModel: Identifiable {
         return String(Trema.text(for: String(dateString.prefix(3)).lowercased()))
     }
     
-    init(sensor: DailyInfoSensor, appVM: AppVM, dataSource: DataSource) {
+    init(sensor: DailyInfoSensor, appState: AppState, dataSource: AppDataSource) {
         self.sensor = sensor
-        self.foregroundColor = colorForValue(type: appVM.selectedMeasure,
+        self.foregroundColor = colorForValue(type: appState.selectedMeasure,
                                              value: sensor.value,
                                              measures: dataSource.measures)
     }

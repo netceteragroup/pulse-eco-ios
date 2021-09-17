@@ -10,19 +10,20 @@ import SwiftUI
 import MapKit
 
 class MapViewCoordinator: NSObject, MKMapViewDelegate {
-    var mapViewController: MapView
+    var map: MapView
+    
     init(_ control: MapView) {
-        self.mapViewController = control
+        self.map = control
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        
-        guard let annotation = annotation as? SensorVM else {
+        guard let annotation = annotation as? SensorPinModel else {
             return nil
         }
         let annotationView = LocationAnnotationView(annotation: annotation, reuseIdentifier: "customView")
         let scaleTransform = CGAffineTransform(scaleX: 0.0, y: 0.0)  // Scale
+        annotationView.centerOffset = CGPoint(x: 0, y: -annotationView.frame.size.height/2)
         UIView.animate(withDuration: 0.2, animations: {
             annotationView.transform = scaleTransform
             annotationView.layoutIfNeeded()
@@ -44,33 +45,34 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
             return
         }
         annotationView.showCallout()
-        mapViewController.appVM.showSensorDetails = true
-        mapViewController.appVM.selectedSensor = annotationView.pin ?? SensorVM()
-        mapViewController.appVM.updateMapRegion = false
-        mapViewController.appVM.updateMapAnnotations = false
-        mapViewController.appVM.getNewSensors = false
-        mapViewController.dataSource.getDailyAverageDataForSensor(cityName: mapViewController.appVM.cityName,
-                                                                  measureType: mapViewController.appVM.selectedMeasure,
-                                                                  sensorId: mapViewController.appVM.selectedSensor?.sensorID ?? "")
+        map.appState.showSensorDetails = true
+        map.appState.selectedSensor = annotationView.pin ?? SensorPinModel()
+        map.appState.updateMapRegion = false
+        map.appState.updateMapAnnotations = false
+        map.appState.getNewSensors = false
+        map.dataSource.getDailyAverageDataForSensor(cityName: map.appState.cityName,
+                                                                  measureType: map.appState.selectedMeasure,
+                                                                  sensorId: map.appState.selectedSensor?.sensorID ?? "")
     }
+
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView)
     {
         guard let annotationView = view as? LocationAnnotationView else {
             return
         }
         annotationView.hideCallout()
-        mapViewController.appVM.showSensorDetails = false
-        mapViewController.appVM.updateMapRegion = false
-        mapViewController.appVM.updateMapAnnotations = false
-        mapViewController.appVM.getNewSensors = false
+        map.appState.showSensorDetails = false
+        map.appState.updateMapRegion = false
+        map.appState.updateMapAnnotations = false
+        map.appState.getNewSensors = false
     }
 }
 
 struct MapView: UIViewRepresentable {
     
-    @ObservedObject var viewModel: MapVM
-    @EnvironmentObject var appVM: AppVM
-    @EnvironmentObject var dataSource: DataSource
+    @ObservedObject var viewModel: MapViewModel
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var dataSource: AppDataSource
     
     func makeCoordinator() -> MapViewCoordinator {
         MapViewCoordinator(self)
@@ -84,24 +86,21 @@ struct MapView: UIViewRepresentable {
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
         let coordinate = self.viewModel.coordinates
-//        let span = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
-//        let region = MKCoordinateRegion(center: coordinate, span: span)
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
-        //var newAnnotationList: [SensorVM] = []
         var newAnnotationListSensorIds: [String] = []
-        let currentAnnotations = uiView.annotations as! [SensorVM]
+        let currentAnnotations = uiView.annotations as! [SensorPinModel]
         let currentAnnotationsSensorIds = currentAnnotations.map{$0.sensorID}
         let selectedAnnotations = uiView.selectedAnnotations
-        if self.appVM.updateMapAnnotations { 
+        
+        if self.appState.updateMapAnnotations { 
             for pin in self.viewModel.sensors {
-                //newAnnotationList.append(pin) // add all the needed sensors to a list
                 newAnnotationListSensorIds.append(pin.sensorID) // add the ids of the sensors to a list
                 if !currentAnnotationsSensorIds.contains(pin.sensorID){ // check if theres a new sensor
                     uiView.addAnnotation(pin) // add the sensor if theres a new one
                 }
-                else /*if currentAnnotationsSensorIds.contains(pin.sensorID)*/{
-                    let foundSensor = currentAnnotations.filter{$0.sensorID == pin.sensorID }.first
-                    if foundSensor?.stamp != pin.stamp{
+                else {
+                    let foundSensor = currentAnnotations.filter { $0.sensorID == pin.sensorID }.first
+                    if foundSensor?.stamp != pin.stamp {
                         uiView.addAnnotation(pin)
                         uiView.removeAnnotation(foundSensor!)
                     }
@@ -117,25 +116,26 @@ struct MapView: UIViewRepresentable {
             }
         }
         
-        if self.appVM.getNewSensors{
+        if self.appState.getNewSensors {
+            uiView.removeAnnotations(currentAnnotations)
             for pin in self.viewModel.sensors {
                 uiView.addAnnotation(pin)
             }
-            uiView.removeAnnotations(currentAnnotations)
-            self.appVM.getNewSensors = false
+            self.appState.getNewSensors = false
         }
                
-        if self.appVM.updateMapRegion {
+        if self.appState.updateMapRegion {
             uiView.setRegion(region, animated: true)
         }
        
         uiView.mapType = MKMapType.standard
-        uiView.setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: region), animated: true)
+        uiView.setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: region),
+                                 animated: true)
         
-        let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: Double(self.viewModel.intialZoomLevel*8000)) //100000))
+        let zoomRange = MKMapView.CameraZoomRange(
+            maxCenterCoordinateDistance: Double(self.viewModel.intialZoomLevel * 8000)
+        )
         uiView.setCameraZoomRange(zoomRange, animated: true)
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: context.coordinator, action:#selector(Coordinator.triggerTouchAction(tapGestureRecognizer:)))
-        //uiView.addGestureRecognizer(tapGestureRecognizer)
     }
 }
 

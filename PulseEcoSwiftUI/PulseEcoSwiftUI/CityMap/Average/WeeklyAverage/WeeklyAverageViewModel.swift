@@ -10,26 +10,26 @@ import Foundation
 import SwiftUI
 
 class WeeklyAverageViewModel: ObservableObject{
-    @EnvironmentObject var dataSource: DataSource
-    @EnvironmentObject var appVM: AppVM
+    @EnvironmentObject var dataSource: AppDataSource
+    @EnvironmentObject var appState: AppState
     var title: String = ""
     var dailyAverageViewModels: [DailyAverageViewModel] = []
     
-    init(appVM: AppVM, dataSource: DataSource, averages: [Sensor]){
-        title = Trema.text(for: "past_week") + "(\(dataSource.getCurrentMeasure(selectedMeasure: appVM.selectedMeasure).unit))"
-        dailyAverageViewModels = transformInfoSensorToViewModel(appVM: appVM,
+    init(appState: AppState, dataSource: AppDataSource, averages: [SensorData]){
+        title = Trema.text(for: "past_week") + "(\(dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasure).unit))"
+        dailyAverageViewModels = transformInfoSensorToViewModel(appState: appState,
                                                                 dataSource: dataSource,
                                                                 averages: averages)
     }
     
-    func transformInfoSensorToViewModel(appVM: AppVM, dataSource: DataSource,
-                                        averages: [Sensor]) -> [DailyAverageViewModel] {
+    func transformInfoSensorToViewModel(appState: AppState, dataSource: AppDataSource,
+                                        averages: [SensorData]) -> [DailyAverageViewModel] {
         let dailyAverageSensorValues = dailyAverages(averages: averages)
         return dailyAverageSensorValues.compactMap {
-            DailyAverageViewModel(sensor: $0, appVM: appVM, dataSource: dataSource)}
+            DailyAverageViewModel(sensor: $0, appState: appState, dataSource: dataSource)}
     }
     
-    func dailyAverages(averages: [Sensor]) -> [DailyInfoSensor] {
+    func dailyAverages(averages: [SensorData]) -> [DailyInfoSensor] {
         var allAverages: [DailyInfoSensor] = []
      
         let week = (-7...(-1)).compactMap {

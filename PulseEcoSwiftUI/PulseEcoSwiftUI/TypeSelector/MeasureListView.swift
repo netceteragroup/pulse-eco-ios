@@ -9,20 +9,28 @@
 import SwiftUI
 
 struct MeasureListView: View {
-    @ObservedObject var viewModel: MeasureListVM
+    @ObservedObject var viewModel: MeasureListViewModel
     
     var body: some View {
         ScrollView (.horizontal, showsIndicators: false) {
-            HStack {
-                ForEach(viewModel.measures, id: \.id) { item in
-                    VStack {
-                        MeasureButtonView(viewModel: item)
-                    }
+            VStack {
+                buttonStack
+                .frame(height: 40)
+                Spacer()
+            }
+            .frame(height: 56)
+        }
+    }
+    
+    var buttonStack: some View {
+        HStack {
+            ForEach(viewModel.measures, id: \.id) { item in
+                VStack {
+                    MeasureButtonView(viewModel: item)
                 }
             }
-        }//.minimumScaleFactor(0.90)
-            .background(self.viewModel.backgroundColor)
-            .shadow(color: self.viewModel.shadow, radius: 0.8, x: 0, y: 0)
+        }
+
     }
 }
 

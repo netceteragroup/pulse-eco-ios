@@ -2,10 +2,10 @@ import SwiftUI
 import Combine
 
 struct ExpandableView: View {
-    @EnvironmentObject var appVM: AppVM
+    @EnvironmentObject var appState: AppState
     @State var isExpanded = false
     @State var width: CGFloat = 115
-    var viewModel: AverageVM
+    var viewModel: AverageViewModel
     @State var geometry: GeometryProxy
     var body: some View {
         VStack {
@@ -60,10 +60,10 @@ struct ExpandableView: View {
                         
                         if self.isExpanded {
                             bar.transition(.asymmetric(
-                                            insertion:
-                                                .opacity.animation(.default.delay(0.19)),
-                                            removal:
-                                                .opacity.animation(.default.speed(7))
+                                insertion:
+                                    .opacity.animation(.default.delay(0.19)),
+                                removal:
+                                    .opacity.animation(.default.speed(7))
                             ))
                             
                         }
@@ -78,15 +78,15 @@ struct ExpandableView: View {
                     }
                     .padding(.top, 10)
                     .padding(.leading, 10)
-                    // .animation(.easeInOut(duration: 0.3))
+                    .animation(.easeInOut(duration: 0.3),
+                               value: isExpanded)
                     Spacer()
                 }
                 
                 Spacer()
-            }
-            
+            }            
         }
-        .animation(.easeInOut(duration:0.3))
+        
     }
     
     var bar: some View {

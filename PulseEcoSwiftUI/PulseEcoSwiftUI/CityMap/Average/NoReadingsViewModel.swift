@@ -2,7 +2,7 @@
 import Foundation
 import SwiftUI
 
-class NoReadingsVM {
+class NoReadingsViewModel {
     var image: UIImage = UIImage(named: "exclamation") ?? UIImage()
     var text: String = Trema.text(for: "no_readings")
     var textColor: Color = Color.white

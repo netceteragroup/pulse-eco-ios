@@ -10,8 +10,8 @@ import SwiftUI
 
 struct LanguageView: View {
     
-    @EnvironmentObject var appVM: AppVM
-    @EnvironmentObject var dataSource: DataSource
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
     @Binding var showPicker: Bool
     @State private var showAlert = false
@@ -40,7 +40,7 @@ struct LanguageView: View {
                             return Alert(title: Text(Trema.text(for: "change_app_language")),
                                          message: Text(String(format: Trema.text(for: "change_language_message"),
                                                               selectedCountry.languageName)),
-                                         primaryButton: .destructive(
+                                         primaryButton: .cancel(
                                             Text(Trema.text(for: "cancel")),
                                             action: { self.showAlert = false}),
                                          secondaryButton: .default (
@@ -81,10 +81,10 @@ struct LanguageView: View {
             self.dataSource.loadingCityData = true
             self.dataSource.getMeasures()
             self.refreshService.updateRefreshDate()
-            self.dataSource.getValuesForCity(cityName: self.appVM.cityName)
-            self.appVM.updateMapAnnotations = true
-            self.appVM.updateMapRegion = true
-            self.appVM.selectedLanguage = toLanguage
+            self.dataSource.getValuesForCity(cityName: self.appState.cityName)
+            self.appState.updateMapAnnotations = true
+            self.appState.updateMapRegion = true
+            self.appState.selectedLanguage = toLanguage
         }
     }
     
