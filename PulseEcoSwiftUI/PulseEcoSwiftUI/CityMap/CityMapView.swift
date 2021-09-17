@@ -27,7 +27,7 @@ struct CityMapView: View {
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
                     BottomShadow()
-            )
+                )
             
             VStack(alignment: .trailing) {
                 Spacer()
@@ -37,13 +37,13 @@ struct CityMapView: View {
                         .fill(self.viewModel.disclaimerIconColor)
                         .frame(width: self.viewModel.disclaimerIconSize.width, height: self.viewModel.disclaimerIconSize.height)
                         .overlay(Text(self.viewModel.disclaimerIconText)
-                            .foregroundColor(Color.black)
-                    )
+                                    .foregroundColor(Color.black)
+                        )
                         .padding(.bottom, 35)
                         .onTapGesture {
                             self.appVM.showSheet = true
                             self.appVM.activeSheet = .disclaimerView
-                    }
+                        }
                     
                 }.padding(.trailing, 15.0)
             }
@@ -53,13 +53,16 @@ struct CityMapView: View {
                     .overlay(BottomShadow())
             }
         }
-            .sheet(isPresented: self.$appVM.showSheet) {
-                if self.appVM.activeSheet == .disclaimerView {
-                    DisclaimerView()
-                        .environment(\.managedObjectContext, self.moc)
-                } else {
-                    CityListView(viewModel: CityListVM(cities: self.dataSource.cities), userSettings: self.userSettings).environment(\.managedObjectContext, self.moc)
-                }
+        .sheet(isPresented: self.$appVM.showSheet, onDismiss: {
+                self.appVM.showSheet = false
+                self.appVM.citySelectorClicked = false}) {
+            
+            if self.appVM.activeSheet == .disclaimerView {
+                DisclaimerView()
+                    .environment(\.managedObjectContext, self.moc)
+            } else {
+                CityListView(viewModel: CityListVM(cities: self.dataSource.cities), userSettings: self.userSettings).environment(\.managedObjectContext, self.moc)
+            }
         }
         
     }
