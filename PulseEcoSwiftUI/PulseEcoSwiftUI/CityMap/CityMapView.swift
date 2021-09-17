@@ -53,15 +53,20 @@ struct CityMapView: View {
                     .overlay(BottomShadow())
             }
         }
-        .sheet(isPresented: self.$appState.showSheet, onDismiss: {
-                self.appState.showSheet = false
-                self.appState.citySelectorClicked = false}) {
+        .sheet(isPresented: self.$appState.showSheet) {
             
             if self.appState.activeSheet == .disclaimerView {
                 DisclaimerView()
                     .environment(\.managedObjectContext, self.moc)
             } else {
-                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities), userSettings: self.userSettings).environment(\.managedObjectContext, self.moc)
+                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities), userSettings: self.userSettings)
+                    .environment(\.managedObjectContext, self.moc)
+                    .onDisappear(perform:{
+                        if self.userSettings.favouriteCities.count == 0{
+                            //self.appState.showSheet = false
+                            self.appState.citySelectorClicked = false
+                        }
+                    })
             }
         }
         

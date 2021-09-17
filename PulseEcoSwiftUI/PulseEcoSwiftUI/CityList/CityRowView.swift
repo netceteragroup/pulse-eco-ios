@@ -9,11 +9,11 @@ struct CityRowView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-//                Image(systemName: "pin")
+                //                Image(systemName: "pin")
                 Image(uiImage: UIImage(named: "whitepin") ?? UIImage()).resizable()
-                .frame(width: 20, height: 25)
+                    .frame(width: 20, height: 25)
                     .foregroundColor(Color.white)
-                    
+                
                 //.scaledToFit()
                 VStack(alignment: .leading) {
                     Text("\(self.viewModel.siteName)").foregroundColor(Color.white)
@@ -21,8 +21,11 @@ struct CityRowView: View {
                 }
                 Spacer()
             }
-            Divider().background(Color.gray)
-        }.frame(height: 60)
+            Divider()
+                .background(Color.gray)
+        }
+        .frame(height: 60)
         .padding(.horizontal, 10)
+        .contentShape(Rectangle())
     }
 }
