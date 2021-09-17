@@ -19,7 +19,7 @@ class MapVM: ObservableObject {
     var sensors = [SensorVM]()
     var measure: String
     
-    init(measure: String, cityName: String, sensors: [SensorModel], sensorsData: [Sensor],
+    init(measure: String, cityName: String, sensors: [Sensor], sensorsData: [SensorData],
          measures: [Measure], city: CityModel) {
         let selectedMeasure = measures.filter{ $0.id.lowercased() == measure.lowercased()}
             .first ?? Measure.empty()
@@ -55,7 +55,7 @@ func pinColorForSensorValue(selectedMeasure: Measure, sensorValue: String) -> UI
         }?.legendColor ?? "gray")
 }
 
-func combine(sensors: [SensorModel], sensorsData: [Sensor], selectedMeasure: String) -> [SensorPin] {
+func combine(sensors: [Sensor], sensorsData: [SensorData], selectedMeasure: String) -> [SensorPin] {
     var commonSensors = [SensorPin]()
     let selectedMeasureSensors = sensorsData.filter { sensor in
         sensor.type.lowercased() == selectedMeasure.lowercased()

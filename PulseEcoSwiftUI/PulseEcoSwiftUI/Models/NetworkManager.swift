@@ -23,14 +23,16 @@ class NetworkManager: ObservableObject {
             .eraseToAnyPublisher()
         
     }
-    func downloadSensors(cityName: String) -> AnyPublisher<[SensorModel], Error> {
+    
+    func downloadSensors(cityName: String) -> AnyPublisher<[Sensor], Error> {
         let url = URL(string: "https://\(cityName).pulse.eco/rest/sensor")!
         return URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
-            .decode(type: [SensorModel].self, decoder: JSONDecoder())
+            .decode(type: [Sensor].self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
+    
     func downloadOverallValuesForCity(cityName: String) -> AnyPublisher<CityOverallValues, Error> {
         let url = URL(string: "https://\(cityName).pulse.eco/rest/overall")!
         return URLSession.shared.dataTaskPublisher(for: url)
@@ -39,22 +41,25 @@ class NetworkManager: ObservableObject {
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
-    func downloadCurrentDataForSensors(cityName: String) -> AnyPublisher<[Sensor], Error> {
+    
+    func downloadCurrentDataForSensors(cityName: String) -> AnyPublisher<[SensorData], Error> {
         let url = URL(string: "https://\(cityName).pulse.eco/rest/current")!
         return URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
-            .decode(type: [Sensor].self, decoder: JSONDecoder())
+            .decode(type: [SensorData].self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
-    func download24hDataForSensors(cityName: String) -> AnyPublisher<[Sensor], Error> {
+    
+    func download24hDataForSensors(cityName: String) -> AnyPublisher<[SensorData], Error> {
         let url = URL(string: "https://\(cityName).pulse.eco/rest/data24h")!
         return URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
-            .decode(type: [Sensor].self, decoder: JSONDecoder())
+            .decode(type: [SensorData].self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
+    
     func downloadCities() -> AnyPublisher<[CityModel], Error> {
         let url = URL(string: "https://skopje.pulse.eco/rest/city")!
         return URLSession.shared.dataTaskPublisher(for: url)
@@ -63,17 +68,18 @@ class NetworkManager: ObservableObject {
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
+
     func downloadDailyAverageDataForSensor(cityName: String,
                                            measureType: String,
-                                           sensorId: String) -> AnyPublisher<[Sensor], Error> {
+                                           sensorId: String) -> AnyPublisher<[SensorData], Error> {
         let time = DateFormatter.getTime.string(from: Date())
-        /* the request returns timestamp for the average data records exactly at noon GMT of the target day
-         i.e exactly at 13:00 */
-        /* if the request is made before 13h and the daysAgo's value is set to -7, it returns exactly seven values
-         counting from yesterday's date */
-        /* for some reason if the request is made after 13h and the daysAgo's value is set to -7, it returns values for exactly
-         six days from yesterday's date,
-         that's why daysAgo in this case is set to -8, so we can have data for the past seven days */
+//         the request returns timestamp for the average data records exactly at noon GMT of the target day
+//         i.e exactly at 13:00
+//         if the request is made before 13h and the daysAgo's value is set to -7, it returns exactly seven values
+//         counting from yesterday's date
+//         for some reason if the request is made after 13h and the daysAgo's value is set to -7, it returns values for exactly
+//         six days from yesterday's date,
+//         that's why daysAgo in this case is set to -8, so we can have data for the past seven days
         var daysAgo: Int {
             time >= "13:00" ? -8 : -7
         }
@@ -84,7 +90,7 @@ class NetworkManager: ObservableObject {
         let url = URL(string: formattedRequest)!
         return URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
-            .decode(type: [Sensor].self, decoder: JSONDecoder())
+            .decode(type: [SensorData].self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }

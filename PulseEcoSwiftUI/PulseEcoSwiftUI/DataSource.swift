@@ -3,12 +3,12 @@ import Combine
 
 class DataSource: ObservableObject {
     @Published var measures: [Measure] = [Measure.empty("PM10"),Measure.empty("PM25"),Measure.empty("Noise"),Measure.empty("Temperature"),Measure.empty("Humidity"),Measure.empty("Pressure"), Measure.empty("NO2"), Measure.empty("O3")]
-    @Published var citySensors: [SensorModel] = []
+    @Published var citySensors: [Sensor] = []
     @Published var cityOverall: CityOverallValues?
     @Published var userSettings: UserSettings = UserSettings()
-    @Published var sensorsData: [Sensor] = []
-    @Published var sensorsDailyAverageData: [Sensor] = []
-    @Published var sensorsData24h: [Sensor] = []
+    @Published var sensorsData: [SensorData] = []
+    @Published var sensorsDailyAverageData: [SensorData] = []
+    @Published var sensorsData24h: [SensorData] = []
     @Published var cities: [CityModel] = []
     @Published var cancellationTokens: [AnyCancellable] = []
     @Published var loadingCityData: Bool = true
@@ -21,10 +21,10 @@ class DataSource: ObservableObject {
     private var cancellableSensorData24h: AnyCancellable?
     private var cancellableCities: AnyCancellable?
     private var cancellableSensorsDailyAverageData: AnyCancellable?
-
+    
     var subscripiton: AnyCancellable?
     init() {
-       // getCities()
+        // getCities()
         getMeasures()
         getValuesForCity()
         subscripiton = RunLoop.main.schedule(after: RunLoop.main.now, interval: .seconds(600)) {
@@ -57,7 +57,7 @@ class DataSource: ObservableObject {
     func getOverallValuesForFavoriteCities(city: String = "Skopje") {
         
         self.cities.forEach { city in
-        self.cancellableOverallValuesList = NetworkManager().downloadOverallValuesForCity(cityName: city.cityName).sink(receiveCompletion: { _ in  }, receiveValue: { values in
+            self.cancellableOverallValuesList = NetworkManager().downloadOverallValuesForCity(cityName: city.cityName).sink(receiveCompletion: { _ in  }, receiveValue: { values in
                 self.userSettings.cityValues.append(values)
             })
         }
@@ -92,16 +92,21 @@ class DataSource: ObservableObject {
             self.cities = cities
         })
     }
+    
     func getCurrentMeasure(selectedMeasure: String) -> Measure {
         return measures.filter{ $0.id.lowercased() == selectedMeasure.lowercased()}.first ?? Measure.empty()
     }
+    
     func getDailyAverageDataForSensor(cityName: String,
                                       measureType: String,
                                       sensorId: String) {
         self.cancellableSensorsDailyAverageData = NetworkManager()
-            .downloadDailyAverageDataForSensor(cityName: cityName, measureType: measureType, sensorId: sensorId)
-            .sink(receiveCompletion: { _ in }, receiveValue: { sensors in
-                self.sensorsDailyAverageData = sensors
-            })
+            .downloadDailyAverageDataForSensor(cityName: cityName,
+                                               measureType: measureType,
+                                               sensorId: sensorId)
+            .sink(receiveCompletion: { _ in },
+                  receiveValue: { dailyAverage in
+                    self.sensorsDailyAverageData = dailyAverage
+                  })
     }
 }

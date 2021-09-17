@@ -80,7 +80,7 @@
 		59F5EFDE249CD62E0095FE71 /* SensorDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F5EFDD249CD62E0095FE71 /* SensorDetailsViewModel.swift */; };
 		59FAD1D22490C27200AC36A5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D12490C27200AC36A5 /* NetworkManager.swift */; };
 		59FAD1D42490C82600AC36A5 /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* CityModel.swift */; };
-		59FAD1D62490D76200AC36A5 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* Sensor.swift */; };
+		59FAD1D62490D76200AC36A5 /* SensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* SensorData.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
 		BA00D30F25D2B59600FA2C26 /* WeeklyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */; };
 		BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */; };
@@ -211,7 +211,7 @@
 		59F5EFDD249CD62E0095FE71 /* SensorDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDetailsViewModel.swift; sourceTree = "<group>"; };
 		59FAD1D12490C27200AC36A5 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		59FAD1D32490C82600AC36A5 /* CityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityModel.swift; sourceTree = "<group>"; };
-		59FAD1D52490D76200AC36A5 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
+		59FAD1D52490D76200AC36A5 /* SensorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorData.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
 		BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageViewModel.swift; sourceTree = "<group>"; };
 		BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageViewModel.swift; sourceTree = "<group>"; };
@@ -494,7 +494,7 @@
 				5999C7FD24ADFAC40038EED7 /* SensorTypes.swift */,
 				59FAD1D12490C27200AC36A5 /* NetworkManager.swift */,
 				59FAD1D32490C82600AC36A5 /* CityModel.swift */,
-				59FAD1D52490D76200AC36A5 /* Sensor.swift */,
+				59FAD1D52490D76200AC36A5 /* SensorData.swift */,
 				59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */,
 				596619362492703800DACF67 /* Measure.swift */,
 				5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */,
@@ -724,7 +724,7 @@
 				3288687524B51F5E009CC56D /* SelectedSensorView.swift in Sources */,
 				592201AD24AA656A00025F1F /* NoReadingsView.swift in Sources */,
 				59A35AD82498F6E300C07786 /* MapVM.swift in Sources */,
-				59FAD1D62490D76200AC36A5 /* Sensor.swift in Sources */,
+				59FAD1D62490D76200AC36A5 /* SensorData.swift in Sources */,
 				59A4F68F247FD2150089D523 /* AppDelegate.swift in Sources */,
 				59504C1B24B46CE500EA4AFF /* SizePreferenceKey.swift in Sources */,
 				59504C1524B46C7A00EA4AFF /* SliderCircle.swift in Sources */,

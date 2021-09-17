@@ -15,7 +15,7 @@ class WeeklyAverageViewModel: ObservableObject{
     var title: String = ""
     var dailyAverageViewModels: [DailyAverageViewModel] = []
     
-    init(appVM: AppVM, dataSource: DataSource, averages: [Sensor]){
+    init(appVM: AppVM, dataSource: DataSource, averages: [SensorData]){
         title = Trema.text(for: "past_week") + "(\(dataSource.getCurrentMeasure(selectedMeasure: appVM.selectedMeasure).unit))"
         dailyAverageViewModels = transformInfoSensorToViewModel(appVM: appVM,
                                                                 dataSource: dataSource,
@@ -23,13 +23,13 @@ class WeeklyAverageViewModel: ObservableObject{
     }
     
     func transformInfoSensorToViewModel(appVM: AppVM, dataSource: DataSource,
-                                        averages: [Sensor]) -> [DailyAverageViewModel] {
+                                        averages: [SensorData]) -> [DailyAverageViewModel] {
         let dailyAverageSensorValues = dailyAverages(averages: averages)
         return dailyAverageSensorValues.compactMap {
             DailyAverageViewModel(sensor: $0, appVM: appVM, dataSource: dataSource)}
     }
     
-    func dailyAverages(averages: [Sensor]) -> [DailyInfoSensor] {
+    func dailyAverages(averages: [SensorData]) -> [DailyInfoSensor] {
         var allAverages: [DailyInfoSensor] = []
      
         let week = (-7...(-1)).compactMap {
