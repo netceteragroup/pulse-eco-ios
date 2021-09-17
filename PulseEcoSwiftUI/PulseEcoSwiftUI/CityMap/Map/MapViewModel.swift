@@ -16,11 +16,15 @@ class MapViewModel: ObservableObject {
     var coordinates: CLLocationCoordinate2D
     var intialZoomLevel: Int
     var cityBorderPoints: [CLLocationCoordinate2D] = []
-    var sensors = [SensorPinModel]()
+    @Published var sensors = [SensorPinModel]()
     var measure: String
     
-    init(measure: String, cityName: String, sensors: [Sensor], sensorsData: [SensorData],
-         measures: [Measure], city: City) {
+    init(measure: String,
+         cityName: String,
+         sensors: [Sensor],
+         sensorsData: [SensorData],
+         measures: [Measure],
+         city: City) {
         let selectedMeasure = measures.filter{ $0.id.lowercased() == measure.lowercased()}
             .first ?? Measure.empty()
         self.cityName = cityName

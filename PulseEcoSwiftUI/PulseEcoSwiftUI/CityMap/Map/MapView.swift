@@ -91,16 +91,16 @@ struct MapView: UIViewRepresentable {
         let currentAnnotations = uiView.annotations as! [SensorPinModel]
         let currentAnnotationsSensorIds = currentAnnotations.map{$0.sensorID}
         let selectedAnnotations = uiView.selectedAnnotations
+        
         if self.appState.updateMapAnnotations { 
             for pin in self.viewModel.sensors {
-                //newAnnotationList.append(pin) // add all the needed sensors to a list
                 newAnnotationListSensorIds.append(pin.sensorID) // add the ids of the sensors to a list
                 if !currentAnnotationsSensorIds.contains(pin.sensorID){ // check if theres a new sensor
                     uiView.addAnnotation(pin) // add the sensor if theres a new one
                 }
-                else /*if currentAnnotationsSensorIds.contains(pin.sensorID)*/{
-                    let foundSensor = currentAnnotations.filter{$0.sensorID == pin.sensorID }.first
-                    if foundSensor?.stamp != pin.stamp{
+                else {
+                    let foundSensor = currentAnnotations.filter { $0.sensorID == pin.sensorID }.first
+                    if foundSensor?.stamp != pin.stamp {
                         uiView.addAnnotation(pin)
                         uiView.removeAnnotation(foundSensor!)
                     }
@@ -116,11 +116,11 @@ struct MapView: UIViewRepresentable {
             }
         }
         
-        if self.appState.getNewSensors{
+        if self.appState.getNewSensors {
+            uiView.removeAnnotations(currentAnnotations)
             for pin in self.viewModel.sensors {
                 uiView.addAnnotation(pin)
             }
-            uiView.removeAnnotations(currentAnnotations)
             self.appState.getNewSensors = false
         }
                
@@ -129,12 +129,13 @@ struct MapView: UIViewRepresentable {
         }
        
         uiView.mapType = MKMapType.standard
-        uiView.setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: region), animated: true)
+        uiView.setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: region),
+                                 animated: true)
         
-        let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: Double(self.viewModel.intialZoomLevel*8000)) //100000))
+        let zoomRange = MKMapView.CameraZoomRange(
+            maxCenterCoordinateDistance: Double(self.viewModel.intialZoomLevel * 8000)
+        )
         uiView.setCameraZoomRange(zoomRange, animated: true)
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: context.coordinator, action:#selector(Coordinator.triggerTouchAction(tapGestureRecognizer:)))
-        //uiView.addGestureRecognizer(tapGestureRecognizer)
     }
 }
 

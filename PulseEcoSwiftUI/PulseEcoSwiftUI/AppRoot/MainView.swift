@@ -24,8 +24,7 @@ struct MainView: View {
                 ZStack{
                     ZStack {
                      
-                        CityMapView(viewModel: CityMapViewModel(blurBackground: self.appState.blurBackground),
-                                    userSettings: self.dataSource.userSettings)
+                        CityMapView(userSettings: self.dataSource.userSettings)
                             .edgesIgnoringSafeArea([.horizontal,.bottom
                             ])
                             .padding(.top, 36)
