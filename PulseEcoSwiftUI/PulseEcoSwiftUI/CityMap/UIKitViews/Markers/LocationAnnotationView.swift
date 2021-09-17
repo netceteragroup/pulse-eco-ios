@@ -13,7 +13,7 @@ import SwiftUI
 
 class LocationAnnotationView: MKAnnotationView {
 
-    var pin: SensorViewModel?
+    var pin: SensorPinModel?
     var markerView: MarkerView?
     var selectedSensor: SelectedSensorView?
     @EnvironmentObject var appState: AppState
@@ -23,7 +23,7 @@ class LocationAnnotationView: MKAnnotationView {
 
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        guard let pin = annotation as? SensorViewModel else {
+        guard let pin = annotation as? SensorPinModel else {
             return
         }
         self.pin = pin

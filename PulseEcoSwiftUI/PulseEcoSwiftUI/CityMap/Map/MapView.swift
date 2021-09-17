@@ -10,15 +10,15 @@ import SwiftUI
 import MapKit
 
 class MapViewCoordinator: NSObject, MKMapViewDelegate {
-    var mapViewController: MapView
+    var map: MapView
+    
     init(_ control: MapView) {
-        self.mapViewController = control
+        self.map = control
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        
-        guard let annotation = annotation as? SensorViewModel else {
+        guard let annotation = annotation as? SensorPinModel else {
             return nil
         }
         let annotationView = LocationAnnotationView(annotation: annotation, reuseIdentifier: "customView")
@@ -45,25 +45,26 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
             return
         }
         annotationView.showCallout()
-        mapViewController.appState.showSensorDetails = true
-        mapViewController.appState.selectedSensor = annotationView.pin ?? SensorViewModel()
-        mapViewController.appState.updateMapRegion = false
-        mapViewController.appState.updateMapAnnotations = false
-        mapViewController.appState.getNewSensors = false
-        mapViewController.dataSource.getDailyAverageDataForSensor(cityName: mapViewController.appState.cityName,
-                                                                  measureType: mapViewController.appState.selectedMeasure,
-                                                                  sensorId: mapViewController.appState.selectedSensor?.sensorID ?? "")
+        map.appState.showSensorDetails = true
+        map.appState.selectedSensor = annotationView.pin ?? SensorPinModel()
+        map.appState.updateMapRegion = false
+        map.appState.updateMapAnnotations = false
+        map.appState.getNewSensors = false
+        map.dataSource.getDailyAverageDataForSensor(cityName: map.appState.cityName,
+                                                                  measureType: map.appState.selectedMeasure,
+                                                                  sensorId: map.appState.selectedSensor?.sensorID ?? "")
     }
+
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView)
     {
         guard let annotationView = view as? LocationAnnotationView else {
             return
         }
         annotationView.hideCallout()
-        mapViewController.appState.showSensorDetails = false
-        mapViewController.appState.updateMapRegion = false
-        mapViewController.appState.updateMapAnnotations = false
-        mapViewController.appState.getNewSensors = false
+        map.appState.showSensorDetails = false
+        map.appState.updateMapRegion = false
+        map.appState.updateMapAnnotations = false
+        map.appState.getNewSensors = false
     }
 }
 
@@ -85,12 +86,9 @@ struct MapView: UIViewRepresentable {
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
         let coordinate = self.viewModel.coordinates
-//        let span = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
-//        let region = MKCoordinateRegion(center: coordinate, span: span)
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
-        //var newAnnotationList: [SensorVM] = []
         var newAnnotationListSensorIds: [String] = []
-        let currentAnnotations = uiView.annotations as! [SensorViewModel]
+        let currentAnnotations = uiView.annotations as! [SensorPinModel]
         let currentAnnotationsSensorIds = currentAnnotations.map{$0.sensorID}
         let selectedAnnotations = uiView.selectedAnnotations
         if self.appState.updateMapAnnotations { 

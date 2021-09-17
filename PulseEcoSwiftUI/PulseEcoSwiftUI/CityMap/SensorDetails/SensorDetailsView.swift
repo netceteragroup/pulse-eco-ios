@@ -45,7 +45,7 @@ struct SensorDetailsView: View {
             // Expanded View
             VStack {
                 LineChartSwiftUI(viewModel:
-                    ChartViewModel(sensor: self.appState.selectedSensor ?? SensorViewModel(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appState.selectedMeasure)
+                    ChartViewModel(sensor: self.appState.selectedSensor ?? SensorPinModel(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appState.selectedMeasure)
                     )
                 ).frame(width: 350, height: 200 )
                 

@@ -76,7 +76,7 @@
 		59E4992124C5A2E000E89746 /* TitilliumWeb-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991524C5A2E000E89746 /* TitilliumWeb-Italic.ttf */; };
 		59E4992224C5A2E000E89746 /* TitilliumWeb-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991624C5A2E000E89746 /* TitilliumWeb-Light.ttf */; };
 		59F01AD724AC7B1300AD2802 /* AppDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F01AD624AC7B1300AD2802 /* AppDataSource.swift */; };
-		59F5EFDC249CC5A40095FE71 /* SensorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F5EFDB249CC5A40095FE71 /* SensorViewModel.swift */; };
+		59F5EFDC249CC5A40095FE71 /* SensorPinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F5EFDB249CC5A40095FE71 /* SensorPinModel.swift */; };
 		59F5EFDE249CD62E0095FE71 /* SensorDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F5EFDD249CD62E0095FE71 /* SensorDetailsViewModel.swift */; };
 		59FAD1D22490C27200AC36A5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D12490C27200AC36A5 /* NetworkService.swift */; };
 		59FAD1D42490C82600AC36A5 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* City.swift */; };
@@ -207,7 +207,7 @@
 		59E4991524C5A2E000E89746 /* TitilliumWeb-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TitilliumWeb-Italic.ttf"; sourceTree = "<group>"; };
 		59E4991624C5A2E000E89746 /* TitilliumWeb-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TitilliumWeb-Light.ttf"; sourceTree = "<group>"; };
 		59F01AD624AC7B1300AD2802 /* AppDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDataSource.swift; sourceTree = "<group>"; };
-		59F5EFDB249CC5A40095FE71 /* SensorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorViewModel.swift; sourceTree = "<group>"; };
+		59F5EFDB249CC5A40095FE71 /* SensorPinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorPinModel.swift; sourceTree = "<group>"; };
 		59F5EFDD249CD62E0095FE71 /* SensorDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDetailsViewModel.swift; sourceTree = "<group>"; };
 		59FAD1D12490C27200AC36A5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		59FAD1D32490C82600AC36A5 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
@@ -318,7 +318,7 @@
 		5997F73524A36F570035BEEB /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				59F5EFDB249CC5A40095FE71 /* SensorViewModel.swift */,
+				59F5EFDB249CC5A40095FE71 /* SensorPinModel.swift */,
 				59A35AD52498F6AD00C07786 /* MapView.swift */,
 				59A35AD72498F6E300C07786 /* MapViewModel.swift */,
 				BAC09D8425E5183400F794F9 /* SensorPin.swift */,
@@ -759,7 +759,7 @@
 				591642A52499FD70000A4F7C /* CityMapView.swift in Sources */,
 				59504C1324B46C2D00EA4AFF /* LoadingView.swift in Sources */,
 				BA12EB122611E520005BC654 /* Countries.swift in Sources */,
-				59F5EFDC249CC5A40095FE71 /* SensorViewModel.swift in Sources */,
+				59F5EFDC249CC5A40095FE71 /* SensorPinModel.swift in Sources */,
 				5999C7FE24ADFAC40038EED7 /* SensorTypes.swift in Sources */,
 				BA013FE8261C8E500057A343 /* LineChartSwiftUI.swift in Sources */,
 				C52F371D26F240FC007813B0 /* KeyboardDismissModifier.swift in Sources */,

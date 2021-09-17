@@ -6,7 +6,7 @@ class AppState: ObservableObject {
     @Published var citySelectorClicked: Bool = false
     @Published var cityName: String = "Skopje"
     @Published var showSensorDetails: Bool = false
-    @Published var selectedSensor: SensorViewModel?
+    @Published var selectedSensor: SensorPinModel?
     @Published var updateMapRegion: Bool = true
     @Published var updateMapAnnotations: Bool = true
     @Published var blurBackground: Bool = false

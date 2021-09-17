@@ -54,7 +54,7 @@ struct MainView: View {
                                     if self.showPicker == true {
                                         self.showPicker = false
                                     }
-                                    if self.appState.showSensorDetails == true{
+                                    if self.appState.showSensorDetails == true {
                                         self.appState.showSensorDetails = false
                                         self.appState.selectedSensor = nil
                                         self.appState.updateMapAnnotations = true
@@ -108,7 +108,7 @@ struct MainView: View {
                         else if self.appState.showSensorDetails {
                             SlideOverCard {
                                 SensorDetailsView(viewModel: SensorDetailsViewModel(
-                                    sensor: self.appState.selectedSensor ?? SensorViewModel(),
+                                    sensor: self.appState.selectedSensor ?? SensorPinModel(),
                                     sensorsData: self.dataSource.sensorsData24h,
                                     selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure:self.appState.selectedMeasure),
                                     sensorData24h: self.dataSource.sensorsData24h,

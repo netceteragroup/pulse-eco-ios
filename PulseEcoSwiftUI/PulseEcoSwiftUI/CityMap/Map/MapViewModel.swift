@@ -16,7 +16,7 @@ class MapViewModel: ObservableObject {
     var coordinates: CLLocationCoordinate2D
     var intialZoomLevel: Int
     var cityBorderPoints: [CLLocationCoordinate2D] = []
-    var sensors = [SensorViewModel]()
+    var sensors = [SensorPinModel]()
     var measure: String
     
     init(measure: String, cityName: String, sensors: [Sensor], sensorsData: [SensorData],
@@ -34,7 +34,7 @@ class MapViewModel: ObservableObject {
         self.sensors = combine(sensors: sensors, sensorsData: sensorsData, selectedMeasure: measure).map {
             sensor in
             let coordinates = sensor.position.split(separator: ",")
-            return SensorViewModel(title: sensor.description,
+            return SensorPinModel(title: sensor.description,
                             sensorID: sensor.sensorID,
                             value: sensor.value,
                             coordinate: CLLocationCoordinate2D(latitude: Double(coordinates[0]) ?? 0,

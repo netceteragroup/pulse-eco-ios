@@ -12,7 +12,6 @@ struct MeasureButtonView: View {
                 //self.appState.updateMapAnnotations = true
                 self.appState.getNewSensors = true
                 self.appState.showSensorDetails = false
-                self.appState.selectedSensor = self.appState.selectedSensor
             }) {
                 VStack(spacing: 0) {
                     Text(self.viewModel.title)
