@@ -12,7 +12,7 @@ import Combine
 class NetworkService {
     
     // MARK: - New
-    let language = "lang=\(Trema.appLanguage)"
+    var language: String { "lang=\(Trema.appLanguage)" }
     
     func downloadMeasures() -> AnyPublisher<[Measure], Error> {
         let url = URL(string: "https://pulse.eco/rest/measures?\(language)")!

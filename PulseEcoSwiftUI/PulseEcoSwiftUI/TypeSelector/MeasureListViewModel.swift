@@ -17,7 +17,10 @@ class MeasureListViewModel: ObservableObject {
     init(selectedMeasure: String, cityName: String, measuresList: [Measure], cityValues: CityOverallValues?, citySelectorClicked: Bool) {
         self.selectedMeasure = selectedMeasure
         for measure in measuresList {
-            let measureVM = MeasureButtonViewModel(id: measure.id, title: measure.buttonTitle, selectedMeasure: selectedMeasure, icon: measure.icon)
+            let measureVM = MeasureButtonViewModel(id: measure.id,
+                                                   title: measure.buttonTitle,
+                                                   selectedMeasure: selectedMeasure,
+                                                   icon: measure.icon)
             self.measures.append(measureVM)
             if cityValues?.values[measure.id.lowercased()] == nil {
                 measureVM.clickDisabled = true
