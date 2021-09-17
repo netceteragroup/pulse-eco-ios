@@ -49,17 +49,22 @@ struct FavouriteCitiesView: View {
                         Spacer()
                         HStack {
                             Spacer()
-                            Image(systemName: "plus.circle")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(Color(AppColors.purple))
-                                .onTapGesture {
-                                    self.appState.showSheet = true
-                                    self.appState.activeSheet = .cityListView
-                                }
-                                .padding(.trailing, 25)
+                            Button(action: {
+                                self.appState.showSheet = true
+                                self.appState.activeSheet = .cityListView
+                            }) {
+                                Text(Trema.text(for: "add_city_button"))
+                                    .font(Font.custom("TitilliumWeb-SemiBold", size: 18))
+                                    .foregroundColor(Color(AppColors.purple))
+                                    .padding([.vertical, .leading], 16)
+                                Image(systemName: "plus.circle")
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .foregroundColor(Color(AppColors.purple))
+                                    .padding(.trailing, 16)
+                            }
                         }
-                        .padding(.bottom, 25)
+                        .padding([.trailing, .bottom], 8)
                         .edgesIgnoringSafeArea(.bottom)
                     }
                     .edgesIgnoringSafeArea(.bottom)
