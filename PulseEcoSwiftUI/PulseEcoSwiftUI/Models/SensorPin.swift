@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SensorPin: Codable, Identifiable {
+struct SensorPin: Identifiable {
     let id = UUID()
     let sensorID: String
     let stamp: String
