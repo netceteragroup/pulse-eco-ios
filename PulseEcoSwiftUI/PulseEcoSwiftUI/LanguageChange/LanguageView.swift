@@ -38,7 +38,7 @@ struct LanguageView: View {
                     }.padding(.trailing, 20)
                         .alert(isPresented: $showAlert) {
                             return Alert(title: Text(Trema.text(for: "change_app_language")),
-                                         message: Text(String(format: Trema.text(for: "change_language_message"),
+                                         message: Text(String(format: Trema.text(for: "change_language_message_ios"),
                                                               selectedCountry.languageName)),
                                          primaryButton: .cancel(
                                             Text(Trema.text(for: "cancel")),

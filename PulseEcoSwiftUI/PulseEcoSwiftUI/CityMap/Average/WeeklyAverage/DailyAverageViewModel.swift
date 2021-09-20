@@ -24,7 +24,7 @@ class DailyAverageViewModel: Identifiable {
     var dayOfWeek: String {
         let date = DateFormatter.iso8601Full.date(from: sensor.dayOfWeek) ?? Date()
         let dateString = DateFormatter.getDay.string(from: date)
-        return String(Trema.text(for: String(dateString.prefix(3)).lowercased()))
+        return String(Trema.text(for: dateString.lowercased() + "-short"))
     }
     
     init(sensor: DailyInfoSensor, appState: AppState, dataSource: AppDataSource) {
