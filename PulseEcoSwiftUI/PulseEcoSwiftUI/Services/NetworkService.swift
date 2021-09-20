@@ -11,12 +11,18 @@ import Combine
 
 class NetworkService {
     
+    let appURLSession: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.httpAdditionalHeaders = ["User-Agent": "pulse-eco-ios"]
+        return URLSession(configuration: config)
+    }()
+    
     // MARK: - New
     var language: String { "lang=\(Trema.appLanguage)" }
     
     func downloadMeasures() -> AnyPublisher<[Measure], Error> {
         let url = URL(string: "https://pulse.eco/rest/measures?\(language)")!
-        return URLSession.shared.dataTaskPublisher(for: url)
+        return appURLSession.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: [Measure].self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
@@ -26,7 +32,7 @@ class NetworkService {
     
     func downloadSensors(cityName: String) -> AnyPublisher<[Sensor], Error> {
         let url = URL(string: "https://\(cityName).pulse.eco/rest/sensor")!
-        return URLSession.shared.dataTaskPublisher(for: url)
+        return appURLSession.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: [Sensor].self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
@@ -35,7 +41,7 @@ class NetworkService {
     
     func downloadOverallValuesForCity(cityName: String) -> AnyPublisher<CityOverallValues, Error> {
         let url = URL(string: "https://\(cityName).pulse.eco/rest/overall")!
-        return URLSession.shared.dataTaskPublisher(for: url)
+        return appURLSession.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: CityOverallValues.self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
@@ -44,7 +50,7 @@ class NetworkService {
     
     func downloadCurrentDataForSensors(cityName: String) -> AnyPublisher<[SensorData], Error> {
         let url = URL(string: "https://\(cityName).pulse.eco/rest/current")!
-        return URLSession.shared.dataTaskPublisher(for: url)
+        return appURLSession.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: [SensorData].self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
@@ -53,7 +59,7 @@ class NetworkService {
     
     func download24hDataForSensors(cityName: String) -> AnyPublisher<[SensorData], Error> {
         let url = URL(string: "https://\(cityName).pulse.eco/rest/data24h")!
-        return URLSession.shared.dataTaskPublisher(for: url)
+        return appURLSession.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: [SensorData].self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
@@ -62,7 +68,7 @@ class NetworkService {
     
     func downloadCities() -> AnyPublisher<[City], Error> {
         let url = URL(string: "https://skopje.pulse.eco/rest/city")!
-        return URLSession.shared.dataTaskPublisher(for: url)
+        return appURLSession.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: [City].self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
@@ -88,10 +94,11 @@ class NetworkService {
         let requestString = "https://\(cityName).pulse.eco/rest/avgData/day?sensorId=\(sensorId)&type=\(measureType)&from=\(from)&to=\(to)"
         let formattedRequest = requestString.replacingOccurrences(of: "+", with: "%2b")
         let url = URL(string: formattedRequest)!
-        return URLSession.shared.dataTaskPublisher(for: url)
+        return appURLSession.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: [SensorData].self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
 }
+
