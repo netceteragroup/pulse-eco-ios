@@ -13,7 +13,6 @@ struct CityMapView: View {
     struct Theme {
         static let disclaimerIconColor: Color = Color(UIColor(red: 0.96, green: 0.93, blue: 0.86, alpha: 1.00))
         static let disclaimerIconSize: CGSize = CGSize(width: 220, height: 25)
-        static let disclaimerIconText: String = Trema.text(for: "crowdsourced_sensor_data")
     }
     
     @EnvironmentObject var appState: AppState
@@ -41,7 +40,7 @@ struct CityMapView: View {
                     RoundedRectangle(cornerRadius: 5.0, style: .continuous)
                         .fill(Theme.disclaimerIconColor)
                         .frame(width: Theme.disclaimerIconSize.width, height: Theme.disclaimerIconSize.height)
-                        .overlay(Text(Theme.disclaimerIconText)
+                        .overlay(Text(Trema.text(for: "crowdsourced_sensor_data"))
                                     .foregroundColor(Color.black)
                         )
                         .padding(.bottom, 35)
