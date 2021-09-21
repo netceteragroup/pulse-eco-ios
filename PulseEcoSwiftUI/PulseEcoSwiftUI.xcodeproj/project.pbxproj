@@ -95,6 +95,7 @@
 		BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA692F525E3E7C6002E0B2F /* DailyInfoSensor.swift */; };
 		BAC09D8525E5183400F794F9 /* SensorPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC09D8425E5183400F794F9 /* SensorPin.swift */; };
 		C52F371D26F240FC007813B0 /* KeyboardDismissModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52F371C26F240FC007813B0 /* KeyboardDismissModifier.swift */; };
+		C547DABF26F9D48F006A6F76 /* NewLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547DABE26F9D48F006A6F76 /* NewLanguageView.swift */; };
 		C575B48226EA38A7008611D1 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C575B48126EA38A7008611D1 /* Charts */; };
 		C575B48526EA38DC008611D1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C575B48426EA38DC008611D1 /* Lottie */; };
 		C5E8E7B926EB5CA2002B532C /* RefreshService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8E7B826EB5CA2002B532C /* RefreshService.swift */; };
@@ -225,6 +226,7 @@
 		BAA692F525E3E7C6002E0B2F /* DailyInfoSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyInfoSensor.swift; sourceTree = "<group>"; };
 		BAC09D8425E5183400F794F9 /* SensorPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorPin.swift; sourceTree = "<group>"; };
 		C52F371C26F240FC007813B0 /* KeyboardDismissModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDismissModifier.swift; sourceTree = "<group>"; };
+		C547DABE26F9D48F006A6F76 /* NewLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLanguageView.swift; sourceTree = "<group>"; };
 		C5E8E7B826EB5CA2002B532C /* RefreshService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -513,6 +515,7 @@
 				BA12EB0F2611E503005BC654 /* Country.swift */,
 				BA12EB112611E520005BC654 /* Countries.swift */,
 				BA12EB132611E5BA005BC654 /* LanguageView.swift */,
+				C547DABE26F9D48F006A6F76 /* NewLanguageView.swift */,
 			);
 			path = LanguageChange;
 			sourceTree = "<group>";
@@ -784,6 +787,7 @@
 				59FAD1D22490C27200AC36A5 /* NetworkService.swift in Sources */,
 				59B0018E24C9BC6A006EA796 /* ChartViewModel.swift in Sources */,
 				3288686D24B513DA009CC56D /* LocationAnnotationView.swift in Sources */,
+				C547DABF26F9D48F006A6F76 /* NewLanguageView.swift in Sources */,
 				BA12EB102611E503005BC654 /* Country.swift in Sources */,
 				32479108261A6F7200E97C56 /* SlideOverCard.swift in Sources */,
 				59B0019024C9C269006EA796 /* ChartsDateValueFormatter.swift in Sources */,

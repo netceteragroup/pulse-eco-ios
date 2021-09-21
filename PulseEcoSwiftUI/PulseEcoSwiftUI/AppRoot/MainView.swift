@@ -65,7 +65,7 @@ struct MainView: View {
                                         .font(Font.custom("TitilliumWeb-SemiBold", size: 14))
                                         .foregroundColor(Color(AppColors.darkblue))
                                     
-                                    self.appState.cityIcon
+                                    self.appState.cityIcon.foregroundColor(Color(AppColors.darkblue))
                                 }
                             }.accentColor(Color.black),
                             trailing: HStack {
@@ -84,12 +84,17 @@ struct MainView: View {
                                         self.appState.showSensorDetails = false
                                         self.appState.updateMapRegion = true
                                         self.appState.updateMapAnnotations = true
-                                        self.showPicker = true
+                                        self.appState.activeSheet = .languageView
+                                        self.appState.showSheet = true
+                                        //self.showPicker = true
                                         
                                     }
                                 }) {
-                                    Text(Countries.selectedCountry(for: Trema.appLanguage).flagImageName)
-                                        .font(.title)
+                                    Image(systemName: "globe")
+                                        .resizable()
+                                        .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .foregroundColor(Color(AppColors.darkblue))
+                                        .padding(.leading, 15)
                                 }
                         })
                 }

@@ -17,6 +17,7 @@ struct CityMapView: View {
     
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
+    @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var userSettings: UserSettings
     
     var body: some View {
@@ -63,7 +64,8 @@ struct CityMapView: View {
             
             if self.appState.activeSheet == .disclaimerView {
                 DisclaimerView()
-            } else {
+            }
+            else if self.appState.activeSheet == .cityListView {
                 CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities), userSettings: self.userSettings)
                     .onDisappear(perform:{
                         if self.userSettings.favouriteCities.count == 0{
@@ -72,12 +74,15 @@ struct CityMapView: View {
                         }
                     })
             }
+            else {
+                NewLanguageView()
+            }
         }
-        
     }
 }
 
 enum ActiveSheet {
     case disclaimerView
     case cityListView
+    case languageView
 }
