@@ -72,7 +72,7 @@ struct CityMapView: View {
                         }
                     })
             
-            case .languageView: NewLanguageView()
+            case .languageView: LanguageView()
             }
         }
         

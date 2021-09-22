@@ -13,7 +13,6 @@ struct MainView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @ObservedObject var userSettings = UserSettings()
-    @State var showPicker: Bool = false
     
     private let backgroundColor: Color = Color.white
     private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
@@ -50,9 +49,6 @@ struct MainView: View {
                             leading: Button(action: {
                                 withAnimation(.easeInOut(duration: 0.2)){
                                     self.appState.citySelectorClicked.toggle()
-                                    if self.showPicker == true {
-                                        self.showPicker = false
-                                    }
                                     if self.appState.showSensorDetails == true {
                                         self.appState.showSensorDetails = false
                                         self.appState.selectedSensor = nil
@@ -76,18 +72,12 @@ struct MainView: View {
                                         //action
                                         if self.appState.citySelectorClicked == false {
                                             self.refreshService.refreshData()
-                                            self.showPicker = false
                                         }
                                 }
                                 Button(action: {
                                     withAnimation(){
-                                        self.appState.showSensorDetails = false
-                                        self.appState.updateMapRegion = true
-                                        self.appState.updateMapAnnotations = true
                                         self.appState.activeSheet = .languageView
                                         self.appState.showSheet = true
-                                        //self.showPicker = true
-                                        
                                     }
                                 }) {
                                     Image(systemName: "globe")
@@ -102,15 +92,7 @@ struct MainView: View {
             .navigationBarColor(UIColor.white)
                 .overlay(
                     ZStack{
-                        
-                        if self.showPicker {
-                            
-                            LanguageView(showPicker: self.$showPicker)
-                                .transition(.move(edge: .bottom))
-                                .animation(.spring())
-                                .zIndex(1)
-                        }
-                        else if self.appState.showSensorDetails {
+                        if self.appState.showSensorDetails {
                             SlideOverCard {
                                 SensorDetailsView(viewModel: SensorDetailsViewModel(
                                     sensor: self.appState.selectedSensor ?? SensorPinModel(),
