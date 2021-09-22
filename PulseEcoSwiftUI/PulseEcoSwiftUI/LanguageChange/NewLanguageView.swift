@@ -13,17 +13,21 @@ struct NewLanguageView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
     
-    @State private var showAlert = false
-    //@State var selectedLanguage: String? = Countries.selectedCountry(for: Trema.appLanguage).languageName
     var countries = Countries.countries(language: Trema.appLanguage)
     @State var selectedCountry: Country? = Countries.selectedCountry(for: Trema.appLanguage)
+    @State var tappedCountry: Country?
     
     var body: some View {
         NavigationView {
             VStack {
                 List{
                     ForEach(countries, id: \.self) { country in
-                        SelectionCell(country: country, selectedCountry: self.$selectedCountry)
+                        CountryCellView(country: country,
+                                      checked: country == self.selectedCountry,
+                                      action: { tappedCountry in
+                                        self.tappedCountry = tappedCountry
+                                      })
+                        
                     }
                 }
             }
@@ -37,58 +41,56 @@ struct NewLanguageView: View {
                                     })
             )
         }
+        
+        .alert(item: $tappedCountry) { item in
+            return Alert(title: Text(Trema.text(for: "change_app_language")),
+                         message: Text(String(format: Trema.text(for: "change_language_message_ios"),
+                                              tappedCountry?.languageName ?? "")),
+                         primaryButton: .cancel(
+                            Text(Trema.text(for: "cancel")),
+                            action: { self.tappedCountry = nil }),
+                         secondaryButton: .default (
+                            Text(Trema.text(for: "proceed")),
+                            action: {
+                                self.selectCountry(country: item)
+                            }))
+        }
+    }
+    
+    
+    func selectCountry(country: Country) {
+        self.tappedCountry = nil
+        self.selectedCountry = country
+        Trema.appLanguage = country.shortName
+        self.appState.selectedLanguage = Trema.appLanguage
+        self.dataSource.getMeasures()
+        self.refreshService.updateRefreshDate()
+        self.dataSource.getValuesForCity(cityName: self.appState.cityName)
+        self.appState.updateMapAnnotations = true
+        self.appState.updateMapRegion = true
+        self.appState.showSheet = false
     }
 }
 
-private struct SelectionCell: View {
-    
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var dataSource: AppDataSource
-    @EnvironmentObject var refreshService: RefreshService
+private struct CountryCellView: View {
     let country: Country
-    @Binding var selectedCountry: Country?
-    @State var showAlert: Bool = false
-    
+    let checked: Bool
+    let action: (Country) -> ()
     
     var body: some View {
         HStack {
             Text(country.languageName)
             Spacer()
-            if country.shortName == selectedCountry!.shortName {
+            if checked {
                 Image(systemName: "checkmark")
                     .foregroundColor(.black)
             }
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            if (self.selectedCountry != self.country) {
-                self.showAlert = true
+            if !checked {
+                action(country)
             }
-            
         }
-        .alert(isPresented: self.$showAlert) {
-            return Alert(title: Text(Trema.text(for: "change_app_language")),
-                         message: Text(String(format: Trema.text(for: "change_language_message_ios"), self.country.languageName)),
-                         primaryButton: .cancel(
-                            Text(Trema.text(for: "cancel")),
-                            action: { self.showAlert = false}),
-                         secondaryButton: .default (
-                            Text(Trema.text(for: "proceed")),
-                            action: {
-                                self.changeLanguage(toLanguage: self.country.shortName)
-                                self.appState.showSheet = false
-                            }))
-        }
-        
     }
-    func changeLanguage(toLanguage: String) {
-            Trema.appLanguage = toLanguage
-            self.dataSource.getMeasures()
-            self.refreshService.updateRefreshDate()
-            self.dataSource.getValuesForCity(cityName: self.appState.cityName)
-            self.appState.updateMapAnnotations = true
-            self.appState.updateMapRegion = true
-            self.appState.selectedLanguage = toLanguage
-    }
-    
 }
