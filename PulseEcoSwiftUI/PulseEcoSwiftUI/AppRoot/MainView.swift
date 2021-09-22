@@ -98,7 +98,8 @@ struct MainView: View {
                                 }
                         })
                 }
-            }.navigationBarColor(UIColor.white)
+            }
+            .navigationBarColor(UIColor.white)
                 .overlay(
                     ZStack{
                         

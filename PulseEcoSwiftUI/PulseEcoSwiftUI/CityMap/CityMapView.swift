@@ -61,23 +61,21 @@ struct CityMapView: View {
             
         }
         .sheet(isPresented: self.$appState.showSheet) {
-            
-            if self.appState.activeSheet == .disclaimerView {
-                DisclaimerView()
-            }
-            else if self.appState.activeSheet == .cityListView {
-                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities), userSettings: self.userSettings)
+            switch self.appState.activeSheet {
+            case .disclaimerView: DisclaimerView()
+            case .cityListView:
+                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
+                             userSettings: self.userSettings)
                     .onDisappear(perform:{
-                        if self.userSettings.favouriteCities.count == 0{
-                            //self.appState.showSheet = false
+                        if self.userSettings.favouriteCities.count == 0 {
                             self.appState.citySelectorClicked = false
                         }
                     })
-            }
-            else {
-                NewLanguageView()
+            
+            case .languageView: NewLanguageView()
             }
         }
+        
     }
 }
 
