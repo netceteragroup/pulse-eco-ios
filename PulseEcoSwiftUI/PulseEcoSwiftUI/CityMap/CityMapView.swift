@@ -17,6 +17,7 @@ struct CityMapView: View {
     
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
+    @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var userSettings: UserSettings
     
     var body: some View {
@@ -60,17 +61,18 @@ struct CityMapView: View {
             
         }
         .sheet(isPresented: self.$appState.showSheet) {
-            
-            if self.appState.activeSheet == .disclaimerView {
-                DisclaimerView()
-            } else {
-                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities), userSettings: self.userSettings)
+            switch self.appState.activeSheet {
+            case .disclaimerView: DisclaimerView()
+            case .cityListView:
+                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
+                             userSettings: self.userSettings)
                     .onDisappear(perform:{
-                        if self.userSettings.favouriteCities.count == 0{
-                            //self.appState.showSheet = false
+                        if self.userSettings.favouriteCities.count == 0 {
                             self.appState.citySelectorClicked = false
                         }
                     })
+            
+            case .languageView: LanguageView()
             }
         }
         
@@ -80,4 +82,5 @@ struct CityMapView: View {
 enum ActiveSheet {
     case disclaimerView
     case cityListView
+    case languageView
 }

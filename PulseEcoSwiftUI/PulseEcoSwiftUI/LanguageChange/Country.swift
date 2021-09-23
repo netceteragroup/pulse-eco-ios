@@ -7,8 +7,11 @@
 //
 
 import Foundation
-struct Country: Hashable {
+struct Country: Hashable, Identifiable {
+    var id: String { shortName }
+    
     var flagImageName: String
     var languageName: String
     var shortName: String
+    
 }

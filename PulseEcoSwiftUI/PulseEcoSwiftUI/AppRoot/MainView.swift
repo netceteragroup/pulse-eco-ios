@@ -13,7 +13,6 @@ struct MainView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @ObservedObject var userSettings = UserSettings()
-    @State var showPicker: Bool = false
     
     private let backgroundColor: Color = Color.white
     private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
@@ -50,9 +49,6 @@ struct MainView: View {
                             leading: Button(action: {
                                 withAnimation(.easeInOut(duration: 0.2)){
                                     self.appState.citySelectorClicked.toggle()
-                                    if self.showPicker == true {
-                                        self.showPicker = false
-                                    }
                                     if self.appState.showSensorDetails == true {
                                         self.appState.showSensorDetails = false
                                         self.appState.selectedSensor = nil
@@ -65,7 +61,7 @@ struct MainView: View {
                                         .font(Font.custom("TitilliumWeb-SemiBold", size: 14))
                                         .foregroundColor(Color(AppColors.darkblue))
                                     
-                                    self.appState.cityIcon
+                                    self.appState.cityIcon.foregroundColor(Color(AppColors.darkblue))
                                 }
                             }.accentColor(Color.black),
                             trailing: HStack {
@@ -76,35 +72,27 @@ struct MainView: View {
                                         //action
                                         if self.appState.citySelectorClicked == false {
                                             self.refreshService.refreshData()
-                                            self.showPicker = false
                                         }
                                 }
                                 Button(action: {
                                     withAnimation(){
-                                        self.appState.showSensorDetails = false
-                                        self.appState.updateMapRegion = true
-                                        self.appState.updateMapAnnotations = true
-                                        self.showPicker = true
-                                        
+                                        self.appState.activeSheet = .languageView
+                                        self.appState.showSheet = true
                                     }
                                 }) {
-                                    Text(Countries.selectedCountry(for: Trema.appLanguage).flagImageName)
-                                        .font(.title)
+                                    Image(systemName: "globe")
+                                        .resizable()
+                                        .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .foregroundColor(Color(AppColors.darkblue))
+                                        .padding(.leading, 15)
                                 }
                         })
                 }
-            }.navigationBarColor(UIColor.white)
+            }
+            .navigationBarColor(UIColor.white)
                 .overlay(
                     ZStack{
-                        
-                        if self.showPicker {
-                            
-                            LanguageView(showPicker: self.$showPicker)
-                                .transition(.move(edge: .bottom))
-                                .animation(.spring())
-                                .zIndex(1)
-                        }
-                        else if self.appState.showSensorDetails {
+                        if self.appState.showSensorDetails {
                             SlideOverCard {
                                 SensorDetailsView(viewModel: SensorDetailsViewModel(
                                     sensor: self.appState.selectedSensor ?? SensorPinModel(),
