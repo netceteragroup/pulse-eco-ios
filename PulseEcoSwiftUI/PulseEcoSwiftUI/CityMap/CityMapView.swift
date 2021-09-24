@@ -70,6 +70,15 @@ struct CityMapView: View {
                         if self.userSettings.favouriteCities.count == 0 {
                             self.appState.citySelectorClicked = false
                         }
+                        if self.$appState.newCitySelected.wrappedValue == true{
+                            self.dataSource.loadingCityData = true
+                            self.refreshService.updateRefreshDate()
+                            self.dataSource.getValuesForCity(cityName: self.appState.cityName)
+                            self.appState.updateMapRegion = true
+                            self.appState.updateMapAnnotations = true
+                            self.appState.newCitySelected = false
+                            self.appState.citySelectorClicked = false
+                        }
                     })
             
             case .languageView: LanguageView()
