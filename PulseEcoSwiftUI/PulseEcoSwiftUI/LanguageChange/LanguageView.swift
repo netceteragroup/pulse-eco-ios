@@ -30,7 +30,7 @@ struct LanguageView: View {
                         
                     }
                 }
-                .listStyle(.plain)
+                .listStyle(PlainListStyle())
             }
             .navigationBarColor(UIColor.white)
             .navigationBarTitle("Select language", displayMode: .inline)
