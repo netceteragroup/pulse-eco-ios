@@ -68,7 +68,7 @@ struct CityListView: View {
                         Text(Trema.text(for: "city_missing_add_new"))
                             .font(.system(size: 14)).foregroundColor(Color(AppColors.gray))
                             .multilineTextAlignment(.center)
-                        
+                            .fixedSize(horizontal: false, vertical: true)
                         Button(action: {
                             guard let url = URL(string: "https://pulse.eco/addcity") else { return }
                             UIApplication.shared.open(url)
