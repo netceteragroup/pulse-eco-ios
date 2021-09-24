@@ -103,7 +103,8 @@ struct MainView: View {
                                 self.appState.cityIcon.foregroundColor(Color(AppColors.darkblue))
                             }
                         }.accentColor(Color.black),
-                        trailing: HStack {
+                        trailing:
+                            HStack {
                             Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
                                 .imageScale(.large)
                                 .padding(.trailing, (UIWidth)/3.7)
@@ -113,6 +114,7 @@ struct MainView: View {
                                         self.refreshService.refreshData()
                                     }
                             }
+                                
                             Button(action: {
                                 withAnimation(){
                                     self.appState.activeSheet = .languageView

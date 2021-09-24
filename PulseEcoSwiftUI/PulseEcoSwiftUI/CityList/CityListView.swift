@@ -34,13 +34,15 @@ struct CityListView: View {
                 ScrollView {
                     if self.viewModel.searchText.isEmpty {
                         ForEach(self.viewModel.getCountries(), id: \.self) { elem in
-                            Section(header: HStack {
+                            Section(header:
+                                        HStack {
                                 Text("\(elem)").padding()
                                 Spacer()
                             }
                                         .frame(height: 30)
                                         .background(Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255))
                                         .listRowInsets(.zero)) {
+                                
                                 let favouriteCitiesNames = self.userSettings.favouriteCities.map{$0.cityName}
                                 ForEach(self.viewModel.getCities().filter {
                                     elem == $0.countryName
@@ -62,14 +64,20 @@ struct CityListView: View {
                     } else {
                         self.listCities
                     }
-                    Text(Trema.text(for: "city_missing_add_new"))
-                        .multilineTextAlignment(.center)
-                    Button(action: {
-                        guard let url = URL(string: "https://pulse.eco/addcity") else { return }
-                        UIApplication.shared.open(url)
-                    }) {
-                        Text("https://pulse.eco/addcity")
+                    VStack {
+                        Text(Trema.text(for: "city_missing_add_new"))
+                            .font(.system(size: 14)).foregroundColor(Color(AppColors.gray))
+                            .multilineTextAlignment(.center)
+                        
+                        Button(action: {
+                            guard let url = URL(string: "https://pulse.eco/addcity") else { return }
+                            UIApplication.shared.open(url)
+                        }) {
+                            Text("https://pulse.eco/addcity")
+                                .font(.system(size: 14))
+                        }
                     }
+                    .padding(.all)
                 }
                 .resignKeyboardOnDragGesture()
             }
