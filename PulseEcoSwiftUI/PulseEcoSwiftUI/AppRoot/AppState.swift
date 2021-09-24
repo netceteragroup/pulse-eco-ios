@@ -14,6 +14,7 @@ class AppState: ObservableObject {
     @Published var activeSheet: ActiveSheet = .disclaimerView
     @Published var selectedLanguage: String = Trema.appLanguage
     @Published var getNewSensors: Bool = false
+    @Published var newCitySelected: Bool = false
     
     var cityIcon: Image {
         citySelectorClicked ? Image(systemName: "chevron.up") : Image(systemName: "chevron.down")

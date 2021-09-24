@@ -1,70 +1,116 @@
+//
+//  NewCityListView.swift
+//  PulseEcoSwiftUI
+//
+//  Created by Darko Skerlevski on 23.9.21.
+//
 
 import SwiftUI
 
 struct CityListView: View {
     
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
+    @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var viewModel: CityListViewModel
     @ObservedObject var userSettings: UserSettings
+    @State var searchText = ""
+    
     var body: some View {
-        VStack {
-            VStack(spacing: 5) {
-                Text(Trema.text(for: "search_city_or_choose_suggested"))
-                    .foregroundColor(Color.white).multilineTextAlignment(.center)
-                SearchBar(text: self.$viewModel.searchText,
-                          placeholder: Trema.text(for: "search_city_or_country"))
-                    .padding(.horizontal, 10)
-                Text(self.viewModel.text).font(.headline).foregroundColor(Color.white)
-            }.padding(.top, 10)
-            ScrollView {
-                if self.viewModel.searchText.isEmpty {
-                    ForEach(self.viewModel.getCountries(), id: \.self) { elem in
-                        Section(header: HStack {
-                            Text("\(elem)")
-                                .foregroundColor(.white)
-                                .padding()
-                            Spacer()
-                        }.frame(height: 30)
-                        .background(Color(AppColors.lightPurple))
-                        .listRowInsets(EdgeInsets(
-                                        top: 0,
-                                        leading: 0,
-                                        bottom: 0,
-                                        trailing: 0))
-                        ) {
-                            ForEach(self.viewModel.getCities().filter {
-                                elem == $0.countryName
-                            }, id: \.id) { city in
-                                CityRowView(viewModel: city).onTapGesture {
-                                    if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                                        self.userSettings.favouriteCities.insert(city)
-                                        self.presentationMode.wrappedValue.dismiss()
+    
+        NavigationView {
+            VStack {
+              
+                HStack {
+                    SearchBar(text: $searchText,
+                              placeholder: Trema.text(for: "search_city_or_country"))
+                        .padding(.leading, 10)
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text(Trema.text(for: "cancel"))
+                    })
+                        .padding(.trailing, 15)
+                }
+                
+                ScrollView {
+                    if self.searchText.isEmpty {
+                        ForEach(self.viewModel.getCountries(), id: \.self) { elem in
+                            Section(header:
+                                        HStack {
+                                Text("\(elem)").padding()
+                                Spacer()
+                            }
+                                        .frame(height: 30)
+                                        .background(Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255))
+                                        .listRowInsets(.zero)) {
+                                
+                                let favouriteCitiesNames = self.userSettings.favouriteCities.map{$0.cityName}
+                                ForEach(self.viewModel.getCities().filter {
+                                    elem == $0.countryName
+                                }, id: \.id) { city in
+                                    CityRowView(viewModel: city,
+                                                addCheckMark: favouriteCitiesNames.contains(city.cityName)).onTapGesture {
+                                        if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
+                                            self.userSettings.favouriteCities.insert(city)
+                                            self.appState.cityName = city.cityName
+                                            self.appState.newCitySelected = true
+                                            self.presentationMode.wrappedValue.dismiss()
+                                        }
                                     }
+                                    Divider()
+                                        .background(Color.gray)
                                 }
                             }
                         }
+                    } else {
+                        self.listCities
                     }
-                } else {
-                    self.listCities
+                    VStack {
+                        Text(Trema.text(for: "city_missing_add_new"))
+                            .font(.system(size: 14)).foregroundColor(Color(AppColors.gray))
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Button(action: {
+                            guard let url = URL(string: "https://pulse.eco/addcity") else { return }
+                            UIApplication.shared.open(url)
+                        }) {
+                            Text("https://pulse.eco/addcity")
+                                .font(.system(size: 14))
+                        }
+                    }
+                    .padding(.all)
                 }
+                .resignKeyboardOnDragGesture()
             }
-            .resignKeyboardOnDragGesture()
+            .navigationBarColor(UIColor.white)
+            .navigationBarTitle("Select city", displayMode: .inline)
         }
-        .background(Color(AppColors.darkblue))
-        .edgesIgnoringSafeArea(.all)
+        .if(.pad, transform: {
+            $0.navigationViewStyle(StackNavigationViewStyle())
+        })
     }
     
     var listCities: some View {
         
-        return ForEach(self.viewModel.getCities().filter{ $0.cityName.lowercased().contains(self.viewModel.searchText.lowercased()) || $0.countryName.lowercased().contains(self.viewModel.searchText.lowercased())
+        let favouriteCitiesNames = self.userSettings.favouriteCities.map{$0.cityName}
+        
+        return ForEach(self.viewModel.getCities().filter{ $0.cityName.lowercased().contains(self.searchText.lowercased()) || $0.countryName.lowercased().contains(self.searchText.lowercased())
         }, id: \.id) { city in
-            CityRowView(viewModel: city).onTapGesture {
-                if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                    self.userSettings.favouriteCities.insert(city)
-                    self.presentationMode.wrappedValue.dismiss()
+            CityRowView(viewModel: city, addCheckMark: favouriteCitiesNames.contains(city.cityName))
+                .onTapGesture {
+                    if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
+                        self.userSettings.favouriteCities.insert(city)
+                        self.appState.cityName = city.cityName
+                        self.appState.newCitySelected = true
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
                 }
-            }
         }
     }
+}
+
+extension EdgeInsets {
+    static let zero = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
 }

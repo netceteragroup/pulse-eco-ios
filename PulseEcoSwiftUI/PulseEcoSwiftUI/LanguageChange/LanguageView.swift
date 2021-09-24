@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LanguageView: View {
-    
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
@@ -20,7 +20,7 @@ struct LanguageView: View {
     var body: some View {
         NavigationView {
             VStack {
-                List{
+                List {
                     ForEach(countries, id: \.self) { country in
                         CountryCellView(country: country,
                                       checked: country == self.selectedCountry,
@@ -30,17 +30,22 @@ struct LanguageView: View {
                         
                     }
                 }
+                .listStyle(.plain)
             }
             .navigationBarColor(UIColor.white)
             .navigationBarTitle("Select language", displayMode: .inline)
             .navigationBarItems(trailing:
                                     Button(action: {
-                                        self.appState.showSheet = false
+                                        presentationMode.wrappedValue.dismiss()
                                     }, label: {
                                         Text(Trema.text(for: "cancel"))
                                     })
             )
         }
+        .if(.pad, transform: {
+            $0.navigationViewStyle(StackNavigationViewStyle())
+        })
+        
         
         .alert(item: $tappedCountry) { item in
             return Alert(title: Text(Trema.text(for: "change_app_language")),
@@ -64,11 +69,12 @@ struct LanguageView: View {
         Trema.appLanguage = country.shortName
         self.appState.selectedLanguage = Trema.appLanguage
         self.dataSource.getMeasures()
+        self.dataSource.loadingMeasures = true
         self.refreshService.updateRefreshDate()
         self.dataSource.getValuesForCity(cityName: self.appState.cityName)
         self.appState.updateMapAnnotations = true
         self.appState.updateMapRegion = true
-        self.appState.showSheet = false
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

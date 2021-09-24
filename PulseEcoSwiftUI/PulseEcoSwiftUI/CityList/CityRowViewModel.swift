@@ -1,7 +1,7 @@
 
 import Foundation
 
-class CityRowViewModel: ObservableObject, Identifiable {
+class CityRowViewModel: ObservableObject, Identifiable, Equatable {
     var id: String { return cityName }
     var cityName: String
     var siteName: String
@@ -12,5 +12,8 @@ class CityRowViewModel: ObservableObject, Identifiable {
         self.countryCode = countryCode
         self.countryName = countryName
         self.siteName = siteName
+    }
+    static func ==(lhs: CityRowViewModel, rhs: CityRowViewModel) -> Bool {
+        return lhs.id == rhs.id
     }
 }

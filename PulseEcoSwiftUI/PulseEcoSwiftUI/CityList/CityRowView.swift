@@ -5,27 +5,28 @@ import SwiftUI
 struct CityRowView: View {
     
     var viewModel: CityRowViewModel
+    var addCheckMark: Bool
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                //                Image(systemName: "pin")
-                Image(uiImage: UIImage(named: "whitepin") ?? UIImage()).resizable()
-                    .frame(width: 20, height: 25)
-                    .foregroundColor(Color.white)
-                
-                //.scaledToFit()
                 VStack(alignment: .leading) {
-                    Text("\(self.viewModel.siteName)").foregroundColor(Color.white)
-                    Text("\(self.viewModel.countryName)").font(.system(size: 12)).foregroundColor(Color.blue)
+                    Text("\(self.viewModel.siteName)").foregroundColor(Color.black)
+                    Text("\(self.viewModel.countryName)").font(.system(size: 12)).foregroundColor(Color(AppColors.gray))
                 }
+                .padding(.leading, 10)
                 Spacer()
+                if (addCheckMark){
+                    Image(systemName: "checkmark")
+                        .foregroundColor(.black)
+                        .padding(.trailing, 10)
+                }
             }
-            Divider()
-                .background(Color.gray)
+            
         }
         .frame(height: 60)
         .padding(.horizontal, 10)
         .contentShape(Rectangle())
+        .resignKeyboardOnDragGesture()
     }
 }

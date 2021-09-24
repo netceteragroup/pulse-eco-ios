@@ -23,7 +23,6 @@
 		592201AB24AA55D900025F1F /* ExpandableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592201AA24AA55D900025F1F /* ExpandableView.swift */; };
 		592201AD24AA656A00025F1F /* NoReadingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592201AC24AA656A00025F1F /* NoReadingsView.swift */; };
 		5924C5DA249A4792007E0D78 /* MeasureListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5924C5D9249A4792007E0D78 /* MeasureListViewModel.swift */; };
-		593C263024BC75BF005152BE /* CityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593C262F24BC75BF005152BE /* CityListView.swift */; };
 		593C263624BC8969005152BE /* CityRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593C263524BC8969005152BE /* CityRowView.swift */; };
 		593C263824BC89BE005152BE /* CityRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593C263724BC89BE005152BE /* CityRowViewModel.swift */; };
 		593C263A24BC8B59005152BE /* CityListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593C263924BC8B59005152BE /* CityListViewModel.swift */; };
@@ -81,6 +80,8 @@
 		59FAD1D42490C82600AC36A5 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* City.swift */; };
 		59FAD1D62490D76200AC36A5 /* SensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* SensorData.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
+		746C4EC026FDF9A000183A91 /* TestContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EBF26FDF9A000183A91 /* TestContentView.swift */; };
+		746C4EC226FDFDB500183A91 /* ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */; };
 		BA00D30F25D2B59600FA2C26 /* WeeklyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */; };
 		BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */; };
 		BA013FE8261C8E500057A343 /* LineChartSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */; };
@@ -94,6 +95,7 @@
 		BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA692F525E3E7C6002E0B2F /* DailyInfoSensor.swift */; };
 		BAC09D8525E5183400F794F9 /* SensorPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC09D8425E5183400F794F9 /* SensorPin.swift */; };
 		C52F371D26F240FC007813B0 /* KeyboardDismissModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52F371C26F240FC007813B0 /* KeyboardDismissModifier.swift */; };
+		C547A3CA26FC6E09002BE2A5 /* CityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A3C926FC6E09002BE2A5 /* CityListView.swift */; };
 		C547DABF26F9D48F006A6F76 /* LanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547DABE26F9D48F006A6F76 /* LanguageView.swift */; };
 		C575B48226EA38A7008611D1 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C575B48126EA38A7008611D1 /* Charts */; };
 		C575B48526EA38DC008611D1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C575B48426EA38DC008611D1 /* Lottie */; };
@@ -147,7 +149,6 @@
 		592201AA24AA55D900025F1F /* ExpandableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableView.swift; sourceTree = "<group>"; };
 		592201AC24AA656A00025F1F /* NoReadingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoReadingsView.swift; sourceTree = "<group>"; };
 		5924C5D9249A4792007E0D78 /* MeasureListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureListViewModel.swift; sourceTree = "<group>"; };
-		593C262F24BC75BF005152BE /* CityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListView.swift; sourceTree = "<group>"; };
 		593C263524BC8969005152BE /* CityRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityRowView.swift; sourceTree = "<group>"; };
 		593C263724BC89BE005152BE /* CityRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityRowViewModel.swift; sourceTree = "<group>"; };
 		593C263924BC8B59005152BE /* CityListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListViewModel.swift; sourceTree = "<group>"; };
@@ -211,6 +212,8 @@
 		59FAD1D32490C82600AC36A5 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		59FAD1D52490D76200AC36A5 /* SensorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorData.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
+		746C4EBF26FDF9A000183A91 /* TestContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestContentView.swift; sourceTree = "<group>"; };
+		746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalModifier.swift; sourceTree = "<group>"; };
 		BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageViewModel.swift; sourceTree = "<group>"; };
 		BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageViewModel.swift; sourceTree = "<group>"; };
 		BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartSwiftUI.swift; sourceTree = "<group>"; };
@@ -224,6 +227,7 @@
 		BAA692F525E3E7C6002E0B2F /* DailyInfoSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyInfoSensor.swift; sourceTree = "<group>"; };
 		BAC09D8425E5183400F794F9 /* SensorPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorPin.swift; sourceTree = "<group>"; };
 		C52F371C26F240FC007813B0 /* KeyboardDismissModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDismissModifier.swift; sourceTree = "<group>"; };
+		C547A3C926FC6E09002BE2A5 /* CityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListView.swift; sourceTree = "<group>"; };
 		C547DABE26F9D48F006A6F76 /* LanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageView.swift; sourceTree = "<group>"; };
 		C5E8E7B826EB5CA2002B532C /* RefreshService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -363,7 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				593C263924BC8B59005152BE /* CityListViewModel.swift */,
-				593C262F24BC75BF005152BE /* CityListView.swift */,
+				C547A3C926FC6E09002BE2A5 /* CityListView.swift */,
 				593C263724BC89BE005152BE /* CityRowViewModel.swift */,
 				593C263524BC8969005152BE /* CityRowView.swift */,
 				593C264424BCAD19005152BE /* SearchBar.swift */,
@@ -388,6 +392,7 @@
 			children = (
 				59A35AC12498EBB600C07786 /* MainView.swift */,
 				59A3954D24A206F400D39D64 /* AppState.swift */,
+				746C4EBF26FDF9A000183A91 /* TestContentView.swift */,
 			);
 			path = AppRoot;
 			sourceTree = "<group>";
@@ -544,6 +549,7 @@
 			children = (
 				5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */,
 				C52F371C26F240FC007813B0 /* KeyboardDismissModifier.swift */,
+				746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -749,8 +755,8 @@
 				59504C0C24B4625400EA4AFF /* FavouriteCityRowViewModel.swift in Sources */,
 				C5E8E7B926EB5CA2002B532C /* RefreshService.swift in Sources */,
 				59A35AD62498F6AD00C07786 /* MapView.swift in Sources */,
+				C547A3CA26FC6E09002BE2A5 /* CityListView.swift in Sources */,
 				3288687924B5C053009CC56D /* UIViewExtension.swift in Sources */,
-				593C263024BC75BF005152BE /* CityListView.swift in Sources */,
 				59504C0624B45B8900EA4AFF /* DisclaimerViewModel.swift in Sources */,
 				591642A52499FD70000A4F7C /* CityMapView.swift in Sources */,
 				59504C1324B46C2D00EA4AFF /* LoadingView.swift in Sources */,
@@ -773,6 +779,7 @@
 				59504C0824B45E7000EA4AFF /* MeasureButtonView.swift in Sources */,
 				59504C1924B46CC700EA4AFF /* ChildSizeReader.swift in Sources */,
 				59504C0F24B46B9F00EA4AFF /* RoundedCorners.swift in Sources */,
+				746C4EC026FDF9A000183A91 /* TestContentView.swift in Sources */,
 				591EA1D224C99D5500CA61AE /* BottomShadow.swift in Sources */,
 				59A3954E24A206F400D39D64 /* AppState.swift in Sources */,
 				BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */,
@@ -783,6 +790,7 @@
 				59FAD1D22490C27200AC36A5 /* NetworkService.swift in Sources */,
 				59B0018E24C9BC6A006EA796 /* ChartViewModel.swift in Sources */,
 				3288686D24B513DA009CC56D /* LocationAnnotationView.swift in Sources */,
+				746C4EC226FDFDB500183A91 /* ConditionalModifier.swift in Sources */,
 				C547DABF26F9D48F006A6F76 /* LanguageView.swift in Sources */,
 				BA12EB102611E503005BC654 /* Country.swift in Sources */,
 				32479108261A6F7200E97C56 /* SlideOverCard.swift in Sources */,
@@ -976,7 +984,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1000,7 +1008,7 @@
 				PRODUCT_NAME = pulse.eco;
 				PROVISIONING_PROFILE_SPECIFIER = GenericAppStore;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

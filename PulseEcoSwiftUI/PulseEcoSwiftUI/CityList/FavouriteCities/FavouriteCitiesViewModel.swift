@@ -13,7 +13,10 @@ class FavouriteCitiesViewModel: ObservableObject {
     @Published var cityList: [FavouriteCityRowViewModel] = []
     var selectedMeasure: String
 
-    init(selectedMeasure: String, favouriteCities: Set<City>, cityValues: [CityOverallValues], measureList: [Measure]) {
+    init(selectedMeasure: String,
+         favouriteCities: Set<City>,
+         cityValues: [CityOverallValues],
+         measureList: [Measure]) {
         self.selectedMeasure = selectedMeasure
         var value: String? = nil
         for city in favouriteCities {

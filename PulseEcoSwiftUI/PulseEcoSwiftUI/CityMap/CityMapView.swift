@@ -24,11 +24,11 @@ struct CityMapView: View {
         
         ZStack {
             MapView(viewModel: MapViewModel(measure: self.appState.selectedMeasure,
-                                     cityName: self.appState.cityName,
-                                     sensors: self.dataSource.citySensors,
-                                     sensorsData: self.dataSource.sensorsData,
-                                     measures: self.dataSource.measures,
-                                     city: self.dataSource.cities.first{ $0.cityName == self.appState.cityName} ?? City.defaultCity()))
+                                            cityName: self.appState.cityName,
+                                            sensors: self.dataSource.citySensors,
+                                            sensorsData: self.dataSource.sensorsData,
+                                            measures: self.dataSource.measures,
+                                            city: self.dataSource.cities.first{ $0.cityName == self.appState.cityName} ?? City.defaultCity()))
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
                     BottomShadow()
@@ -55,28 +55,18 @@ struct CityMapView: View {
             
             AverageView(viewModel: AverageViewModel(measure: self.appState.selectedMeasure, cityName: self.appState.cityName, measuresList: self.dataSource.measures, cityValues: self.dataSource.cityOverall))
             if self.appState.citySelectorClicked {
-                FavouriteCitiesView(viewModel: FavouriteCitiesViewModel(selectedMeasure: self.appState.selectedMeasure, favouriteCities: self.userSettings.favouriteCities, cityValues: self.userSettings.cityValues, measureList: self.dataSource.measures), userSettings: self.userSettings)
+                FavouriteCitiesView(viewModel: FavouriteCitiesViewModel(selectedMeasure: self.appState.selectedMeasure,
+                                                                        favouriteCities: self.userSettings.favouriteCities,
+                                                                        cityValues: self.userSettings.cityValues,
+                                                                        measureList: self.dataSource.measures),
+                                    userSettings: self.userSettings)
                     .overlay(BottomShadow())
             }
             
         }
-        .sheet(isPresented: self.$appState.showSheet) {
-            switch self.appState.activeSheet {
-            case .disclaimerView: DisclaimerView()
-            case .cityListView:
-                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
-                             userSettings: self.userSettings)
-                    .onDisappear(perform:{
-                        if self.userSettings.favouriteCities.count == 0 {
-                            self.appState.citySelectorClicked = false
-                        }
-                    })
-            
-            case .languageView: LanguageView()
-            }
-        }
         
     }
+    
 }
 
 enum ActiveSheet {
