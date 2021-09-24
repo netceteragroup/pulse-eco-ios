@@ -4,12 +4,8 @@ import Foundation
 class CityListViewModel: ObservableObject {
     @Published var cities: [CityRowViewModel] = []
     @Published var cityModel: [City] = []
-    @Published var searchText : String = ""
-    var text: String {
-        return searchText == "" ? Trema.text(for: "suggested") : Trema.text(for: "results")
-    }
     @Published var countries = Set<String>()
-    
+
     init(cities: [City]) {
         self.cityModel = cities
         for city in cities {

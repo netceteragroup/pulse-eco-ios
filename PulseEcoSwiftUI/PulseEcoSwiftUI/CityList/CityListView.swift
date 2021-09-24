@@ -8,19 +8,22 @@
 import SwiftUI
 
 struct CityListView: View {
+    
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var viewModel: CityListViewModel
     @ObservedObject var userSettings: UserSettings
+    @State var searchText = ""
     
     var body: some View {
+    
         NavigationView {
-            
             VStack {
+              
                 HStack {
-                    SearchBar(text: self.$viewModel.searchText,
+                    SearchBar(text: $searchText,
                               placeholder: Trema.text(for: "search_city_or_country"))
                         .padding(.leading, 10)
                     Button(action: {
@@ -32,7 +35,7 @@ struct CityListView: View {
                 }
                 
                 ScrollView {
-                    if self.viewModel.searchText.isEmpty {
+                    if self.searchText.isEmpty {
                         ForEach(self.viewModel.getCountries(), id: \.self) { elem in
                             Section(header:
                                         HStack {
@@ -93,7 +96,7 @@ struct CityListView: View {
         
         let favouriteCitiesNames = self.userSettings.favouriteCities.map{$0.cityName}
         
-        return ForEach(self.viewModel.getCities().filter{ $0.cityName.lowercased().contains(self.viewModel.searchText.lowercased()) || $0.countryName.lowercased().contains(self.viewModel.searchText.lowercased())
+        return ForEach(self.viewModel.getCities().filter{ $0.cityName.lowercased().contains(self.searchText.lowercased()) || $0.countryName.lowercased().contains(self.searchText.lowercased())
         }, id: \.id) { city in
             CityRowView(viewModel: city, addCheckMark: favouriteCitiesNames.contains(city.cityName))
                 .onTapGesture {

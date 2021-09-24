@@ -20,7 +20,7 @@ struct LanguageView: View {
     var body: some View {
         NavigationView {
             VStack {
-                List{
+                List {
                     ForEach(countries, id: \.self) { country in
                         CountryCellView(country: country,
                                       checked: country == self.selectedCountry,
@@ -30,6 +30,7 @@ struct LanguageView: View {
                         
                     }
                 }
+                .listStyle(.plain)
             }
             .navigationBarColor(UIColor.white)
             .navigationBarTitle("Select language", displayMode: .inline)

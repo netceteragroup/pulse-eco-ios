@@ -13,7 +13,6 @@ struct MainView: View {
     @EnvironmentObject var refreshService: RefreshService 
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
-    @ObservedObject var userSettings = UserSettings()
     
     private let backgroundColor: Color = Color.white
     private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
@@ -32,9 +31,9 @@ struct MainView: View {
             case .disclaimerView: DisclaimerView()
             case .cityListView:
                 CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
-                             userSettings: self.userSettings)
+                             userSettings: self.dataSource.userSettings)
                     .onDisappear(perform:{
-                        if self.userSettings.favouriteCities.count == 0 {
+                        if self.dataSource.userSettings.favouriteCities.count == 0 {
                             self.appState.citySelectorClicked = false
                         }
                         if self.$appState.newCitySelected.wrappedValue == true{

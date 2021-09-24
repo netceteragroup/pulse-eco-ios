@@ -55,7 +55,11 @@ struct CityMapView: View {
             
             AverageView(viewModel: AverageViewModel(measure: self.appState.selectedMeasure, cityName: self.appState.cityName, measuresList: self.dataSource.measures, cityValues: self.dataSource.cityOverall))
             if self.appState.citySelectorClicked {
-                FavouriteCitiesView(viewModel: FavouriteCitiesViewModel(selectedMeasure: self.appState.selectedMeasure, favouriteCities: self.userSettings.favouriteCities, cityValues: self.userSettings.cityValues, measureList: self.dataSource.measures), userSettings: self.userSettings)
+                FavouriteCitiesView(viewModel: FavouriteCitiesViewModel(selectedMeasure: self.appState.selectedMeasure,
+                                                                        favouriteCities: self.userSettings.favouriteCities,
+                                                                        cityValues: self.userSettings.cityValues,
+                                                                        measureList: self.dataSource.measures),
+                                    userSettings: self.userSettings)
                     .overlay(BottomShadow())
             }
             
