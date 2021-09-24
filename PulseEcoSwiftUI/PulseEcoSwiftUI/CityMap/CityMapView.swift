@@ -24,11 +24,11 @@ struct CityMapView: View {
         
         ZStack {
             MapView(viewModel: MapViewModel(measure: self.appState.selectedMeasure,
-                                     cityName: self.appState.cityName,
-                                     sensors: self.dataSource.citySensors,
-                                     sensorsData: self.dataSource.sensorsData,
-                                     measures: self.dataSource.measures,
-                                     city: self.dataSource.cities.first{ $0.cityName == self.appState.cityName} ?? City.defaultCity()))
+                                            cityName: self.appState.cityName,
+                                            sensors: self.dataSource.citySensors,
+                                            sensorsData: self.dataSource.sensorsData,
+                                            measures: self.dataSource.measures,
+                                            city: self.dataSource.cities.first{ $0.cityName == self.appState.cityName} ?? City.defaultCity()))
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
                     BottomShadow()
@@ -60,32 +60,9 @@ struct CityMapView: View {
             }
             
         }
-        .sheet(isPresented: self.$appState.showSheet) {
-            switch self.appState.activeSheet {
-            case .disclaimerView: DisclaimerView()
-            case .cityListView:
-                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
-                             userSettings: self.userSettings)
-                    .onDisappear(perform:{
-                        if self.userSettings.favouriteCities.count == 0 {
-                            self.appState.citySelectorClicked = false
-                        }
-                        if self.$appState.newCitySelected.wrappedValue == true{
-                            self.dataSource.loadingCityData = true
-                            self.refreshService.updateRefreshDate()
-                            self.dataSource.getValuesForCity(cityName: self.appState.cityName)
-                            self.appState.updateMapRegion = true
-                            self.appState.updateMapAnnotations = true
-                            self.appState.newCitySelected = false
-                            self.appState.citySelectorClicked = false
-                        }
-                    })
-            
-            case .languageView: LanguageView()
-            }
-        }
         
     }
+    
 }
 
 enum ActiveSheet {

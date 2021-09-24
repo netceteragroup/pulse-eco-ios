@@ -15,41 +15,38 @@ struct CityListView: View {
     @ObservedObject var viewModel: CityListViewModel
     @ObservedObject var userSettings: UserSettings
     
-    
     var body: some View {
-        NavigationView{
+        NavigationView {
+            
             VStack {
                 HStack {
                     SearchBar(text: self.$viewModel.searchText,
                               placeholder: Trema.text(for: "search_city_or_country"))
                         .padding(.leading, 10)
                     Button(action: {
-                        self.appState.showSheet = false
+                        presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text(Trema.text(for: "cancel"))
                     })
-                    .padding(.trailing, 15)
+                        .padding(.trailing, 15)
                 }
+                
                 ScrollView {
                     if self.viewModel.searchText.isEmpty {
                         ForEach(self.viewModel.getCountries(), id: \.self) { elem in
                             Section(header: HStack {
-                                Text("\(elem)")
-                                    .padding()
+                                Text("\(elem)").padding()
                                 Spacer()
-                            }.frame(height: 30)
-                            .background(Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255))
-                            .listRowInsets(EdgeInsets(
-                                            top: 0,
-                                            leading: 0,
-                                            bottom: 0,
-                                            trailing: 0))
-                            ) {
+                            }
+                                        .frame(height: 30)
+                                        .background(Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255))
+                                        .listRowInsets(.zero)) {
                                 let favouriteCitiesNames = self.userSettings.favouriteCities.map{$0.cityName}
                                 ForEach(self.viewModel.getCities().filter {
                                     elem == $0.countryName
                                 }, id: \.id) { city in
-                                    CityRowView(viewModel: city, addCheckMark: favouriteCitiesNames.contains(city.cityName)).onTapGesture {
+                                    CityRowView(viewModel: city,
+                                                addCheckMark: favouriteCitiesNames.contains(city.cityName)).onTapGesture {
                                         if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
                                             self.userSettings.favouriteCities.insert(city)
                                             self.appState.cityName = city.cityName
@@ -79,6 +76,9 @@ struct CityListView: View {
             .navigationBarColor(UIColor.white)
             .navigationBarTitle("Select city", displayMode: .inline)
         }
+        .if(.pad, transform: {
+            $0.navigationViewStyle(StackNavigationViewStyle())
+        })
     }
     
     var listCities: some View {
@@ -98,4 +98,8 @@ struct CityListView: View {
                 }
         }
     }
+}
+
+extension EdgeInsets {
+    static let zero = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
 }

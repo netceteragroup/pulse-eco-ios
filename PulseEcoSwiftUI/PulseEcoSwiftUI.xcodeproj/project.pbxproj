@@ -80,6 +80,8 @@
 		59FAD1D42490C82600AC36A5 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* City.swift */; };
 		59FAD1D62490D76200AC36A5 /* SensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* SensorData.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
+		746C4EC026FDF9A000183A91 /* TestContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EBF26FDF9A000183A91 /* TestContentView.swift */; };
+		746C4EC226FDFDB500183A91 /* ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */; };
 		BA00D30F25D2B59600FA2C26 /* WeeklyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */; };
 		BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */; };
 		BA013FE8261C8E500057A343 /* LineChartSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */; };
@@ -210,6 +212,8 @@
 		59FAD1D32490C82600AC36A5 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		59FAD1D52490D76200AC36A5 /* SensorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorData.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
+		746C4EBF26FDF9A000183A91 /* TestContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestContentView.swift; sourceTree = "<group>"; };
+		746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalModifier.swift; sourceTree = "<group>"; };
 		BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageViewModel.swift; sourceTree = "<group>"; };
 		BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageViewModel.swift; sourceTree = "<group>"; };
 		BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartSwiftUI.swift; sourceTree = "<group>"; };
@@ -388,6 +392,7 @@
 			children = (
 				59A35AC12498EBB600C07786 /* MainView.swift */,
 				59A3954D24A206F400D39D64 /* AppState.swift */,
+				746C4EBF26FDF9A000183A91 /* TestContentView.swift */,
 			);
 			path = AppRoot;
 			sourceTree = "<group>";
@@ -544,6 +549,7 @@
 			children = (
 				5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */,
 				C52F371C26F240FC007813B0 /* KeyboardDismissModifier.swift */,
+				746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -773,6 +779,7 @@
 				59504C0824B45E7000EA4AFF /* MeasureButtonView.swift in Sources */,
 				59504C1924B46CC700EA4AFF /* ChildSizeReader.swift in Sources */,
 				59504C0F24B46B9F00EA4AFF /* RoundedCorners.swift in Sources */,
+				746C4EC026FDF9A000183A91 /* TestContentView.swift in Sources */,
 				591EA1D224C99D5500CA61AE /* BottomShadow.swift in Sources */,
 				59A3954E24A206F400D39D64 /* AppState.swift in Sources */,
 				BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */,
@@ -783,6 +790,7 @@
 				59FAD1D22490C27200AC36A5 /* NetworkService.swift in Sources */,
 				59B0018E24C9BC6A006EA796 /* ChartViewModel.swift in Sources */,
 				3288686D24B513DA009CC56D /* LocationAnnotationView.swift in Sources */,
+				746C4EC226FDFDB500183A91 /* ConditionalModifier.swift in Sources */,
 				C547DABF26F9D48F006A6F76 /* LanguageView.swift in Sources */,
 				BA12EB102611E503005BC654 /* Country.swift in Sources */,
 				32479108261A6F7200E97C56 /* SlideOverCard.swift in Sources */,
@@ -976,7 +984,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1000,7 +1008,7 @@
 				PRODUCT_NAME = pulse.eco;
 				PROVISIONING_PROFILE_SPECIFIER = GenericAppStore;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
