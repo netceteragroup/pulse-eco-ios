@@ -143,6 +143,7 @@ struct MainView: View {
                                 selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure:self.appState.selectedMeasure),
                                 sensorData24h: self.dataSource.sensorsData24h,
                                 dailyAverages: self.dataSource.sensorsDailyAverageData))
+                                .frame(maxWidth: UIScreen.main.bounds.width)
                         }
                     }
             })

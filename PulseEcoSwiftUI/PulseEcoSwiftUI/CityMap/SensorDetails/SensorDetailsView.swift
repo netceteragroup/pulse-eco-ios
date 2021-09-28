@@ -40,14 +40,19 @@ struct SensorDetailsView: View {
                             }
                         }
                     }
-                }.padding([.horizontal], 20)
+                }
+                .padding([.horizontal], 20)
             }
             // Expanded View
             VStack {
                 LineChartSwiftUI(viewModel:
-                    ChartViewModel(sensor: self.appState.selectedSensor ?? SensorPinModel(), sensorsData: self.dataSource.sensorsData24h, selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appState.selectedMeasure)
+                    ChartViewModel(sensor: self.appState.selectedSensor ?? SensorPinModel(),
+                                   sensorsData: self.dataSource.sensorsData24h,
+                                   selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appState.selectedMeasure)
                     )
-                ).frame(width: 350, height: 200 )
+                )
+                .frame(width: min(350, UIScreen.main.bounds.width - 10),
+                       height: 200)
                 
                 WeeklyAverageView(viewModel: WeeklyAverageViewModel(appState: appState,
                                                                     dataSource: dataSource,
@@ -59,7 +64,8 @@ struct SensorDetailsView: View {
                     .foregroundColor(self.viewModel.color)
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
-                    .padding([.horizontal, .bottom], 15).fixedSize(horizontal: false, vertical: true)
+                    .padding([.horizontal, .bottom], 15)
+                    .fixedSize(horizontal: false, vertical: true)
                 
 //                HStack {
 //                    Text(Trema.text(for: "details"))

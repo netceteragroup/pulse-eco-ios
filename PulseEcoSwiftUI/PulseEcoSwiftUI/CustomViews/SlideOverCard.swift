@@ -12,16 +12,15 @@ struct SlideOverCard<Content: View> : View {
             }
             .onEnded(onDragEnded)
         
-        return Group {
-//            Spacer()
-//            Handle()
+        return VStack {
             self.content()
+            Spacer()
         }
         .frame(height: UIScreen.main.bounds.height)
         .background(Color.white)
         .cornerRadius(30.0)
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
-        .offset(y: max(self.position + self.dragState.translation.height, CardPosition.top - 120))
+        .offset(y: max(self.position + self.dragState.translation.height, CardPosition.top - 120, 0))
         .animation(self.dragState.isDragging ? nil : .interpolatingSpring(stiffness: 250, damping: 30.0, initialVelocity: 10))
         .gesture(drag)
     }
@@ -57,24 +56,14 @@ struct SlideOverCard<Content: View> : View {
     }
 }
 
-//enum CardPosition: CGFloat {
-//    case top = UIScreen.main.width.bounds
-//    case middle = 500
-//    case bottom = 650
-//}
 
 struct CardPosition {
-    static let top: CGFloat = UIScreen.main.bounds.height - 550// - 550
-    static let middle: CGFloat = UIScreen.main.bounds.height - 130 //- 350
+    private static let fullCardHeight: CGFloat = min(550, UIScreen.main.bounds.height)
+    private static let middleCardHeight: CGFloat = 130
+    static let top: CGFloat = UIScreen.main.bounds.height - fullCardHeight// - 550
+    static let middle: CGFloat = UIScreen.main.bounds.height - middleCardHeight //- 350
     static let bottom: CGFloat = UIScreen.main.bounds.height + 100 //- 150
 }
-
-//enum CardPosition: CGFloat {
-//    case top = 100
-//    case middle = 500
-//    case bottom = 650
-//}
-
 
 enum DragState {
     case inactive
