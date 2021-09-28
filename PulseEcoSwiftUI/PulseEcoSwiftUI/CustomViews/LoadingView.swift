@@ -31,27 +31,26 @@ struct LoadingView<Content>: View where Content: View {
 struct LoadingDialog: View {
     var body: some View {
         ZStack(alignment: .center) {
-        Image(uiImage: UIImage(named: "launchScreenBackground") ?? UIImage()).resizable()
-            .overlay(
-                VStack {
-                    LottieView().frame(width: 176, height: 66, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-//                    Image(uiImage: UIImage(named: "launchScreenLogo") ?? UIImage())
-                    Image(uiImage: UIImage(named: "launchScreenName") ?? UIImage())
-                }
-                .scaledToFit(), alignment: .center)
+            Image(uiImage: UIImage(named: "launchScreenBackground") ?? UIImage()).resizable()
+            VStack {
+                Spacer()
+                LottieView().frame(width: 176, height: 66, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                Image(uiImage: UIImage(named: "launchScreenName") ?? UIImage())
+                Spacer()
+            }
         }.edgesIgnoringSafeArea(.all)
     }
 }
 
 struct ActivityIndicator: UIViewRepresentable {
-
+    
     @Binding var isAnimating: Bool
     let style: UIActivityIndicatorView.Style
-
+    
     func makeUIView(context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
         return UIActivityIndicatorView(style: style)
     }
-
+    
     func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
         isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
     }
