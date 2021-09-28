@@ -31,13 +31,14 @@ struct LoadingView<Content>: View where Content: View {
 struct LoadingDialog: View {
     var body: some View {
         ZStack(alignment: .center) {
-        Image(uiImage: UIImage(named: "launchScreenBackground") ?? UIImage()).resizable()//.scaledToFill()
+        Image(uiImage: UIImage(named: "launchScreenBackground") ?? UIImage()).resizable()
             .overlay(
-            VStack {
-                Image(uiImage: UIImage(named: "launchScreenLogo") ?? UIImage())
-                Image(uiImage: UIImage(named: "launchScreenName") ?? UIImage())
-            }.scaledToFit()
-           , alignment: .center)
+                VStack {
+                    LottieView().frame(width: 176, height: 66, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                    Image(uiImage: UIImage(named: "launchScreenLogo") ?? UIImage())
+                    Image(uiImage: UIImage(named: "launchScreenName") ?? UIImage())
+                }
+                .scaledToFit(), alignment: .center)
         }.edgesIgnoringSafeArea(.all)
     }
 }

@@ -82,6 +82,8 @@
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
 		746C4EC026FDF9A000183A91 /* TestContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EBF26FDF9A000183A91 /* TestContentView.swift */; };
 		746C4EC226FDFDB500183A91 /* ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */; };
+		74E46618270327000010F80E /* logo-pulse-loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 74E46617270327000010F80E /* logo-pulse-loader.json */; };
+		74E4661A2703272F0010F80E /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E466192703272F0010F80E /* LottieView.swift */; };
 		BA00D30F25D2B59600FA2C26 /* WeeklyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */; };
 		BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */; };
 		BA013FE8261C8E500057A343 /* LineChartSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */; };
@@ -214,6 +216,8 @@
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
 		746C4EBF26FDF9A000183A91 /* TestContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestContentView.swift; sourceTree = "<group>"; };
 		746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalModifier.swift; sourceTree = "<group>"; };
+		74E46617270327000010F80E /* logo-pulse-loader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "logo-pulse-loader.json"; sourceTree = "<group>"; };
+		74E466192703272F0010F80E /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageViewModel.swift; sourceTree = "<group>"; };
 		BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageViewModel.swift; sourceTree = "<group>"; };
 		BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartSwiftUI.swift; sourceTree = "<group>"; };
@@ -420,6 +424,7 @@
 		59A4F68D247FD2150089D523 /* PulseEcoSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				74E46614270326BE0010F80E /* Lottie */,
 				C52F371B26F240CC007813B0 /* Utility */,
 				59504C0D24B46B7600EA4AFF /* CustomViews */,
 				59103A9E24A4B62F00ED9617 /* Disclamer */,
@@ -500,6 +505,15 @@
 				BAC09D8425E5183400F794F9 /* SensorPin.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		74E46614270326BE0010F80E /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				74E46617270327000010F80E /* logo-pulse-loader.json */,
+				74E466192703272F0010F80E /* LottieView.swift */,
+			);
+			path = Lottie;
 			sourceTree = "<group>";
 		};
 		74F419AC26F4886500E433A7 /* Services */ = {
@@ -678,6 +692,7 @@
 				59E4991C24C5A2E000E89746 /* TitilliumWeb-BoldItalic.ttf in Resources */,
 				3288687424B51F5E009CC56D /* SelectedSensorView.xib in Resources */,
 				3288687624B51F5E009CC56D /* MarkerView.xib in Resources */,
+				74E46618270327000010F80E /* logo-pulse-loader.json in Resources */,
 				59E4991824C5A2E000E89746 /* TitilliumWeb-Bold.ttf in Resources */,
 				59E4991A24C5A2E000E89746 /* TitilliumWeb-SemiBold.ttf in Resources */,
 				59E4991E24C5A2E000E89746 /* OFL.txt in Resources */,
@@ -778,6 +793,7 @@
 				59F5EFDE249CD62E0095FE71 /* SensorDetailsViewModel.swift in Sources */,
 				59504C0824B45E7000EA4AFF /* MeasureButtonView.swift in Sources */,
 				59504C1924B46CC700EA4AFF /* ChildSizeReader.swift in Sources */,
+				74E4661A2703272F0010F80E /* LottieView.swift in Sources */,
 				59504C0F24B46B9F00EA4AFF /* RoundedCorners.swift in Sources */,
 				746C4EC026FDF9A000183A91 /* TestContentView.swift in Sources */,
 				591EA1D224C99D5500CA61AE /* BottomShadow.swift in Sources */,
