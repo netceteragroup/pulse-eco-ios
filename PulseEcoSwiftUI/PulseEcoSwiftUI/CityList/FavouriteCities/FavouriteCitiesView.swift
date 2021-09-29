@@ -11,14 +11,16 @@ import MapKit
 
 struct FavouriteCitiesView: View {
     
-    @ObservedObject var viewModel: FavouriteCitiesViewModel
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
+    
+    @ObservedObject var viewModel: FavouriteCitiesViewModel
     @ObservedObject var userSettings: UserSettings
-
+    let proxy:  GeometryProxy
+    
     var body: some View {
-        VStack() {
+        Group {
             if self.viewModel.cityList.count == 0 {
                 VStack {
                     Text("").onAppear {
@@ -27,56 +29,55 @@ struct FavouriteCitiesView: View {
                     }
                 }
             } else {
-                ZStack {
-                    VStack{
-                        List {
-                            ForEach(self.viewModel.getCities(), id: \.id) { city in
-                                Button(action: {
-                                    self.appState.citySelectorClicked = false
-                                    self.appState.cityName = city.cityName
-                                    self.dataSource.loadingCityData = true
-                                    self.refreshService.updateRefreshDate()
-                                    self.dataSource.getValuesForCity(cityName: city.cityName)
-                                    self.appState.updateMapRegion = true
-                                    self.appState.updateMapAnnotations = true
-                                }, label: {
-                                    FavouriteCityRowView(viewModel: city)
-                                        .contentShape(Rectangle())
-                                })
-                                
-                            }.onDelete(perform: self.delete)
-                        }
-                    }
-                    VStack{
-                        Spacer()
-                        HStack {
-                            Spacer()
+                VStack (spacing: 0) {
+                    List {
+                        ForEach(self.viewModel.getCities(), id: \.id) { city in
                             Button(action: {
-                                self.appState.showSheet = true
-                                self.appState.activeSheet = .cityListView
-                            }) {
-                                Text(Trema.text(for: "add_city_button"))
-                                    .font(Font.custom("TitilliumWeb-SemiBold", size: 18))
-                                    .foregroundColor(Color(AppColors.purple))
-                                    .padding([.vertical, .leading], 16)
+                                self.appState.citySelectorClicked = false
+                                self.appState.cityName = city.cityName
+                                self.dataSource.loadingCityData = true
+                                self.refreshService.updateRefreshDate()
+                                self.dataSource.getValuesForCity(cityName: city.cityName)
+                                self.appState.updateMapRegion = true
+                                self.appState.updateMapAnnotations = true
+                            }, label: {
+                                FavouriteCityRowView(viewModel: city)
+                                    .contentShape(Rectangle())
+                            })
+                        }
+                        .onDelete(perform: self.delete)
+                    }
+                    .overlay(ShadowOnBottomOfView())
+                    
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            self.appState.showSheet = true
+                            self.appState.activeSheet = .cityListView
+                        }) {
+                            VStack(alignment: .center, spacing: 0) {
                                 Image(systemName: "plus.circle")
                                     .resizable()
                                     .frame(width: 30, height: 30)
                                     .foregroundColor(Color(AppColors.purple))
-                                    .padding(.trailing, 16)
+                                Text(Trema.text(for: "add_city_button"))
+                                    .font(Font.custom("TitilliumWeb-SemiBold", size: 14))
+                                    .foregroundColor(Color(AppColors.purple))
                             }
+                            .padding(.horizontal, 40)
+                            .padding(.top, 8)
+                            .padding(.bottom, max(proxy.safeAreaInsets.bottom, 16))
                         }
-                        .padding([.trailing, .bottom], 8)
-                        .edgesIgnoringSafeArea(.bottom)
+                        Spacer()
                     }
-                    .edgesIgnoringSafeArea(.bottom)
-                }.background(Color.clear)
+                    .background(Color.white)
+                }
             }
         }
-        .background(Color.white)
+        
     }
     
-    func delete(at offsets: IndexSet) {
+    private func delete(at offsets: IndexSet) {
         offsets.forEach {
             let delRow = self.viewModel.getCities()[$0]
             if let city = self.userSettings.favouriteCities.first(where: { $0.cityName == delRow.cityName }) {

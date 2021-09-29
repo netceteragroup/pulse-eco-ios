@@ -19,6 +19,7 @@ struct CityMapView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var userSettings: UserSettings
+    let proxy:  GeometryProxy
     
     var body: some View {
         
@@ -31,7 +32,7 @@ struct CityMapView: View {
                                             city: self.dataSource.cities.first{ $0.cityName == self.appState.cityName} ?? City.defaultCity()))
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
-                    BottomShadow()
+                    ShadowOnTopOfView()
                 )
             
             VStack(alignment: .trailing) {
@@ -54,19 +55,22 @@ struct CityMapView: View {
             }
             
             AverageView(viewModel: AverageViewModel(measure: self.appState.selectedMeasure, cityName: self.appState.cityName, measuresList: self.dataSource.measures, cityValues: self.dataSource.cityOverall))
-            if self.appState.citySelectorClicked {
-                FavouriteCitiesView(viewModel: FavouriteCitiesViewModel(selectedMeasure: self.appState.selectedMeasure,
-                                                                        favouriteCities: self.userSettings.favouriteCities,
-                                                                        cityValues: self.userSettings.cityValues,
-                                                                        measureList: self.dataSource.measures),
-                                    userSettings: self.userSettings)
-                    .overlay(BottomShadow())
-            }
             
+            if self.appState.citySelectorClicked {
+                FavouriteCitiesView(viewModel:
+                                        FavouriteCitiesViewModel(
+                                            selectedMeasure: self.appState.selectedMeasure,
+                                            favouriteCities: self.userSettings.favouriteCities,
+                                            cityValues: self.userSettings.cityValues,
+                                            measureList: self.dataSource.measures),
+                                    userSettings: self.userSettings,
+                                    proxy: proxy)
+                    .overlay(ShadowOnTopOfView())
+                    .animation(nil)
+                
+            }
         }
-        
     }
-    
 }
 
 enum ActiveSheet {

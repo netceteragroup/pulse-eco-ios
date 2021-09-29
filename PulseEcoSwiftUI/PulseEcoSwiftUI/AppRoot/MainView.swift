@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MainView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var refreshService: RefreshService 
+    @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     
@@ -46,7 +46,7 @@ struct MainView: View {
                             self.appState.citySelectorClicked = false
                         }
                     })
-            
+                
             case .languageView: LanguageView()
             }
         }
@@ -57,32 +57,34 @@ struct MainView: View {
     }
     
     var contentView: some View {
-        NavigationView {
-            ZStack{
+        GeometryReader { proxy in
+            
+            NavigationView {
                 ZStack {
-                    CityMapView(userSettings: self.dataSource.userSettings)
-                        .edgesIgnoringSafeArea([.horizontal,.bottom
-                        ])
-                        .padding(.top, 36)
-                    
-                    VStack {
-                        Rectangle()
-                            .frame(height: 36)
+                    ZStack {
+                        CityMapView(userSettings: self.dataSource.userSettings, proxy: proxy)
+                            .edgesIgnoringSafeArea([.horizontal,.bottom
+                                                   ])
+                            .padding(.top, 36)
+                        
+                        VStack {
+                            Rectangle()
+                                .frame(height: 36)
                                 .foregroundColor(backgroundColor)
                                 .shadow(color: shadow, radius: 0.8, x: 0, y: 0)
-                        Spacer()
+                            Spacer()
+                        }
+                        
+                        VStack {
+                            MeasureListView(viewModel: MeasureListViewModel(selectedMeasure: self.appState.selectedMeasure,
+                                                                            cityName: self.appState.cityName,
+                                                                            measuresList: self.dataSource.measures,
+                                                                            cityValues: self.dataSource.cityOverall,
+                                                                            citySelectorClicked: self.appState.citySelectorClicked))
+                            Spacer()
+                        }
                     }
-                    
-                    VStack {
-                    MeasureListView(viewModel: MeasureListViewModel(selectedMeasure: self.appState.selectedMeasure,
-                                                             cityName: self.appState.cityName,
-                                                             measuresList: self.dataSource.measures,
-                                                             cityValues: self.dataSource.cityOverall,
-                                                             citySelectorClicked: self.appState.citySelectorClicked))
-                     Spacer()
-                    }
-                }
-                .navigationBarTitle("", displayMode: .inline)
+                    .navigationBarTitle("", displayMode: .inline)
                     .navigationBarItems(
                         leading: Button(action: {
                             withAnimation(.easeInOut(duration: 0.2)){
@@ -104,35 +106,33 @@ struct MainView: View {
                         }.accentColor(Color.black),
                         trailing:
                             HStack {
-                            Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
-                                .imageScale(.large)
-                                .padding(.trailing, (UIWidth)/3.7)
-                                .onTapGesture {
-                                    //action
-                                    if self.appState.citySelectorClicked == false {
-                                        self.refreshService.refreshData()
+                                Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
+                                    .imageScale(.large)
+                                    .padding(.trailing, (UIWidth)/3.7)
+                                    .onTapGesture {
+                                        //action
+                                        if self.appState.citySelectorClicked == false {
+                                            self.refreshService.refreshData()
+                                        }
                                     }
-                            }
                                 
-                            Button(action: {
-                                withAnimation(){
-                                    self.appState.activeSheet = .languageView
-                                    self.appState.showSheet = true
+                                Button(action: {
+                                    withAnimation(){
+                                        self.appState.activeSheet = .languageView
+                                        self.appState.showSheet = true
+                                    }
+                                }) {
+                                    Image(systemName: "globe")
+                                        .resizable()
+                                        .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .foregroundColor(Color(AppColors.darkblue))
+                                        .padding(.leading, 15)
                                 }
-                            }) {
-                                Image(systemName: "globe")
-                                    .resizable()
-                                    .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                    .foregroundColor(Color(AppColors.darkblue))
-                                    .padding(.leading, 15)
-                            }
-                    })
+                            })
+                }
             }
-        }
-        .if(.pad, transform: {
-            $0.navigationViewStyle(StackNavigationViewStyle())
-        })
-        .navigationBarColor(UIColor.white)
+            .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
+            .navigationBarColor(UIColor.white)
             .overlay(
                 ZStack{
                     if self.appState.showSensorDetails {
@@ -146,7 +146,9 @@ struct MainView: View {
                                 .frame(maxWidth: UIScreen.main.bounds.width)
                         }
                     }
-            })
+                })
+        }
+        
     }
 }
 
