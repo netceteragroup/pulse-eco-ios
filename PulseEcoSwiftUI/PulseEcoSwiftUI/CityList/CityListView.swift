@@ -53,15 +53,18 @@ struct CityListView: View {
                                     elem == $0.countryName
                                 }
                                 ForEach(citiesFromCountry, id: \.id) { city in
-                                    CityRowView(viewModel: city,
-                                                addCheckMark: favouriteCitiesNames.contains(city.cityName)).onTapGesture {
-                                                    if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                                                        self.userSettings.favouriteCities.insert(city)
-                                                        self.appState.cityName = city.cityName
-                                                        self.appState.newCitySelected = true
-                                                        self.presentationMode.wrappedValue.dismiss()
-                                                    }
-                                                }
+                                    Button(action: {
+                                        if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
+                                            self.userSettings.favouriteCities.insert(city)
+                                            self.appState.cityName = city.cityName
+                                            self.appState.newCitySelected = true
+                                            self.presentationMode.wrappedValue.dismiss()
+                                        }
+                                    }, label: {
+                                        CityRowView(viewModel: city,
+                                                    addCheckMark: favouriteCitiesNames.contains(city.cityName))
+                                    })
+                                    
                                     if (city != citiesFromCountry.last) {
                                         Divider()
                                             .background(Color.gray)

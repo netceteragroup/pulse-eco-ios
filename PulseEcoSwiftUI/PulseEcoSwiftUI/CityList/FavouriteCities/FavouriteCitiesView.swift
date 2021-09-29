@@ -31,17 +31,19 @@ struct FavouriteCitiesView: View {
                     VStack{
                         List {
                             ForEach(self.viewModel.getCities(), id: \.id) { city in
-                                FavouriteCityRowView(viewModel: city)
-                                    .contentShape(Rectangle())
-                                    .onTapGesture {
-                                        self.appState.citySelectorClicked = false
-                                        self.appState.cityName = city.cityName
-                                        self.dataSource.loadingCityData = true
-                                        self.refreshService.updateRefreshDate()
-                                        self.dataSource.getValuesForCity(cityName: city.cityName)
-                                        self.appState.updateMapRegion = true
-                                        self.appState.updateMapAnnotations = true
-                                    }
+                                Button(action: {
+                                    self.appState.citySelectorClicked = false
+                                    self.appState.cityName = city.cityName
+                                    self.dataSource.loadingCityData = true
+                                    self.refreshService.updateRefreshDate()
+                                    self.dataSource.getValuesForCity(cityName: city.cityName)
+                                    self.appState.updateMapRegion = true
+                                    self.appState.updateMapAnnotations = true
+                                }, label: {
+                                    FavouriteCityRowView(viewModel: city)
+                                        .contentShape(Rectangle())
+                                })
+                                
                             }.onDelete(perform: self.delete)
                         }
                     }
