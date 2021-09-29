@@ -15,16 +15,14 @@ struct FavouriteCityRowView: View {
     var body: some View {
         VStack {
             HStack {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 2) {
                     Text(self.viewModel.siteName)
                         .font(Font.custom("TitilliumWeb-Bold", size: 14))
                     Text(self.viewModel.countryName)
                         .font(Font.custom("TitilliumWeb-SemiBold", size: 11))
                         .foregroundColor(Color.gray)
-                        .padding(.top, 2)
                     Text(self.viewModel.message)
                         .font(Font.custom("TitilliumWeb-SemiBold", size: 11))
-                        .padding(.top, 2)
                 }
                 Spacer()
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
@@ -45,7 +43,8 @@ struct FavouriteCityRowView: View {
                     })
                     .foregroundColor(Color.white)
                     .padding(10)
-            }.padding([.leading, .trailing], 10)
+            }
+            .padding([.leading, .trailing], 10)
             .frame(height: 80)
            // Divider()
         }
