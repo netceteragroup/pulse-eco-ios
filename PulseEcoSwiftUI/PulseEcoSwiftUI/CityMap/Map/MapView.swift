@@ -53,6 +53,8 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         map.dataSource.getDailyAverageDataForSensor(cityName: map.appState.cityName,
                                                                   measureType: map.appState.selectedMeasure,
                                                                   sensorId: map.appState.selectedSensor?.sensorID ?? "")
+        let region = MKCoordinateRegion(center: view.annotation!.coordinate, span: mapView.region.span)
+        mapView.setRegion(region, animated: true)
     }
 
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView)
@@ -81,6 +83,8 @@ struct MapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView(frame: .zero)
         mapView.delegate = context.coordinator
+        mapView.isPitchEnabled = false
+        mapView.isRotateEnabled = false
         return mapView
     }
     

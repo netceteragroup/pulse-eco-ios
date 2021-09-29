@@ -11,7 +11,7 @@ import SwiftUI
 struct CityMapView: View {
     
     struct Theme {
-        static let disclaimerIconColor: Color = Color(UIColor(red: 0.96, green: 0.93, blue: 0.86, alpha: 1.00))
+        static let disclaimerIconColor: Color = Color.white
         static let disclaimerIconSize: CGSize = CGSize(width: 220, height: 25)
     }
     
