@@ -59,14 +59,14 @@ struct FavouriteCitiesView: View {
                                 Image(systemName: "plus.circle")
                                     .resizable()
                                     .frame(width: 30, height: 30)
-                                    .foregroundColor(Color(AppColors.purple))
+                                    .foregroundColor(Color(AppColors.darkblue))
                                 Text(Trema.text(for: "add_city_button"))
                                     .font(Font.custom("TitilliumWeb-SemiBold", size: 14))
-                                    .foregroundColor(Color(AppColors.purple))
+                                    .foregroundColor(Color(AppColors.darkblue))
                             }
                             .padding(.horizontal, 40)
                             .padding(.top, 8)
-                            .padding(.bottom, max(proxy.safeAreaInsets.bottom, 16))
+                            .padding(.bottom, max(proxy.safeAreaInsets.bottom, 8))
                         }
                         Spacer()
                     }
