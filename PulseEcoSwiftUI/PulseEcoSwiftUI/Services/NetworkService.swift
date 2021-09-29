@@ -14,6 +14,8 @@ class NetworkService {
     let appURLSession: URLSession = {
         let config = URLSessionConfiguration.default
         config.httpAdditionalHeaders = ["User-Agent": "pulse-eco-ios"]
+        config.requestCachePolicy = .reloadIgnoringCacheData
+        config.urlCache = nil
         return URLSession(configuration: config)
     }()
     
