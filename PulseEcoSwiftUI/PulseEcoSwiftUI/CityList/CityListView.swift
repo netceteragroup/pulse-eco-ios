@@ -107,7 +107,7 @@ struct CityListView: View {
     var listCities: some View {
         
         let favouriteCitiesNames = self.userSettings.favouriteCities.map{$0.cityName}
-        let foundCities = self.viewModel.getCities().filter{ $0.cityName.lowercased().contains(self.searchText.lowercased()) || $0.countryName.lowercased().contains(self.searchText.lowercased())
+        let foundCities = self.viewModel.getCities().filter{ $0.siteName.lowercased().contains(self.searchText.lowercased()) || $0.countryName.lowercased().contains(self.searchText.lowercased())
         }
         
         return VStack {
