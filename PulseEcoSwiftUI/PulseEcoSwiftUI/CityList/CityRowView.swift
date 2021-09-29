@@ -27,7 +27,7 @@ struct CityRowView: View {
             }
             
         }
-        .frame(height: 60)
+        .frame(height: showCountryName ? 50 : 36)
         .padding(.horizontal, 10)
         .contentShape(Rectangle())
         .resignKeyboardOnDragGesture()

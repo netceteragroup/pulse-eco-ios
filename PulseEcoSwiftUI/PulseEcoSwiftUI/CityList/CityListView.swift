@@ -18,10 +18,10 @@ struct CityListView: View {
     @State var searchText = ""
     
     var body: some View {
-    
+        
         NavigationView {
             VStack {
-              
+                
                 HStack {
                     SearchBar(text: $searchText,
                               placeholder: Trema.text(for: "search_city_or_country"))
@@ -31,7 +31,7 @@ struct CityListView: View {
                     }, label: {
                         Text(Trema.text(for: "cancel"))
                     })
-                        .padding(.trailing, 15)
+                    .padding(.trailing, 15)
                 }
                 
                 ScrollView {
@@ -39,12 +39,14 @@ struct CityListView: View {
                         ForEach(self.viewModel.getCountries(), id: \.self) { elem in
                             Section(header:
                                         HStack {
-                                Text("\(elem)")
-                                    .padding()
-                                    .font(.system(size: 16, weight: .bold))
-                                Spacer()
-                            }
+                                            Text("\(elem)")
+                                                .padding()
+                                                .font(.system(size: 16, weight: .bold))
+                                            Spacer()
+                                        }
                                         .frame(height: 30)
+                                        .overlay(Rectangle().frame(width: nil, height: 1, alignment: .top).foregroundColor(Color.gray), alignment: .top)
+                                        .overlay(Rectangle().frame(width: nil, height: 1, alignment: .top).foregroundColor(Color.gray), alignment: .bottom)
                                         .background(Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255))
                                         .listRowInsets(.zero)) {
                                 
@@ -73,6 +75,7 @@ struct CityListView: View {
                                 }
                             }
                         }
+                        Divider().background(Color.gray)
                     } else {
                         self.listCities
                     }
@@ -107,18 +110,24 @@ struct CityListView: View {
         let foundCities = self.viewModel.getCities().filter{ $0.cityName.lowercased().contains(self.searchText.lowercased()) || $0.countryName.lowercased().contains(self.searchText.lowercased())
         }
         
-        return ForEach(foundCities, id: \.id) { city in
-            Button(action: {
-                if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                    self.userSettings.favouriteCities.insert(city)
-                    self.appState.cityName = city.cityName
-                    self.appState.newCitySelected = true
-                    self.presentationMode.wrappedValue.dismiss()
+        return VStack {
+            ForEach(foundCities, id: \.id) { city in
+                Button(action: {
+                    if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
+                        self.userSettings.favouriteCities.insert(city)
+                        self.appState.cityName = city.cityName
+                        self.appState.newCitySelected = true
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
+                }, label: {
+                    CityRowView(viewModel: city, addCheckMark: favouriteCitiesNames.contains(city.cityName), showCountryName: true)
+                })
+                if (city != foundCities.last){
+                    Divider()
+                        .background(Color.gray)
                 }
-            }, label: {
-                CityRowView(viewModel: city, addCheckMark: favouriteCitiesNames.contains(city.cityName), showCountryName: true)
-            })
-            if (city != foundCities.last){
+            }
+            if (foundCities.count > 0){
                 Divider()
                     .background(Color.gray)
             }
