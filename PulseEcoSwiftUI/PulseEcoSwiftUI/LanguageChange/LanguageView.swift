@@ -22,12 +22,15 @@ struct LanguageView: View {
             VStack {
                 List {
                     ForEach(countries, id: \.self) { country in
-                        CountryCellView(country: country,
-                                      checked: country == self.selectedCountry,
-                                      action: { tappedCountry in
-                                        self.tappedCountry = tappedCountry
-                                      })
-                        
+                        VStack(spacing: 0) {
+                            Button {
+                                self.tappedCountry = tappedCountry
+                            } label: {
+                                CountryCellView(country: country,
+                                                checked: country == self.selectedCountry)
+                            }
+                            Divider()
+                        }
                     }
                 }
                 .listStyle(PlainListStyle())
@@ -81,7 +84,6 @@ struct LanguageView: View {
 private struct CountryCellView: View {
     let country: Country
     let checked: Bool
-    let action: (Country) -> ()
     
     var body: some View {
         HStack {
@@ -89,14 +91,9 @@ private struct CountryCellView: View {
             Spacer()
             if checked {
                 Image(systemName: "checkmark")
-                    .foregroundColor(.black)
+                    .foregroundColor(Color(AppColors.darkblue))
             }
         }
         .contentShape(Rectangle())
-        .onTapGesture {
-            if !checked {
-                action(country)
-            }
-        }
     }
 }

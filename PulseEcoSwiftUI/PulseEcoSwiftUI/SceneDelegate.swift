@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let dataSource = AppDataSource()
         self.refreshService = RefreshService(appViewModel: appViewModel, appDataSource: dataSource)
         let rootView = MainView()
+        UITableView.appearance().separatorColor = .clear
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: rootView
