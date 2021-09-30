@@ -47,12 +47,12 @@ struct FavouriteCitiesView: View {
                                     FavouriteCityRowView(viewModel: city)
                                         .contentShape(Rectangle())
                                     
-                                })
-                                    .padding()
+                                }).padding()
+                                
                                 if (city != cities.last){
                                     Divider()
                                 }
-                                    
+                                
                             }
                             .listRowInsets(EdgeInsets())
                         }

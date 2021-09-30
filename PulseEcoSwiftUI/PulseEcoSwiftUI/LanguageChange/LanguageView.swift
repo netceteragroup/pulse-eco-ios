@@ -24,13 +24,15 @@ struct LanguageView: View {
                     ForEach(countries, id: \.self) { country in
                         VStack(spacing: 0) {
                             Button {
-                                self.tappedCountry = tappedCountry
+                                self.tappedCountry = country
                             } label: {
                                 CountryCellView(country: country,
                                                 checked: country == self.selectedCountry)
                             }
+                            .padding()
                             Divider()
                         }
+                        .listRowInsets(EdgeInsets())
                     }
                 }
                 .listStyle(PlainListStyle())
@@ -94,6 +96,5 @@ private struct CountryCellView: View {
                     .foregroundColor(Color(AppColors.darkblue))
             }
         }
-        .contentShape(Rectangle())
     }
 }
