@@ -112,7 +112,12 @@ struct MainView: View {
                                     .onTapGesture {
                                         //action
                                         if self.appState.citySelectorClicked == false {
-                                            self.refreshService.refreshData()
+                                            self.appState.selectedSensor = nil
+                                            self.appState.updateMapAnnotations = true
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                                                self.refreshService.refreshData()
+                                            }
+                                            
                                         }
                                     }
                                 
