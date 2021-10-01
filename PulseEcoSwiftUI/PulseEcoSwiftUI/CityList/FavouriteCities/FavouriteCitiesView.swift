@@ -31,19 +31,30 @@ struct FavouriteCitiesView: View {
             } else {
                 VStack (spacing: 0) {
                     List {
-                        ForEach(self.viewModel.getCities(), id: \.id) { city in
-                            Button(action: {
-                                self.appState.citySelectorClicked = false
-                                self.appState.cityName = city.cityName
-                                self.dataSource.loadingCityData = true
-                                self.refreshService.updateRefreshDate()
-                                self.dataSource.getValuesForCity(cityName: city.cityName)
-                                self.appState.updateMapRegion = true
-                                self.appState.updateMapAnnotations = true
-                            }, label: {
-                                FavouriteCityRowView(viewModel: city)
-                                    .contentShape(Rectangle())
-                            })
+                        let cities = self.viewModel.getCities()
+                        ForEach(cities, id: \.id) { city in
+                            VStack(spacing: 0) {
+                                
+                                Button(action: {
+                                    self.appState.citySelectorClicked = false
+                                    self.appState.cityName = city.cityName
+                                    self.dataSource.loadingCityData = true
+                                    self.refreshService.updateRefreshDate()
+                                    self.dataSource.getValuesForCity(cityName: city.cityName)
+                                    self.appState.updateMapRegion = true
+                                    self.appState.updateMapAnnotations = true
+                                }, label: {
+                                    FavouriteCityRowView(viewModel: city)
+                                        .contentShape(Rectangle())
+                                    
+                                }).padding()
+                                
+                                if (city != cities.last){
+                                    Divider()
+                                }
+                                
+                            }
+                            .listRowInsets(EdgeInsets())
                         }
                         .onDelete(perform: self.delete)
                     }
