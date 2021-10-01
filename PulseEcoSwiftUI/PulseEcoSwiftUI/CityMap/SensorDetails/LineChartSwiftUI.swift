@@ -11,103 +11,136 @@ import SwiftUI
 import Charts
 
 struct LineChartSwiftUI: UIViewRepresentable {
-    @State var lineChart = LineChartView()
+    @State var lineChart = CombinedChartView()
     @ObservedObject var viewModel: ChartViewModel
-    func makeUIView(context: UIViewRepresentableContext<LineChartSwiftUI>) -> LineChartView {
+    
+    func makeUIView(context: UIViewRepresentableContext<LineChartSwiftUI>) -> CombinedChartView {
         setUpChart()
         return lineChart
     }
     
-    func updateUIView(_ uiView: LineChartView, context: UIViewRepresentableContext<LineChartSwiftUI>) {
+    func updateUIView(_ uiView: CombinedChartView, context: UIViewRepresentableContext<LineChartSwiftUI>) {
         setUpChart()
     }
     
     func setUpChart() {
         lineChart.noDataText = Trema.text(for: "no_data_availabe")
-        var dataSets = [ChartDataSet]()
+        let sensorName = self.viewModel.sensor.title ?? Trema.text(for: "unknown")
+        
         let colors = [AppColors.purple, AppColors.blue, AppColors.darkred, AppColors.darkgreen, AppColors.red]
         var iterator = colors.makeIterator()
         
-        var dataEntries: [ChartDataEntry] = []
-        
-        for i in self.viewModel.sensorReadings {
-            var dataEntry = ChartDataEntry()
-            let date = DateFormatter.iso8601Full.date(from: i.stamp) ?? Date()
-            let valuedate = date.timeIntervalSince1970
-            let x =  valuedate
-            let y = Double(i.value)!
-            dataEntry = ChartDataEntry(x: x, y: y)
-            dataEntries.append(dataEntry)
-        }
-        let sensorName = self.viewModel.sensor.title ?? Trema.text(for: "unknown")
-        let lineChartDataSet = LineChartDataSet(entries: dataEntries, label: sensorName)
-        
+        let lineDataEntries = lineChartDataEntries(from: viewModel.sensorReadings)
+        let lineChartDataSet = LineChartDataSet(entries: lineDataEntries, label: sensorName)
         lineChartDataSet.setColor(iterator.next()!)
-        
-        lineChartDataSet.mode = .cubicBezier
+        lineChartDataSet.mode = .linear
         lineChartDataSet.drawCirclesEnabled = false
         lineChartDataSet.drawValuesEnabled = false
-        lineChartDataSet.lineWidth = 2.0
+        lineChartDataSet.lineWidth = 2
         lineChartDataSet.drawHorizontalHighlightIndicatorEnabled = false
         lineChartDataSet.drawVerticalHighlightIndicatorEnabled = false
         
-        dataSets.append(lineChartDataSet)
+        let startDate = lineDataEntries.map { $0.x }.min()!
+        let minY = lineDataEntries.map { $0.y }.min()!
+        let maxY = lineDataEntries.map { $0.y }.max()!
         
-        let data = LineChartData(dataSets: dataSets)
-        data.setValueFont(.systemFont(ofSize: 7, weight: .light))
-        lineChart.data = data
+        let barDataSets = barDataSets(for: viewModel.selectedMeasure,
+                                         maxY: maxY,
+                                         minY: minY, startDate: startDate)
         
-        let lineChartData = LineChartData(dataSets: dataSets)
-        lineChart.data = lineChartData
+        let combinedData = CombinedChartData(dataSets: [lineChartDataSet] + barDataSets )
+        combinedData.lineData = LineChartData(dataSet: lineChartDataSet)
+        combinedData.barData = BarChartData(dataSets: barDataSets)
+        
+        
+        lineChart.data = combinedData
+        
+        lineChart.legend.enabled = false
+        lineChart.rightAxis.enabled = false
+        
         lineChart.xAxis.labelPosition = .bottom
-        lineChart.legend.textColor = .black
         lineChart.xAxis.labelTextColor = .black
-        lineChart.leftAxis.labelTextColor = .black
-        lineChart.rightAxis.drawAxisLineEnabled = false
-        lineChart.rightAxis.labelTextColor = .black
-        lineChart.leftAxis.axisMinimum = 0
-        lineChart.rightAxis.axisMinimum = 0
         lineChart.xAxis.granularityEnabled = true
         lineChart.xAxis.drawLabelsEnabled = true
+        lineChart.xAxis.drawAxisLineEnabled = false
         lineChart.xAxis.valueFormatter = ChartsDateValueFormatter()
         lineChart.xAxis.granularity = 1.0
+        lineChart.xAxis.drawGridLinesEnabled = false
+        
+        lineChart.leftAxis.labelTextColor = .black
+        lineChart.leftAxis.axisMinimum = min(minY, Double(viewModel.selectedMeasure.showMin))
+        lineChart.leftAxis.axisMaximum = max(maxY, Double(viewModel.selectedMeasure.showMax))
+        lineChart.leftAxis.drawGridLinesEnabled = false
+        lineChart.leftAxis.removeAllLimitLines()
+        
         lineChart.doubleTapToZoomEnabled = false
         lineChart.pinchZoomEnabled = false
         lineChart.scaleXEnabled = false
         lineChart.scaleYEnabled = false
-        lineChart.leftAxis.drawGridLinesEnabled = false
-        lineChart.rightAxis.drawGridLinesEnabled = false
-        lineChart.xAxis.drawGridLinesEnabled = false
         
-        lineChart.leftAxis.removeAllLimitLines()
-        let limitLines = LimitLines.getLimitLines(for: self.viewModel.selectedMeasure)
+        let limitLines = getLimitLines(for: self.viewModel.selectedMeasure)
         for limitLine in limitLines {
             lineChart.leftAxis.addLimitLine(limitLine)
         }
         lineChart.leftAxis.drawLimitLinesBehindDataEnabled = true
         
-        lineChart.zoomOut()
+    }
+    
+    private func lineChartDataEntries(from sensorReadings: [SensorData]) -> [ChartDataEntry] {
+        sensorReadings.map {
+            let date = DateFormatter.iso8601Full.date(from: $0.stamp) ?? Date()
+            let x =  date.timeIntervalSince1970
+            let y = Double($0.value)!
+            return ChartDataEntry(x: x, y: y)
+        }
+    }
+    
+    private func barDataSets(for measure: Measure,
+                     maxY: Double,
+                     minY: Double,
+                     startDate: Double) -> [BarChartDataSet] {
+        var sets = [BarChartDataSet]()
+        let negativeBands = measure.bands
+            .filter { $0.from < 0 }
+            .sorted { $0.from < $1.from }
+        let positiveBands = measure.bands
+            .filter { $0.to > 0 }
+            .sorted { $0.to > $1.to }
+        
+        sets.append(contentsOf: positiveBands.map {
+            let barDataSet = BarChartDataSet(entries: [BarChartDataEntry(x: startDate, y: Double($0.to))])
+            barDataSet.barBorderColor = AppColors.colorFrom(string: $0.legendColor)
+            return barDataSet
+        })
+        sets.append(contentsOf: negativeBands.map {
+            let barDataSet = BarChartDataSet(entries: [BarChartDataEntry(x: startDate, y: Double($0.from))])
+            barDataSet.barBorderColor = AppColors.colorFrom(string: $0.legendColor)
+            return barDataSet
+        })
+        
+        return sets.map {
+            $0.barBorderWidth = 5
+            $0.label = nil
+            $0.drawValuesEnabled = false
+            return $0
+        }
+    }
+    
+   private func getLimitLines(for measure: Measure) -> [ChartLimitLine] {
+        measure.bands.compactMap {
+            var limitLine: ChartLimitLine?
+            if $0.from < 0 && $0.to > 0 {
+                limitLine = ChartLimitLine(limit: Double(0))
+            } else if $0.legendPoint < 0 {
+                limitLine = ChartLimitLine(limit: Double($0.to))
+            } else {
+                limitLine = ChartLimitLine(limit: Double($0.from))
+            }
+            limitLine?.lineDashLengths = [2, 4]
+            limitLine?.lineColor = AppColors.colorFrom(string: $0.legendColor)
+            limitLine?.lineWidth = 1
+            return limitLine
+        }
     }
 }
 
-class LimitLines {
-    
-    static func getLimitLines(for measure: Measure) -> [ChartLimitLine] {
-        var limitLines: [ChartLimitLine] = []
-        
-        for band in measure.bands {
-            let limitLine = ChartLimitLine(limit: Double(band.legendPoint), label: band.shortGrade)
-            limitLine.lineColor = AppColors.colorFrom(string: band.legendColor)
-            limitLines.append(limitLine)
-        }
-        
-        for limitLine in limitLines {
-            limitLine.lineWidth = 1
-            limitLine.lineDashLengths = [5, 5]
-            limitLine.labelPosition = .rightBottom
-            limitLine.valueFont = .systemFont(ofSize: 8)
-        }
-        return limitLines
-    }
-    
-}
