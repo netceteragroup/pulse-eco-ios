@@ -10,15 +10,24 @@ import SwiftUI
 
 struct MeasureListView: View {
     @ObservedObject var viewModel: MeasureListViewModel
+    @EnvironmentObject var appDataSource: AppDataSource
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         ScrollView (.horizontal, showsIndicators: false) {
-            VStack {
-                buttonStack
-                .frame(height: 40)
-                Spacer()
+            ScrollViewReader { scrollProxy in
+                VStack {
+                    buttonStack
+                        .frame(height: 40)
+                        .onReceive(appDataSource.$loadingMeasures) { value in
+                            if !value {
+                                scrollProxy.scrollTo(appState.selectedMeasure)
+                            }
+                        }
+                    Spacer()
+                }
+                .frame(height: 56)
             }
-            .frame(height: 56)
         }
     }
     
@@ -28,9 +37,10 @@ struct MeasureListView: View {
                 VStack {
                     MeasureButtonView(viewModel: item)
                 }
+                .id(item.id)
             }
         }
-
+        
     }
 }
 
