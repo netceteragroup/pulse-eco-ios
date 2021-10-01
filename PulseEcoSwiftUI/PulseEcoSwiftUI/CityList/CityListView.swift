@@ -45,9 +45,9 @@ struct CityListView: View {
                                             Spacer()
                                         }
                                         .frame(height: 30)
-                                        .overlay(Rectangle().frame(width: nil, height: 1, alignment: .top).foregroundColor(Color.gray), alignment: .top)
-                                        .overlay(Rectangle().frame(width: nil, height: 1, alignment: .top).foregroundColor(Color.gray), alignment: .bottom)
-                                        .background(Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255))
+//                                        .overlay(Rectangle().frame(width: nil, height: 1, alignment: .top).foregroundColor(Color.gray), alignment: .top)
+//                                        .overlay(Rectangle().frame(width: nil, height: 1, alignment: .top).foregroundColor(Color.gray), alignment: .bottom)
+                                        .background(Color(red: 240 / 255, green: 240 / 255, blue: 240 / 255))
                                         .listRowInsets(.zero)) {
                                 
                                 let favouriteCitiesNames = self.userSettings.favouriteCities.map{$0.cityName}
