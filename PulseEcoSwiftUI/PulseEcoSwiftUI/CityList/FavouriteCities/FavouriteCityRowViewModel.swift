@@ -3,7 +3,12 @@ import SwiftUI
 
 class FavouriteCityRowViewModel: ObservableObject, Identifiable, Equatable {
     static func == (lhs: FavouriteCityRowViewModel, rhs: FavouriteCityRowViewModel) -> Bool {
-        return lhs.id == rhs.id
+        lhs.id == rhs.id &&
+        lhs.value == rhs.value &&
+        lhs.color == rhs.color &&
+        lhs.unit == rhs.unit &&
+        lhs.noReadings == rhs.noReadings &&
+        lhs.message == rhs.message
     }
     
     var id: String { return cityName }

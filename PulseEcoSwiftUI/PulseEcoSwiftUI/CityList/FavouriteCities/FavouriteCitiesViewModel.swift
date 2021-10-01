@@ -51,7 +51,11 @@ class FavouriteCitiesViewModel: ObservableObject {
                 }
             }
             
-            self.cityList.append(FavouriteCityRowViewModel(city: city, message: message, value: value, unit: selMeasure.unit, color: color))
+            self.cityList.append(FavouriteCityRowViewModel(city: city,
+                                                           message: message,
+                                                           value: value,
+                                                           unit: selMeasure.unit,
+                                                           color: color))
         }
     }
     
