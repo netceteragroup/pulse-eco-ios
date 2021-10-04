@@ -53,6 +53,7 @@ struct SensorDetailsView: View {
                 )
                 .frame(width: min(350, UIScreen.main.bounds.width - 10),
                        height: 200)
+                .padding(.bottom)
                 
                 WeeklyAverageView(viewModel: WeeklyAverageViewModel(appState: appState,
                                                                     dataSource: dataSource,
