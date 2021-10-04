@@ -40,6 +40,8 @@ struct LineChartSwiftUI: UIViewRepresentable {
         lineChartDataSet.drawHorizontalHighlightIndicatorEnabled = false
         lineChartDataSet.drawVerticalHighlightIndicatorEnabled = false
         
+        guard lineDataEntries.count > 0 else { return }
+        
         let startDate = lineDataEntries.map { $0.x }.min()!
         let minY = lineDataEntries.map { $0.y }.min()!
         let maxY = lineDataEntries.map { $0.y }.max()!
@@ -51,7 +53,6 @@ struct LineChartSwiftUI: UIViewRepresentable {
         let combinedData = CombinedChartData(dataSets: [lineChartDataSet] + barDataSets )
         combinedData.lineData = LineChartData(dataSet: lineChartDataSet)
         combinedData.barData = BarChartData(dataSets: barDataSets)
-        
         
         lineChart.data = combinedData
         
