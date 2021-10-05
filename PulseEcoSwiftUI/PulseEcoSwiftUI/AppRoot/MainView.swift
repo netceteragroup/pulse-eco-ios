@@ -58,9 +58,8 @@ struct MainView: View {
     
     var contentView: some View {
         GeometryReader { proxy in
-            
-            NavigationView {
-                ZStack {
+            ZStack {
+                NavigationView {
                     ZStack {
                         CityMapView(userSettings: self.dataSource.userSettings, proxy: proxy)
                             .edgesIgnoringSafeArea([.horizontal,.bottom
@@ -133,24 +132,24 @@ struct MainView: View {
                                 }
                             })
                 }
-            }
-            .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
-            .navigationBarColor(UIColor.white)
-            .overlay(
-                ZStack{
-                    if self.appState.showSensorDetails {
-                        SlideOverCard {
-                            SensorDetailsView(viewModel: SensorDetailsViewModel(
-                                sensor: self.appState.selectedSensor ?? SensorPinModel(),
-                                sensorsData: self.dataSource.sensorsData24h,
-                                selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure:self.appState.selectedMeasure),
-                                sensorData24h: self.dataSource.sensorsData24h,
-                                dailyAverages: self.dataSource.sensorsDailyAverageData))
-                                .frame(maxWidth: UIScreen.main.bounds.width)
-                        }
-                        .transition(.move(edge: .bottom))
+                
+                .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
+                .navigationBarColor(UIColor.white)
+                .zIndex(1)
+                if self.appState.showSensorDetails {
+                    SlideOverCard {
+                        SensorDetailsView(viewModel: SensorDetailsViewModel(
+                            sensor: self.appState.selectedSensor ?? SensorPinModel(),
+                            sensorsData: self.dataSource.sensorsData24h,
+                            selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure:self.appState.selectedMeasure),
+                            sensorData24h: self.dataSource.sensorsData24h,
+                            dailyAverages: self.dataSource.sensorsDailyAverageData))
+                            .frame(maxWidth: UIScreen.main.bounds.width)
                     }
-                })
+                    .transition(.move(edge: .bottom))
+                    .zIndex(2) // zIndexes are needed to maintain dismiss transition
+                }
+            }
         }
         
     }
