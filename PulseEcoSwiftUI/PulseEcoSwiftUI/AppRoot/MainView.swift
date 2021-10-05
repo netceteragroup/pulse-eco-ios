@@ -150,6 +150,7 @@ struct MainView: View {
                                 dailyAverages: self.dataSource.sensorsDailyAverageData))
                                 .frame(maxWidth: UIScreen.main.bounds.width)
                         }
+                        .transition(.move(edge: .bottom))
                     }
                 })
         }

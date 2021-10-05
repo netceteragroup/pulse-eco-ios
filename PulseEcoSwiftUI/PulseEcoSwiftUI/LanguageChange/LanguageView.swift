@@ -24,7 +24,9 @@ struct LanguageView: View {
                     ForEach(countries, id: \.self) { country in
                         VStack(spacing: 0) {
                             Button {
-                                self.tappedCountry = country
+                                if (self.selectedCountry != country) {
+                                    self.tappedCountry = country
+                                }
                             } label: {
                                 CountryCellView(country: country,
                                                 checked: country == self.selectedCountry)
