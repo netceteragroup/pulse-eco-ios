@@ -34,11 +34,11 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
                 annotationView.layoutIfNeeded()
             })
         }
-
+        
         return annotationView
         
     }
-
+    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView)
     {
         guard let annotationView = view as? LocationAnnotationView else {
@@ -51,12 +51,12 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         map.appState.updateMapAnnotations = false
         map.appState.getNewSensors = false
         map.dataSource.getDailyAverageDataForSensor(cityName: map.appState.cityName,
-                                                                  measureType: map.appState.selectedMeasure,
-                                                                  sensorId: map.appState.selectedSensor?.sensorID ?? "")
+                                                    measureType: map.appState.selectedMeasure,
+                                                    sensorId: map.appState.selectedSensor?.sensorID ?? "")
         let region = MKCoordinateRegion(center: view.annotation!.coordinate, span: mapView.region.span)
-        mapView.setRegion(region, animated: true)
+        mapView.animatedSetRegion(region, duration: 0.2)
     }
-
+    
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView)
     {
         guard let annotationView = view as? LocationAnnotationView else {
@@ -96,7 +96,7 @@ struct MapView: UIViewRepresentable {
         let currentAnnotationsSensorIds = currentAnnotations.map{$0.sensorID}
         let selectedAnnotations = uiView.selectedAnnotations
         
-        if self.appState.updateMapAnnotations { 
+        if self.appState.updateMapAnnotations {
             for pin in self.viewModel.sensors {
                 newAnnotationListSensorIds.append(pin.sensorID) // add the ids of the sensors to a list
                 if !currentAnnotationsSensorIds.contains(pin.sensorID){ // check if theres a new sensor
@@ -127,11 +127,11 @@ struct MapView: UIViewRepresentable {
             }
             self.appState.getNewSensors = false
         }
-               
+        
         if self.appState.updateMapRegion {
             uiView.setRegion(region, animated: true)
         }
-       
+        
         uiView.mapType = MKMapType.standard
         uiView.setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: region),
                                  animated: true)
@@ -146,5 +146,17 @@ struct MapView: UIViewRepresentable {
 extension Collection {
     subscript (safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
+    }
+}
+
+extension MKMapView {
+    func animatedSetRegion(_ region:MKCoordinateRegion, duration:TimeInterval) {
+        MKMapView.animate(withDuration: duration,
+                          delay: 0,
+                          usingSpringWithDamping: 0.6,
+                          initialSpringVelocity: 10,
+                          options: UIView.AnimationOptions.curveEaseIn,
+                          animations: { self.setRegion(region, animated: true) },
+                          completion: nil)
     }
 }
