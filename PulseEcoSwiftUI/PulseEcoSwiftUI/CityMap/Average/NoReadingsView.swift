@@ -18,14 +18,14 @@ struct NoReadingsView: View {
                             Text(self.viewModel.text).foregroundColor(self.viewModel.textColor).padding(.bottom, 3)
                         }.padding(.top, 3)
                     }
-                }.frame(width: 120, height: 75)
+                }.frame(width: 115, height: 65)
                     .background(RoundedCorners(tl: 8, tr: 8, bl: 8, br: 8)
                     .fill(self.viewModel.backgroundColor))
-                    .padding(.top, 20)
+                    .padding(.top, 10)
                 Spacer()
             }
             Spacer()
-        }.padding(.leading, 20)
+        }.padding(.leading, 10)
     }
 }
 

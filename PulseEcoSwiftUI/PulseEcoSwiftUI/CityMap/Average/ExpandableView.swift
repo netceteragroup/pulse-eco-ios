@@ -111,7 +111,5 @@ struct ExpandableView: View {
                 .offset(x: CGFloat(self.viewModel.sliderValue()) * self.width / 100)
                 .frame(height: 6)
         }
-        //                            .animation(.easeInOut(duration: 0.3))
-        //}//.animation(.default)
     }
 }
