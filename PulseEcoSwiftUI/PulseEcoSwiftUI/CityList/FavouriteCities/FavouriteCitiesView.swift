@@ -43,6 +43,7 @@ struct FavouriteCitiesView: View {
                                     self.dataSource.getValuesForCity(cityName: city.cityName)
                                     self.appState.updateMapRegion = true
                                     self.appState.updateMapAnnotations = true
+                                    UserDefaults.standard.set(city.cityName, forKey: "selectedCity")
                                 }, label: {
                                     FavouriteCityRowView(viewModel: city)
                                         .contentShape(Rectangle())
