@@ -30,10 +30,6 @@ class MeasureListViewModel: ObservableObject {
             for measure in measures {
                 measure.clickDisabled = false
             }
-        } else {
-            self.measures.sort{ (x, y) in
-                y.clickDisabled == true
-            }
         }
     }
 }

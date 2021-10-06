@@ -85,57 +85,13 @@ struct MainView: View {
                     }
                     .navigationBarTitle("", displayMode: .inline)
                     .navigationBarItems(
-                        leading: Button(action: {
-                            withAnimation(.easeInOut(duration: 0.2)){
-                                self.appState.citySelectorClicked.toggle()
-                                if self.appState.showSensorDetails == true {
-                                    self.appState.showSensorDetails = false
-                                    self.appState.selectedSensor = nil
-                                    self.appState.updateMapAnnotations = true
-                                }
-                            }
-                        }) {
-                            HStack {
-                                Text(self.appState.cityName.uppercased())
-                                    .font(Font.custom("TitilliumWeb-SemiBold", size: 14))
-                                    .foregroundColor(Color(AppColors.darkblue))
-                                
-                                self.appState.cityIcon.foregroundColor(Color(AppColors.darkblue))
-                            }
-                        }.accentColor(Color.black),
-                        trailing:
-                            HStack {
-                                Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
-                                    .imageScale(.large)
-                                    .padding(.trailing, (UIWidth)/3.7)
-                                    .onTapGesture {
-                                        //action
-                                        if self.appState.citySelectorClicked == false {
-                                            self.appState.selectedSensor = nil
-                                            self.appState.updateMapAnnotations = true
-                                            self.refreshService.refreshData()
-                                            
-                                        }
-                                    }
-                                
-                                Button(action: {
-                                    withAnimation(){
-                                        self.appState.activeSheet = .languageView
-                                        self.appState.showSheet = true
-                                    }
-                                }) {
-                                    Image(systemName: "globe")
-                                        .resizable()
-                                        .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                        .foregroundColor(Color(AppColors.darkblue))
-                                        .padding(.leading, 15)
-                                }
-                            })
+                        leading: leadingNavigationItems,
+                        trailing: trailingNavigationItems)
                 }
-                
                 .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
                 .navigationBarColor(UIColor.white)
                 .zIndex(1)
+                
                 if self.appState.showSensorDetails {
                     SlideOverCard {
                         SensorDetailsView(viewModel: SensorDetailsViewModel(
@@ -152,6 +108,58 @@ struct MainView: View {
             }
         }
         
+    }
+    
+    var trailingNavigationItems: some View {
+        HStack {
+            Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
+                .imageScale(.large)
+                .padding(.trailing, (UIWidth)/3.7)
+                .onTapGesture {
+                    //action
+                    if self.appState.citySelectorClicked == false {
+                        self.appState.selectedSensor = nil
+                        self.appState.updateMapAnnotations = true
+                        self.refreshService.refreshData()
+                        
+                    }
+                }
+            
+            Button(action: {
+                withAnimation(){
+                    self.appState.activeSheet = .languageView
+                    self.appState.showSheet = true
+                }
+            }) {
+                Image(systemName: "globe")
+                    .resizable()
+                    .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .foregroundColor(Color(AppColors.darkblue))
+                    .padding(.leading, 15)
+            }
+        }
+    }
+    
+    var leadingNavigationItems: some View {
+        Button(action: {
+            withAnimation(.easeInOut(duration: 0.2)){
+                self.appState.citySelectorClicked.toggle()
+                if self.appState.showSensorDetails == true {
+                    self.appState.showSensorDetails = false
+                    self.appState.selectedSensor = nil
+                    self.appState.updateMapAnnotations = true
+                }
+            }
+        }) {
+            HStack {
+                Text(self.appState.cityName.uppercased())
+                    .font(Font.custom("TitilliumWeb-SemiBold", size: 14))
+                    .foregroundColor(Color(AppColors.darkblue))
+                
+                self.appState.cityIcon.foregroundColor(Color(AppColors.darkblue))
+            }
+        }
+        .accentColor(Color.black)
     }
 }
 
