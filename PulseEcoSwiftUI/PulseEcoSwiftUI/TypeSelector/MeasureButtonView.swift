@@ -14,11 +14,12 @@ struct MeasureButtonView: View {
             }) {
                 VStack(spacing: 0) {
                     Text(self.viewModel.title)
-                        .font(Font.custom("TitilliumWeb-Regular", size: 13))
+                        .font(.system(size: 13, weight: .regular))
+//                        .font(Font.custom("TitilliumWeb-Regular", size: 13))
                         .accentColor(self.viewModel.titleColor)
                         .fixedSize(horizontal: true, vertical: false)
                         .padding(.horizontal, 8)
-                        .padding(.vertical, 5)
+                        .padding(.vertical, 8)
                         .scaledToFit()
                     Rectangle()
                         .frame(height: 2.0)

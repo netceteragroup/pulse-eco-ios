@@ -153,7 +153,8 @@ struct MainView: View {
         }) {
             HStack {
                 Text(self.appState.cityName.uppercased())
-                    .font(Font.custom("TitilliumWeb-SemiBold", size: 14))
+                    .font(.system(size: 14, weight: .semibold))
+//                    .font(Font.custom("TitilliumWeb-SemiBold", size: 14))
                     .foregroundColor(Color(AppColors.darkblue))
                 
                 self.appState.cityIcon.foregroundColor(Color(AppColors.darkblue))

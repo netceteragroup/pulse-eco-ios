@@ -15,14 +15,22 @@ struct FavouriteCityRowView: View {
     var body: some View {
         VStack {
             HStack {
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 8) {
                     Text(self.viewModel.siteName)
-                        .font(Font.custom("TitilliumWeb-Bold", size: 14))
+                        .font(.system(size: 14, weight: .bold))
+//                        .font(Font.custom("TitilliumWeb-Bold", size: 14))
+                        .foregroundColor(Color.black)
                     Text(self.viewModel.countryName)
-                        .font(Font.custom("TitilliumWeb-SemiBold", size: 11))
+                        .font(.system(size: 11, weight: .semibold))
+//                        .font(Font.custom("TitilliumWeb-SemiBold", size: 11))
                         .foregroundColor(Color.gray)
                     Text(self.viewModel.message)
-                        .font(Font.custom("TitilliumWeb-SemiBold", size: 11))
+                        .font(.system(size: 11, weight: .semibold))
+//                        .font(Font.custom("TitilliumWeb-SemiBold", size: 11))
+                        .foregroundColor(Color.black)
+                        .lineLimit(3)
+                        
+//                        .frame(height: 20)
                 }
                 Spacer()
                 RoundedRectangle(cornerRadius: 10, style: .continuous)

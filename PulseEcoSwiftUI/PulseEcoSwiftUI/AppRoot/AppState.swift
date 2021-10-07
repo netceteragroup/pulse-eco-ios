@@ -4,7 +4,11 @@ class AppState: ObservableObject {
    
     @Published var selectedMeasure: String = "pm10"
     @Published var citySelectorClicked: Bool = false
-    @Published var cityName: String = UserDefaults.standard.string(forKey: "selectedCity") ?? "Skopje"
+    @Published var cityName: String = UserSettings.selectedCity {
+        didSet {
+            UserSettings.selectedCity = cityName
+        }
+    }
     @Published var showSensorDetails: Bool = false
     @Published var selectedSensor: SensorPinModel?
     @Published var updateMapRegion: Bool = true

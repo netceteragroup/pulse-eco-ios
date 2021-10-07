@@ -45,19 +45,17 @@ struct CityListView: View {
                                             Spacer()
                                         }
                                         .frame(height: 30)
-//                                        .overlay(Rectangle().frame(width: nil, height: 1, alignment: .top).foregroundColor(Color.gray), alignment: .top)
-//                                        .overlay(Rectangle().frame(width: nil, height: 1, alignment: .top).foregroundColor(Color.gray), alignment: .bottom)
                                         .background(Color(red: 240 / 255, green: 240 / 255, blue: 240 / 255))
                                         .listRowInsets(.zero)) {
                                 
-                                let favouriteCitiesNames = self.userSettings.favouriteCities.map{$0.cityName}
+                                let favouriteCitiesNames = self.userSettings.favouriteCities.map{ $0.cityName }
                                 let citiesFromCountry = self.viewModel.getCities().filter {
                                     elem == $0.countryName
                                 }
                                 ForEach(citiesFromCountry, id: \.id) { city in
                                     Button(action: {
                                         if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                                            self.userSettings.favouriteCities.insert(city)
+                                            self.userSettings.addFavoriteCity(city)
                                             self.appState.cityName = city.cityName
                                             self.appState.newCitySelected = true
                                             self.presentationMode.wrappedValue.dismiss()
@@ -114,7 +112,7 @@ struct CityListView: View {
             ForEach(foundCities, id: \.id) { city in
                 Button(action: {
                     if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                        self.userSettings.favouriteCities.insert(city)
+                        self.userSettings.addFavoriteCity(city)
                         self.appState.cityName = city.cityName
                         self.appState.newCitySelected = true
                         self.presentationMode.wrappedValue.dismiss()
