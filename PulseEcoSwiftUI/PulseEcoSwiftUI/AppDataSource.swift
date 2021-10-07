@@ -45,7 +45,7 @@ class AppDataSource: ObservableObject {
             .store(in: &cancelables)
     }
     
-    func getValuesForCity(cityName: String = "Skopje") {
+    func getValuesForCity(cityName: String = UserSettings.selectedCity) {
         getOverallValues(city: cityName)
         getSensors(city: cityName)
         getCurrentDataForSensors(city: cityName)

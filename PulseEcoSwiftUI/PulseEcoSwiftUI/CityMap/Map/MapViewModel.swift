@@ -30,9 +30,9 @@ class MapViewModel: ObservableObject {
         self.cityName = cityName
         self.coordinates = CLLocationCoordinate2D(latitude: Double(city.cityLocation.latitude) ?? 0.0,
                                                   longitude: Double(city.cityLocation.longitute) ?? 0.0)
-        for border in city.cityBorderPoints {
-            self.cityBorderPoints.append(CLLocationCoordinate2D(latitude: Double(border.latitude) ?? 0.0,
-                                                                longitude:  Double(border.longitute) ?? 0.0))
+        self.cityBorderPoints = city.cityBorderPoints.compactMap {
+            guard let lat = Double($0.latitude), let lon = Double($0.longitute) else { return nil }
+            return CLLocationCoordinate2D(latitude: lat, longitude: lon)
         }
         self.intialZoomLevel = city.intialZoomLevel
         self.sensors = combine(sensors: sensors, sensorsData: sensorsData, selectedMeasure: measure).map {
@@ -50,6 +50,14 @@ class MapViewModel: ObservableObject {
             )
         }
         self.measure = measure
+    }
+    
+    func span() -> MKCoordinateSpan {
+        let latitudes = self.cityBorderPoints.map { $0.latitude }
+        let latDelta = abs((latitudes.max() ?? 0) - (latitudes.min() ?? 0))
+        let longitudes = self.cityBorderPoints.map { $0.longitude }
+        let lonDelta = abs((longitudes.max() ?? 0) - (longitudes.min() ?? 0))
+        return MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
     }
 }
 

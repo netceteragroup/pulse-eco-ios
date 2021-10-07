@@ -90,7 +90,7 @@ struct MapView: UIViewRepresentable {
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
         let coordinate = self.viewModel.coordinates
-        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
+        let region = MKCoordinateRegion(center: coordinate, span: viewModel.span())
         var newAnnotationListSensorIds: [String] = []
         let currentAnnotations = uiView.annotations as! [SensorPinModel]
         let currentAnnotationsSensorIds = currentAnnotations.map{$0.sensorID}

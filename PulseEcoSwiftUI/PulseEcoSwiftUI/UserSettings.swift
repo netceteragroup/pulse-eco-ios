@@ -2,47 +2,63 @@
 import Foundation
 
 class UserSettings: ObservableObject {
-    @Published var favouriteCities: Set<City> {
+    
+    private struct Keys {
+        static let favouriteCities = "pulseco.favouriteCities"
+        static let cityValues = "pulseeco.cityValues"
+        static let selectedCity = "puseleco.selectedCity"
+    }
+    
+    @Published var favouriteCities: [City] {
         didSet {
-           save()
+            if let encoded = try? JSONEncoder().encode(favouriteCities) {
+                UserDefaults.standard.set(encoded, forKey: Keys.favouriteCities)
+            }
         }
     }
     @Published var cityValues: [CityOverallValues] {
         didSet {
-           saveValues()
-        }
-    }
-    init() {
-        if let data = UserDefaults.standard.data(forKey: "FavouriteCities") {
-            if let decoded = try? JSONDecoder().decode(Set<City>.self, from: data) {
-                self.favouriteCities = decoded
-                //return
-            } else {
-                self.favouriteCities = []
+            if let encoded = try? JSONEncoder().encode(cityValues) {
+                UserDefaults.standard.set(encoded, forKey: Keys.cityValues)
             }
-        } else {
-            self.favouriteCities = []
-        }
-        if let data = UserDefaults.standard.data(forKey: "CityValues") {
-            if let decoded = try? JSONDecoder().decode([CityOverallValues].self, from: data) {
-                self.cityValues = decoded
-             //   return
-            } else {
-                 self.cityValues = []
-            }
-        } else {
-            self.cityValues = []
         }
     }
     
-    func save() {
-        if let encoded = try? JSONEncoder().encode(favouriteCities) {
-            UserDefaults.standard.set(encoded, forKey: "FavouriteCities")
+    static var selectedCity: String {
+        set(value) {
+            UserDefaults.standard.set(value, forKey: Keys.selectedCity)
+        }
+        get {
+            UserDefaults.standard.string(forKey: Keys.selectedCity) ?? "Skopje"
         }
     }
-    func saveValues() {
-        if let encoded = try? JSONEncoder().encode(cityValues) {
-            UserDefaults.standard.set(encoded, forKey: "CityValues")
+    
+    func removeFavouriteCity(_ city: City) {
+        var fc = favouriteCities
+        fc.removeAll { $0 == city }
+        self.favouriteCities = fc
+    }
+    
+    func addFavoriteCity(_ city: City) {
+        var fc = favouriteCities
+        fc.removeAll { $0 == city }
+        fc.insert(city, at: 0)
+        self.favouriteCities = fc
+    }
+    
+    init() {
+        if let data = UserDefaults.standard.data(forKey: Keys.favouriteCities),
+           let decoded = try? JSONDecoder().decode([City].self, from: data) {
+            self.favouriteCities = decoded
+        } else {
+            self.favouriteCities = []
+        }
+        
+        if let data = UserDefaults.standard.data(forKey: Keys.cityValues),
+           let decoded = try? JSONDecoder().decode([CityOverallValues].self, from: data) {
+            self.cityValues = decoded
+        } else {
+            self.cityValues = []
         }
     }
 }

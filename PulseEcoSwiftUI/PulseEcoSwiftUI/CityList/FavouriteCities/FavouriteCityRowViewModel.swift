@@ -11,27 +11,26 @@ class FavouriteCityRowViewModel: ObservableObject, Identifiable, Equatable {
         lhs.message == rhs.message
     }
     
-    var id: String { return cityName }
-    var cityName: String
-    var siteName: String
-    var countryCode: String
-    var countryName: String
+    var id: String { return city.cityName }
+    let city: City
     var message: String
     var value: Float
     var color: Color
     var unit: String
     var noReadings: Bool
     var noReadingsImage: UIImage = UIImage(named: "exclamation") ?? UIImage()
+    
+    var cityName: String { city.cityName }
+    var siteName: String { city.siteName }
+    var countryCode: String { city.countryCode }
+    var countryName: String { city.countryName }
 
     init(city: City = City(),
          message: String = Trema.text(for: "no_data_available"),
          value: String? = "3",
          unit: String = "µq/m3",
          color: Color = Color.gray) {
-        self.cityName = city.cityName
-        self.siteName = city.siteName
-        self.countryCode = city.countryCode
-        self.countryName = city.countryName
+        self.city = city
         self.message = message
         if let val = value {
             if let floatValue = Float(val) {

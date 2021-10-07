@@ -14,7 +14,7 @@ class FavouriteCitiesViewModel: ObservableObject {
     var selectedMeasure: String
 
     init(selectedMeasure: String,
-         favouriteCities: Set<City>,
+         favouriteCities: [City],
          cityValues: [CityOverallValues],
          measureList: [Measure]) {
         self.selectedMeasure = selectedMeasure
@@ -64,7 +64,7 @@ class FavouriteCitiesViewModel: ObservableObject {
     }
     
     func getCities() -> [FavouriteCityRowViewModel] {
-        return self.cityList.sorted { $0.siteName < $1.siteName}
+        return self.cityList
     }
 }
 
