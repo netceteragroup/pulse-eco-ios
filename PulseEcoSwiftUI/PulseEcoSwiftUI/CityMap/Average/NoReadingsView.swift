@@ -15,7 +15,12 @@ struct NoReadingsView: View {
                         }
                         VStack(alignment: .center, spacing: 3) {
                             Image(uiImage: self.viewModel.image)
-                            Text(self.viewModel.text).foregroundColor(self.viewModel.textColor).padding(.bottom, 3)
+                            Text(self.viewModel.text)
+                                .padding(.horizontal, 5)
+                                .scaledToFit()
+                                .minimumScaleFactor(0.5)
+                                .foregroundColor(self.viewModel.textColor)
+                                .padding(.bottom, 3)
                         }.padding(.top, 3)
                     }
                 }.frame(width: 115, height: 65)
