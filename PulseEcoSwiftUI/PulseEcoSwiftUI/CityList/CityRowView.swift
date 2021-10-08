@@ -12,7 +12,7 @@ struct CityRowView: View {
         VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .leading) {
-                    Text(self.viewModel.siteName).foregroundColor(Color.black)
+                    Text(self.viewModel.siteName).foregroundColor(AppColors.black.color)
                     if (showCountryName) {
                         Text(self.viewModel.countryName).font(.system(size: 12)).foregroundColor(Color(AppColors.gray))
                     }

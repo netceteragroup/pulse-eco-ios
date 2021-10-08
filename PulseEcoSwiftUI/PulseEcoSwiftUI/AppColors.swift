@@ -3,19 +3,21 @@ import UIKit
 import SwiftUI
 
 struct AppColors {
-    static let darkred = UIColor(red: 177, green: 43, blue: 56)
-    static let red = UIColor(red: 214, green: 56, blue: 71)
-    static let orange = UIColor(red: 255, green: 152, blue: 0)
-    static let green = UIColor(red: 64, green: 151, blue: 87)
-    static let darkgreen = UIColor(red: 55, green: 128, blue: 75)
-    static let blue = UIColor(red: 0, green: 105, blue: 192)
+    static let darkred = UIColor(named: "darkred")!
+    static let red = UIColor(named: "red")!
+    static let orange = UIColor(named: "orange")!
+    static let green = UIColor(named: "green")!
+    static let darkgreen = UIColor(named: "darkgreen")!
+    static let blue = UIColor(named: "blue")!
     static let darkblue = UIColor(named: "darkblue")!
-    static let purple = UIColor(red: 54, green: 0, blue: 166)
-	static let indigo = UIColor(red: 55, green: 17, blue: 211)
-    static let gray = UIColor(white: 0.5, alpha: 1.0)
-    static let lightGray = UIColor(red: 0.97, green: 0.96, blue: 0.94, alpha: 1)
-    static let lightPurple = UIColor(red: 0.19, green: 0.20, blue: 0.42, alpha: 1.00)
-    static let white = Color.white
+    static let purple = UIColor(named: "purple")!
+	static let indigo = UIColor(named: "indigo")!
+    static let gray = UIColor(named: "gray")!
+    static let gray2 = UIColor(named: "gray2")!
+    static let lightGray = UIColor(named: "lightGray")!
+    static let lightPurple = UIColor(named: "lightPurple")!
+    static let white = UIColor(named: "white")!
+    static let black = UIColor(named: "black")!
     static var allColors: [UIColor] {
         return [blue, green, orange, purple, red, indigo, darkred, darkgreen]
     }

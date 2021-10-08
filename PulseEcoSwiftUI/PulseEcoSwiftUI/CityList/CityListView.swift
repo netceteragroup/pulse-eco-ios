@@ -68,12 +68,12 @@ struct CityListView: View {
                                     
                                     if (city != citiesFromCountry.last) {
                                         Divider()
-                                            .background(Color.gray)
+                                            .background(AppColors.gray.color)
                                     }
                                 }
                             }
                         }
-                        Divider().background(Color.gray)
+                        Divider().background(AppColors.gray.color)
                     } else {
                         self.listCities
                     }
@@ -94,7 +94,7 @@ struct CityListView: View {
                 }
                 .resignKeyboardOnDragGesture()
             }
-            .navigationBarColor(UIColor.white)
+            .navigationBarColor(AppColors.white)
             .navigationBarTitle("Select city", displayMode: .inline)
         }
         .if(.pad, transform: {
@@ -122,12 +122,12 @@ struct CityListView: View {
                 })
                 if (city != foundCities.last){
                     Divider()
-                        .background(Color.gray)
+                        .background(AppColors.gray.color)
                 }
             }
             if (foundCities.count > 0){
                 Divider()
-                    .background(Color.gray)
+                    .background(AppColors.gray.color)
             }
         }
     }

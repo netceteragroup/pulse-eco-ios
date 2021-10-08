@@ -19,7 +19,7 @@ struct SensorDetailsView: View {
             // Handler
             RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.0)
                 .frame(width: 40, height: 3.0)
-                .foregroundColor(Color(UIColor.systemGray2))
+                .foregroundColor(AppColors.gray2.color)
                 .padding([.top, .bottom], 10)
             // Collapsed View
             VStack {
@@ -27,7 +27,7 @@ struct SensorDetailsView: View {
                     VStack(alignment: .leading, spacing: 1) {
                         HStack {
                             Image(uiImage: self.viewModel.image)//.animation(.none)
-                            Text("\(self.viewModel.title)").foregroundColor(Color.gray)
+                            Text("\(self.viewModel.title)").foregroundColor(AppColors.gray.color)
                                 .font(.system(size: 13))//.animation(.none)
                         }
                         HStack {
@@ -36,7 +36,7 @@ struct SensorDetailsView: View {
                             Spacer()
                             VStack (alignment: .trailing) {
                                 Text("\(self.viewModel.time)")
-                                Text("\(self.viewModel.date)").foregroundColor(Color.gray)
+                                Text("\(self.viewModel.date)").foregroundColor(AppColors.gray.color)
                             }
                         }
                     }

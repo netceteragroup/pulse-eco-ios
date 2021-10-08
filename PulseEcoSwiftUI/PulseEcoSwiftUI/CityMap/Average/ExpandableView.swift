@@ -21,7 +21,7 @@ struct ExpandableView: View {
                             .frame(height:  20)
                             .overlay(Text(Trema.text(for: "average"))
                                         .font(.system(size: 13))
-                                        .foregroundColor(Color.white)
+                                        .foregroundColor(AppColors.white.color)
                                         .padding(.leading, 10), alignment: .leading
                             )
                         
@@ -31,13 +31,13 @@ struct ExpandableView: View {
                                 HStack(spacing: 3) {
                                     Text("\(Int(self.viewModel.value))")
                                         .font(.system(size: 25))
-                                        .foregroundColor(Color.white)
+                                        .foregroundColor(AppColors.white.color)
                                         .fixedSize(horizontal: true, vertical: false)
                                         .padding(.top, 5)
                                         .animation(.none)
                                     Text(self.viewModel.unit)
                                         .font(.system(size: 15))
-                                        .foregroundColor(Color.white).padding(.top, 15)
+                                        .foregroundColor(AppColors.white.color).padding(.top, 15)
                                         .animation(.none)
                                 }
                                 .padding(.leading, 10)
@@ -49,7 +49,7 @@ struct ExpandableView: View {
                                 
                                 Text(self.viewModel.message)
                                     .font(.system(size: 15))
-                                    .foregroundColor(Color.white)
+                                    .foregroundColor(AppColors.white.color)
                                     .padding([.trailing], 10)
                                     .padding(.top, 4)
                                     .padding(.bottom, 10)

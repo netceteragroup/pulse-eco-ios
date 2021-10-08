@@ -14,7 +14,7 @@ struct MainView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     
-    private let backgroundColor: Color = Color.white
+    private let backgroundColor: Color = AppColors.white.color
     private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
     
     var body: some View {
@@ -89,7 +89,7 @@ struct MainView: View {
                         trailing: trailingNavigationItems)
                 }
                 .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
-                .navigationBarColor(UIColor.white)
+                .navigationBarColor(AppColors.white)
                 .zIndex(1)
                 
                 if self.appState.showSensorDetails {
@@ -160,7 +160,7 @@ struct MainView: View {
                 self.appState.cityIcon.foregroundColor(Color(AppColors.darkblue))
             }
         }
-        .accentColor(Color.black)
+        .accentColor(AppColors.black.color)
     }
 }
 

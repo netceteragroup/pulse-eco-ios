@@ -11,7 +11,7 @@ import SwiftUI
 struct CityMapView: View {
     
     struct Theme {
-        static let disclaimerIconColor: Color = Color.white
+        static let disclaimerIconColor: Color = AppColors.white.color
         static let disclaimerIconSize: CGSize = CGSize(width: 220, height: 25)
     }
     
@@ -43,7 +43,7 @@ struct CityMapView: View {
                         .fill(Theme.disclaimerIconColor)
                         .frame(width: Theme.disclaimerIconSize.width, height: Theme.disclaimerIconSize.height)
                         .overlay(Text(Trema.text(for: "crowdsourced_sensor_data"))
-                                    .foregroundColor(Color.black)
+                                    .foregroundColor(AppColors.black.color)
                         )
                         .padding(.bottom, 35)
                         .onTapGesture {
