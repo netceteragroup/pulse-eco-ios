@@ -71,7 +71,7 @@ struct FavouriteCitiesView: View {
                         }
                         Spacer()
                     }
-                    .background(Color.white)
+                    .background(AppColors.white.color)
                 }
                 
             }// else

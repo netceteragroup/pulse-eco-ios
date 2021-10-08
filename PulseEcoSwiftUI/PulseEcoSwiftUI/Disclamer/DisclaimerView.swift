@@ -37,6 +37,6 @@ struct DisclaimerView: View {
                 .padding(.horizontal, 20).fixedSize(horizontal: false, vertical: true)
             Spacer()
         }
-        .background(Color.white)
+        .background(AppColors.white.color)
     }
 }

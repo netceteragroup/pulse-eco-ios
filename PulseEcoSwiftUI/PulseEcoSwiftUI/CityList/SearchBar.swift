@@ -29,7 +29,7 @@ struct SearchBar: UIViewRepresentable {
         searchBar.placeholder = placeholder
         searchBar.searchBarStyle = .minimal
         searchBar.autocapitalizationType = .none
-        searchBar.searchTextField.textColor = UIColor.black
+        searchBar.searchTextField.textColor = AppColors.black
         return searchBar
     }
 

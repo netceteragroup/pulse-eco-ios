@@ -29,7 +29,7 @@ class FavouriteCityRowViewModel: ObservableObject, Identifiable, Equatable {
          message: String = Trema.text(for: "no_data_available"),
          value: String? = "3",
          unit: String = "µq/m3",
-         color: Color = Color.gray) {
+         color: Color = AppColors.gray.color) {
         self.city = city
         self.message = message
         if let val = value {

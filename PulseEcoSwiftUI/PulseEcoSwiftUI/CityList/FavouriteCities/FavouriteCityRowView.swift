@@ -19,15 +19,15 @@ struct FavouriteCityRowView: View {
                     Text(self.viewModel.siteName)
                         .font(.system(size: 14, weight: .bold))
 //                        .font(Font.custom("TitilliumWeb-Bold", size: 14))
-                        .foregroundColor(Color.black)
+                        .foregroundColor(AppColors.black.color)
                     Text(self.viewModel.countryName)
                         .font(.system(size: 11, weight: .semibold))
 //                        .font(Font.custom("TitilliumWeb-SemiBold", size: 11))
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(AppColors.gray.color)
                     Text(self.viewModel.message)
                         .font(.system(size: 11, weight: .semibold))
 //                        .font(Font.custom("TitilliumWeb-SemiBold", size: 11))
-                        .foregroundColor(Color.black)
+                        .foregroundColor(AppColors.black.color)
                         .lineLimit(3)
                         
 //                        .frame(height: 20)
@@ -49,7 +49,7 @@ struct FavouriteCityRowView: View {
                                 .padding(20)
                         }
                     })
-                    .foregroundColor(Color.white)
+                    .foregroundColor(AppColors.white.color)
                     .padding(10)
             }
             .padding([.leading, .trailing], 10)

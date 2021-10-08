@@ -9,7 +9,7 @@ class MeasureButtonViewModel: ObservableObject {
     var clickDisabled: Bool = false
     var icon: String
     var titleColor: Color {
-        return clickDisabled ? Color.gray : Color.black
+        return clickDisabled ? AppColors.gray.color : AppColors.black.color
     }
     init(id: String, title: String, selectedMeasure: String, icon: String) {
         self.id = id
