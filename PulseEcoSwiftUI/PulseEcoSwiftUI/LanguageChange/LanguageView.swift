@@ -40,7 +40,7 @@ struct LanguageView: View {
                 .listStyle(PlainListStyle())
             }
             .navigationBarColor(AppColors.white)
-            .navigationBarTitle("Select language", displayMode: .inline)
+            .navigationBarTitle(Trema.text(for: "change_app_language"), displayMode: .inline)
             .navigationBarItems(trailing:
                                     Button(action: {
                                         presentationMode.wrappedValue.dismiss()
