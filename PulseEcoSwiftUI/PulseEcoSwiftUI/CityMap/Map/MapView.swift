@@ -11,9 +11,11 @@ import MapKit
 
 class MapViewCoordinator: NSObject, MKMapViewDelegate {
     var map: MapView
+    @Binding var boundryAndZoomEnabled: Bool
     
-    init(_ control: MapView) {
+    init(_ control: MapView, _ boundryAndZoomEnabled: Binding<Bool>) {
         self.map = control
+        _boundryAndZoomEnabled = boundryAndZoomEnabled
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -41,6 +43,8 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView)
     {
+        boundryAndZoomEnabled = false
+        mapView.isZoomEnabled = false
         guard let annotationView = view as? LocationAnnotationView else {
             return
         }
@@ -55,6 +59,10 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
                                                     sensorId: map.appState.selectedSensor?.sensorID ?? "")
         let region = MKCoordinateRegion(center: view.annotation!.coordinate, span: mapView.region.span)
         mapView.animatedSetRegion(region, duration: 0.2)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.boundryAndZoomEnabled = true
+            mapView.isZoomEnabled = true
+        }
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView)
@@ -75,9 +83,10 @@ struct MapView: UIViewRepresentable {
     @ObservedObject var viewModel: MapViewModel
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
+    @State var boundryAndZoomEnabled = true
     
     func makeCoordinator() -> MapViewCoordinator {
-        MapViewCoordinator(self)
+        MapViewCoordinator(self, $boundryAndZoomEnabled)
     }
     
     func makeUIView(context: Context) -> MKMapView {
@@ -132,14 +141,16 @@ struct MapView: UIViewRepresentable {
             uiView.setRegion(region, animated: true)
         }
         
-        uiView.mapType = MKMapType.standard
-        uiView.setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: region),
-                                 animated: true)
-        
-        let zoomRange = MKMapView.CameraZoomRange(
-            maxCenterCoordinateDistance: Double(self.viewModel.intialZoomLevel * 8000)
-        )
-        uiView.setCameraZoomRange(zoomRange, animated: true)
+        if boundryAndZoomEnabled {
+            uiView.mapType = MKMapType.standard
+            uiView.setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: region),
+                                     animated: true)
+            
+            let zoomRange = MKMapView.CameraZoomRange(
+                maxCenterCoordinateDistance: Double(self.viewModel.intialZoomLevel * 8000)
+            )
+            uiView.setCameraZoomRange(zoomRange, animated: true)
+        }
     }
 }
 
