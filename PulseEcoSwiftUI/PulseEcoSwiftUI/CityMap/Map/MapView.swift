@@ -147,10 +147,14 @@ struct MapView: UIViewRepresentable {
                                      animated: true)
             
             let zoomRange = MKMapView.CameraZoomRange(
-                maxCenterCoordinateDistance: Double(self.viewModel.intialZoomLevel * 8000)
+                maxCenterCoordinateDistance: Double(meters(from: self.viewModel.intialZoomLevel) * 8)
             )
             uiView.setCameraZoomRange(zoomRange, animated: true)
         }
+    }
+    
+    private func meters(from zoomLevel: Int) -> Double {
+        Double(40000) / Double (2<<zoomLevel) * 2000
     }
 }
 
