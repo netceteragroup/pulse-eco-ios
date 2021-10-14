@@ -95,7 +95,7 @@ struct CityListView: View {
                 .resignKeyboardOnDragGesture()
             }
             .navigationBarColor(AppColors.white)
-            .navigationBarTitle("Select city", displayMode: .inline)
+            .navigationBarTitle(Trema.text(for: "select_city"), displayMode: .inline)
         }
         .if(.pad, transform: {
             $0.navigationViewStyle(StackNavigationViewStyle())
