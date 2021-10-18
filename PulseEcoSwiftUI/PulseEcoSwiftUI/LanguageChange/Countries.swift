@@ -11,15 +11,18 @@ import Foundation
 class Countries {
     
     static func countries(language: String) -> [Country] {
-        return  [Country(flagImageName: "🇬🇧",
+        return  [Country(flagImageName: "",
                          languageName: Trema.text(for: "english", language: language),
                          shortName: "en"),
-                 Country(flagImageName: "🇲🇰",
+                 Country(flagImageName: "",
                          languageName: Trema.text(for: "macedonian", language: language),
                          shortName: "mk"),
-                 Country(flagImageName: "🇩🇪",
+                 Country(flagImageName: "",
                          languageName: Trema.text(for: "german", language: language),
-                         shortName: "de")]
+                         shortName: "de"),
+                 Country(flagImageName: "",
+                         languageName: Trema.text(for: "romanian", language: language),
+                         shortName: "ro")]
     }
     
     static func selectedCountry(for language: String) -> Country {
