@@ -98,8 +98,8 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        let coordinate = self.viewModel.coordinates
-        let region = MKCoordinateRegion(center: coordinate, span: viewModel.span())
+        let region = MKCoordinateRegion(center: viewModel.selectedCity.center,
+                                        span: viewModel.span)
         var newAnnotationListSensorIds: [String] = []
         let currentAnnotations = uiView.annotations as! [SensorPinModel]
         let currentAnnotationsSensorIds = currentAnnotations.map{$0.sensorID}
@@ -147,7 +147,7 @@ struct MapView: UIViewRepresentable {
                                      animated: true)
             
             let zoomRange = MKMapView.CameraZoomRange(
-                maxCenterCoordinateDistance: Double(meters(from: self.viewModel.intialZoomLevel) * 8)
+                maxCenterCoordinateDistance: Double(meters(from: viewModel.selectedCity.intialZoomLevel) * 8)
             )
             uiView.setCameraZoomRange(zoomRange, animated: true)
         }

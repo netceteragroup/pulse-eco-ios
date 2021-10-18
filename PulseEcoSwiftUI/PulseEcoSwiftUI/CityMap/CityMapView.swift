@@ -19,17 +19,13 @@ struct CityMapView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var userSettings: UserSettings
+    let mapViewModel: MapViewModel
     let proxy:  GeometryProxy
     
     var body: some View {
         
         ZStack {
-            MapView(viewModel: MapViewModel(measure: self.appState.selectedMeasure,
-                                            cityName: self.appState.cityName,
-                                            sensors: self.dataSource.citySensors,
-                                            sensorsData: self.dataSource.sensorsData,
-                                            measures: self.dataSource.measures,
-                                            city: self.dataSource.cities.first{ $0.cityName == self.appState.cityName} ?? City.defaultCity()))
+            MapView(viewModel: mapViewModel)
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
                     ShadowOnTopOfView()

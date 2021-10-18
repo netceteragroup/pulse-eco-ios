@@ -13,6 +13,7 @@ struct MainView: View {
     @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
+    let mapViewModel: MapViewModel
     
     private let backgroundColor: Color = AppColors.white.color
     private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
@@ -61,7 +62,9 @@ struct MainView: View {
             ZStack {
                 NavigationView {
                     ZStack {
-                        CityMapView(userSettings: self.dataSource.userSettings, proxy: proxy)
+                        CityMapView(userSettings: self.dataSource.userSettings,
+                                    mapViewModel: mapViewModel,
+                                    proxy: proxy)
                             .edgesIgnoringSafeArea([.horizontal,.bottom
                                                    ])
                             .padding(.top, 36)

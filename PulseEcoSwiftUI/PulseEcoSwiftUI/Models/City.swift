@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 struct City: Codable, Identifiable, Hashable {
    
@@ -73,6 +74,10 @@ struct City: Codable, Identifiable, Hashable {
         return City(cityBorderPoints: cityBorderPoints)
     }
     
+    var center: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: Double(cityLocation.latitude) ?? 0,
+                               longitude: Double(cityLocation.longitute) ?? 0)
+    }
 }
 
 struct CityCoordinates: Codable {

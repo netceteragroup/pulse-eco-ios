@@ -22,8 +22,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         let appViewModel = AppState()
         let dataSource = AppDataSource()
+        let mapViewModel = MapViewModel(appState: appViewModel,
+                                        appDataSource: dataSource)
         self.refreshService = RefreshService(appViewModel: appViewModel, appDataSource: dataSource)
-        let rootView = MainView()
+        let rootView = MainView(mapViewModel: mapViewModel)
         UITableView.appearance().separatorColor = .clear
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

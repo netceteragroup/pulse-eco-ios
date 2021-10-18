@@ -19,17 +19,24 @@ class SensorPinModel: NSObject, MKAnnotation {
     var color: UIColor
     var stamp: String
     
+    
     init(title: String = "",
          sensorID: String = "",
          value: String = "",
-         coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(),
+         position: String = "",
          type: String = "",
          color: UIColor = UIColor.clear,
          stamp: String = "--") {
+        let coord = position.split(separator: ",")
+        if coord.count != 2 {
+            self.coordinate = CLLocationCoordinate2D()
+        } else {
+            self.coordinate = CLLocationCoordinate2D(latitude: Double(coord.first ?? "0") ?? 0,
+                                                     longitude: Double(coord.last ?? "0") ?? 0)
+        }
         self.title = title
         self.sensorID = sensorID
         self.value = value
-        self.coordinate = coordinate
         self.type = SensorType(rawValue: type) ?? SensorType.undefined
         self.color = color
         self.stamp = stamp
