@@ -18,7 +18,7 @@ struct WeeklyAverageView: View {
             Text(viewModel.title)
                 .bold()
                 .frame(height: 17, alignment: .center)
-                .frame(minWidth: 310, idealWidth: 327, maxWidth: 327)
+               
                 .padding(.bottom, 20)
             HStack{
                 ForEach(0..<viewModel.dailyAverageViewModels.count) { i in
@@ -26,6 +26,7 @@ struct WeeklyAverageView: View {
                 }
             }
         }
+        .frame(minWidth: 310, idealWidth: 327, maxWidth: .infinity)
         .padding(.horizontal, 20)
     }
 }
