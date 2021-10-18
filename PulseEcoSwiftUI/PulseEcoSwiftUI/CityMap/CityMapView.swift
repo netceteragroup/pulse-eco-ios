@@ -25,7 +25,9 @@ struct CityMapView: View {
     var body: some View {
         
         ZStack {
-            MapView(viewModel: mapViewModel)
+            MapView(viewModel: mapViewModel,
+                    appState: appState)
+                .id("MapView")
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
                     ShadowOnTopOfView()
@@ -43,7 +45,6 @@ struct CityMapView: View {
                         )
                         .padding(.bottom, 35)
                         .onTapGesture {
-                            self.appState.showSheet = true
                             self.appState.activeSheet = .disclaimerView
                         }
                     
@@ -51,7 +52,7 @@ struct CityMapView: View {
             }
             
             AverageView(viewModel: AverageViewModel(measure: self.appState.selectedMeasure,
-                                                    cityName: self.appState.cityName,
+                                                    cityName: self.appState.selectedCity.cityName,
                                                     measuresList: self.dataSource.measures,
                                                     cityValues: self.dataSource.cityOverall))
             
@@ -72,7 +73,9 @@ struct CityMapView: View {
     }
 }
 
-enum ActiveSheet {
+enum ActiveSheet: Int, Identifiable {
+    var id: Int { self.rawValue }
+    
     case disclaimerView
     case cityListView
     case languageView

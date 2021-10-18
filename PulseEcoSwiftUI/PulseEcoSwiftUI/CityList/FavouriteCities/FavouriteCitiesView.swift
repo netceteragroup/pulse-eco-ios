@@ -28,7 +28,6 @@ struct FavouriteCitiesView: View {
             if (self.viewModel.cityList.count == 0) {
                 VStack {
                     Text("").onAppear {
-                        self.appState.showSheet = true
                         self.appState.activeSheet = .cityListView
                     }
                 }
@@ -52,7 +51,6 @@ struct FavouriteCitiesView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            self.appState.showSheet = true
                             self.appState.activeSheet = .cityListView
                         }) {
                             VStack(alignment: .center, spacing: 0) {
@@ -86,12 +84,9 @@ struct FavouriteCitiesView: View {
             Button(action: {
                 self.appState.citySelectorClicked = false
                 self.userSettings.addFavoriteCity(city.city)
-                self.appState.cityName = city.cityName
-                self.dataSource.loadingCityData = true
+                self.appState.selectedCity = city.city
                 self.refreshService.updateRefreshDate()
                 self.dataSource.getValuesForCity(cityName: city.cityName)
-                self.appState.updateMapRegion = true
-                self.appState.updateMapAnnotations = true
             }, label: {
                 FavouriteCityRowView(viewModel: city)
                     .contentShape(Rectangle())

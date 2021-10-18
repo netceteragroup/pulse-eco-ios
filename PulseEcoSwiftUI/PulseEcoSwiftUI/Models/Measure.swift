@@ -30,8 +30,8 @@ struct Measure: Codable, Identifiable {
         case showMin, showMax, legendMin, legendMax, unit, showMessages, bands
     }
     
-    static func empty(_ title: String = "--") -> Measure {
-        return Measure(id: "--",
+    static func empty(id: String = "--", _ title: String = "--") -> Measure {
+        return Measure(id: id,
                        buttonTitle: title,
                        title: "--",
                        icon: "wifi",

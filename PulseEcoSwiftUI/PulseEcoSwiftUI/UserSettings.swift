@@ -24,12 +24,18 @@ class UserSettings: ObservableObject {
         }
     }
     
-    static var selectedCity: String {
+    static var selectedCity: City {
         set(value) {
-            UserDefaults.standard.set(value, forKey: Keys.selectedCity)
+            if let encoded = try? JSONEncoder().encode(value) {
+                UserDefaults.standard.set(encoded, forKey: Keys.selectedCity)
+            }
         }
         get {
-            UserDefaults.standard.string(forKey: Keys.selectedCity) ?? "Skopje"
+            if let data = UserDefaults.standard.object(forKey: Keys.selectedCity) as? Data,
+               let decoded = try? JSONDecoder().decode(City.self, from: data) {
+                return decoded
+            }
+            return City.defaultCity()
         }
     }
     

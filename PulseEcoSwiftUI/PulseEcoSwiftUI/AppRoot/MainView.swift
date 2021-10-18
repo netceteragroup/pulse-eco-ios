@@ -27,8 +27,8 @@ struct MainView: View {
             }
         }
         .edgesIgnoringSafeArea(.top)
-        .sheet(isPresented: self.$appState.showSheet) {
-            switch self.appState.activeSheet {
+        .sheet(item: $appState.activeSheet) { sheet in
+            switch sheet {
             case .disclaimerView: DisclaimerView()
             case .cityListView:
                 CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
@@ -37,12 +37,9 @@ struct MainView: View {
                         if self.dataSource.userSettings.favouriteCities.count == 0 {
                             self.appState.citySelectorClicked = false
                         }
-                        if self.$appState.newCitySelected.wrappedValue == true{
-                            self.dataSource.loadingCityData = true
+                        if self.$appState.newCitySelected.wrappedValue == true {
                             self.refreshService.updateRefreshDate()
-                            self.dataSource.getValuesForCity(cityName: self.appState.cityName)
-                            self.appState.updateMapRegion = true
-                            self.appState.updateMapAnnotations = true
+                            self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
                             self.appState.newCitySelected = false
                             self.appState.citySelectorClicked = false
                         }
@@ -65,6 +62,7 @@ struct MainView: View {
                         CityMapView(userSettings: self.dataSource.userSettings,
                                     mapViewModel: mapViewModel,
                                     proxy: proxy)
+                            .id("CityMapView")
                             .edgesIgnoringSafeArea([.horizontal,.bottom
                                                    ])
                             .padding(.top, 36)
@@ -79,7 +77,7 @@ struct MainView: View {
                         
                         VStack {
                             MeasureListView(viewModel: MeasureListViewModel(selectedMeasure: self.appState.selectedMeasure,
-                                                                            cityName: self.appState.cityName,
+                                                                            cityName: self.appState.selectedCity.cityName,
                                                                             measuresList: self.dataSource.measures,
                                                                             cityValues: self.dataSource.cityOverall,
                                                                             citySelectorClicked: self.appState.citySelectorClicked))
@@ -122,7 +120,6 @@ struct MainView: View {
                     //action
                     if self.appState.citySelectorClicked == false {
                         self.appState.selectedSensor = nil
-                        self.appState.updateMapAnnotations = true
                         self.refreshService.refreshData()
                         
                     }
@@ -131,7 +128,6 @@ struct MainView: View {
             Button(action: {
                 withAnimation(){
                     self.appState.activeSheet = .languageView
-                    self.appState.showSheet = true
                 }
             }) {
                 Image(systemName: "globe")
@@ -147,15 +143,14 @@ struct MainView: View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)){
                 self.appState.citySelectorClicked.toggle()
-                if self.appState.showSensorDetails == true {
+                if self.appState.showSensorDetails {
                     self.appState.showSensorDetails = false
                     self.appState.selectedSensor = nil
-                    self.appState.updateMapAnnotations = true
                 }
             }
         }) {
             HStack {
-                Text(self.appState.cityName.uppercased())
+                Text(self.appState.selectedCity.cityName.uppercased())
                     .font(.system(size: 14, weight: .semibold))
 //                    .font(Font.custom("TitilliumWeb-SemiBold", size: 14))
                     .foregroundColor(Color(AppColors.darkblue))

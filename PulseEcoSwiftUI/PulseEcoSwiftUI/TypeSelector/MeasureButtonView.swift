@@ -8,8 +8,6 @@ struct MeasureButtonView: View {
         VStack(alignment: .center, spacing: 5) {
             Button(action:  {
                 self.appState.selectedMeasure = self.viewModel.id
-                self.appState.updateMapRegion = false
-                self.appState.getNewSensors = true
                 self.appState.showSensorDetails = false
             }) {
                 VStack(spacing: 0) {

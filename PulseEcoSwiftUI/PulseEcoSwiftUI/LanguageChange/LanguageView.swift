@@ -78,9 +78,7 @@ struct LanguageView: View {
         self.dataSource.getMeasures()
         self.dataSource.loadingMeasures = true
         self.refreshService.updateRefreshDate()
-        self.dataSource.getValuesForCity(cityName: self.appState.cityName)
-        self.appState.updateMapAnnotations = true
-        self.appState.updateMapRegion = true
+        self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
         presentationMode.wrappedValue.dismiss()
     }
 }

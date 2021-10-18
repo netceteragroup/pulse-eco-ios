@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
         let appViewModel = AppState()
-        let dataSource = AppDataSource()
+        let dataSource = AppDataSource(appState: appViewModel)
         let mapViewModel = MapViewModel(appState: appViewModel,
                                         appDataSource: dataSource)
         self.refreshService = RefreshService(appViewModel: appViewModel, appDataSource: dataSource)

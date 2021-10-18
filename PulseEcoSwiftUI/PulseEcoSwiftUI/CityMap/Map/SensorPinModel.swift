@@ -19,7 +19,17 @@ class SensorPinModel: NSObject, MKAnnotation {
     var color: UIColor
     var stamp: String
     
-    
+    static func isIdentical(_ l: SensorPinModel, r: SensorPinModel) -> Bool {
+        l.sensorID == r.sensorID &&
+        l.value == r.value &&
+        l.type == r.type &&
+        l.color == r.color &&
+        l.coordinate.latitude == r.coordinate.latitude &&
+        l.coordinate.longitude == r.coordinate.longitude &&
+        l.title == r.title &&
+        l.stamp == r.stamp
+    }
+
     init(title: String = "",
          sensorID: String = "",
          value: String = "",
