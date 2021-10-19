@@ -55,10 +55,16 @@ struct CityListView: View {
                                 ForEach(citiesFromCountry, id: \.id) { city in
                                     Button(action: {
                                         if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                                            self.userSettings.addFavoriteCity(city)
-                                            self.appState.selectedCity = city
-                                            self.appState.newCitySelected = true
-                                            self.presentationMode.wrappedValue.dismiss()
+                                            if self.appState.selectedCity != city {
+                                                self.userSettings.addFavoriteCity(city)
+                                                self.appState.selectedCity = city
+                                                self.appState.newCitySelected = true
+                                                self.presentationMode.wrappedValue.dismiss()
+                                            }
+                                            else {
+                                                self.presentationMode.wrappedValue.dismiss()
+                                                self.appState.citySelectorClicked = false
+                                            }
                                         }
                                     }, label: {
                                         CityRowView(viewModel: city,
@@ -112,10 +118,16 @@ struct CityListView: View {
             ForEach(foundCities, id: \.id) { city in
                 Button(action: {
                     if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                        self.userSettings.addFavoriteCity(city)
-                        self.appState.selectedCity = city
-                        self.appState.newCitySelected = true
-                        self.presentationMode.wrappedValue.dismiss()
+                        if self.appState.selectedCity != city {
+                            self.userSettings.addFavoriteCity(city)
+                            self.appState.selectedCity = city
+                            self.appState.newCitySelected = true
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
+                        else {
+                            self.presentationMode.wrappedValue.dismiss()
+                            self.appState.citySelectorClicked = false
+                        }
                     }
                 }, label: {
                     CityRowView(viewModel: city, addCheckMark: favouriteCitiesNames.contains(city.cityName), showCountryName: true)
