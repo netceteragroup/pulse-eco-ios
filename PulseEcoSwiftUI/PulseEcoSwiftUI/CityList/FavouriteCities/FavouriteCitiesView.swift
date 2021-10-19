@@ -83,10 +83,12 @@ struct FavouriteCitiesView: View {
             
             Button(action: {
                 self.appState.citySelectorClicked = false
-                self.userSettings.addFavoriteCity(city.city)
-                self.appState.selectedCity = city.city
-                self.refreshService.updateRefreshDate()
-                self.dataSource.getValuesForCity(cityName: city.cityName)
+                if self.appState.selectedCity != city.city {
+                    self.userSettings.addFavoriteCity(city.city)
+                    self.appState.selectedCity = city.city
+                    self.refreshService.updateRefreshDate()
+                    self.dataSource.getValuesForCity(cityName: city.cityName)
+                }
             }, label: {
                 FavouriteCityRowView(viewModel: city)
                     .contentShape(Rectangle())
