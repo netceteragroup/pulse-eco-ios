@@ -7,8 +7,7 @@ struct AverageView: View {
             VStack {
                 if self.viewModel.clickDisabled {
                     NoReadingsView()
-                }
-                else {
+                } else {
                     ExpandableView(viewModel: self.viewModel, geometry: geo)
                 }
             }

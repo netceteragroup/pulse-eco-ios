@@ -26,15 +26,15 @@ struct SensorDetailsView: View {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 1) {
                         HStack {
-                            Image(uiImage: self.viewModel.image)//.animation(.none)
+                            Image(uiImage: self.viewModel.image)
                             Text("\(self.viewModel.title)").foregroundColor(AppColors.gray.color)
-                                .font(.system(size: 13))//.animation(.none)
+                                .font(.system(size: 13))
                         }
                         HStack {
                             Text(self.viewModel.value).font(.system(size: 40))
                             Text(self.viewModel.unit).padding(.top, 10)
                             Spacer()
-                            VStack (alignment: .trailing) {
+                            VStack(alignment: .trailing) {
                                 Text("\(self.viewModel.time)")
                                 Text("\(self.viewModel.date)").foregroundColor(AppColors.gray.color)
                             }
@@ -46,9 +46,9 @@ struct SensorDetailsView: View {
             // Expanded View
             VStack {
                 LineChartSwiftUI(viewModel:
-                    ChartViewModel(sensor: self.appState.selectedSensor ?? SensorPinModel(),
-                                   sensorsData: self.dataSource.sensorsData24h,
-                                   selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure: self.appState.selectedMeasure)
+                    ChartViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
+                                   sensorsData: dataSource.sensorsData24h,
+                                   selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasure)
                     )
                 )
                 .frame(width: min(350, UIScreen.main.bounds.width - 10),
@@ -67,21 +67,9 @@ struct SensorDetailsView: View {
                     .multilineTextAlignment(.center)
                     .padding([.horizontal, .bottom], 15)
                     .fixedSize(horizontal: false, vertical: true)
-                
-//                HStack {
-//                    Text(Trema.text(for: "details"))
-//                        .font(.system(size: 13, weight: .medium))
-//                    Text("|")
-//                        .font(.system(size: 13, weight: .medium))
-//                    Text(Trema.text(for: "privacy_policy"))
-//                        .font(.system(size: 13, weight: .medium))
-//                }.foregroundColor(self.viewModel.color)
-//                    .padding(.bottom, 15)
+
             }.scaledToFit()
             Spacer()
         }
     }
 }
-
-
-

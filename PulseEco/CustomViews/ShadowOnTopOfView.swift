@@ -23,4 +23,3 @@ struct ShadowOnBottomOfView: View {
             .shadow(color: Color(red: 192/255, green: 189/255, blue: 191/255), radius: 3, x: 0, y: -3)
     }
 }
-

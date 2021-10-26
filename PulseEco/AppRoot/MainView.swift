@@ -14,10 +14,9 @@ struct MainView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     let mapViewModel: MapViewModel
-    
     private let backgroundColor: Color = AppColors.white.color
     private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
-    
+
     var body: some View {
         Group {
             if dataSource.loadingCityData || dataSource.loadingMeasures {
@@ -33,7 +32,7 @@ struct MainView: View {
             case .cityListView:
                 CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
                              userSettings: self.dataSource.userSettings)
-                    .onDisappear(perform:{
+                    .onDisappear(perform: {
                         if self.dataSource.userSettings.favouriteCities.count == 0 {
                             self.appState.citySelectorClicked = false
                         }
@@ -53,7 +52,7 @@ struct MainView: View {
     var loadingView: some View {
         LoadingDialog()
     }
-    
+
     var contentView: some View {
         GeometryReader { proxy in
             ZStack {
@@ -63,10 +62,8 @@ struct MainView: View {
                                     mapViewModel: mapViewModel,
                                     proxy: proxy)
                             .id("CityMapView")
-                            .edgesIgnoringSafeArea([.horizontal,.bottom
-                                                   ])
+                            .edgesIgnoringSafeArea([.horizontal, .bottom])
                             .padding(.top, 36)
-                        
                         VStack {
                             Rectangle()
                                 .frame(height: 36)
@@ -74,13 +71,13 @@ struct MainView: View {
                                 .shadow(color: shadow, radius: 0.8, x: 0, y: 0)
                             Spacer()
                         }
-                        
                         VStack {
-                            MeasureListView(viewModel: MeasureListViewModel(selectedMeasure: self.appState.selectedMeasure,
-                                                                            cityName: self.appState.selectedCity.cityName,
-                                                                            measuresList: self.dataSource.measures,
-                                                                            cityValues: self.dataSource.cityOverall,
-                                                                            citySelectorClicked: self.appState.citySelectorClicked))
+                            let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasure,
+                                                                 cityName: appState.selectedCity.cityName,
+                                                                 measuresList: dataSource.measures,
+                                                                 cityValues: dataSource.cityOverall,
+                                                                 citySelectorClicked: appState.citySelectorClicked)
+                            MeasureListView(viewModel: viewModel)
                             Spacer()
                         }
                     }
@@ -92,15 +89,13 @@ struct MainView: View {
                 .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
                 .navigationBarColor(AppColors.white)
                 .zIndex(1)
-                
                 if self.appState.showSensorDetails {
                     SlideOverCard {
-                        SensorDetailsView(viewModel: SensorDetailsViewModel(
-                            sensor: self.appState.selectedSensor ?? SensorPinModel(),
-                            sensorsData: self.dataSource.sensorsData24h,
-                            selectedMeasure: self.dataSource.getCurrentMeasure(selectedMeasure:self.appState.selectedMeasure),
-                            sensorData24h: self.dataSource.sensorsData24h,
-                            dailyAverages: self.dataSource.sensorsDailyAverageData))
+                        SensorDetailsView(viewModel: SensorDetailsViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
+                                                                            sensorsData: dataSource.sensorsData24h,
+                                                                            selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasure),
+                                                                            sensorData24h: dataSource.sensorsData24h,
+                                                                            dailyAverages: dataSource.sensorsDailyAverageData))
                             .frame(maxWidth: UIScreen.main.bounds.width)
                     }
                     .transition(.move(edge: .bottom))
@@ -108,25 +103,21 @@ struct MainView: View {
                 }
             }
         }
-        
     }
-    
+
     var trailingNavigationItems: some View {
         HStack {
             Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
                 .imageScale(.large)
                 .padding(.trailing, (UIWidth)/3.7)
                 .onTapGesture {
-                    //action
                     if self.appState.citySelectorClicked == false {
                         self.appState.selectedSensor = nil
                         self.refreshService.refreshData()
-                        
                     }
                 }
-            
             Button(action: {
-                withAnimation(){
+                withAnimation {
                     self.appState.activeSheet = .languageView
                 }
             }) {
@@ -138,10 +129,10 @@ struct MainView: View {
             }
         }
     }
-    
+
     var leadingNavigationItems: some View {
         Button(action: {
-            withAnimation(.easeInOut(duration: 0.2)){
+            withAnimation(.easeInOut(duration: 0.2)) {
                 self.appState.citySelectorClicked.toggle()
                 if self.appState.showSensorDetails {
                     self.appState.showSensorDetails = false
@@ -152,9 +143,7 @@ struct MainView: View {
             HStack {
                 Text(self.appState.selectedCity.cityName.uppercased())
                     .font(.system(size: 14, weight: .semibold))
-//                    .font(Font.custom("TitilliumWeb-SemiBold", size: 14))
                     .foregroundColor(Color(AppColors.darkblue))
-                
                 self.appState.cityIcon.foregroundColor(Color(AppColors.darkblue))
             }
         }
@@ -162,11 +151,8 @@ struct MainView: View {
     }
 }
 
-
 extension View {
     func navigationBarColor(_ backgroundColor: UIColor?) -> some View {
         self.modifier(NavigationBarModifier(backgroundColor: backgroundColor))
     }
 }
-
-

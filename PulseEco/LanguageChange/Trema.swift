@@ -10,7 +10,6 @@ import Foundation
 import SwiftUI
 
 class Trema {
-    
     static var appLanguage: String {
         get {
             UserDefaults.standard.string(forKey: "AppLanguage") ?? "en"
@@ -19,7 +18,7 @@ class Trema {
             UserDefaults.standard.set(toLanguage, forKey: "AppLanguage")
         }
     }
-    
+
     static func text(for key: String,
                      language: String = appLanguage) -> String {
         key.localizedFor(language)

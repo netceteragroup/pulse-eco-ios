@@ -14,7 +14,11 @@ class MeasureListViewModel: ObservableObject {
     @Published var measures: [MeasureButtonViewModel] = []
     @Published var selectedMeasure: String
 
-    init(selectedMeasure: String, cityName: String, measuresList: [Measure], cityValues: CityOverallValues?, citySelectorClicked: Bool) {
+    init(selectedMeasure: String,
+         cityName: String,
+         measuresList: [Measure],
+         cityValues: CityOverallValues?,
+         citySelectorClicked: Bool) {
         self.selectedMeasure = selectedMeasure
         for measure in measuresList {
             let measureVM = MeasureButtonViewModel(id: measure.id,
@@ -33,4 +37,3 @@ class MeasureListViewModel: ObservableObject {
         }
     }
 }
-

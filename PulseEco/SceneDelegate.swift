@@ -15,11 +15,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     private (set) var refreshService: RefreshService!
     
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        // Create the SwiftUI view that provides the window contents.
+    // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
+    // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
+    // This delegate does not imply the connecting scene or session are new
+    // (see `application:configurationForConnectingSceneSession` instead).
+    // Create the SwiftUI view that provides the window contents.
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
         let appViewModel = AppState()
         let dataSource = AppDataSource(appState: appViewModel)
         let mapViewModel = MapViewModel(appState: appViewModel,
@@ -41,5 +43,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         refreshService.refreshDataIfNeeded()
     }
-    
 }

@@ -17,9 +17,7 @@ class LocationAnnotationView: MKAnnotationView {
     var selectedSensor: SelectedSensorView?
     @EnvironmentObject var appState: AppState
 
-
-    // MARK: Initialization
-
+    // MARK: - Initialization
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         guard let pin = annotation as? SensorPinModel else {
@@ -34,8 +32,7 @@ class LocationAnnotationView: MKAnnotationView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: Setup
-
+    // MARK: - Setup
     private func setupUI() -> MarkerView? {
         guard let markerIconView = UINib(nibName: "MarkerView", bundle: nil)
                 .instantiate(withOwner: nil, options: nil).first as? MarkerView else { return nil }
@@ -62,7 +59,7 @@ class LocationAnnotationView: MKAnnotationView {
         UIView.animate(withDuration: 0.1, animations: {
             selectedSensorView.transform = scaleTransform
             selectedSensorView.layoutIfNeeded()
-        }) { isCompleted in
+        }) { _ in
             UIView.animate(withDuration: 0.08, animations: {
                 selectedSensorView.alpha = 1.0
                 selectedSensorView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -73,12 +70,11 @@ class LocationAnnotationView: MKAnnotationView {
         markerView.addSubview(selectedSensorView)
         self.selectedSensor = selectedSensorView
     }
+    
     func hideCallout() {
         guard let selectedSensorView = self.selectedSensor else {
             return
         }
         selectedSensorView.removeFromSuperview()
-       // self.appState.isExpanded = false
     }
-    
 }

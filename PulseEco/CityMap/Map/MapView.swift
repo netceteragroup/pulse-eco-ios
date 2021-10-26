@@ -58,7 +58,7 @@ struct MapView: UIViewRepresentable {
     }
 
     private func meters(from zoomLevel: Int) -> Double {
-        Double(40000) / Double (2<<zoomLevel) * 20000
+        Double(40000) / Double(2<<zoomLevel) * 20000
     }
 }
 
@@ -82,7 +82,7 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         UIView.animate(withDuration: 0.2, animations: {
             annotationView.transform = scaleTransform
             annotationView.layoutIfNeeded()
-        }) { (isCompleted) in
+        }) { _ in
             UIView.animate(withDuration: 0.08, animations: {
                 annotationView.alpha = 1.0
                 annotationView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -94,8 +94,7 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView)
-    {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         boundryAndZoomEnabled = false
         mapView.isZoomEnabled = false
         guard let annotationView = view as? LocationAnnotationView else {
@@ -113,8 +112,7 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         }
     }
     
-    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView)
-    {
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         guard let annotationView = view as? LocationAnnotationView else {
             return
         }
@@ -130,7 +128,7 @@ extension Collection {
 }
 
 extension MKMapView {
-    func animatedSetRegion(_ region:MKCoordinateRegion, duration:TimeInterval) {
+    func animatedSetRegion(_ region: MKCoordinateRegion, duration: TimeInterval) {
         MKMapView.animate(withDuration: duration,
                           delay: 0,
                           usingSpringWithDamping: 0.6,

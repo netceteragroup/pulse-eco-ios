@@ -32,7 +32,7 @@ class RefreshService: ObservableObject {
     
     func refreshData() {
         updateRefreshDate()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.appViewModel.showSensorDetails = false
             self.appViewModel.selectedSensor = nil
             self.appDataSource.loadingMeasures = true

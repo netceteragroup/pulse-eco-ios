@@ -1,10 +1,9 @@
 import Foundation
 import Charts
-class ChartsDateValueFormatter: DateFormatter, AxisValueFormatter {
 
+class ChartsDateValueFormatter: DateFormatter, AxisValueFormatter {
     override init() {
         super.init()
-
         self.dateFormat = " h a "
     }
 
@@ -15,6 +14,4 @@ class ChartsDateValueFormatter: DateFormatter, AxisValueFormatter {
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         return self.string(from: Date(timeIntervalSince1970: value))
     }
-
 }
-
