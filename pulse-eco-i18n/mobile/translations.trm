@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trema masterLang="de" noNamespaceSchemaLocation="http://software.group.nca/trema/schema/trema-1.0.xsd">
+  <!--region Application-->
+  <text key="monday-short">
+    <context></context>
+    <value lang="en" status="translated">Mon</value>
+    <value lang="mk" status="translated">Пон</value>
+    <value lang="de" status="translated">Mo</value>
+    <value lang="ro" status="translated">Lun</value>
+  </text>
+  <text key="tuesday-short">
+    <context></context>
+    <value lang="en" status="translated">Tue</value>
+    <value lang="mk" status="translated">Вто</value>
+    <value lang="de" status="translated">Di</value>
+    <value lang="ro" status="translated">Mar</value>
+  </text>
+  <text key="wednesday-short">
+    <context></context>
+    <value lang="en" status="translated">Wed</value>
+    <value lang="mk" status="translated">Сре</value>
+    <value lang="de" status="translated">Mi</value>
+    <value lang="ro" status="translated">Mie</value>
+  </text>
+  <text key="thursday-short">
+    <context></context>
+    <value lang="en" status="translated">Thu</value>
+    <value lang="mk" status="translated">Чет</value>
+    <value lang="de" status="translated">Do</value>
+    <value lang="ro" status="translated">Joi</value>
+  </text>
+  <text key="friday-short">
+    <context></context>
+    <value lang="en" status="translated">Fri</value>
+    <value lang="mk" status="translated">Пет</value>
+    <value lang="de" status="translated">Fr</value>
+    <value lang="ro" status="translated">Vin</value>
+  </text>
+  <text key="saturday-short">
+    <context></context>
+    <value lang="en" status="translated">Sat</value>
+    <value lang="mk" status="translated">Саб</value>
+    <value lang="de" status="translated">Sa</value>
+    <value lang="ro" status="translated">Sam</value>
+  </text>
+  <text key="sunday-short">
+    <context></context>
+    <value lang="en" status="translated">Sun</value>
+    <value lang="mk" status="translated">Нед</value>
+    <value lang="de" status="translated">So</value>
+    <value lang="ro" status="translated">Dum</value>
+  </text>
+  <text key="crowdsourced_sensor_data">
+    <context></context>
+    <value lang="en" status="initial">Crowdsourced sensor data</value>
+    <value lang="mk" status="initial">Податоци од заедницата</value>
+    <value lang="de" status="translated">Crowdsource-Sensordaten</value>
+    <value lang="ro" status="translated">Date de la senzori publici</value>
+  </text>
+  <text key="no_readings">
+    <context></context>
+    <value lang="en" status="initial">No readings</value>
+    <value lang="mk" status="initial">Нема читања</value>
+    <value lang="de" status="translated">Keine Messwerte</value>
+    <value lang="ro" status="translated">Fără citiri</value>
+  </text>
+  <text key="past_week">
+    <context></context>
+    <value lang="en" status="translated">Past week</value>
+    <value lang="mk" status="translated">Минатата недела</value>
+    <value lang="de" status="translated">Letzte Woche</value>
+    <value lang="ro" status="translated">Săptămâna trecută</value>
+  </text>
+  <text key="unknown">
+    <context></context>
+    <value lang="en" status="initial">Unknown</value>
+    <value lang="mk" status="initial">Непознато</value>
+    <value lang="de" status="translated">Unbekannt</value>
+    <value lang="ro" status="translated">Necunoscut</value>
+  </text>
+  <text key="disclaimer_short_message">
+    <context></context>
+    <value lang="en" status="initial">Disclaimer: The data shown comes directly from the used sensors. We do not guarantee of their correctness.</value>
+    <value lang="mk" status="initial">Прикажаните податоци потекнуваат директно од самите сензори. Не гарантираме за нивната точност.</value>
+    <value lang="de" status="translated">Die angezeigten Daten stammen direkt von den verwendeten Sensoren. Wir übernehmen keine Garantie für deren Richtigkeit.</value>
+    <value lang="ro" status="translated">Datele afișate provin direct de la senzorii folosiți. Nu garantăm corectitudinea lor.</value>
+  </text>
+  <text key="privacy_policy">
+    <context></context>
+    <value lang="en" status="translated">Privacy Policy</value>
+    <value lang="mk" status="translated">Политика за приватност</value>
+    <value lang="de" status="translated">Datenschutzrichtlinie</value>
+    <value lang="ro" status="translated">Politica de confidențialitate</value>
+  </text>
+  <text key="details">
+    <context></context>
+    <value lang="en" status="initial">Details</value>
+    <value lang="mk" status="initial">Детали</value>
+    <value lang="de" status="translated">Details</value>
+    <value lang="ro" status="translated">Detalii</value>
+  </text>
+  <text key="results">
+    <context></context>
+    <value lang="en" status="initial">Results</value>
+    <value lang="mk" status="initial">Резултати</value>
+    <value lang="de" status="translated">Ergebnisse</value>
+    <value lang="ro" status="translated">Rezultate</value>
+  </text>
+  <text key="suggested">
+    <context>City select screen</context>
+    <value lang="en" status="initial">Suggested</value>
+    <value lang="mk" status="initial">Предложени</value>
+    <value lang="de" status="translated">Vorgeschlagen</value>
+    <value lang="ro" status="translated">Sugerat</value>
+  </text>
+  <text key="search_city_or_choose_suggested">
+    <context>City select screen</context>
+    <value lang="en" status="initial">Search city, or choose suggested</value>
+    <value lang="mk" status="initial">Пребарувајте град или изберете од предложените</value>
+    <value lang="de" status="translated">Stadt suchen oder vorgeschlagene wählen</value>
+    <value lang="ro" status="translated">Căutați orașul sau alegeți orașul sugerat</value>
+  </text>
+  <text key="search_city_or_country">
+    <context>City select screen</context>
+    <value lang="en" status="initial">Search City or Country</value>
+    <value lang="mk" status="initial">Пребарување по град или земја</value>
+    <value lang="de" status="translated">Suche Stadt oder Land</value>
+    <value lang="ro" status="translated">Căutați oraș sau țară</value>
+  </text>
+  <text key="no_data_available">
+    <context>City select search bar when there is no data available</context>
+    <value lang="en" status="initial">No data available. Try again later.</value>
+    <value lang="mk" status="initial">Нема достапни податоци. Обидете се повторно подоцна.</value>
+    <value lang="de" status="translated">Keine Daten verfügbar. Versuchen Sie es später erneut.</value>
+    <value lang="ro" status="translated">Nu există date disponibile. Încercați mai târziu.</value>
+  </text>
+  <text key="disclaimer">
+    <context></context>
+    <value lang="en" status="translated">Disclaimer</value>
+    <value lang="mk" status="translated">Забелешка</value>
+    <value lang="de" status="translated">Haftungsausschluss</value>
+    <value lang="ro" status="translated">Disclaimer</value>
+  </text>
+  <text key="ok">
+    <context></context>
+    <value lang="en" status="initial">OK</value>
+    <value lang="mk" status="initial">Во ред</value>
+    <value lang="de" status="translated">ОК</value>
+    <value lang="ro" status="translated">OK</value>
+  </text>
+  <text key="change_language_message_ios">
+    <context></context>
+    <value lang="en" status="initial">Applying this setting will change the language of the app to %@ and will refresh the app.</value>
+    <value lang="mk" status="initial">Примената на оваа поставка ќе го промени јазикот во %@ и ќе ја освежи апликацијата.</value>
+    <value lang="de" status="translated">Wenn Sie diese Einstellung anwenden wird die Sprache der App in %@ geändert und die App neu gestartet.</value>
+    <value lang="ro" status="translated">Aplicarea acestei setări va schimba limba aplicației la %@ și va actualiza aplicația.</value>
+  </text>
+  <text key="change_app_language">
+    <context></context>
+    <value lang="en" status="initial">Change App Language</value>
+    <value lang="mk" status="initial">Промена на јазик</value>
+    <value lang="de" status="translated">Sprache ändern</value>
+    <value lang="ro" status="translated">Schimbați limba aplicației</value>
+  </text>
+  <text key="proceed">
+    <context></context>
+    <value lang="en" status="initial">Proceed</value>
+    <value lang="mk" status="initial">Продолжи</value>
+    <value lang="de" status="translated">Weiter</value>
+    <value lang="ro" status="translated">Continua</value>
+  </text>
+  <text key="german">
+    <context></context>
+    <value lang="en" status="translated">Deutsch</value>
+    <value lang="mk" status="translated">Deutsch</value>
+    <value lang="de" status="translated">Deutsch</value>
+    <value lang="ro" status="translated">Deutsch</value>
+  </text>
+  <text key="macedonian">
+    <context></context>
+    <value lang="en" status="initial">Македонски</value>
+    <value lang="mk" status="initial">Македонски</value>
+    <value lang="de" status="initial">Македонски</value>
+    <value lang="ro" status="initial">Македонски</value>
+  </text>
+  <text key="english">
+    <context></context>
+    <value lang="en" status="initial">English</value>
+    <value lang="mk" status="initial">English</value>
+    <value lang="de" status="initial">English</value>
+    <value lang="ro" status="translated">English</value>
+  </text>
+  <text key="romanian">
+    <context></context>
+    <value lang="en" status="initial">Română</value>
+    <value lang="mk" status="initial">Română</value>
+    <value lang="de" status="initial">Română</value>
+    <value lang="ro" status="initial">Română</value>
+  </text>
+  <text key="done">
+    <context></context>
+    <value lang="en" status="initial">Done</value>
+    <value lang="mk" status="initial">Готово</value>
+    <value lang="de" status="translated">Fertig</value>
+    <value lang="ro" status="translated">Gata</value>
+  </text>
+  <text key="cancel">
+    <context></context>
+    <value lang="en" status="initial">Cancel</value>
+    <value lang="mk" status="initial">Затвори</value>
+    <value lang="de" status="translated">Abbrechen</value>
+    <value lang="ro" status="translated">Anulare</value>
+  </text>
+  <text key="average">
+    <context></context>
+    <value lang="en" status="initial">Average</value>
+    <value lang="mk" status="initial">Просечно</value>
+    <value lang="de" status="translated">Durchschnitt</value>
+    <value lang="ro" status="translated">Medie</value>
+  </text>
+  <text key="add_city_button">
+    <context>City select screen</context>
+      <value lang="en" status="initial">Add city</value>
+      <value lang="mk" status="initial">Додади град</value>
+      <value lang="de" status="translated">Stadt hinzufügen</value>
+      <value lang="ro" status="translated">Adăugați oraș</value>
+  </text>
+  <text key="disclaimer_message">
+      <context>index</context>
+      <value lang="de" status="translated">Die präsentierten Daten sind Crowdsourcing-Daten. Wir übernehmen keine Garantie für die Richtigkeit. Die Sensordaten von Drittanbietern werden so gespeichert, wie sie von ihrem Dienst empfangen wurden, während die puls.eco-Geräte von der Richtigkeit der verwendeten Sensoren und den Bedingungen in der nächstgelegenen Umgebung abhängen. Weitere Informationen findest du in den FAQ.</value>
+      <value lang="en" status="translated">The data presented is crowdsourced. We do not guarantee of its correctness. The third-party sensor data are stored as received from their service, while the pulse.eco devices depend on the correctness of the used sensors and the conditions in their nearest surroundings. Please refer to the FAQ for details.</value>
+      <value lang="mk" status="translated">Претставените податоци потекнуваат од заедницата. Не ја гарантираме точноста на овие податоци. Податоците од трети извори се складирани и добиени од нивната услуга, додека уредите на pulse.eco зависат од точноста на користените сензори и условите во нивното непосредно опкружување. За повеќе детали упатете се во делот за Често поставувани прашања.</value>
+      <value lang="ro" status="translated">Datele prezentate sunt crowdsourced. Nu garantăm corectitudinea acestora. Datele primite de la senzori terți sunt stocate asa cum sunt primite de la serviciul lor, iar dispozitivele pulse.eco depind de corectitudinea senzorilor folosiți și condițiile din apropierea lor. Vă rugăm să consultați FAQ pentru detalii.</value>
+  </text>
+  <text key="faq">
+      <context>index</context>
+      <value lang="de" status="translated">Häufig gestellte Fragen</value>
+      <value lang="en" status="translated">FAQ</value>
+      <value lang="mk" status="translated">Често поставувани прашања</value>
+      <value lang="ro" status="translated">FAQ</value>
+  </text>
+  <text key="city_missing_add_new">
+    <context></context>
+    <value lang="en" status="initial">Didn't find the city you were looking for? Add a new city</value>
+    <value lang="mk" status="initial">Не го најде градот кој го бараше? Додади нов град</value>
+    <value lang="de" status="initial">Stadt nicht gefunden? Neue Stadt hinzufügen</value>
+    <value lang="ro" status="translated">Nu ați găsit orașul pe care îl căutați? Adăugați un oraș nou.</value>
+  </text>
+  <text key="select_city">
+    <context>Toolbar Select City</context>
+    <value lang="en" status="initial">Select city</value>
+    <value lang="mk" status="initial">Изберете град</value>
+    <value lang="de" status="initial">Stadt wählen</value>
+    <value lang="ro" status="translated">Selectați orașul</value>
+  </text>
+  <text key="technical_error">
+    <context>Technical error</context>
+    <value lang="en" status="initial">Technical error occurred. Please try again.</value>
+    <value lang="mk" status="initial">Настана техничка грешка. Ве молиме обидете се повторно.</value>
+    <value lang="de" status="initial">Technischer Fehler aufgetreten. Bitte versuche es erneut.</value>
+    <value lang="ro" status="translated">A apărut o eroare tehnică. Vă rugăm să încercați din nou.</value>
+  </text>
+  <text key="select_sensors">
+    <context>Bottom sheet button if there are no sensors selected</context>
+    <value lang="en" status="initial">Select sensor/s</value>
+    <value lang="mk" status="initial">Изберете сензор/и</value>
+    <value lang="de" status="initial">Sensor/en auswählen</value>
+    <value lang="ro" status="translated">Selectați senzorii</value>
+  </text>
+  <text key="no_sensors_selected">
+    <context>Bottom sheet message if there are no sensors selected</context>
+    <value lang="en" status="initial">You can select up to 5 sensors by clicking the pins on the map. Bookmark them so they can be displayed here. You can also select sensors from the button.</value>
+    <value lang="mk" status="initial">Можете да селектирате намногу 5 сензори со одбирање на мапата. Додадете ги во омилени за да бидат прикажани тука. Можете да додадете омилени сензори и со копчето.</value>
+    <value lang="de" status="initial">Sie können bis zu 5 Sensoren auswählen, indem Sie auf die Stifte auf der Karte klicken. Setzen Sie ein Lesezeichen, damit sie hier angezeigt werden können. Sie können auch Sensoren über die Schaltfläche auswählen.</value>
+    <value lang="ro" status="translated">Puteți selecta până la 5 senzori făcând clic pe pinii de pe hartă. Marcați-i astfel încât să poată fi afișati aici. De asemenea, puteți selecta senzori din buton.</value>
+  </text>
+  <text key="sensors_selected">
+    <context>Bottom sheet message if there are 1 or more sensors selected</context>
+    <value lang="en" status="initial">Graph data for selected sensors</value>
+    <value lang="mk" status="initial">Графички податоци за селекитираните сензори</value>
+    <value lang="de" status="initial">Grafikdaten für ausgewählte Sensoren</value>
+    <value lang="ro" status="translated">Date grafice pentru senzorii selectați</value>
+  </text>
+  <text key="day_for_weekly_average_data">
+    <context>Bottom sheet day for weekly average data</context>
+    <value lang="en" status="initial">Day</value>
+    <value lang="mk" status="initial">Den</value>
+    <value lang="de" status="initial">Tag</value>
+    <value lang="ro" status="translated">Zi</value>
+  </text>
+  <text key="no_internet_connection">
+    <context>No internet connection</context>
+    <value lang="en" status="initial">No internet connection.</value>
+    <value lang="mk" status="initial">Нема интернет конекција.</value>
+    <value lang="de" status="initial">Keine Internet verbindung.</value>
+    <value lang="ro" status="translated">Fără conexiune la internet.</value>
+  </text>
+  <text key="unhandled_technical_error">
+    <context>Unhandled technical error</context>
+    <value lang="en" status="initial">Unhandled technical error.</value>
+    <value lang="mk" status="initial">Неработена техничка грешка.</value>
+    <value lang="de" status="initial">Unbehandelter technischer Fehler.</value>
+    <value lang="ro" status="translated">Eroare tehnică nesoluționată.</value>
+  </text>
+  <text key="msg_removed">
+    <context>Message displayed when city is deleted from selected cities</context>
+    <value lang="en" status="initial">Removed from selected cities</value>
+    <value lang="mk" status="initial">Отстранет од листата на избрани градови</value>
+    <value lang="de" status="initial">Aus ausgewählten Städten entfernt</value>
+    <value lang="ro" status="translated">Eliminat din orașele selectate.</value>
+  </text>
+  <text key="missing_location_permission_error">
+    <context>Message for missing location permission after starting app</context>
+    <value lang="en" status="initial">Missing location permission needed to sort cities by distance. Please allow in application settings.</value>
+    <value lang="mk" status="initial">Недостасуваат привилегии за сортирање на градовите според оддалеченост. Ве молиме овозможете го тоа во поставките.</value>
+    <value lang="de" status="initial">Fehlende Standortgenehmigung erforderlich, um Städte nach Entfernung zu sortieren. Bitte in den Anwendungseinstellungen zulassen.</value>
+    <value lang="ro" status="translated">Lipsește permisiunea de localizare necesară pentru a sorta orașele după distanță. Vă rugăm să permiteți setările aplicației.</value>
+  </text>
+  <text key="location_services_disabled_error">
+    <context>Message for disabled location services after starting app</context>
+    <value lang="en" status="initial">Location services disabled, can't acquire current location. Please allow in location services in phone settings.</value>
+    <value lang="mk" status="initial">Не може да се добие точна локација. Ве молиме вклучете локација.</value>
+    <value lang="de" status="initial">Standortdienste deaktiviert, aktueller Standort kann nicht erfasst werden. Bitte erlauben Sie in Ortungsdiensten in den Telefoneinstellungen.</value>
+    <value lang="ro" status="translated">Serviciile de localizare sunt dezactivate, nu pot accesa locația curentă. Vă rugăm să permiteți serviciile de localizare în setările telefonului.</value>
+  </text>
+  <text key="change_language_message_android">
+    <context>Change language message</context>
+    <value lang="en" status="initial">Applying this setting will change the language of the app and will refresh the app. Are you sure you want to change the language?</value>
+    <value lang="mk" status="initial">Примена на оваа поставка ќе го смени јазикот на апликацијата и ќе ја освежи апликацијата. Дали сте сигурни дека сакате да го смените јазикот?</value>
+    <value lang="de" status="initial">Durch das Anwenden dieser Einstellung wird die Sprache der App geändert und die App aktualisiert. Möchten Sie die Sprache wirklich ändern?</value>
+    <value lang="ro" status="translated">Aplicarea acestei setări va schimba limba aplicației și va actualiza aplicația. Sigur doriți să schimbați limba?</value>
+  </text>
+  <text key="tooltip_maximum_sensors_reached">
+    <context>Bottom sheet adding sensors message</context>
+    <value lang="en" status="initial">You can add up to 5 sensors</value>
+    <value lang="mk" status="initial">Можете да додадете најмногу 5 сензори</value>
+    <value lang="de" status="initial">Sie können bis zu 5 Sensoren hinzufügen</value>
+    <value lang="ro" status="translated">Puteți adăuga până la 5 senzori</value>
+  </text>
+  <text key="confirmation">
+    <context></context>
+    <value lang="en" status="initial">Confirmation</value>
+    <value lang="mk" status="initial">Потврда</value>
+    <value lang="de" status="initial">Bestätigung</value>
+    <value lang="ro" status="translated">Confirmare</value>
+  </text>
+  <text key="yes">
+    <context></context>
+    <value lang="en" status="initial">Yes</value>
+    <value lang="mk" status="initial">Да</value>
+    <value lang="de" status="initial">Ja</value>
+    <value lang="ro" status="translated">Da</value>
+  </text>
+  <text key="no">
+    <context></context>
+    <value lang="en" status="initial">No</value>
+    <value lang="mk" status="initial">Не</value>
+    <value lang="de" status="initial">Nein</value>
+    <value lang="ro" status="translated">Nu</value>
+  </text>
+  <text key="past_week_for_whole_city">
+    <context>Bottom sheet average data for city</context>
+    <value lang="en" status="initial">Past week average data for %s (%s)</value>
+    <value lang="mk" status="initial">Просечни податоци за минатата недела за %s (%s)</value>
+    <value lang="de" status="initial">Durchschnittliche Daten der letzten Woche für %s (%s)</value>
+    <value lang="ro" status="translated">Date medii săptămâna trecută pentru %s (%s)</value>
+  </text>
+  <text key="past_week_for_specific_sensor">
+    <context>Bottom sheet average data for specific sensor</context>
+    <value lang="en" status="initial">Past week average data (%s)</value>
+    <value lang="mk" status="initial">Просечни податоци за минатата недела (%s)</value>
+    <value lang="de" status="initial">Durchschnittliche Daten der letzten Woche (%s)</value>
+    <value lang="ro" status="translated">Datele medii de săptămâna trecută (%s)</value>
+  </text>
+  <text key="map_type_title">
+    <context>3 types of map on Android</context>
+    <value lang="en" status="initial">MAP TYPE</value>
+    <value lang="mk" status="initial">ТИП НА МАПА</value>
+    <value lang="de" status="initial">KARTENTYP</value>
+    <value lang="ro" status="translated">TIP HARTA</value>
+  </text>
+  <text key="map_type_default">
+    <context>Map type default</context>
+    <value lang="en" status="initial">Default</value>
+    <value lang="mk" status="initial">Стандардно</value>
+    <value lang="de" status="initial">Standard</value>
+    <value lang="ro" status="translated">Implicit</value>
+  </text>
+  <text key="map_type_satellite">
+    <context>Map type satellite</context>
+    <value lang="en" status="initial">Satellite</value>
+    <value lang="mk" status="initial">Сателитски</value>
+    <value lang="de" status="initial">Satellit</value>
+    <value lang="ro" status="translated">Satelit</value>
+  </text>
+  <text key="map_type_terrain">
+    <context>Map type terrain</context>
+    <value lang="en" status="initial">Terrain</value>
+    <value lang="mk" status="initial">Земјиште</value>
+    <value lang="de" status="initial">Terrain</value>
+    <value lang="ro" status="translated">Teren</value>
+  </text>
+  <text key="data_visualization_title">
+    <context>Data visualization</context>
+    <value lang="en" status="initial">DATA VISUALIZATION</value>
+    <value lang="mk" status="initial">ВИЗУЕЛИЗАЦИЈА</value>
+    <value lang="de" status="initial">DATENVISUALISIERUNG</value>
+    <value lang="ro" status="translated">VIZUALIZAREA DATELOR</value>
+  </text>
+  <text key="data_visualization_sensor_marker">
+    <context>Data visualization sensor marker</context>
+    <value lang="en" status="initial">Sensors</value>
+    <value lang="mk" status="initial">Сензори</value>
+    <value lang="de" status="initial">Sensormarkierungen</value>
+    <value lang="ro" status="translated">Senzori</value>
+  </text>
+  <text key="data_visualization_geographic">
+    <context>Data visualization geographic</context>
+    <value lang="en" status="initial">Geographic</value>
+    <value lang="mk" status="initial">Област</value>
+    <value lang="de" status="initial">Geografisch</value>
+    <value lang="ro" status="translated">Geografic</value>
+  </text>
+  <text key="sensor_select_dialog_warning_when_more_selected">
+    <context>Bottom sheet sensor select dialog warning when there are more than 5 sensors selected</context>
+    <value lang="en" status="initial">Maximum 5 favourite sensors</value>
+    <value lang="mk" status="initial">Најмногу 5 омилени сензори</value>
+    <value lang="de" status="initial">Maximal 5 Lieblingssensoren</value>
+    <value lang="ro" status="translated">Maxim 5 senzori preferați</value>
+  </text>
+  <text key="not_available">
+    <context>Bottom sheet not available data for selected sensors</context>
+    <value lang="en" status="initial">N/A</value>
+    <value lang="mk" status="initial">N/A</value>
+    <value lang="de" status="initial">N/A</value>
+    <value lang="ro" status="translated">N/A</value>
+  </text>
+  <text key="default_no_sensors_selected">
+    <context>Bottom sheet message when there are no sensors selected</context>
+    <value lang="en" status="initial">No selected sensors</value>
+    <value lang="mk" status="initial">Нема селектирани сензори</value>
+    <value lang="de" status="initial">Keine ausgewählten Sensoren</value>
+    <value lang="ro" status="translated">Nu există senzori selectați</value>
+  </text>
+  <text key="history">
+    <context></context>
+    <value lang="en" status="initial">History</value>
+    <value lang="mk" status="initial">Историја</value>
+    <value lang="de" status="initial">Geschichte</value>
+    <value lang="ro" status="translated">Istoric</value>
+  </text>
+  <text key="currently_selected">
+    <context></context>
+    <value lang="en" status="initial">Currently selected</value>
+    <value lang="mk" status="initial">Моментално избрано</value>
+    <value lang="de" status="initial">Momentan ausgewählt</value>
+    <value lang="ro" status="translated">În prezent selectat</value>
+  </text>
+  <text key="app_name">
+    <context></context>
+    <value lang="en" status="initial">pulse.eco</value>
+    <value lang="mk" status="initial">pulse.eco</value>
+    <value lang="de" status="initial">pulse.eco</value>
+    <value lang="ro" status="translated">pulse.eco</value>
+  </text>
+</trema>
