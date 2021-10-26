@@ -1,6 +1,6 @@
 //
 //  RefreshService.swift
-//  PulseEcoSwiftUI
+//  PulseEco
 //
 //  Created by Darko Skerlevski on 10.9.21.
 //

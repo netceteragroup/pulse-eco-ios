@@ -1,6 +1,6 @@
 //
 //  Countries.swift
-//  PulseEcoSwiftUI
+//  PulseEco
 //
 //  Created by Maja Mitreska on 29.3.21.
 //  Copyright © 2021 Monika Dimitrova. All rights reserved.

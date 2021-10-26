@@ -1,6 +1,6 @@
 //
 //  ConditionalModifier.swift
-//  PulseEcoSwiftUI
+//  PulseEco
 //
 //  Created by Stefan Lazarevski on 24.9.21.
 //

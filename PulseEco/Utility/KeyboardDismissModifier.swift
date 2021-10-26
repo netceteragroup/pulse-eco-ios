@@ -1,6 +1,6 @@
 //
 //  KeyboardDismissModifier.swift
-//  PulseEcoSwiftUI
+//  PulseEco
 //
 //  Created by Darko Skerlevski on 15.9.21.
 //

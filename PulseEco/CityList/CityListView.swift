@@ -1,6 +1,6 @@
 //
 //  NewCityListView.swift
-//  PulseEcoSwiftUI
+//  PulseEco
 //
 //  Created by Darko Skerlevski on 23.9.21.
 //

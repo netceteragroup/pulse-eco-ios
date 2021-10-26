@@ -1,6 +1,6 @@
 //
 //  BottomShadow.swift
-//  PulseEcoSwiftUI
+//  PulseEco
 //
 //  Created by Monika Dimitrova on 7/23/20.
 //  Copyright © 2020 Monika Dimitrova. All rights reserved.

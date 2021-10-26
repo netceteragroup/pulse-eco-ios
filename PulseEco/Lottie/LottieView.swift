@@ -1,6 +1,6 @@
 //
 //  LottieView.swift
-//  PulseEcoSwiftUI
+//  PulseEco
 //
 //  Created by Stefan Lazarevski on 28.9.21.
 //

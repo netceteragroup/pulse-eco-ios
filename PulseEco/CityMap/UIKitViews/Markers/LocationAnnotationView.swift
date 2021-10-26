@@ -1,6 +1,6 @@
 //
 //  SensorAnnotationView.swift
-//  PulseEcoSwiftUI
+//  PulseEco
 //
 //  Created by Marko Nikolov on 7/7/20.
 //  Copyright © 2020 Monika Dimitrova. All rights reserved.
