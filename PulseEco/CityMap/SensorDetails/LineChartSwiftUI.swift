@@ -55,7 +55,17 @@ struct LineChartSwiftUI: UIViewRepresentable {
         combinedData.barData = BarChartData(dataSets: barDataSets)
         
         lineChart.data = combinedData
-        
+        lineChart.leftAxis.axisMinimum = min(minY, Double(viewModel.selectedMeasure.showMin))
+        lineChart.leftAxis.axisMaximum = max(maxY, Double(viewModel.selectedMeasure.showMax))
+        setupLineChart()
+        let limitLines = getLimitLines(for: self.viewModel.selectedMeasure)
+        for limitLine in limitLines {
+            lineChart.leftAxis.addLimitLine(limitLine)
+        }
+        lineChart.leftAxis.drawLimitLinesBehindDataEnabled = true
+    }
+    
+    private func setupLineChart() {
         lineChart.legend.enabled = false
         lineChart.rightAxis.enabled = false
         
@@ -69,8 +79,7 @@ struct LineChartSwiftUI: UIViewRepresentable {
         lineChart.xAxis.drawGridLinesEnabled = false
         
         lineChart.leftAxis.labelTextColor = .black
-        lineChart.leftAxis.axisMinimum = min(minY, Double(viewModel.selectedMeasure.showMin))
-        lineChart.leftAxis.axisMaximum = max(maxY, Double(viewModel.selectedMeasure.showMax))
+        
         lineChart.leftAxis.drawGridLinesEnabled = false
         lineChart.leftAxis.removeAllLimitLines()
         
@@ -78,12 +87,6 @@ struct LineChartSwiftUI: UIViewRepresentable {
         lineChart.pinchZoomEnabled = false
         lineChart.scaleXEnabled = false
         lineChart.scaleYEnabled = false
-        
-        let limitLines = getLimitLines(for: self.viewModel.selectedMeasure)
-        for limitLine in limitLines {
-            lineChart.leftAxis.addLimitLine(limitLine)
-        }
-        lineChart.leftAxis.drawLimitLinesBehindDataEnabled = true
     }
     
     private func lineChartDataEntries(from sensorReadings: [SensorData]) -> [ChartDataEntry] {

@@ -13,9 +13,9 @@ class ChartViewModel: ObservableObject {
 
         self.sensorReadings = sensorsData.filter {
             $0.sensorID == sensor.sensorID && $0.type == selectedMeasure.id
-        }.sorted { s1, s2 in
-            let date = DateFormatter.iso8601Full.date(from: s1.stamp) ?? Date()
-            let date1 = DateFormatter.iso8601Full.date(from: s2.stamp) ?? Date()
+        }.sorted {
+            let date = DateFormatter.iso8601Full.date(from: $0.stamp) ?? Date()
+            let date1 = DateFormatter.iso8601Full.date(from: $1.stamp) ?? Date()
             return date < date1
         }
     }
