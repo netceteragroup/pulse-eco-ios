@@ -1,0 +1,10 @@
+disabled_rules: # rule identifiers turned on by default to exclude from running
+  - trailing_whitespace
+  - multiple_closures_with_trailing_closure
+
+identifier_name:
+  excluded:
+    - to
+    - id
+    - x
+    - y

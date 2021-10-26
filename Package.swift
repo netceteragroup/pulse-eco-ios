@@ -9,7 +9,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "PulseEco",
-            targets: ["PulseEco"]),
+            targets: ["PulseEco"])
     ],
     dependencies: [
         .package(name: "Lottie", url: "https://github.com/airbnb/lottie-ios.git", from: "3.2.1"),
@@ -24,6 +24,6 @@ let package = Package(
                            "Charts"]),
         .testTarget(
             name: "PulseEcoTests",
-            dependencies: ["PulseEco"]),
+            dependencies: ["PulseEco"])
     ]
 )

@@ -14,6 +14,12 @@ struct SensorDetailsView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @ObservedObject var viewModel: SensorDetailsViewModel
     @State var isExpanded: Bool = false
+    private var chartViewModel: ChartViewModel {
+        ChartViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
+                       sensorsData: dataSource.sensorsData24h,
+                       selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasure))
+    }
+    
     var body: some View {
         VStack {
             // Handler
@@ -45,12 +51,7 @@ struct SensorDetailsView: View {
             }
             // Expanded View
             VStack {
-                LineChartSwiftUI(viewModel:
-                    ChartViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
-                                   sensorsData: dataSource.sensorsData24h,
-                                   selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasure)
-                    )
-                )
+                LineChartSwiftUI(viewModel: chartViewModel)
                 .frame(width: min(350, UIScreen.main.bounds.width - 10),
                        height: 200)
                 .padding(.bottom)

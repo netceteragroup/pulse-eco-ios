@@ -16,6 +16,15 @@ struct MainView: View {
     let mapViewModel: MapViewModel
     private let backgroundColor: Color = AppColors.white.color
     private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
+    
+    private var sensorDetailsViewModel: SensorDetailsViewModel {
+        let selectedMeasure = dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasure)
+        return SensorDetailsViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
+                                      sensorsData: dataSource.sensorsData24h,
+                                      selectedMeasure: selectedMeasure,
+                                      sensorData24h: dataSource.sensorsData24h,
+                                      dailyAverages: dataSource.sensorsDailyAverageData)
+    }
 
     var body: some View {
         Group {
@@ -91,11 +100,7 @@ struct MainView: View {
                 .zIndex(1)
                 if self.appState.showSensorDetails {
                     SlideOverCard {
-                        SensorDetailsView(viewModel: SensorDetailsViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
-                                                                            sensorsData: dataSource.sensorsData24h,
-                                                                            selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasure),
-                                                                            sensorData24h: dataSource.sensorsData24h,
-                                                                            dailyAverages: dataSource.sensorsDailyAverageData))
+                        SensorDetailsView(viewModel: sensorDetailsViewModel)
                             .frame(maxWidth: UIScreen.main.bounds.width)
                     }
                     .transition(.move(edge: .bottom))
