@@ -18,7 +18,7 @@ class FavouriteCitiesViewModel: ObservableObject {
          cityValues: [CityOverallValues],
          measureList: [Measure]) {
         self.selectedMeasure = selectedMeasure
-        var value: String? = nil
+        var value: String?
         for city in favouriteCities {
             value = nil
             if let cityValue = cityValues.last(where: { $0.cityName == city.cityName
@@ -29,10 +29,10 @@ class FavouriteCitiesViewModel: ObservableObject {
                     }
                 }
             }
-            let selMeasure = measureList.filter{ $0.id.lowercased() == selectedMeasure.lowercased()}.first ?? Measure.empty()
+            let selMeasure = measureList
+                .filter { $0.id.lowercased() == selectedMeasure.lowercased() }.first ?? Measure.empty()
             var message = Trema.text(for: "no_data_available")
             var color = AppColors.gray.color
-            
             if let val = Float(value ?? "") {
                 if Int(val) < selMeasure.legendMin {
                     message = selMeasure.bands[0].shortGrade
@@ -41,7 +41,7 @@ class FavouriteCitiesViewModel: ObservableObject {
                     message = selMeasure.bands[selMeasure.bands.count - 1].shortGrade
                     color = Color(AppColors.colorFrom(string: selMeasure.bands[selMeasure.bands.count - 1].legendColor))
                 } else {
-                    selMeasure.bands.forEach{ band in
+                    selMeasure.bands.forEach { band in
                         if valueInBand(from: band.from, to: band.to, value: val) {
                             message = band.shortGrade
                             color = Color(AppColors.colorFrom(string: band.legendColor))
@@ -50,7 +50,6 @@ class FavouriteCitiesViewModel: ObservableObject {
                     }
                 }
             }
-            
             self.cityList.append(FavouriteCityRowViewModel(city: city,
                                                            message: message,
                                                            value: value,
@@ -58,13 +57,12 @@ class FavouriteCitiesViewModel: ObservableObject {
                                                            color: color))
         }
     }
-    
+
     func valueInBand(from: Int, to: Int, value: Float) -> Bool {
         return Int(value) >= from && Int(value) <= to
     }
-    
+
     func getCities() -> [FavouriteCityRowViewModel] {
         return self.cityList
     }
 }
-

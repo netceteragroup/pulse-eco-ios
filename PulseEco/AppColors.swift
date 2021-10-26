@@ -21,7 +21,7 @@ struct AppColors {
     static var allColors: [UIColor] {
         return [blue, green, orange, purple, red, indigo, darkred, darkgreen]
     }
-    
+
     static func colorFrom(string: String) -> UIColor {
         switch string {
         case "darkred": return darkred

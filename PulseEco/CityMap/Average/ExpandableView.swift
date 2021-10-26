@@ -7,25 +7,21 @@ struct ExpandableView: View {
     @State var width: CGFloat = 115
     var viewModel: AverageViewModel
     @State var geometry: GeometryProxy
+    
     var body: some View {
         VStack {
-            
             HStack {
-                
                 VStack {
-                    
                     VStack(alignment: .leading, spacing: 0) {
                         RoundedCorners(topLeft: 8, topRight: 8, bottomLeft: 0, bottomRight: 0)
                             .fill(Color(UIColor(white: 0, alpha: 0.3)))
-                            .frame(height:  20)
+                            .frame(height: 20)
                             .overlay(Text(Trema.text(for: "average"))
                                         .font(.system(size: 13))
                                         .foregroundColor(AppColors.white.color)
                                         .padding(.leading, 10), alignment: .leading
                             )
-                        
                         HStack(alignment: .top) {
-                            
                             VStack {
                                 HStack(spacing: 3) {
                                     Text("\(Int(self.viewModel.value))")
@@ -43,9 +39,7 @@ struct ExpandableView: View {
                                 Spacer()
                                     .frame(height: 10)
                             }
-                            
-                            if self.isExpanded {
-                                
+                            if isExpanded {
                                 Text(self.viewModel.message)
                                     .font(.system(size: 15))
                                     .foregroundColor(AppColors.white.color)
@@ -53,10 +47,8 @@ struct ExpandableView: View {
                                     .padding(.top, 4)
                                     .padding(.bottom, 10)
                                     .fixedSize(horizontal: false, vertical: true)
-                                
                             }
                         }
-                        
                         if self.isExpanded {
                             bar.transition(.asymmetric(
                                 insertion:
@@ -64,9 +56,7 @@ struct ExpandableView: View {
                                 removal:
                                     .opacity.animation(.default.speed(7))
                             ))
-                            
                         }
-                        
                     }
                     .frame(width: self.width)
                     .background(RoundedCorners(topLeft: 8, topRight: 8, bottomLeft: 8, bottomRight: 8)
@@ -81,7 +71,6 @@ struct ExpandableView: View {
                                value: isExpanded)
                     Spacer()
                 }
-
                 Spacer()
             }
         }

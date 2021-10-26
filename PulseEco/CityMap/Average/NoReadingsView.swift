@@ -10,7 +10,7 @@ struct NoReadingsView: View {
                         VStack {
                             RoundedCorners(topLeft: 8, topRight: 8, bottomLeft: 0, bottomRight: 0)
                                 .fill(self.viewModel.backgroundColor)
-                                .frame(height:  23)
+                                .frame(height: 23)
                             Spacer()
                         }
                         VStack(alignment: .center, spacing: 3) {
@@ -33,4 +33,3 @@ struct NoReadingsView: View {
         }.padding(.leading, 10)
     }
 }
-

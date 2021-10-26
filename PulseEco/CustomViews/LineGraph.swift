@@ -6,9 +6,9 @@ struct LineGraph: Shape {
     func path(in rect: CGRect) -> Path {
         func makePoint(at idx: Int) -> CGPoint {
             let point = dataPoints[idx]
-            let pointX = rect.width * CGFloat(idx) / CGFloat(dataPoints.count - 1)
-            let pointY = (1-point) * rect.height
-            return CGPoint(x: pointX, y: pointY)
+            let x = rect.width * CGFloat(idx) / CGFloat(dataPoints.count - 1)
+            let y = (1-point) * rect.height
+            return CGPoint(x: x, y: y)
         }
         
         return Path { point in

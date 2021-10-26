@@ -110,7 +110,7 @@ class MapViewModel: ObservableObject {
     }
     
     private func pinColorForSensorValue(selectedMeasure: Measure, sensorValue: String) -> UIColor {
-        return AppColors.colorFrom(string: selectedMeasure.bands.first{ band in
+        return AppColors.colorFrom(string: selectedMeasure.bands.first { band in
             Int(sensorValue) ?? 0 >= band.from && Int(sensorValue) ?? 0 <= band.to
         }?.legendColor ?? "gray")
     }
@@ -122,7 +122,7 @@ class MapViewModel: ObservableObject {
         let sensorMeasurements = sensorsData.filter { sensor in
             sensor.type.lowercased() == selectedMeasure.id.lowercased()
         }
-        let _ = sensors.compactMap { sensor in
+        _ = sensors.compactMap { sensor in
             sensorMeasurements.compactMap { sensorMeasurement in
                 if sensorMeasurement.sensorID == sensor.sensorID {
                     commonSensors.append(
@@ -141,8 +141,7 @@ class MapViewModel: ObservableObject {
     }
 
     private func areIdentical(_ lhs: [SensorPinModel]?, _ rhs: [SensorPinModel]?) -> Bool {
-        guard let lhs = lhs, let rhs = rhs,
-        lhs.count == rhs.count else { return false }
+        guard let lhs = lhs, let rhs = rhs, lhs.count == rhs.count else { return false }
         for (index, value) in lhs.enumerated() {
             if !SensorPinModel.isIdentical(lhs: value, rhs: rhs[index]) { return false }
         }

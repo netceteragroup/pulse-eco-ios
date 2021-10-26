@@ -20,7 +20,7 @@ struct CityMapView: View {
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var userSettings: UserSettings
     let mapViewModel: MapViewModel
-    let proxy:  GeometryProxy
+    let proxy: GeometryProxy
     
     var body: some View {
         

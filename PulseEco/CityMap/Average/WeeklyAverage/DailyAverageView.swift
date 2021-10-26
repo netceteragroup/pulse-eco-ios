@@ -13,7 +13,7 @@ struct DailyAverageView: View {
     var viewModel: DailyAverageViewModel 
     
     var body: some View {
-        VStack{
+        VStack {
             Text(viewModel.dayOfWeek)
             Rectangle()
                 .frame(height: 4)
@@ -25,4 +25,3 @@ struct DailyAverageView: View {
         }
     }
 }
-

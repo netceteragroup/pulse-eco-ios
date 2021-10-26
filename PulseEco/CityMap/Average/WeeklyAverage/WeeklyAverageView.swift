@@ -14,13 +14,13 @@ struct WeeklyAverageView: View {
     var viewModel: WeeklyAverageViewModel
     
     var body: some View {
-        VStack{
+        VStack {
             Text(viewModel.title)
                 .bold()
                 .frame(height: 17, alignment: .center)
                
                 .padding(.bottom, 20)
-            HStack{
+            HStack {
                 ForEach(0..<viewModel.dailyAverageViewModels.count) { index in
                     DailyAverageView(viewModel: viewModel.dailyAverageViewModels[index])
                 }
@@ -30,5 +30,3 @@ struct WeeklyAverageView: View {
         .padding(.horizontal, 20)
     }
 }
-
-

@@ -9,14 +9,16 @@
 import Foundation
 import SwiftUI
 
-class WeeklyAverageViewModel: ObservableObject{
+class WeeklyAverageViewModel: ObservableObject {
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var appState: AppState
     var title: String = ""
     var dailyAverageViewModels: [DailyAverageViewModel] = []
     
-    init(appState: AppState, dataSource: AppDataSource, averages: [SensorData]){
-        title = Trema.text(for: "past_week") + "(\(dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasure).unit))"
+    init(appState: AppState, dataSource: AppDataSource, averages: [SensorData]) {
+        let pastWeekLocalized = Trema.text(for: "past_week")
+        let suffix = "(\(dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasure).unit))"
+        title = pastWeekLocalized + suffix
         dailyAverageViewModels = transformInfoSensorToViewModel(appState: appState,
                                                                 dataSource: dataSource,
                                                                 averages: averages)
@@ -41,8 +43,7 @@ class WeeklyAverageViewModel: ObservableObject{
             var matchingDays = averages.filter({$0.stamp.prefix(10) == date.prefix(10)})
             if matchingDays.isEmpty {
                 allAverages.append(DailyInfoSensor(dayOfWeek: date, value: "N/A"))
-            }
-            else {
+            } else {
                 let sensor = matchingDays.popLast()!
                 allAverages.append(DailyInfoSensor(dayOfWeek: sensor.stamp, value: sensor.value))
             }
@@ -50,4 +51,3 @@ class WeeklyAverageViewModel: ObservableObject{
         return allAverages
     }
 }
-

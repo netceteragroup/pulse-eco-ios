@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-struct Sensor: Codable  {
+struct Sensor: Codable {
     var id: String { return sensorID }
     let sensorID: String
     let position: String
@@ -17,8 +17,7 @@ struct Sensor: Codable  {
     let type: String
     let description: String
     let status: String
-  
-    
+
     enum CodingKeys: String, CodingKey {
         case sensorID = "sensorId"
         case position, comments, type
@@ -43,5 +42,3 @@ struct SensorData: Codable, Identifiable {
         return DateFormatter.iso8601Full.date(from: self.stamp) ?? Date()
     }
 }
-
-

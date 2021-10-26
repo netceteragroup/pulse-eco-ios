@@ -10,7 +10,6 @@ import Foundation
 import SwiftUI
 
 struct Measure: Codable, Identifiable {
-    
     let id: String
     let buttonTitle: String
     let title: String
@@ -29,7 +28,7 @@ struct Measure: Codable, Identifiable {
         case description
         case showMin, showMax, legendMin, legendMax, unit, showMessages, bands
     }
-    
+
     static func empty(id: String = "--", _ title: String = "--") -> Measure {
         return Measure(id: id,
                        buttonTitle: title,
@@ -55,7 +54,7 @@ struct Band: Codable {
     let shortGrade: String
     let grade: String
     let suggestion: String
-    
+
     static func == (lhs: Band, rhs: Band) -> Bool {
           return lhs.legendPoint == rhs.legendPoint
       }

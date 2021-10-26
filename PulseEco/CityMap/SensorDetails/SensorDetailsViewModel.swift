@@ -23,7 +23,11 @@ class SensorDetailsViewModel: ObservableObject {
     @Published var sensorData24h: [SensorData]
     @Published var dailyAverages: [SensorData]
 
-    init(sensor: SensorPinModel, sensorsData: [SensorData], selectedMeasure: Measure, sensorData24h: [SensorData], dailyAverages: [SensorData]) {
+    init(sensor: SensorPinModel,
+         sensorsData: [SensorData],
+         selectedMeasure: Measure,
+         sensorData24h: [SensorData],
+         dailyAverages: [SensorData]) {
         self.sensorID = sensor.sensorID
         self.sensorType = sensor.type
         self.title = sensor.title ?? "Sensor"

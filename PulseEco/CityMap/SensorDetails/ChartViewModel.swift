@@ -11,9 +11,9 @@ class ChartViewModel: ObservableObject {
         self.sensorsData24h = sensorsData
         self.selectedMeasure = selectedMeasure
 
-        self.sensorReadings = sensorsData.filter{
+        self.sensorReadings = sensorsData.filter {
             $0.sensorID == sensor.sensorID && $0.type == selectedMeasure.id
-        }.sorted{ (s1, s2) in
+        }.sorted { s1, s2 in
             let date = DateFormatter.iso8601Full.date(from: s1.stamp) ?? Date()
             let date1 = DateFormatter.iso8601Full.date(from: s2.stamp) ?? Date()
             return date < date1

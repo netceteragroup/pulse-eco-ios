@@ -12,11 +12,11 @@ struct LanguageView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
-    
+
     var countries = Countries.countries(language: Trema.appLanguage)
     @State var selectedCountry: Country? = Countries.selectedCountry(for: Trema.appLanguage)
     @State var tappedCountry: Country?
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -24,7 +24,7 @@ struct LanguageView: View {
                     ForEach(countries, id: \.self) { country in
                         VStack(spacing: 0) {
                             Button {
-                                if (self.selectedCountry != country) {
+                                if self.selectedCountry != country {
                                     self.tappedCountry = country
                                 }
                             } label: {
@@ -52,8 +52,6 @@ struct LanguageView: View {
         .if(.pad, transform: {
             $0.navigationViewStyle(StackNavigationViewStyle())
         })
-        
-        
         .alert(item: $tappedCountry) { item in
             return Alert(title: Text(Trema.text(for: "change_app_language")),
                          message: Text(String(format: Trema.text(for: "change_language_message_ios"),
@@ -61,15 +59,14 @@ struct LanguageView: View {
                          primaryButton: .cancel(
                             Text(Trema.text(for: "cancel")),
                             action: { self.tappedCountry = nil }),
-                         secondaryButton: .default (
+                         secondaryButton: .default(
                             Text(Trema.text(for: "proceed")),
                             action: {
                                 self.selectCountry(country: item)
                             }))
         }
     }
-    
-    
+
     func selectCountry(country: Country) {
         self.tappedCountry = nil
         self.selectedCountry = country
@@ -86,7 +83,7 @@ struct LanguageView: View {
 private struct CountryCellView: View {
     let country: Country
     let checked: Bool
-    
+
     var body: some View {
         HStack {
             Text(country.languageName)

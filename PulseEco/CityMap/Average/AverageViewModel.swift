@@ -69,12 +69,13 @@ class AverageViewModel: ObservableObject {
         var rangeWidth = 0.0
         for indx in 0...bands.count-1 {
             let band = bands[indx]
-            var nextValue = indx >= bands.count - 1 ? abs(Double(abs(self.max) - band.from)) : Double(abs(band.to) - band.from)
+            var nextValue = indx >= bands.count - 1
+                ? abs(Double(abs(self.max) - band.from))
+                : Double(abs(band.to) - band.from)
             if indx == 0 {
                 nextValue = Double(abs(band.to) - self.min)
             }
             var bandRangeWidth = nextValue
-            
             if isHugeValue() && indx == bands.count - 1 {
                // bandRangeWidth = nextValue * (Double(self.value) / Double(self.max))
                 bandRangeWidth = nextValue + (Double(self.value) - Double(self.max))
@@ -86,16 +87,17 @@ class AverageViewModel: ObservableObject {
         }
         return rangeWidth
     }
-    
+
     func setBandsRange(bands: [Band]) {
         for indx in 0...bands.count-1 {
             let band = bands[indx]
-            var nextValue = indx >= bands.count - 1 ? abs(Double(abs(self.max) - band.from)) : Double(abs(band.to) - band.from)
+            var nextValue = indx >= bands.count - 1
+                ? abs(Double(abs(self.max) - band.from))
+                : Double(abs(band.to) - band.from)
             if indx == 0 {
                 nextValue = Double(abs(band.to) - self.min)
             }
             var bandRangeWidth = nextValue
-        
             if isHugeValue() && indx == bands.count-1 {
                // bandRangeWidth = nextValue * (Double(self.value) / Double(self.max))
                 bandRangeWidth = nextValue + (Double(self.value) - Double(self.max))
@@ -128,11 +130,11 @@ class AverageViewModel: ObservableObject {
     func isHugeValue() -> Bool {
         return Int(self.value) >= self.max
     }
-    
+
     func isLowValue() -> Bool {
         return Int(self.value) <= self.min
     }
-    
+
     func valueInBand(from: Int, to: Int) -> Bool {
         return Int(value) >= from && Int(value) <= to
     }
@@ -161,8 +163,9 @@ class BandVM: Identifiable {
     let grade: String
     let suggestion: String
     var width: Double
-    
-    init(from: Int = 1, to: Int = 1,
+
+    init(from: Int = 1,
+         to: Int = 1,
          legendPoint: Int = 1,
          legendColor: UIColor = AppColors.gray,
          markerColor: UIColor = AppColors.gray,

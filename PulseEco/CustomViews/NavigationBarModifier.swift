@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct NavigationBarModifier: ViewModifier {
-        
+
     var backgroundColor: UIColor?
-    
+
     init( backgroundColor: UIColor?) {
         self.backgroundColor = backgroundColor
         let coloredAppearance = UINavigationBarAppearance()
@@ -14,9 +14,9 @@ struct NavigationBarModifier: ViewModifier {
         UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
 
     }
-    
+
     func body(content: Content) -> some View {
-        ZStack{
+        ZStack {
             content
             VStack {
                 GeometryReader { geometry in

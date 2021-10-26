@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CityListView: View {
-    
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
@@ -16,12 +15,10 @@ struct CityListView: View {
     @ObservedObject var viewModel: CityListViewModel
     @ObservedObject var userSettings: UserSettings
     @State var searchText = ""
-    
+
     var body: some View {
-        
         NavigationView {
             VStack {
-                
                 HStack {
                     SearchBar(text: $searchText,
                               placeholder: Trema.text(for: "search_city_or_country"))
@@ -33,7 +30,6 @@ struct CityListView: View {
                     })
                     .padding(.trailing, 15)
                 }
-                
                 ScrollView {
                     if self.searchText.isEmpty {
                         ForEach(self.viewModel.getCountries(), id: \.self) { elem in
@@ -47,21 +43,20 @@ struct CityListView: View {
                                         .frame(height: 30)
                                         .background(Color(red: 240 / 255, green: 240 / 255, blue: 240 / 255))
                                         .listRowInsets(.zero)) {
-                                
-                                let favouriteCitiesNames = self.userSettings.favouriteCities.map{ $0.cityName }
+                                let favouriteCitiesNames = self.userSettings.favouriteCities.map { $0.cityName }
                                 let citiesFromCountry = self.viewModel.getCities().filter {
                                     elem == $0.countryName
                                 }
                                 ForEach(citiesFromCountry, id: \.id) { city in
                                     Button(action: {
-                                        if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
+                                        if let city = viewModel.cityModel
+                                            .first(where: { $0.cityName == city.cityName }) {
                                             if self.appState.selectedCity != city {
                                                 self.userSettings.addFavoriteCity(city)
                                                 self.appState.selectedCity = city
                                                 self.appState.newCitySelected = true
                                                 self.presentationMode.wrappedValue.dismiss()
-                                            }
-                                            else {
+                                            } else {
                                                 self.presentationMode.wrappedValue.dismiss()
                                                 self.appState.citySelectorClicked = false
                                             }
@@ -71,8 +66,7 @@ struct CityListView: View {
                                                     addCheckMark: favouriteCitiesNames.contains(city.cityName),
                                                     showCountryName: false)
                                     })
-                                    
-                                    if (city != citiesFromCountry.last) {
+                                    if city != citiesFromCountry.last {
                                         Divider()
                                             .background(AppColors.gray.color)
                                     }
@@ -107,13 +101,15 @@ struct CityListView: View {
             $0.navigationViewStyle(StackNavigationViewStyle())
         })
     }
-    
+
     var listCities: some View {
-        
-        let favouriteCitiesNames = self.userSettings.favouriteCities.map{$0.cityName}
-        let foundCities = self.viewModel.getCities().filter{ $0.siteName.lowercased().contains(self.searchText.lowercased()) || $0.countryName.lowercased().contains(self.searchText.lowercased())
-        }
-        
+        let favouriteCitiesNames = userSettings.favouriteCities.map { $0.cityName }
+        let foundCities = viewModel.getCities()
+            .filter { $0.siteName.lowercased()
+                .contains(self.searchText.lowercased()) || $0.countryName.lowercased()
+                .contains(self.searchText.lowercased())
+            }
+
         return VStack {
             ForEach(foundCities, id: \.id) { city in
                 Button(action: {
@@ -123,21 +119,22 @@ struct CityListView: View {
                             self.appState.selectedCity = city
                             self.appState.newCitySelected = true
                             self.presentationMode.wrappedValue.dismiss()
-                        }
-                        else {
+                        } else {
                             self.presentationMode.wrappedValue.dismiss()
                             self.appState.citySelectorClicked = false
                         }
                     }
                 }, label: {
-                    CityRowView(viewModel: city, addCheckMark: favouriteCitiesNames.contains(city.cityName), showCountryName: true)
+                    CityRowView(viewModel: city,
+                                addCheckMark: favouriteCitiesNames.contains(city.cityName),
+                                showCountryName: true)
                 })
-                if (city != foundCities.last){
+                if city != foundCities.last {
                     Divider()
                         .background(AppColors.gray.color)
                 }
             }
-            if (foundCities.count > 0){
+            if foundCities.count > 0 {
                 Divider()
                     .background(AppColors.gray.color)
             }

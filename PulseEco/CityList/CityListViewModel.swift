@@ -1,24 +1,28 @@
-
 import Foundation
 
 class CityListViewModel: ObservableObject {
     @Published var cities: [CityRowViewModel] = []
     @Published var cityModel: [City] = []
     @Published var countries = Set<String>()
-
+    
     init(cities: [City]) {
         self.cityModel = cities
         for city in cities {
-            self.cities.append(CityRowViewModel(cityName: city.cityName, siteName: city.siteName, countryName: city.countryName, countryCode: city.countryCode))
+            self.cities.append(CityRowViewModel(cityName: city.cityName,
+                                                siteName: city.siteName,
+                                                countryName: city.countryName,
+                                                countryCode: city.countryCode))
             self.countries.insert(city.countryName)
-            }
+        }
     }
-    func getCountries() -> [String]{
+    
+    func getCountries() -> [String] {
         return self.countries.sorted {
             $0 < $1
         }
     }
-    func getCities() -> [CityRowViewModel]{
+    
+    func getCities() -> [CityRowViewModel] {
         return self.cities.sorted {
             $0.siteName < $1.siteName
         }

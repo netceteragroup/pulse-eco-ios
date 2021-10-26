@@ -89,9 +89,9 @@ struct LineChartSwiftUI: UIViewRepresentable {
     private func lineChartDataEntries(from sensorReadings: [SensorData]) -> [ChartDataEntry] {
         sensorReadings.map {
             let date = DateFormatter.iso8601Full.date(from: $0.stamp) ?? Date()
-            let pointX =  date.timeIntervalSince1970
-            let pointY = Double($0.value)!
-            return ChartDataEntry(x: pointX, y: pointY)
+            let x =  date.timeIntervalSince1970
+            let y = Double($0.value)!
+            return ChartDataEntry(x: x, y: y)
         }
     }
     

@@ -13,7 +13,8 @@ class CityRowViewModel: ObservableObject, Identifiable, Equatable {
         self.countryName = countryName
         self.siteName = siteName
     }
-    static func ==(lhs: CityRowViewModel, rhs: CityRowViewModel) -> Bool {
+    
+    static func == (lhs: CityRowViewModel, rhs: CityRowViewModel) -> Bool {
         return lhs.id == rhs.id
     }
 }

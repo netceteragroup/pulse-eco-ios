@@ -21,13 +21,12 @@ class AppDataSource: ObservableObject {
     @Published var cancellationTokens: [AnyCancellable] = []
     @Published var loadingCityData: Bool = true
     @Published var loadingMeasures: Bool = true
-    
+
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
     private let networkService = NetworkService()
-    
+
     init(appState: AppState) {
-        // getCities()
         self.appState = appState
         getMeasures()
         getValuesForCity()
@@ -35,9 +34,8 @@ class AppDataSource: ObservableObject {
             self.emptyCityOverallValueList()
             self.getCities()
         } as? AnyCancellable
-        //getOverallValuesForFavoriteCities()
     }
-    
+
     func getMeasures() {
         networkService.downloadMeasures().sink(receiveCompletion: { _ in
             self.loadingMeasures = false
@@ -47,7 +45,7 @@ class AppDataSource: ObservableObject {
         })
             .store(in: &cancelables)
     }
-    
+
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
         self.loadingCityData = true
         Publishers.Zip4(networkService.downloadOverallValuesForCity(cityName: cityName),
@@ -64,21 +62,21 @@ class AppDataSource: ObservableObject {
         }
         .store(in: &cancelables)
     }
-    
+
     func getOverallValuesForFavoriteCities(city: String = "Skopje") {
-        
         self.cities.forEach { city in
-            networkService.downloadOverallValuesForCity(cityName: city.cityName).sink(receiveCompletion: { _ in  }, receiveValue: { values in
-                self.userSettings.cityValues.append(values)
-            })
+            networkService.downloadOverallValuesForCity(cityName: city.cityName)
+                .sink(receiveCompletion: { _ in  }, receiveValue: { values in
+                    self.userSettings.cityValues.append(values)
+                })
                 .store(in: &cancelables)
         }
     }
-    
+
     func emptyCityOverallValueList() {
         self.userSettings.cityValues.removeAll()
     }
-        
+
     func getCities() {
         networkService.downloadCities().sink(receiveCompletion: { _ in
             self.cities.forEach { city in
@@ -93,11 +91,11 @@ class AppDataSource: ObservableObject {
         })
         .store(in: &cancelables)
     }
-    
+
     func getCurrentMeasure(selectedMeasure: String) -> Measure {
-        return measures.filter{ $0.id.lowercased() == selectedMeasure.lowercased()}.first ?? Measure.empty()
+        measures.filter { $0.id.lowercased() == selectedMeasure.lowercased()}.first ?? Measure.empty()
     }
-    
+
     func getDailyAverageDataForSensor(city: City,
                                       measure: Measure?,
                                       sensorId: String) {
