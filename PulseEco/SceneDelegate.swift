@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  PulseEcoSwiftUI
+//  PulseEco
 //
 //  Created by Monika Dimitrova on 5/28/20.
 //  Copyright © 2020 Monika Dimitrova. All rights reserved.

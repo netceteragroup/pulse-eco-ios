@@ -1,6 +1,6 @@
 //
 //  LanguageView.swift
-//  PulseEcoSwiftUI
+//  PulseEco
 //
 //  Created by Darko Skerlevski on 21.9.21.
 //
