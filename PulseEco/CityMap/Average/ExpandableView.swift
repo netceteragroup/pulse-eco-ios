@@ -15,8 +15,7 @@ struct ExpandableView: View {
                 VStack {
                     
                     VStack(alignment: .leading, spacing: 0) {
-                        
-                        RoundedCorners(tl: 8, tr: 8, bl: 0, br: 0)
+                        RoundedCorners(topLeft: 8, topRight: 8, bottomLeft: 0, bottomRight: 0)
                             .fill(Color(UIColor(white: 0, alpha: 0.3)))
                             .frame(height:  20)
                             .overlay(Text(Trema.text(for: "average"))
@@ -70,7 +69,7 @@ struct ExpandableView: View {
                         
                     }
                     .frame(width: self.width)
-                    .background(RoundedCorners(tl: 8, tr: 8, bl: 8, br: 8)
+                    .background(RoundedCorners(topLeft: 8, topRight: 8, bottomLeft: 8, bottomRight: 8)
                                     .fill(Color(self.viewModel.colorForValue())))
                     .onTapGesture {
                         self.isExpanded.toggle()
@@ -82,22 +81,21 @@ struct ExpandableView: View {
                                value: isExpanded)
                     Spacer()
                 }
-                
+
                 Spacer()
-            }            
+            }
         }
-        
     }
-    
+
     var bar: some View {
         ZStack(alignment: .leading) {
             HStack(alignment: .bottom, spacing: 0) {
                 if self.viewModel.bands.count != 0 {
                     ForEach(0...self.viewModel.bands.count - 1, id: \.self) { indx in
-                        RoundedCorners(tl: 0,
-                                       tr: 0,
-                                       bl: indx == 0 ? 8 : 0,
-                                       br: indx == self.viewModel.bands.count - 1 ? 8 : 0)
+                        RoundedCorners(topLeft: 0,
+                                       topRight: 0,
+                                       bottomLeft: indx == 0 ? 8 : 0,
+                                       bottomRight: indx == self.viewModel.bands.count - 1 ? 8 : 0)
                             .fill(Color(self.viewModel.bands[indx].legendColor))
                             .frame(width: CGFloat((self.viewModel.bands[indx].width) *
                                                     Double(self.width) / 100),

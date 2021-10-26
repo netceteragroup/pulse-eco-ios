@@ -24,7 +24,7 @@ class MapViewModel: ObservableObject {
     private (set) var span: MKCoordinateSpan!
     
     init(appState: AppState,
-        appDataSource: AppDataSource) {
+         appDataSource: AppDataSource) {
         self.appState = appState
         self.appDataSource = appDataSource
         self.span = span(for: selectedCity)
@@ -74,7 +74,7 @@ class MapViewModel: ObservableObject {
         guard let measureName = measure else { return }
         let measures = measures ?? appDataSource.measures
         
-        let selectedMeasure = measures.filter{ $0.id.lowercased() == measureName.lowercased()}
+        let selectedMeasure = measures.filter { $0.id.lowercased() == measureName.lowercased()}
             .first
         defer { self.measure = selectedMeasure }
         guard let measure = selectedMeasure else { return }
@@ -96,7 +96,7 @@ class MapViewModel: ObservableObject {
         self.span = span(for: city)
         self.shouldUpdateSensors = true
     }
-    
+
     private func span(for city: City) -> MKCoordinateSpan {
         let borders: [CLLocationCoordinate2D] = city.cityBorderPoints.compactMap {
             guard let lat = Double($0.latitude), let lon = Double($0.longitute) else { return nil }
@@ -116,13 +116,13 @@ class MapViewModel: ObservableObject {
     }
 
     private func combine(sensors: [Sensor],
-                 sensorsData: [SensorData],
-                 selectedMeasure: Measure) -> [SensorPinModel] {
+                         sensorsData: [SensorData],
+                         selectedMeasure: Measure) -> [SensorPinModel] {
         var commonSensors = [SensorPinModel]()
         let sensorMeasurements = sensorsData.filter { sensor in
             sensor.type.lowercased() == selectedMeasure.id.lowercased()
         }
-        let _ = sensors.compactMap{ sensor in
+        let _ = sensors.compactMap { sensor in
             sensorMeasurements.compactMap { sensorMeasurement in
                 if sensorMeasurement.sensorID == sensor.sensorID {
                     commonSensors.append(
@@ -133,22 +133,19 @@ class MapViewModel: ObservableObject {
                                        color: pinColorForSensorValue(selectedMeasure: selectedMeasure,
                                        sensorValue: sensorMeasurement.value),
                                        stamp: sensorMeasurement.stamp)
-                    
                     )
                 }
             }
         }
         return commonSensors
     }
-    
-    private func areIdentical(_ l: [SensorPinModel]?, _ r: [SensorPinModel]?) -> Bool {
-        guard let l = l, let r = r,
-        l.count == r.count else { return false }
-        for (i, v) in l.enumerated() {
-            if !SensorPinModel.isIdentical(v, r: r[i]) { return false }
+
+    private func areIdentical(_ lhs: [SensorPinModel]?, _ rhs: [SensorPinModel]?) -> Bool {
+        guard let lhs = lhs, let rhs = rhs,
+        lhs.count == rhs.count else { return false }
+        for (index, value) in lhs.enumerated() {
+            if !SensorPinModel.isIdentical(lhs: value, rhs: rhs[index]) { return false }
         }
         return true
     }
 }
-
-

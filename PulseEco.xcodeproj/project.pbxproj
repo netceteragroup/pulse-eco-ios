@@ -518,6 +518,7 @@
 				59A4F688247FD2150089D523 /* Frameworks */,
 				59A4F689247FD2150089D523 /* Resources */,
 				DE461D9226E3B1E10084E85B /* Embed Frameworks */,
+				DE36B17C272895A100649177 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -615,6 +616,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}\"/BuildScripts/trema.rb \"${SRCROOT}/pulse-eco-i18n/mobile/translations.trm\" \"${CODESIGNING_FOLDER_PATH}\"\n";
+		};
+		DE36B17C272895A100649177 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -21,7 +21,6 @@ struct AppColors {
     static var allColors: [UIColor] {
         return [blue, green, orange, purple, red, indigo, darkred, darkgreen]
     }
-    static let b = AppColors.darkred.color
     
     static func colorFrom(string: String) -> UIColor {
         switch string {
@@ -38,7 +37,7 @@ struct AppColors {
         default: return gray
         }
     }
-    
+
     static func stringFrom(color: UIColor) -> String {
         switch color {
         case darkred: return "darkred"
@@ -64,7 +63,7 @@ extension UIColor {
 
         self.init(red: newRed, green: newGreen, blue: newBlue, alpha: 1.0)
     }
-    
+
     var color: Color {
         Color(self)
     }

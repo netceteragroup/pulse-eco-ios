@@ -56,7 +56,7 @@ class AverageViewModel: ObservableObject {
     }
     
     func appendBands(measuresList: [Measure]) {
-        let selectedMeasure = measuresList.filter{ $0.id.lowercased() == measure.lowercased()}.first ?? Measure.empty()
+        let selectedMeasure = measuresList.filter { $0.id.lowercased() == measure.lowercased()}.first ?? Measure.empty()
         self.selectedMeasure = selectedMeasure
         self.min = selectedMeasure.legendMin
         self.max = selectedMeasure.legendMax
@@ -104,7 +104,15 @@ class AverageViewModel: ObservableObject {
                 bandRangeWidth = nextValue + abs(Double(self.value) + Double(self.min))
             }
             let width = (bandRangeWidth * 100 ) / self.measureBandsWidth
-            let bandVM = BandVM(from: band.from, to: band.to, legendPoint: band.legendPoint, legendColor: AppColors.colorFrom(string: band.legendColor), markerColor: AppColors.colorFrom(string: band.markerColor), shortGrade: band.shortGrade, grade: band.grade, suggestion: band.suggestion, width: width)
+            let bandVM = BandVM(from: band.from,
+                                to: band.to,
+                                legendPoint: band.legendPoint,
+                                legendColor: AppColors.colorFrom(string: band.legendColor),
+                                markerColor: AppColors.colorFrom(string: band.markerColor),
+                                shortGrade: band.shortGrade,
+                                grade: band.grade,
+                                suggestion: band.suggestion,
+                                width: width)
             self.bands.append(bandVM)
             if self.valueInBand(from: band.from, to: band.to) {
                 currBand = bandVM
@@ -115,9 +123,8 @@ class AverageViewModel: ObservableObject {
         } else if isLowValue() {
             self.currBand = self.bands[0]
         }
-       
     }
-    
+
     func isHugeValue() -> Bool {
         return Int(self.value) >= self.max
     }
@@ -173,7 +180,7 @@ class BandVM: Identifiable {
         self.suggestion = suggestion
         self.width = width
     }
-    
+
     func valueInBand(value: Int?) -> Bool {
         guard let value = value else {
             return false
@@ -181,4 +188,3 @@ class BandVM: Identifiable {
         return value >= from && value <= to
     }
 }
-

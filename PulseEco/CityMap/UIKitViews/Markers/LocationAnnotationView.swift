@@ -6,7 +6,6 @@
 //  Copyright © 2020 Monika Dimitrova. All rights reserved.
 //
 
-//import SwiftUI
 import MapKit
 import Foundation
 import SwiftUI
@@ -37,8 +36,9 @@ class LocationAnnotationView: MKAnnotationView {
 
     // MARK: Setup
 
-    private func setupUI() -> MarkerView {
-        let markerIconView = UINib(nibName: "MarkerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as! MarkerView
+    private func setupUI() -> MarkerView? {
+        guard let markerIconView = UINib(nibName: "MarkerView", bundle: nil)
+                .instantiate(withOwner: nil, options: nil).first as? MarkerView else { return nil }
         markerIconView.setup(withValue: Double(pin!.value)!, color: pin!.color)
         addSubview(markerIconView)
         markerIconView.frame = bounds
@@ -52,7 +52,7 @@ class LocationAnnotationView: MKAnnotationView {
         let selectedSensorView = SelectedSensorView.instanceFromNib()
         selectedSensorView.setTitle(title: self.pin?.title ?? "Sensor")
 
-        let calloutViewFrame = markerView.frame;
+        let calloutViewFrame = markerView.frame
 
         selectedSensorView.frame = CGRect(x: -(selectedSensorView.frame.width - calloutViewFrame.size.width)/2,
                                           y: -calloutViewFrame.size.height + 5,
@@ -62,7 +62,7 @@ class LocationAnnotationView: MKAnnotationView {
         UIView.animate(withDuration: 0.1, animations: {
             selectedSensorView.transform = scaleTransform
             selectedSensorView.layoutIfNeeded()
-        }) { (isCompleted) in
+        }) { isCompleted in
             UIView.animate(withDuration: 0.08, animations: {
                 selectedSensorView.alpha = 1.0
                 selectedSensorView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
