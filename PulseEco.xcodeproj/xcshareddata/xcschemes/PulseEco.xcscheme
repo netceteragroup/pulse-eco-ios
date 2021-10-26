@@ -16,22 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "59A4F68A247FD2150089D523"
                BuildableName = "pulse.eco.app"
-               BlueprintName = "PulseEcoSwiftUI"
-               ReferencedContainer = "container:PulseEcoSwiftUI.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1E44AE1FB34F57289F031F17D4476BEA"
-               BuildableName = "libPods-PulseEcoSwiftUI.a"
-               BlueprintName = "Pods-PulseEcoSwiftUI"
-               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+               BlueprintName = "PulseEco"
+               ReferencedContainer = "container:PulseEco.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -42,26 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "59A4F6A0247FD2160089D523"
-               BuildableName = "PulseEcoSwiftUITests.xctest"
-               BlueprintName = "PulseEcoSwiftUITests"
-               ReferencedContainer = "container:PulseEcoSwiftUI.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "59A4F6AB247FD2160089D523"
-               BuildableName = "PulseEcoSwiftUIUITests.xctest"
-               BlueprintName = "PulseEcoSwiftUIUITests"
-               ReferencedContainer = "container:PulseEcoSwiftUI.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -73,7 +39,6 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      enableGPUValidationMode = "1"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
@@ -81,8 +46,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "59A4F68A247FD2150089D523"
             BuildableName = "pulse.eco.app"
-            BlueprintName = "PulseEcoSwiftUI"
-            ReferencedContainer = "container:PulseEcoSwiftUI.xcodeproj">
+            BlueprintName = "PulseEco"
+            ReferencedContainer = "container:PulseEco.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -98,8 +63,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "59A4F68A247FD2150089D523"
             BuildableName = "pulse.eco.app"
-            BlueprintName = "PulseEcoSwiftUI"
-            ReferencedContainer = "container:PulseEcoSwiftUI.xcodeproj">
+            BlueprintName = "PulseEco"
+            ReferencedContainer = "container:PulseEco.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

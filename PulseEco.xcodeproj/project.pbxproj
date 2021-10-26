@@ -57,8 +57,6 @@
 		59A4F695247FD2160089D523 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59A4F694247FD2160089D523 /* Assets.xcassets */; };
 		59A4F698247FD2160089D523 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59A4F697247FD2160089D523 /* Preview Assets.xcassets */; };
 		59A4F69B247FD2160089D523 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59A4F699247FD2160089D523 /* LaunchScreen.storyboard */; };
-		59A4F6A6247FD2160089D523 /* PulseEcoSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A4F6A5247FD2160089D523 /* PulseEcoSwiftUITests.swift */; };
-		59A4F6B1247FD2160089D523 /* PulseEcoSwiftUIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A4F6B0247FD2160089D523 /* PulseEcoSwiftUIUITests.swift */; };
 		59B0018E24C9BC6A006EA796 /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B0018D24C9BC6A006EA796 /* ChartViewModel.swift */; };
 		59B0019024C9C269006EA796 /* ChartsDateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B0018F24C9C269006EA796 /* ChartsDateValueFormatter.swift */; };
 		59E4991724C5A2E000E89746 /* TitilliumWeb-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4990B24C5A2E000E89746 /* TitilliumWeb-Black.ttf */; };
@@ -90,7 +88,6 @@
 		BA12EB0E2611E3FE005BC654 /* Trema.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB0D2611E3FE005BC654 /* Trema.swift */; };
 		BA12EB102611E503005BC654 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB0F2611E503005BC654 /* Country.swift */; };
 		BA12EB122611E520005BC654 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB112611E520005BC654 /* Countries.swift */; };
-		BA483A2425B06E3400D4E178 /* lightMap.json in Resources */ = {isa = PBXBuildFile; fileRef = BA483A2325B06E3400D4E178 /* lightMap.json */; };
 		BA5C405025D3D1E80010291F /* DailyAverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5C404F25D3D1E80010291F /* DailyAverageView.swift */; };
 		BA5C405225D3D25D0010291F /* WeeklyAverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5C405125D3D25D0010291F /* WeeklyAverageView.swift */; };
 		BA718F0D25BED6B100EC87E0 /* SensorDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA718F0C25BED6B100EC87E0 /* SensorDetailsView.swift */; };
@@ -103,23 +100,6 @@
 		C575B48526EA38DC008611D1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C575B48426EA38DC008611D1 /* Lottie */; };
 		C5E8E7B926EB5CA2002B532C /* RefreshService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8E7B826EB5CA2002B532C /* RefreshService.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		59A4F6A2247FD2160089D523 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 59A4F683247FD2150089D523 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 59A4F68A247FD2150089D523;
-			remoteInfo = PulseEcoSwiftUI;
-		};
-		59A4F6AD247FD2160089D523 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 59A4F683247FD2150089D523 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 59A4F68A247FD2150089D523;
-			remoteInfo = PulseEcoSwiftUI;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		DE461D9226E3B1E10084E85B /* Embed Frameworks */ = {
@@ -180,19 +160,13 @@
 		59A35AD72498F6E300C07786 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		59A35AD92499057C00C07786 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		59A3954D24A206F400D39D64 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		59A4F68B247FD2150089D523 /* PulseEcoSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PulseEcoSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		59A4F68B247FD2150089D523 /* pulse.eco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pulse.eco.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59A4F68E247FD2150089D523 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59A4F690247FD2150089D523 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		59A4F694247FD2160089D523 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59A4F697247FD2160089D523 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		59A4F69A247FD2160089D523 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59A4F69C247FD2160089D523 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		59A4F6A1247FD2160089D523 /* PulseEcoSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PulseEcoSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		59A4F6A5247FD2160089D523 /* PulseEcoSwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseEcoSwiftUITests.swift; sourceTree = "<group>"; };
-		59A4F6A7247FD2160089D523 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		59A4F6AC247FD2160089D523 /* PulseEcoSwiftUIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PulseEcoSwiftUIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		59A4F6B0247FD2160089D523 /* PulseEcoSwiftUIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseEcoSwiftUIUITests.swift; sourceTree = "<group>"; };
-		59A4F6B2247FD2160089D523 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59B0018D24C9BC6A006EA796 /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		59B0018F24C9C269006EA796 /* ChartsDateValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsDateValueFormatter.swift; sourceTree = "<group>"; };
 		59E4990B24C5A2E000E89746 /* TitilliumWeb-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TitilliumWeb-Black.ttf"; sourceTree = "<group>"; };
@@ -243,20 +217,6 @@
 			files = (
 				C575B48226EA38A7008611D1 /* Charts in Frameworks */,
 				C575B48526EA38DC008611D1 /* Lottie in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		59A4F69E247FD2160089D523 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		59A4F6A9247FD2160089D523 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,9 +364,7 @@
 		59A4F682247FD2150089D523 = {
 			isa = PBXGroup;
 			children = (
-				59A4F68D247FD2150089D523 /* PulseEcoSwiftUI */,
-				59A4F6A4247FD2160089D523 /* PulseEcoSwiftUITests */,
-				59A4F6AF247FD2160089D523 /* PulseEcoSwiftUIUITests */,
+				59A4F68D247FD2150089D523 /* PulseEco */,
 				59A4F68C247FD2150089D523 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -414,14 +372,12 @@
 		59A4F68C247FD2150089D523 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				59A4F68B247FD2150089D523 /* PulseEcoSwiftUI.app */,
-				59A4F6A1247FD2160089D523 /* PulseEcoSwiftUITests.xctest */,
-				59A4F6AC247FD2160089D523 /* PulseEcoSwiftUIUITests.xctest */,
+				59A4F68B247FD2150089D523 /* pulse.eco.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		59A4F68D247FD2150089D523 /* PulseEcoSwiftUI */ = {
+		59A4F68D247FD2150089D523 /* PulseEco */ = {
 			isa = PBXGroup;
 			children = (
 				74E46614270326BE0010F80E /* Lottie */,
@@ -446,7 +402,7 @@
 				59F01AD624AC7B1300AD2802 /* AppDataSource.swift */,
 				593C264224BC9E01005152BE /* UserSettings.swift */,
 			);
-			path = PulseEcoSwiftUI;
+			path = PulseEco;
 			sourceTree = "<group>";
 		};
 		59A4F696247FD2160089D523 /* Preview Content */ = {
@@ -455,24 +411,6 @@
 				59A4F697247FD2160089D523 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		59A4F6A4247FD2160089D523 /* PulseEcoSwiftUITests */ = {
-			isa = PBXGroup;
-			children = (
-				59A4F6A5247FD2160089D523 /* PulseEcoSwiftUITests.swift */,
-				59A4F6A7247FD2160089D523 /* Info.plist */,
-			);
-			path = PulseEcoSwiftUITests;
-			sourceTree = "<group>";
-		};
-		59A4F6AF247FD2160089D523 /* PulseEcoSwiftUIUITests */ = {
-			isa = PBXGroup;
-			children = (
-				59A4F6B0247FD2160089D523 /* PulseEcoSwiftUIUITests.swift */,
-				59A4F6B2247FD2160089D523 /* Info.plist */,
-			);
-			path = PulseEcoSwiftUIUITests;
 			sourceTree = "<group>";
 		};
 		59E4990A24C5A2E000E89746 /* Titillium_Web */ = {
@@ -571,9 +509,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		59A4F68A247FD2150089D523 /* PulseEcoSwiftUI */ = {
+		59A4F68A247FD2150089D523 /* PulseEco */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 59A4F6B5247FD2160089D523 /* Build configuration list for PBXNativeTarget "PulseEcoSwiftUI" */;
+			buildConfigurationList = 59A4F6B5247FD2160089D523 /* Build configuration list for PBXNativeTarget "PulseEco" */;
 			buildPhases = (
 				74B053EB26E9F8BF0067B6E3 /* Run Trema Script */,
 				59A4F687247FD2150089D523 /* Sources */,
@@ -585,50 +523,14 @@
 			);
 			dependencies = (
 			);
-			name = PulseEcoSwiftUI;
+			name = PulseEco;
 			packageProductDependencies = (
 				C575B48126EA38A7008611D1 /* Charts */,
 				C575B48426EA38DC008611D1 /* Lottie */,
 			);
 			productName = PulseEcoSwiftUI;
-			productReference = 59A4F68B247FD2150089D523 /* PulseEcoSwiftUI.app */;
+			productReference = 59A4F68B247FD2150089D523 /* pulse.eco.app */;
 			productType = "com.apple.product-type.application";
-		};
-		59A4F6A0247FD2160089D523 /* PulseEcoSwiftUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 59A4F6B8247FD2160089D523 /* Build configuration list for PBXNativeTarget "PulseEcoSwiftUITests" */;
-			buildPhases = (
-				59A4F69D247FD2160089D523 /* Sources */,
-				59A4F69E247FD2160089D523 /* Frameworks */,
-				59A4F69F247FD2160089D523 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				59A4F6A3247FD2160089D523 /* PBXTargetDependency */,
-			);
-			name = PulseEcoSwiftUITests;
-			productName = PulseEcoSwiftUITests;
-			productReference = 59A4F6A1247FD2160089D523 /* PulseEcoSwiftUITests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		59A4F6AB247FD2160089D523 /* PulseEcoSwiftUIUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 59A4F6BB247FD2160089D523 /* Build configuration list for PBXNativeTarget "PulseEcoSwiftUIUITests" */;
-			buildPhases = (
-				59A4F6A8247FD2160089D523 /* Sources */,
-				59A4F6A9247FD2160089D523 /* Frameworks */,
-				59A4F6AA247FD2160089D523 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				59A4F6AE247FD2160089D523 /* PBXTargetDependency */,
-			);
-			name = PulseEcoSwiftUIUITests;
-			productName = PulseEcoSwiftUIUITests;
-			productReference = 59A4F6AC247FD2160089D523 /* PulseEcoSwiftUIUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -643,17 +545,9 @@
 					59A4F68A247FD2150089D523 = {
 						CreatedOnToolsVersion = 11.2.1;
 					};
-					59A4F6A0247FD2160089D523 = {
-						CreatedOnToolsVersion = 11.2.1;
-						TestTargetID = 59A4F68A247FD2150089D523;
-					};
-					59A4F6AB247FD2160089D523 = {
-						CreatedOnToolsVersion = 11.2.1;
-						TestTargetID = 59A4F68A247FD2150089D523;
-					};
 				};
 			};
-			buildConfigurationList = 59A4F686247FD2150089D523 /* Build configuration list for PBXProject "PulseEcoSwiftUI" */;
+			buildConfigurationList = 59A4F686247FD2150089D523 /* Build configuration list for PBXProject "PulseEco" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -670,9 +564,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				59A4F68A247FD2150089D523 /* PulseEcoSwiftUI */,
-				59A4F6A0247FD2160089D523 /* PulseEcoSwiftUITests */,
-				59A4F6AB247FD2160089D523 /* PulseEcoSwiftUIUITests */,
+				59A4F68A247FD2150089D523 /* PulseEco */,
 			);
 		};
 /* End PBXProject section */
@@ -685,7 +577,6 @@
 				59E4991F24C5A2E000E89746 /* TitilliumWeb-SemiBoldItalic.ttf in Resources */,
 				59E4992124C5A2E000E89746 /* TitilliumWeb-Italic.ttf in Resources */,
 				59A4F69B247FD2160089D523 /* LaunchScreen.storyboard in Resources */,
-				BA483A2425B06E3400D4E178 /* lightMap.json in Resources */,
 				59E4991D24C5A2E000E89746 /* TitilliumWeb-ExtraLightItalic.ttf in Resources */,
 				59E4991B24C5A2E000E89746 /* TitilliumWeb-ExtraLight.ttf in Resources */,
 				59E4992024C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf in Resources */,
@@ -701,20 +592,6 @@
 				59A4F695247FD2160089D523 /* Assets.xcassets in Resources */,
 				59E4991924C5A2E000E89746 /* TitilliumWeb-Regular.ttf in Resources */,
 				59E4991724C5A2E000E89746 /* TitilliumWeb-Black.ttf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		59A4F69F247FD2160089D523 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		59A4F6AA247FD2160089D523 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,36 +698,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		59A4F69D247FD2160089D523 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				59A4F6A6247FD2160089D523 /* PulseEcoSwiftUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		59A4F6A8247FD2160089D523 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				59A4F6B1247FD2160089D523 /* PulseEcoSwiftUIUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		59A4F6A3247FD2160089D523 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 59A4F68A247FD2150089D523 /* PulseEcoSwiftUI */;
-			targetProxy = 59A4F6A2247FD2160089D523 /* PBXContainerItemProxy */;
-		};
-		59A4F6AE247FD2160089D523 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 59A4F68A247FD2150089D523 /* PulseEcoSwiftUI */;
-			targetProxy = 59A4F6AD247FD2160089D523 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		59A4F699247FD2160089D523 /* LaunchScreen.storyboard */ = {
@@ -987,17 +835,18 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 52;
-				DEVELOPMENT_ASSET_PATHS = "\"PulseEcoSwiftUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PulseEco/Preview Content\"";
 				DEVELOPMENT_TEAM = LAA69LK8PF;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = PulseEcoSwiftUI/Info.plist;
+				INFOPLIST_FILE = PulseEco/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 4.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.PulseEcoSwiftUI;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse;
+				PRODUCT_MODULE_NAME = PulseEco;
+				PRODUCT_NAME = pulse.eco;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1011,16 +860,17 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 52;
-				DEVELOPMENT_ASSET_PATHS = "\"PulseEcoSwiftUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PulseEco/Preview Content\"";
 				DEVELOPMENT_TEAM = LAA69LK8PF;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = PulseEcoSwiftUI/Info.plist;
+				INFOPLIST_FILE = PulseEco/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 4.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse;
+				PRODUCT_MODULE_NAME = PulseEco;
 				PRODUCT_NAME = pulse.eco;
 				PROVISIONING_PROFILE_SPECIFIER = GenericAppStore;
 				SWIFT_VERSION = 5.0;
@@ -1028,90 +878,10 @@
 			};
 			name = Release;
 		};
-		59A4F6B9247FD2160089D523 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PulseEcoSwiftUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.PulseEcoSwiftUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PulseEcoSwiftUI.app/PulseEcoSwiftUI";
-			};
-			name = Debug;
-		};
-		59A4F6BA247FD2160089D523 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PulseEcoSwiftUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.PulseEcoSwiftUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PulseEcoSwiftUI.app/PulseEcoSwiftUI";
-			};
-			name = Release;
-		};
-		59A4F6BC247FD2160089D523 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PulseEcoSwiftUIUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.PulseEcoSwiftUIUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PulseEcoSwiftUI;
-			};
-			name = Debug;
-		};
-		59A4F6BD247FD2160089D523 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PulseEcoSwiftUIUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.PulseEcoSwiftUIUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PulseEcoSwiftUI;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		59A4F686247FD2150089D523 /* Build configuration list for PBXProject "PulseEcoSwiftUI" */ = {
+		59A4F686247FD2150089D523 /* Build configuration list for PBXProject "PulseEco" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				59A4F6B3247FD2160089D523 /* Debug */,
@@ -1120,29 +890,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		59A4F6B5247FD2160089D523 /* Build configuration list for PBXNativeTarget "PulseEcoSwiftUI" */ = {
+		59A4F6B5247FD2160089D523 /* Build configuration list for PBXNativeTarget "PulseEco" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				59A4F6B6247FD2160089D523 /* Debug */,
 				59A4F6B7247FD2160089D523 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		59A4F6B8247FD2160089D523 /* Build configuration list for PBXNativeTarget "PulseEcoSwiftUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				59A4F6B9247FD2160089D523 /* Debug */,
-				59A4F6BA247FD2160089D523 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		59A4F6BB247FD2160089D523 /* Build configuration list for PBXNativeTarget "PulseEcoSwiftUIUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				59A4F6BC247FD2160089D523 /* Debug */,
-				59A4F6BD247FD2160089D523 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
