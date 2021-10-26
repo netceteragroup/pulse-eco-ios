@@ -1,3 +1,4 @@
+// swiftlint:disable all
 import Foundation
 import CoreLocation
 import UIKit

@@ -47,7 +47,7 @@ struct MapView: UIViewRepresentable {
     }
     
     private func addAnotations(to mapView: MKMapView) {
-        let currentAnnotations = mapView.annotations as! [SensorPinModel]
+        guard let currentAnnotations = mapView.annotations as? [SensorPinModel] else { return }
         mapView.removeAnnotations(currentAnnotations)
         for pin in self.viewModel.sensors {
             mapView.addAnnotation(pin)
@@ -56,7 +56,7 @@ struct MapView: UIViewRepresentable {
             self.viewModel.shouldUpdateSensors = false
         }
     }
-    
+
     private func meters(from zoomLevel: Int) -> Double {
         Double(40000) / Double (2<<zoomLevel) * 20000
     }

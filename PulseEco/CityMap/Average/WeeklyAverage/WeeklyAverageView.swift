@@ -21,8 +21,8 @@ struct WeeklyAverageView: View {
                
                 .padding(.bottom, 20)
             HStack{
-                ForEach(0..<viewModel.dailyAverageViewModels.count) { i in
-                    DailyAverageView(viewModel: viewModel.dailyAverageViewModels[i])
+                ForEach(0..<viewModel.dailyAverageViewModels.count) { index in
+                    DailyAverageView(viewModel: viewModel.dailyAverageViewModels[index])
                 }
             }
         }

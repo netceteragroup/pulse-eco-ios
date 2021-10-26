@@ -84,22 +84,21 @@ struct LineChartSwiftUI: UIViewRepresentable {
             lineChart.leftAxis.addLimitLine(limitLine)
         }
         lineChart.leftAxis.drawLimitLinesBehindDataEnabled = true
-        
     }
     
     private func lineChartDataEntries(from sensorReadings: [SensorData]) -> [ChartDataEntry] {
         sensorReadings.map {
             let date = DateFormatter.iso8601Full.date(from: $0.stamp) ?? Date()
-            let x =  date.timeIntervalSince1970
-            let y = Double($0.value)!
-            return ChartDataEntry(x: x, y: y)
+            let pointX =  date.timeIntervalSince1970
+            let pointY = Double($0.value)!
+            return ChartDataEntry(x: pointX, y: pointY)
         }
     }
     
     private func barDataSets(for measure: Measure,
-                     maxY: Double,
-                     minY: Double,
-                     startDate: Double) -> [BarChartDataSet] {
+                             maxY: Double,
+                             minY: Double,
+                             startDate: Double) -> [BarChartDataSet] {
         var sets = [BarChartDataSet]()
         let negativeBands = measure.bands
             .filter { $0.from < 0 }
@@ -118,7 +117,7 @@ struct LineChartSwiftUI: UIViewRepresentable {
             barDataSet.barBorderColor = AppColors.colorFrom(string: $0.legendColor)
             return barDataSet
         })
-        
+
         return sets.map {
             $0.barBorderWidth = 5
             $0.label = nil
@@ -126,7 +125,7 @@ struct LineChartSwiftUI: UIViewRepresentable {
             return $0
         }
     }
-    
+
    private func getLimitLines(for measure: Measure) -> [ChartLimitLine] {
         measure.bands.compactMap {
             var limitLine: ChartLimitLine?
@@ -144,4 +143,3 @@ struct LineChartSwiftUI: UIViewRepresentable {
         }
     }
 }
-
