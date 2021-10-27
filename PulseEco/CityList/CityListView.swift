@@ -51,8 +51,8 @@ struct CityListView: View {
                                     Button(action: {
                                         if let city = viewModel.cityModel
                                             .first(where: { $0.cityName == city.cityName }) {
+                                            self.userSettings.addFavoriteCity(city)
                                             if self.appState.selectedCity != city {
-                                                self.userSettings.addFavoriteCity(city)
                                                 self.appState.selectedCity = city
                                                 self.appState.newCitySelected = true
                                                 self.presentationMode.wrappedValue.dismiss()
@@ -114,8 +114,8 @@ struct CityListView: View {
             ForEach(foundCities, id: \.id) { city in
                 Button(action: {
                     if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
+                        self.userSettings.addFavoriteCity(city)
                         if self.appState.selectedCity != city {
-                            self.userSettings.addFavoriteCity(city)
                             self.appState.selectedCity = city
                             self.appState.newCitySelected = true
                             self.presentationMode.wrappedValue.dismiss()
