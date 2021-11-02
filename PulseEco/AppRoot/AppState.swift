@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 class AppState: ObservableObject {
    
-    @Published var selectedMeasure: String!
+    @Published var selectedMeasure: String! = ""
     @Published var citySelectorClicked: Bool = false
     @Published var selectedCity: City = UserSettings.selectedCity {
         didSet {
