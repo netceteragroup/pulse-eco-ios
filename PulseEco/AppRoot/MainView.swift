@@ -18,9 +18,8 @@ struct MainView: View {
     private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
     
     private var sensorDetailsViewModel: SensorDetailsViewModel {
-        let selectedMeasure = dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasure)
+        let selectedMeasure = dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId)
         return SensorDetailsViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
-                                      sensorsData: dataSource.sensorsData24h,
                                       selectedMeasure: selectedMeasure,
                                       sensorData24h: dataSource.sensorsData24h,
                                       dailyAverages: dataSource.sensorsDailyAverageData)
@@ -81,7 +80,7 @@ struct MainView: View {
                             Spacer()
                         }
                         VStack {
-                            let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasure,
+                            let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
                                                                  cityName: appState.selectedCity.cityName,
                                                                  measuresList: dataSource.measures,
                                                                  cityValues: dataSource.cityOverall,

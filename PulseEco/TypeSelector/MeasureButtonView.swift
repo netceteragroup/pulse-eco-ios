@@ -7,7 +7,7 @@ struct MeasureButtonView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
             Button(action: {
-                self.appState.selectedMeasure = self.viewModel.id
+                self.appState.selectedMeasureId = self.viewModel.id
                 self.appState.showSensorDetails = false
             }) {
                 VStack(spacing: 0) {

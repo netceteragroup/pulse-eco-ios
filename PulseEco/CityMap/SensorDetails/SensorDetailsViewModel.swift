@@ -24,7 +24,6 @@ class SensorDetailsViewModel: ObservableObject {
     @Published var dailyAverages: [SensorData]
 
     init(sensor: SensorPinModel,
-         sensorsData: [SensorData],
          selectedMeasure: Measure,
          sensorData24h: [SensorData],
          dailyAverages: [SensorData]) {

@@ -29,7 +29,7 @@ class DailyAverageViewModel: Identifiable {
     
     init(sensor: DailyInfoSensor, appState: AppState, dataSource: AppDataSource) {
         self.sensor = sensor
-        self.foregroundColor = colorForValue(type: appState.selectedMeasure,
+        self.foregroundColor = colorForValue(type: appState.selectedMeasureId,
                                              value: sensor.value,
                                              measures: dataSource.measures)
     }

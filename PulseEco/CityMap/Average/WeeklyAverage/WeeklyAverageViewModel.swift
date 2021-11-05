@@ -17,7 +17,7 @@ class WeeklyAverageViewModel: ObservableObject {
     
     init(appState: AppState, dataSource: AppDataSource, averages: [SensorData]) {
         let pastWeekLocalized = Trema.text(for: "past_week")
-        let suffix = "(\(dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasure).unit))"
+        let suffix = "(\(dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId).unit))"
         title = pastWeekLocalized + suffix
         dailyAverageViewModels = transformInfoSensorToViewModel(appState: appState,
                                                                 dataSource: dataSource,

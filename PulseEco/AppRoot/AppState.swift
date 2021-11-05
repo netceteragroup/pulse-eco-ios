@@ -1,8 +1,11 @@
 import Foundation
 import SwiftUI
+import Combine
+
 class AppState: ObservableObject {
-   
-    @Published var selectedMeasure: String! = ""
+    var cancelables = Set<AnyCancellable>()
+    
+    @Published var selectedMeasureId: String = "pm10"
     @Published var citySelectorClicked: Bool = false
     @Published var selectedCity: City = UserSettings.selectedCity {
         didSet {

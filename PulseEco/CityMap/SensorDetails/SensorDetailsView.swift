@@ -17,7 +17,7 @@ struct SensorDetailsView: View {
     private var chartViewModel: ChartViewModel {
         ChartViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
                        sensorsData: dataSource.sensorsData24h,
-                       selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasure))
+                       selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId))
     }
     
     var body: some View {

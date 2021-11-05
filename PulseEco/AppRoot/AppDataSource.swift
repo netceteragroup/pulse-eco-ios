@@ -28,24 +28,28 @@ class AppDataSource: ObservableObject {
 
     init(appState: AppState) {
         self.appState = appState
+        
         getMeasures()
         getValuesForCity()
+        
         subscripiton = RunLoop.main.schedule(after: RunLoop.main.now, interval: .seconds(600)) {
             self.emptyCityOverallValueList()
             self.getCities()
         } as? AnyCancellable
     }
-
+    
     func getMeasures() {
-        networkService.downloadMeasures().sink(receiveCompletion: { _ in
-            self.loadingMeasures = false
-        }, receiveValue: {[unowned self] measures in
-            self.measures = measures
-            self.appState.selectedMeasure = measures.first?.id
-        })
-            .store(in: &cancelables)
-    }
+        networkService.downloadMeasures().sink(receiveCompletion: { [weak self] _ in
+            self?.loadingMeasures = false
+        }, receiveValue: { [weak self] measures in
+            self?.measures = measures
+            if let firstMeasureId = measures.first?.id {
+                self?.appState.selectedMeasureId = firstMeasureId
+            }
 
+        }).store(in: &cancelables)
+    }
+    
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
         self.loadingCityData = true
         Publishers.Zip4(networkService.downloadOverallValuesForCity(cityName: cityName),
@@ -54,23 +58,13 @@ class AppDataSource: ObservableObject {
                         networkService.download24hDataForSensors(cityName: cityName))
             .sink { [weak self] _ in
                 self?.loadingCityData = false
-        } receiveValue: { [unowned self] (cityOverallValues, sensors, sensorsData, sensorsData24) in
-            self.cityOverall = cityOverallValues
-            self.citySensors = sensors
-            self.sensorsData = sensorsData
-            self.sensorsData24h = sensorsData24
+        } receiveValue: { [weak self] (cityOverallValues, sensors, sensorsData, sensorsData24) in
+            self?.cityOverall = cityOverallValues
+            self?.citySensors = sensors
+            self?.sensorsData = sensorsData
+            self?.sensorsData24h = sensorsData24
         }
         .store(in: &cancelables)
-    }
-
-    func getOverallValuesForFavoriteCities(city: String = "Skopje") {
-        self.cities.forEach { city in
-            networkService.downloadOverallValuesForCity(cityName: city.cityName)
-                .sink(receiveCompletion: { _ in  }, receiveValue: { values in
-                    self.userSettings.cityValues.append(values)
-                })
-                .store(in: &cancelables)
-        }
     }
 
     func emptyCityOverallValueList() {

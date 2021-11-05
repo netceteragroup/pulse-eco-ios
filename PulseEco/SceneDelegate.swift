@@ -20,20 +20,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // This delegate does not imply the connecting scene or session are new
     // (see `application:configurationForConnectingSceneSession` instead).
     // Create the SwiftUI view that provides the window contents.
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
-        let appViewModel = AppState()
-        let dataSource = AppDataSource(appState: appViewModel)
-        let mapViewModel = MapViewModel(appState: appViewModel,
-                                        appDataSource: dataSource)
-        self.refreshService = RefreshService(appViewModel: appViewModel, appDataSource: dataSource)
+        
+        let appState = AppState()
+        let dataSource = AppDataSource(appState: appState)
+        
+        let mapViewModel = MapViewModel(appState: appState, appDataSource: dataSource)
+        self.refreshService = RefreshService(appViewModel: appState, appDataSource: dataSource)
         let rootView = MainView(mapViewModel: mapViewModel)
         UITableView.appearance().separatorColor = .clear
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: rootView
-                                                                .environmentObject(appViewModel)
                                                                 .environmentObject(dataSource)
+                                                                .environmentObject(appState)
                                                                 .environmentObject(refreshService))
             self.window = window
             window.makeKeyAndVisible()

@@ -25,8 +25,7 @@ struct CityMapView: View {
     var body: some View {
         
         ZStack {
-            MapView(viewModel: mapViewModel,
-                    appState: appState)
+            MapView(viewModel: mapViewModel, appState: appState)
                 .id("MapView")
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
@@ -51,7 +50,7 @@ struct CityMapView: View {
                 }.padding(.trailing, 15.0)
             }
             
-            AverageView(viewModel: AverageViewModel(measure: self.appState.selectedMeasure,
+            AverageView(viewModel: AverageUtilModel(measureId: self.appState.selectedMeasureId,
                                                     cityName: self.appState.selectedCity.cityName,
                                                     measuresList: self.dataSource.measures,
                                                     cityValues: self.dataSource.cityOverall))
@@ -59,7 +58,7 @@ struct CityMapView: View {
             if self.appState.citySelectorClicked {
                 FavouriteCitiesView(viewModel:
                                         FavouriteCitiesViewModel(
-                                            selectedMeasure: self.appState.selectedMeasure,
+                                            selectedMeasure: self.appState.selectedMeasureId,
                                             favouriteCities: self.userSettings.favouriteCities,
                                             cityValues: self.userSettings.cityValues,
                                             measureList: self.dataSource.measures),
@@ -67,7 +66,6 @@ struct CityMapView: View {
                                     proxy: proxy)
                     .overlay(ShadowOnTopOfView())
                     .animation(nil)
-                
             }
         }
     }
