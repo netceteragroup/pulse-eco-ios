@@ -3,7 +3,7 @@ import Foundation
 import UIKit
 import SwiftUI
 
-struct AppColors {
+struct AppColors {    
     static let darkred = UIColor(named: "darkred")!
     static let red = UIColor(named: "red")!
     static let orange = UIColor(named: "orange")!
@@ -19,6 +19,7 @@ struct AppColors {
     static let lightPurple = UIColor(named: "lightPurple")!
     static let white = UIColor(named: "white")!
     static let black = UIColor(named: "black")!
+    
     static var allColors: [UIColor] {
         return [blue, green, orange, purple, red, indigo, darkred, darkgreen]
     }

@@ -23,8 +23,7 @@ class MapViewModel: ObservableObject {
     
     private (set) var span: MKCoordinateSpan!
     
-    init(appState: AppState,
-         appDataSource: AppDataSource) {
+    init(appState: AppState, appDataSource: AppDataSource) {
         self.appState = appState
         self.appDataSource = appDataSource
         self.span = span(for: selectedCity)
@@ -43,15 +42,18 @@ class MapViewModel: ObservableObject {
         self.appState.$selectedCity.sink { [weak self] city in
             self?.setCity(city)
         }.store(in: &cancellables)
-        self.appState.$selectedMeasure.sink { [weak self] selectedMeasureName in
-            guard let sel = selectedMeasureName else { return }
-            self?.findSelectedMeasure(sel)
+        
+        self.appState.$selectedMeasureId.sink { [weak self] selectedMeasure in
+            self?.findSelectedMeasure(selectedMeasure)
         }.store(in: &cancellables)
+        
         self.appDataSource.$measures.sink { [weak self] measures in
             self?.findSelectedMeasure(self?.measure?.id, measures: measures)
         }.store(in: &cancellables)
+        
         self.appDataSource.$loadingCityData.sink { [unowned self] isLoading in
             guard !isLoading, let selectedMeasure = self.measure else { return }
+            
             let sensors = combine(sensors: self.appDataSource.citySensors,
                                   sensorsData: self.appDataSource.sensorsData,
                                   selectedMeasure: selectedMeasure)
@@ -59,6 +61,7 @@ class MapViewModel: ObservableObject {
             self.shouldUpdateSensors = true
             self.sensors = sensors
         }.store(in: &cancellables)
+        
         self.appDataSource.$sensorsData.sink { [unowned self] data in
             guard let selectedMeasure = self.measure else { return }
             let sensors = combine(sensors: self.appDataSource.citySensors,
@@ -74,14 +77,18 @@ class MapViewModel: ObservableObject {
         guard let measureName = measure else { return }
         let measures = measures ?? appDataSource.measures
         
-        let selectedMeasure = measures.filter { $0.id.lowercased() == measureName.lowercased()}
-            .first
+        let selectedMeasure = measures.filter { $0.id.lowercased() == measureName.lowercased()}.first
+        
         defer { self.measure = selectedMeasure }
+        
         guard let measure = selectedMeasure else { return }
+        
         let sensors = combine(sensors: appDataSource.citySensors,
-                               sensorsData: appDataSource.sensorsData,
+                              sensorsData: appDataSource.sensorsData,
                               selectedMeasure: measure)
+        
         guard !areIdentical(self.sensors, sensors) else { return }
+        
         self.shouldUpdateSensors = true
         self.sensors = sensors
     }

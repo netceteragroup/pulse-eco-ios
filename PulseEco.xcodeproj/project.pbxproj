@@ -18,7 +18,7 @@
 		59103AA024A4B64C00ED9617 /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59103A9F24A4B64C00ED9617 /* DisclaimerView.swift */; };
 		591642A52499FD70000A4F7C /* CityMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591642A42499FD70000A4F7C /* CityMapView.swift */; };
 		591642A72499FE4C000A4F7C /* AverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591642A62499FE4C000A4F7C /* AverageView.swift */; };
-		591642A92499FE9F000A4F7C /* AverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591642A82499FE9F000A4F7C /* AverageViewModel.swift */; };
+		591642A92499FE9F000A4F7C /* AverageUtilModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591642A82499FE9F000A4F7C /* AverageUtilModel.swift */; };
 		591EA1D224C99D5500CA61AE /* ShadowOnTopOfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EA1D124C99D5500CA61AE /* ShadowOnTopOfView.swift */; };
 		592201AB24AA55D900025F1F /* ExpandableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592201AA24AA55D900025F1F /* ExpandableView.swift */; };
 		592201AD24AA656A00025F1F /* NoReadingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592201AC24AA656A00025F1F /* NoReadingsView.swift */; };
@@ -66,7 +66,6 @@
 		59E4991B24C5A2E000E89746 /* TitilliumWeb-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4990F24C5A2E000E89746 /* TitilliumWeb-ExtraLight.ttf */; };
 		59E4991C24C5A2E000E89746 /* TitilliumWeb-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991024C5A2E000E89746 /* TitilliumWeb-BoldItalic.ttf */; };
 		59E4991D24C5A2E000E89746 /* TitilliumWeb-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991124C5A2E000E89746 /* TitilliumWeb-ExtraLightItalic.ttf */; };
-		59E4991E24C5A2E000E89746 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991224C5A2E000E89746 /* OFL.txt */; };
 		59E4991F24C5A2E000E89746 /* TitilliumWeb-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991324C5A2E000E89746 /* TitilliumWeb-SemiBoldItalic.ttf */; };
 		59E4992024C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991424C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf */; };
 		59E4992124C5A2E000E89746 /* TitilliumWeb-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991524C5A2E000E89746 /* TitilliumWeb-Italic.ttf */; };
@@ -78,7 +77,6 @@
 		59FAD1D42490C82600AC36A5 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* City.swift */; };
 		59FAD1D62490D76200AC36A5 /* SensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* SensorData.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
-		746C4EC026FDF9A000183A91 /* TestContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EBF26FDF9A000183A91 /* TestContentView.swift */; };
 		746C4EC226FDFDB500183A91 /* ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */; };
 		74E46618270327000010F80E /* logo-pulse-loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 74E46617270327000010F80E /* logo-pulse-loader.json */; };
 		74E4661A2703272F0010F80E /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E466192703272F0010F80E /* LottieView.swift */; };
@@ -99,9 +97,93 @@
 		C575B48226EA38A7008611D1 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C575B48126EA38A7008611D1 /* Charts */; };
 		C575B48526EA38DC008611D1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C575B48426EA38DC008611D1 /* Lottie */; };
 		C5E8E7B926EB5CA2002B532C /* RefreshService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8E7B826EB5CA2002B532C /* RefreshService.swift */; };
+		D01FA8C42737FAEF0062531E /* SliderCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59504C1424B46C7A00EA4AFF /* SliderCircle.swift */; };
+		D03524C6273603800089E11C /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* City.swift */; };
+		D03524C7273603800089E11C /* Measure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596619362492703800DACF67 /* Measure.swift */; };
+		D03524C8273603800089E11C /* SensorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999C7FD24ADFAC40038EED7 /* SensorTypes.swift */; };
+		D03524C9273603800089E11C /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
+		D03524CA273603800089E11C /* SensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* SensorData.swift */; };
+		D03524CB273603800089E11C /* SensorPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC09D8425E5183400F794F9 /* SensorPin.swift */; };
+		D03524CC273603FB0089E11C /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D12490C27200AC36A5 /* NetworkService.swift */; };
+		D03524CD273604D60089E11C /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593C264224BC9E01005152BE /* UserSettings.swift */; };
+		D03524CE2736050F0089E11C /* Trema.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB0D2611E3FE005BC654 /* Trema.swift */; };
+		D03524CF273605410089E11C /* ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */; };
+		D03524D0273605410089E11C /* DateFormatterUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */; };
+		D03524D32736876C0089E11C /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A35AD12498F1C800C07786 /* AppColors.swift */; };
+		D03524D42736885A0089E11C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59A4F694247FD2160089D523 /* Assets.xcassets */; };
+		D03524D5273688600089E11C /* TitilliumWeb-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991024C5A2E000E89746 /* TitilliumWeb-BoldItalic.ttf */; };
+		D03524D6273688600089E11C /* TitilliumWeb-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4990B24C5A2E000E89746 /* TitilliumWeb-Black.ttf */; };
+		D03524D7273688600089E11C /* TitilliumWeb-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991124C5A2E000E89746 /* TitilliumWeb-ExtraLightItalic.ttf */; };
+		D03524D8273688600089E11C /* TitilliumWeb-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991424C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf */; };
+		D03524D9273688600089E11C /* TitilliumWeb-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4990C24C5A2E000E89746 /* TitilliumWeb-Bold.ttf */; };
+		D03524DA273688600089E11C /* TitilliumWeb-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4990E24C5A2E000E89746 /* TitilliumWeb-SemiBold.ttf */; };
+		D03524DC273688600089E11C /* TitilliumWeb-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991324C5A2E000E89746 /* TitilliumWeb-SemiBoldItalic.ttf */; };
+		D03524DD273688600089E11C /* TitilliumWeb-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991624C5A2E000E89746 /* TitilliumWeb-Light.ttf */; };
+		D03524DE273688600089E11C /* TitilliumWeb-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4990D24C5A2E000E89746 /* TitilliumWeb-Regular.ttf */; };
+		D03524DF273688600089E11C /* TitilliumWeb-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4990F24C5A2E000E89746 /* TitilliumWeb-ExtraLight.ttf */; };
+		D03524E0273688600089E11C /* TitilliumWeb-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991524C5A2E000E89746 /* TitilliumWeb-Italic.ttf */; };
+		D03524E72736E6140089E11C /* AverageUtilModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591642A82499FE9F000A4F7C /* AverageUtilModel.swift */; };
+		D03524E927372EBC0089E11C /* WidgetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03524E827372EBC0089E11C /* WidgetDataSource.swift */; };
+		D03EC8EF2735E0F300E6E16F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03EC8D62735C3D100E6E16F /* WidgetKit.framework */; };
+		D03EC8F02735E0F300E6E16F /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03EC8D82735C3D100E6E16F /* SwiftUI.framework */; };
+		D03EC8F32735E0F300E6E16F /* PulseEcoWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03EC8F22735E0F300E6E16F /* PulseEcoWidget.swift */; };
+		D03EC8F62735E0F500E6E16F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D03EC8F52735E0F500E6E16F /* Assets.xcassets */; };
+		D03EC8F82735E0F500E6E16F /* PulseEcoWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D03EC8F42735E0F300E6E16F /* PulseEcoWidget.intentdefinition */; };
+		D03EC8F92735E0F500E6E16F /* PulseEcoWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D03EC8F42735E0F300E6E16F /* PulseEcoWidget.intentdefinition */; };
+		D03EC8FC2735E0F500E6E16F /* PulseEcoWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D03EC8EE2735E0F300E6E16F /* PulseEcoWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D03EC9022735E1DA00E6E16F /* WidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03EC9002735E1D600E6E16F /* WidgetEntryView.swift */; };
+		D03EC9052735E7EC00E6E16F /* WidgetTimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03EC9032735E77A00E6E16F /* WidgetTimelineProvider.swift */; };
+		D0A3F8C62775FC0700491666 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A3F8B42775FA2900491666 /* Intents.framework */; };
+		D0A3F8C92775FC0700491666 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3F8C82775FC0700491666 /* IntentHandler.swift */; };
+		D0A3F8CD2775FC0700491666 /* PulseEcoWidgetIntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D0A3F8C52775FC0700491666 /* PulseEcoWidgetIntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D0A3F8D12775FC3D00491666 /* PulseEcoWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D03EC8F42735E0F300E6E16F /* PulseEcoWidget.intentdefinition */; };
+		D0AA0A7D273766C20097D0B0 /* WidgetSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AA0A7C273766C20097D0B0 /* WidgetSmallView.swift */; };
+		D0AA0A7F2737678D0097D0B0 /* WidgetMediumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AA0A7E2737678D0097D0B0 /* WidgetMediumView.swift */; };
+		D0CBADF32776108900526050 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D12490C27200AC36A5 /* NetworkService.swift */; };
+		D0CBADF42776108E00526050 /* Measure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596619362492703800DACF67 /* Measure.swift */; };
+		D0CBADF52776108E00526050 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* City.swift */; };
+		D0CBADF62776108E00526050 /* SensorPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC09D8425E5183400F794F9 /* SensorPin.swift */; };
+		D0CBADF72776108E00526050 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
+		D0CBADF82776108E00526050 /* SensorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999C7FD24ADFAC40038EED7 /* SensorTypes.swift */; };
+		D0CBADF92776108E00526050 /* SensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* SensorData.swift */; };
+		D0CBADFA2776108E00526050 /* AverageUtilModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591642A82499FE9F000A4F7C /* AverageUtilModel.swift */; };
+		D0CBADFB27761A9600526050 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593C264224BC9E01005152BE /* UserSettings.swift */; };
+		D0CBADFC27761A9600526050 /* Trema.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB0D2611E3FE005BC654 /* Trema.swift */; };
+		D0CBADFD27761A9600526050 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A35AD12498F1C800C07786 /* AppColors.swift */; };
+		D0CBADFE27761A9E00526050 /* ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */; };
+		D0CBADFF27761A9E00526050 /* DateFormatterUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D03EC8FA2735E0F500E6E16F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59A4F683247FD2150089D523 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D03EC8ED2735E0F300E6E16F;
+			remoteInfo = PulseEcoWidgetExtension;
+		};
+		D0A3F8CB2775FC0700491666 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59A4F683247FD2150089D523 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0A3F8C42775FC0700491666;
+			remoteInfo = PulseEcoWidgetIntentHandler;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		D03EC8E92735C3D300E6E16F /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D03EC8FC2735E0F500E6E16F /* PulseEcoWidgetExtension.appex in Embed App Extensions */,
+				D0A3F8CD2775FC0700491666 /* PulseEcoWidgetIntentHandler.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DE461D9226E3B1E10084E85B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -126,7 +208,7 @@
 		59103A9F24A4B64C00ED9617 /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
 		591642A42499FD70000A4F7C /* CityMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityMapView.swift; sourceTree = "<group>"; };
 		591642A62499FE4C000A4F7C /* AverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageView.swift; sourceTree = "<group>"; };
-		591642A82499FE9F000A4F7C /* AverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageViewModel.swift; sourceTree = "<group>"; };
+		591642A82499FE9F000A4F7C /* AverageUtilModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageUtilModel.swift; sourceTree = "<group>"; };
 		591EA1D124C99D5500CA61AE /* ShadowOnTopOfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowOnTopOfView.swift; sourceTree = "<group>"; };
 		592201AA24AA55D900025F1F /* ExpandableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableView.swift; sourceTree = "<group>"; };
 		592201AC24AA656A00025F1F /* NoReadingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoReadingsView.swift; sourceTree = "<group>"; };
@@ -176,7 +258,6 @@
 		59E4990F24C5A2E000E89746 /* TitilliumWeb-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TitilliumWeb-ExtraLight.ttf"; sourceTree = "<group>"; };
 		59E4991024C5A2E000E89746 /* TitilliumWeb-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TitilliumWeb-BoldItalic.ttf"; sourceTree = "<group>"; };
 		59E4991124C5A2E000E89746 /* TitilliumWeb-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TitilliumWeb-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
-		59E4991224C5A2E000E89746 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		59E4991324C5A2E000E89746 /* TitilliumWeb-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TitilliumWeb-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		59E4991424C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TitilliumWeb-LightItalic.ttf"; sourceTree = "<group>"; };
 		59E4991524C5A2E000E89746 /* TitilliumWeb-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TitilliumWeb-Italic.ttf"; sourceTree = "<group>"; };
@@ -188,7 +269,6 @@
 		59FAD1D32490C82600AC36A5 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		59FAD1D52490D76200AC36A5 /* SensorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorData.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
-		746C4EBF26FDF9A000183A91 /* TestContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestContentView.swift; sourceTree = "<group>"; };
 		746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalModifier.swift; sourceTree = "<group>"; };
 		74E46617270327000010F80E /* logo-pulse-loader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "logo-pulse-loader.json"; sourceTree = "<group>"; };
 		74E466192703272F0010F80E /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -198,7 +278,6 @@
 		BA12EB0D2611E3FE005BC654 /* Trema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trema.swift; sourceTree = "<group>"; };
 		BA12EB0F2611E503005BC654 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		BA12EB112611E520005BC654 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
-		BA483A2325B06E3400D4E178 /* lightMap.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = lightMap.json; path = ../../../pulse.eco/Assets/lightMap.json; sourceTree = "<group>"; };
 		BA5C404F25D3D1E80010291F /* DailyAverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageView.swift; sourceTree = "<group>"; };
 		BA5C405125D3D25D0010291F /* WeeklyAverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageView.swift; sourceTree = "<group>"; };
 		BA718F0C25BED6B100EC87E0 /* SensorDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDetailsView.swift; sourceTree = "<group>"; };
@@ -208,6 +287,22 @@
 		C547A3C926FC6E09002BE2A5 /* CityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListView.swift; sourceTree = "<group>"; };
 		C547DABE26F9D48F006A6F76 /* LanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageView.swift; sourceTree = "<group>"; };
 		C5E8E7B826EB5CA2002B532C /* RefreshService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshService.swift; sourceTree = "<group>"; };
+		D03524E827372EBC0089E11C /* WidgetDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetDataSource.swift; sourceTree = "<group>"; };
+		D03EC8D62735C3D100E6E16F /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		D03EC8D82735C3D100E6E16F /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		D03EC8EE2735E0F300E6E16F /* PulseEcoWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PulseEcoWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D03EC8F22735E0F300E6E16F /* PulseEcoWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseEcoWidget.swift; sourceTree = "<group>"; };
+		D03EC8F42735E0F300E6E16F /* PulseEcoWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = PulseEcoWidget.intentdefinition; sourceTree = "<group>"; };
+		D03EC8F52735E0F500E6E16F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D03EC8F72735E0F500E6E16F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D03EC9002735E1D600E6E16F /* WidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEntryView.swift; sourceTree = "<group>"; };
+		D03EC9032735E77A00E6E16F /* WidgetTimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTimelineProvider.swift; sourceTree = "<group>"; };
+		D0A3F8B42775FA2900491666 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		D0A3F8C52775FC0700491666 /* PulseEcoWidgetIntentHandler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PulseEcoWidgetIntentHandler.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0A3F8C82775FC0700491666 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		D0A3F8CA2775FC0700491666 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0AA0A7C273766C20097D0B0 /* WidgetSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSmallView.swift; sourceTree = "<group>"; };
+		D0AA0A7E2737678D0097D0B0 /* WidgetMediumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetMediumView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +312,23 @@
 			files = (
 				C575B48226EA38A7008611D1 /* Charts in Frameworks */,
 				C575B48526EA38DC008611D1 /* Lottie in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D03EC8EB2735E0F300E6E16F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D03EC8F02735E0F300E6E16F /* SwiftUI.framework in Frameworks */,
+				D03EC8EF2735E0F300E6E16F /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0A3F8C22775FC0700491666 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0A3F8C62775FC0700491666 /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +382,6 @@
 				59504C0E24B46B9F00EA4AFF /* RoundedCorners.swift */,
 				59504C1024B46BF100EA4AFF /* NavigationBarModifier.swift */,
 				59504C1224B46C2D00EA4AFF /* LoadingView.swift */,
-				59504C1424B46C7A00EA4AFF /* SliderCircle.swift */,
 				59504C1624B46CA700EA4AFF /* LineGraph.swift */,
 				59504C1824B46CC700EA4AFF /* ChildSizeReader.swift */,
 				59504C1A24B46CE500EA4AFF /* SizePreferenceKey.swift */,
@@ -307,7 +418,6 @@
 			isa = PBXGroup;
 			children = (
 				BAA04E2525C8156700B503A1 /* WeeklyAverage */,
-				591642A82499FE9F000A4F7C /* AverageViewModel.swift */,
 				591642A62499FE4C000A4F7C /* AverageView.swift */,
 				592201AA24AA55D900025F1F /* ExpandableView.swift */,
 				592201AC24AA656A00025F1F /* NoReadingsView.swift */,
@@ -356,7 +466,7 @@
 			children = (
 				59A35AC12498EBB600C07786 /* MainView.swift */,
 				59A3954D24A206F400D39D64 /* AppState.swift */,
-				746C4EBF26FDF9A000183A91 /* TestContentView.swift */,
+				59F01AD624AC7B1300AD2802 /* AppDataSource.swift */,
 			);
 			path = AppRoot;
 			sourceTree = "<group>";
@@ -364,7 +474,11 @@
 		59A4F682247FD2150089D523 = {
 			isa = PBXGroup;
 			children = (
+				D03524C4273602AA0089E11C /* Shared */,
 				59A4F68D247FD2150089D523 /* PulseEco */,
+				D03EC8F12735E0F300E6E16F /* PulseEcoWidget */,
+				D0A3F8C72775FC0700491666 /* PulseEcoWidgetIntentHandler */,
+				D03EC8D52735C3D100E6E16F /* Frameworks */,
 				59A4F68C247FD2150089D523 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -373,6 +487,8 @@
 			isa = PBXGroup;
 			children = (
 				59A4F68B247FD2150089D523 /* pulse.eco.app */,
+				D03EC8EE2735E0F300E6E16F /* PulseEcoWidgetExtension.appex */,
+				D0A3F8C52775FC0700491666 /* PulseEcoWidgetIntentHandler.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -381,26 +497,21 @@
 			isa = PBXGroup;
 			children = (
 				59A35ACC2498EDFC00C07786 /* AppRoot */,
-				BA483A2225B06E1300D4E178 /* Assets */,
 				5997F73924A370100035BEEB /* CityList */,
 				5997F73624A36F780035BEEB /* CityMap */,
 				59504C0D24B46B7600EA4AFF /* CustomViews */,
 				59103A9E24A4B62F00ED9617 /* Disclamer */,
 				BA12EB0C2611E198005BC654 /* LanguageChange */,
 				74E46614270326BE0010F80E /* Lottie */,
-				59FAD1D02490BDBF00AC36A5 /* Models */,
 				59A4F696247FD2160089D523 /* Preview Content */,
 				74F419AC26F4886500E433A7 /* Services */,
 				5997F73A24A370EF0035BEEB /* TypeSelector */,
-				C52F371B26F240CC007813B0 /* Utility */,
-				59A35AD12498F1C800C07786 /* AppColors.swift */,
-				59F01AD624AC7B1300AD2802 /* AppDataSource.swift */,
+				D03524D22736055A0089E11C /* Utility */,
 				59A4F68E247FD2150089D523 /* AppDelegate.swift */,
 				59A35AD92499057C00C07786 /* Constants.swift */,
 				59A4F69C247FD2160089D523 /* Info.plist */,
 				59A4F699247FD2160089D523 /* LaunchScreen.storyboard */,
 				59A4F690247FD2150089D523 /* SceneDelegate.swift */,
-				593C264224BC9E01005152BE /* UserSettings.swift */,
 			);
 			path = PulseEco;
 			sourceTree = "<group>";
@@ -423,7 +534,6 @@
 				59E4990F24C5A2E000E89746 /* TitilliumWeb-ExtraLight.ttf */,
 				59E4991024C5A2E000E89746 /* TitilliumWeb-BoldItalic.ttf */,
 				59E4991124C5A2E000E89746 /* TitilliumWeb-ExtraLightItalic.ttf */,
-				59E4991224C5A2E000E89746 /* OFL.txt */,
 				59E4991324C5A2E000E89746 /* TitilliumWeb-SemiBoldItalic.ttf */,
 				59E4991424C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf */,
 				59E4991524C5A2E000E89746 /* TitilliumWeb-Italic.ttf */,
@@ -435,6 +545,7 @@
 		59FAD1D02490BDBF00AC36A5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				591642A82499FE9F000A4F7C /* AverageUtilModel.swift */,
 				5999C7FD24ADFAC40038EED7 /* SensorTypes.swift */,
 				59FAD1D32490C82600AC36A5 /* City.swift */,
 				59FAD1D52490D76200AC36A5 /* SensorData.swift */,
@@ -457,7 +568,6 @@
 		74F419AC26F4886500E433A7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				59FAD1D12490C27200AC36A5 /* NetworkService.swift */,
 				C5E8E7B826EB5CA2002B532C /* RefreshService.swift */,
 			);
 			path = Services;
@@ -466,7 +576,6 @@
 		BA12EB0C2611E198005BC654 /* LanguageChange */ = {
 			isa = PBXGroup;
 			children = (
-				BA12EB0D2611E3FE005BC654 /* Trema.swift */,
 				BA12EB0F2611E503005BC654 /* Country.swift */,
 				BA12EB112611E520005BC654 /* Countries.swift */,
 				C547DABE26F9D48F006A6F76 /* LanguageView.swift */,
@@ -479,7 +588,6 @@
 			children = (
 				59E4990A24C5A2E000E89746 /* Titillium_Web */,
 				59A4F694247FD2160089D523 /* Assets.xcassets */,
-				BA483A2325B06E3400D4E178 /* lightMap.json */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -500,10 +608,83 @@
 			isa = PBXGroup;
 			children = (
 				5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */,
-				C52F371C26F240FC007813B0 /* KeyboardDismissModifier.swift */,
 				746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		D01FA8C32737FAD70062531E /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				59504C1424B46C7A00EA4AFF /* SliderCircle.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		D03524C4273602AA0089E11C /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				593C264224BC9E01005152BE /* UserSettings.swift */,
+				59FAD1D12490C27200AC36A5 /* NetworkService.swift */,
+				BA12EB0D2611E3FE005BC654 /* Trema.swift */,
+				59A35AD12498F1C800C07786 /* AppColors.swift */,
+				D01FA8C32737FAD70062531E /* CustomViews */,
+				BA483A2225B06E1300D4E178 /* Assets */,
+				59FAD1D02490BDBF00AC36A5 /* Models */,
+				C52F371B26F240CC007813B0 /* Utility */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		D03524D22736055A0089E11C /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				C52F371C26F240FC007813B0 /* KeyboardDismissModifier.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		D03EC8D52735C3D100E6E16F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D03EC8D62735C3D100E6E16F /* WidgetKit.framework */,
+				D03EC8D82735C3D100E6E16F /* SwiftUI.framework */,
+				D0A3F8B42775FA2900491666 /* Intents.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D03EC8F12735E0F300E6E16F /* PulseEcoWidget */ = {
+			isa = PBXGroup;
+			children = (
+				D03EC8F22735E0F300E6E16F /* PulseEcoWidget.swift */,
+				D03EC9032735E77A00E6E16F /* WidgetTimelineProvider.swift */,
+				D03524E827372EBC0089E11C /* WidgetDataSource.swift */,
+				D0AA0A7B273765F20097D0B0 /* Views */,
+				D03EC8F42735E0F300E6E16F /* PulseEcoWidget.intentdefinition */,
+				D03EC8F52735E0F500E6E16F /* Assets.xcassets */,
+				D03EC8F72735E0F500E6E16F /* Info.plist */,
+			);
+			path = PulseEcoWidget;
+			sourceTree = "<group>";
+		};
+		D0A3F8C72775FC0700491666 /* PulseEcoWidgetIntentHandler */ = {
+			isa = PBXGroup;
+			children = (
+				D0A3F8C82775FC0700491666 /* IntentHandler.swift */,
+				D0A3F8CA2775FC0700491666 /* Info.plist */,
+			);
+			path = PulseEcoWidgetIntentHandler;
+			sourceTree = "<group>";
+		};
+		D0AA0A7B273765F20097D0B0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D03EC9002735E1D600E6E16F /* WidgetEntryView.swift */,
+				D0AA0A7C273766C20097D0B0 /* WidgetSmallView.swift */,
+				D0AA0A7E2737678D0097D0B0 /* WidgetMediumView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -519,10 +700,13 @@
 				59A4F689247FD2150089D523 /* Resources */,
 				DE461D9226E3B1E10084E85B /* Embed Frameworks */,
 				DE36B17C272895A100649177 /* SwiftLint */,
+				D03EC8E92735C3D300E6E16F /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D03EC8FB2735E0F500E6E16F /* PBXTargetDependency */,
+				D0A3F8CC2775FC0700491666 /* PBXTargetDependency */,
 			);
 			name = PulseEco;
 			packageProductDependencies = (
@@ -533,18 +717,58 @@
 			productReference = 59A4F68B247FD2150089D523 /* pulse.eco.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D03EC8ED2735E0F300E6E16F /* PulseEcoWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D03EC8FD2735E0F500E6E16F /* Build configuration list for PBXNativeTarget "PulseEcoWidgetExtension" */;
+			buildPhases = (
+				D03EC8EA2735E0F300E6E16F /* Sources */,
+				D03EC8EB2735E0F300E6E16F /* Frameworks */,
+				D03EC8EC2735E0F300E6E16F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PulseEcoWidgetExtension;
+			productName = PulseEcoWidgetExtension;
+			productReference = D03EC8EE2735E0F300E6E16F /* PulseEcoWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		D0A3F8C42775FC0700491666 /* PulseEcoWidgetIntentHandler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0A3F8CE2775FC0700491666 /* Build configuration list for PBXNativeTarget "PulseEcoWidgetIntentHandler" */;
+			buildPhases = (
+				D0A3F8C12775FC0700491666 /* Sources */,
+				D0A3F8C22775FC0700491666 /* Frameworks */,
+				D0A3F8C32775FC0700491666 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PulseEcoWidgetIntentHandler;
+			productName = PulseEcoWidgetIntentHandler;
+			productReference = D0A3F8C52775FC0700491666 /* PulseEcoWidgetIntentHandler.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		59A4F683247FD2150089D523 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1120;
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Monika Dimitrova";
 				TargetAttributes = {
 					59A4F68A247FD2150089D523 = {
 						CreatedOnToolsVersion = 11.2.1;
+					};
+					D03EC8ED2735E0F300E6E16F = {
+						CreatedOnToolsVersion = 13.2;
+					};
+					D0A3F8C42775FC0700491666 = {
+						CreatedOnToolsVersion = 13.1;
 					};
 				};
 			};
@@ -566,6 +790,8 @@
 			projectRoot = "";
 			targets = (
 				59A4F68A247FD2150089D523 /* PulseEco */,
+				D03EC8ED2735E0F300E6E16F /* PulseEcoWidgetExtension */,
+				D0A3F8C42775FC0700491666 /* PulseEcoWidgetIntentHandler */,
 			);
 		};
 /* End PBXProject section */
@@ -587,12 +813,38 @@
 				74E46618270327000010F80E /* logo-pulse-loader.json in Resources */,
 				59E4991824C5A2E000E89746 /* TitilliumWeb-Bold.ttf in Resources */,
 				59E4991A24C5A2E000E89746 /* TitilliumWeb-SemiBold.ttf in Resources */,
-				59E4991E24C5A2E000E89746 /* OFL.txt in Resources */,
 				59E4992224C5A2E000E89746 /* TitilliumWeb-Light.ttf in Resources */,
 				59A4F698247FD2160089D523 /* Preview Assets.xcassets in Resources */,
 				59A4F695247FD2160089D523 /* Assets.xcassets in Resources */,
 				59E4991924C5A2E000E89746 /* TitilliumWeb-Regular.ttf in Resources */,
 				59E4991724C5A2E000E89746 /* TitilliumWeb-Black.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D03EC8EC2735E0F300E6E16F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D03524D7273688600089E11C /* TitilliumWeb-ExtraLightItalic.ttf in Resources */,
+				D03524D42736885A0089E11C /* Assets.xcassets in Resources */,
+				D03524D5273688600089E11C /* TitilliumWeb-BoldItalic.ttf in Resources */,
+				D03524DC273688600089E11C /* TitilliumWeb-SemiBoldItalic.ttf in Resources */,
+				D03524E0273688600089E11C /* TitilliumWeb-Italic.ttf in Resources */,
+				D03524D9273688600089E11C /* TitilliumWeb-Bold.ttf in Resources */,
+				D03524DE273688600089E11C /* TitilliumWeb-Regular.ttf in Resources */,
+				D03524DA273688600089E11C /* TitilliumWeb-SemiBold.ttf in Resources */,
+				D03EC8F62735E0F500E6E16F /* Assets.xcassets in Resources */,
+				D03524DD273688600089E11C /* TitilliumWeb-Light.ttf in Resources */,
+				D03524D8273688600089E11C /* TitilliumWeb-LightItalic.ttf in Resources */,
+				D03524DF273688600089E11C /* TitilliumWeb-ExtraLight.ttf in Resources */,
+				D03524D6273688600089E11C /* TitilliumWeb-Black.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0A3F8C32775FC0700491666 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,6 +922,7 @@
 				3288687924B5C053009CC56D /* UIViewExtension.swift in Sources */,
 				59504C0624B45B8900EA4AFF /* DisclaimerViewModel.swift in Sources */,
 				591642A52499FD70000A4F7C /* CityMapView.swift in Sources */,
+				D03EC8F92735E0F500E6E16F /* PulseEcoWidget.intentdefinition in Sources */,
 				59504C1324B46C2D00EA4AFF /* LoadingView.swift in Sources */,
 				BA12EB122611E520005BC654 /* Countries.swift in Sources */,
 				59F5EFDC249CC5A40095FE71 /* SensorPinModel.swift in Sources */,
@@ -680,7 +933,7 @@
 				5964349F24B4853300943978 /* NoReadingsViewModel.swift in Sources */,
 				59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */,
 				59A35AC22498EBB600C07786 /* MainView.swift in Sources */,
-				591642A92499FE9F000A4F7C /* AverageViewModel.swift in Sources */,
+				591642A92499FE9F000A4F7C /* AverageUtilModel.swift in Sources */,
 				593C263A24BC8B59005152BE /* CityListViewModel.swift in Sources */,
 				3288687724B51F5E009CC56D /* MarkerView.swift in Sources */,
 				BA718F0D25BED6B100EC87E0 /* SensorDetailsView.swift in Sources */,
@@ -691,7 +944,6 @@
 				59504C1924B46CC700EA4AFF /* ChildSizeReader.swift in Sources */,
 				74E4661A2703272F0010F80E /* LottieView.swift in Sources */,
 				59504C0F24B46B9F00EA4AFF /* RoundedCorners.swift in Sources */,
-				746C4EC026FDF9A000183A91 /* TestContentView.swift in Sources */,
 				591EA1D224C99D5500CA61AE /* ShadowOnTopOfView.swift in Sources */,
 				59A3954E24A206F400D39D64 /* AppState.swift in Sources */,
 				BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */,
@@ -717,7 +969,70 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D03EC8EA2735E0F300E6E16F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D03524C7273603800089E11C /* Measure.swift in Sources */,
+				D0AA0A7D273766C20097D0B0 /* WidgetSmallView.swift in Sources */,
+				D03524CF273605410089E11C /* ConditionalModifier.swift in Sources */,
+				D03EC8F82735E0F500E6E16F /* PulseEcoWidget.intentdefinition in Sources */,
+				D03524CA273603800089E11C /* SensorData.swift in Sources */,
+				D03524E927372EBC0089E11C /* WidgetDataSource.swift in Sources */,
+				D03524CD273604D60089E11C /* UserSettings.swift in Sources */,
+				D03524D0273605410089E11C /* DateFormatterUtils.swift in Sources */,
+				D03524C8273603800089E11C /* SensorTypes.swift in Sources */,
+				D03524C6273603800089E11C /* City.swift in Sources */,
+				D03524CB273603800089E11C /* SensorPin.swift in Sources */,
+				D03EC9052735E7EC00E6E16F /* WidgetTimelineProvider.swift in Sources */,
+				D03EC8F32735E0F300E6E16F /* PulseEcoWidget.swift in Sources */,
+				D01FA8C42737FAEF0062531E /* SliderCircle.swift in Sources */,
+				D03EC9022735E1DA00E6E16F /* WidgetEntryView.swift in Sources */,
+				D03524E72736E6140089E11C /* AverageUtilModel.swift in Sources */,
+				D03524D32736876C0089E11C /* AppColors.swift in Sources */,
+				D03524CC273603FB0089E11C /* NetworkService.swift in Sources */,
+				D0AA0A7F2737678D0097D0B0 /* WidgetMediumView.swift in Sources */,
+				D03524C9273603800089E11C /* CityOverallValues.swift in Sources */,
+				D03524CE2736050F0089E11C /* Trema.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0A3F8C12775FC0700491666 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0A3F8D12775FC3D00491666 /* PulseEcoWidget.intentdefinition in Sources */,
+				D0CBADFF27761A9E00526050 /* DateFormatterUtils.swift in Sources */,
+				D0CBADF62776108E00526050 /* SensorPin.swift in Sources */,
+				D0CBADF52776108E00526050 /* City.swift in Sources */,
+				D0CBADFE27761A9E00526050 /* ConditionalModifier.swift in Sources */,
+				D0CBADFD27761A9600526050 /* AppColors.swift in Sources */,
+				D0CBADF82776108E00526050 /* SensorTypes.swift in Sources */,
+				D0CBADF32776108900526050 /* NetworkService.swift in Sources */,
+				D0CBADF42776108E00526050 /* Measure.swift in Sources */,
+				D0A3F8C92775FC0700491666 /* IntentHandler.swift in Sources */,
+				D0CBADFA2776108E00526050 /* AverageUtilModel.swift in Sources */,
+				D0CBADF72776108E00526050 /* CityOverallValues.swift in Sources */,
+				D0CBADF92776108E00526050 /* SensorData.swift in Sources */,
+				D0CBADFB27761A9600526050 /* UserSettings.swift in Sources */,
+				D0CBADFC27761A9600526050 /* Trema.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D03EC8FB2735E0F500E6E16F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D03EC8ED2735E0F300E6E16F /* PulseEcoWidgetExtension */;
+			targetProxy = D03EC8FA2735E0F500E6E16F /* PBXContainerItemProxy */;
+		};
+		D0A3F8CC2775FC0700491666 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0A3F8C42775FC0700491666 /* PulseEcoWidgetIntentHandler */;
+			targetProxy = D0A3F8CB2775FC0700491666 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		59A4F699247FD2160089D523 /* LaunchScreen.storyboard */ = {
@@ -765,6 +1080,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 52;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -782,13 +1098,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 4.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -826,6 +1144,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 52;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -837,12 +1156,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 4.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -850,10 +1171,10 @@
 		59A4F6B6247FD2160089D523 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_ASSET_PATHS = "\"PulseEco/Preview Content\"";
 				DEVELOPMENT_TEAM = LAA69LK8PF;
 				ENABLE_PREVIEWS = YES;
@@ -862,7 +1183,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse;
 				PRODUCT_MODULE_NAME = PulseEco;
 				PRODUCT_NAME = pulse.eco;
@@ -875,10 +1195,10 @@
 		59A4F6B7247FD2160089D523 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_ASSET_PATHS = "\"PulseEco/Preview Content\"";
 				DEVELOPMENT_TEAM = LAA69LK8PF;
 				ENABLE_PREVIEWS = YES;
@@ -887,11 +1207,106 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse;
 				PRODUCT_MODULE_NAME = PulseEco;
 				PRODUCT_NAME = pulse.eco;
 				PROVISIONING_PROFILE_SPECIFIER = GenericAppStore;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D03EC8FE2735E0F500E6E16F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LAA69LK8PF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PulseEcoWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse.PulseEcoWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		D03EC8FF2735E0F500E6E16F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LAA69LK8PF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PulseEcoWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse.PulseEcoWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		D0A3F8CF2775FC0700491666 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LAA69LK8PF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PulseEcoWidgetIntentHandler/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PulseEcoWidgetIntentHandler;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 Monika Dimitrova. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse.PulseEcoWidgetIntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D0A3F8D02775FC0700491666 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LAA69LK8PF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PulseEcoWidgetIntentHandler/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PulseEcoWidgetIntentHandler;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 Monika Dimitrova. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse.PulseEcoWidgetIntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -914,6 +1329,24 @@
 			buildConfigurations = (
 				59A4F6B6247FD2160089D523 /* Debug */,
 				59A4F6B7247FD2160089D523 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D03EC8FD2735E0F500E6E16F /* Build configuration list for PBXNativeTarget "PulseEcoWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D03EC8FE2735E0F500E6E16F /* Debug */,
+				D03EC8FF2735E0F500E6E16F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0A3F8CE2775FC0700491666 /* Build configuration list for PBXNativeTarget "PulseEcoWidgetIntentHandler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0A3F8CF2775FC0700491666 /* Debug */,
+				D0A3F8D02775FC0700491666 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

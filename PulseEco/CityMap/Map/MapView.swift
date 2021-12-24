@@ -27,8 +27,7 @@ struct MapView: UIViewRepresentable {
         mapView.mapType = .standard
         addAnotations(to: mapView)
         let zoomLevel = viewModel.selectedCity.intialZoomLevel
-        let region = MKCoordinateRegion(center: viewModel.selectedCity.center,
-                                        span: viewModel.span)
+        let region = MKCoordinateRegion(center: viewModel.selectedCity.center, span: viewModel.span)
         let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: Double((23-zoomLevel)*8000))
         mapView.setCameraZoomRange(zoomRange, animated: true)
        
@@ -43,7 +42,6 @@ struct MapView: UIViewRepresentable {
         if self.viewModel.shouldUpdateSensors {
             addAnotations(to: uiView)
         }
-
     }
     
     private func addAnotations(to mapView: MKMapView) {

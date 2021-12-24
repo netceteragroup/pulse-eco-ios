@@ -21,7 +21,7 @@ struct MeasureListView: View {
                         .frame(height: 40)
                         .onReceive(appDataSource.$loadingMeasures) { value in
                             if !value {
-                                scrollProxy.scrollTo(appState.selectedMeasure)
+                                scrollProxy.scrollTo(appState.selectedMeasureId)
                             }
                         }
                     Spacer()
