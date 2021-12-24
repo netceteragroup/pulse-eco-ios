@@ -3,154 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>INEnums</key>
-	<array>
-		<dict>
-			<key>INEnumDisplayName</key>
-			<string>Measurement</string>
-			<key>INEnumDisplayNameID</key>
-			<string>VvccZj</string>
-			<key>INEnumGeneratesHeader</key>
-			<true/>
-			<key>INEnumName</key>
-			<string>MeasurementTypes</string>
-			<key>INEnumType</key>
-			<string>Regular</string>
-			<key>INEnumValues</key>
-			<array>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>unknown</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>8nsoRj</string>
-					<key>INEnumValueName</key>
-					<string>unknown</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>PM 10</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>suDvMt</string>
-					<key>INEnumValueIndex</key>
-					<integer>1</integer>
-					<key>INEnumValueName</key>
-					<string>pm10</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>PM 2,5</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>2FX6Zv</string>
-					<key>INEnumValueIndex</key>
-					<integer>2</integer>
-					<key>INEnumValueName</key>
-					<string>pm25</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Noise</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>mhGCPS</string>
-					<key>INEnumValueIndex</key>
-					<integer>3</integer>
-					<key>INEnumValueName</key>
-					<string>noise_dba</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Temperature</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>MozK2C</string>
-					<key>INEnumValueIndex</key>
-					<integer>4</integer>
-					<key>INEnumValueName</key>
-					<string>temperature</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Humidity</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>hgyVav</string>
-					<key>INEnumValueIndex</key>
-					<integer>5</integer>
-					<key>INEnumValueName</key>
-					<string>humidity</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Pressure</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>EAmltF</string>
-					<key>INEnumValueIndex</key>
-					<integer>6</integer>
-					<key>INEnumValueName</key>
-					<string>pressure</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>INEnumDisplayName</key>
-			<string>Cities</string>
-			<key>INEnumDisplayNameID</key>
-			<string>8UmT3G</string>
-			<key>INEnumGeneratesHeader</key>
-			<true/>
-			<key>INEnumName</key>
-			<string>Cities</string>
-			<key>INEnumType</key>
-			<string>Regular</string>
-			<key>INEnumValues</key>
-			<array>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>unknown</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>HcsJxE</string>
-					<key>INEnumValueName</key>
-					<string>unknown</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Skopje</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>e2gOWs</string>
-					<key>INEnumValueIndex</key>
-					<integer>1</integer>
-					<key>INEnumValueName</key>
-					<string>skopje</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Ohrid</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>uPj8Fr</string>
-					<key>INEnumValueIndex</key>
-					<integer>2</integer>
-					<key>INEnumValueName</key>
-					<string>ohrid</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Bitola</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>ieyYL2</string>
-					<key>INEnumValueIndex</key>
-					<integer>3</integer>
-					<key>INEnumValueName</key>
-					<string>bitola</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Strumica</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>fkIzfy</string>
-					<key>INEnumValueIndex</key>
-					<integer>4</integer>
-					<key>INEnumValueName</key>
-					<string>strumica</string>
-				</dict>
-			</array>
-		</dict>
-	</array>
+	<array/>
 	<key>INIntentDefinitionModelVersion</key>
 	<string>1.2</string>
 	<key>INIntentDefinitionNamespace</key>
@@ -173,7 +26,7 @@
 			<key>INIntentIneligibleForSuggestions</key>
 			<true/>
 			<key>INIntentLastParameterTag</key>
-			<integer>6</integer>
+			<integer>15</integer>
 			<key>INIntentName</key>
 			<string>Configuration</string>
 			<key>INIntentParameters</key>
@@ -181,25 +34,18 @@
 				<dict>
 					<key>INIntentParameterConfigurable</key>
 					<true/>
-					<key>INIntentParameterCustomDisambiguation</key>
-					<true/>
 					<key>INIntentParameterDisplayName</key>
-					<string>Measurement Type</string>
+					<string>City</string>
 					<key>INIntentParameterDisplayNameID</key>
-					<string>P9HmO9</string>
+					<string>6OnqKe</string>
 					<key>INIntentParameterDisplayPriority</key>
 					<integer>1</integer>
-					<key>INIntentParameterEnumType</key>
-					<string>MeasurementTypes</string>
-					<key>INIntentParameterEnumTypeNamespace</key>
-					<string>88xZPY</string>
-					<key>INIntentParameterMetadata</key>
-					<dict>
-						<key>INIntentParameterMetadataDefaultValue</key>
-						<string>pm10</string>
-					</dict>
 					<key>INIntentParameterName</key>
-					<string>measurements</string>
+					<string>cities</string>
+					<key>INIntentParameterObjectType</key>
+					<string>CityConfig</string>
+					<key>INIntentParameterObjectTypeNamespace</key>
+					<string>88xZPY</string>
 					<key>INIntentParameterPromptDialogs</key>
 					<array>
 						<dict>
@@ -214,56 +60,29 @@
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Primary</string>
 						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There are ${count} options matching ‘${measurements}’.</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>5ndqOD</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>DisambiguationIntroduction</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${measurements}’?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>vVmTWG</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>Confirmation</string>
-						</dict>
 					</array>
-					<key>INIntentParameterSupportsResolution</key>
+					<key>INIntentParameterSupportsDynamicEnumeration</key>
 					<true/>
 					<key>INIntentParameterTag</key>
-					<integer>4</integer>
+					<integer>7</integer>
 					<key>INIntentParameterType</key>
-					<string>Integer</string>
+					<string>Object</string>
 				</dict>
 				<dict>
 					<key>INIntentParameterConfigurable</key>
 					<true/>
-					<key>INIntentParameterCustomDisambiguation</key>
-					<true/>
 					<key>INIntentParameterDisplayName</key>
-					<string>Cities</string>
+					<string>Measure</string>
 					<key>INIntentParameterDisplayNameID</key>
-					<string>6OnqKe</string>
+					<string>xH2Yj7</string>
 					<key>INIntentParameterDisplayPriority</key>
 					<integer>2</integer>
-					<key>INIntentParameterEnumType</key>
-					<string>Cities</string>
-					<key>INIntentParameterEnumTypeNamespace</key>
-					<string>88xZPY</string>
-					<key>INIntentParameterMetadata</key>
-					<dict>
-						<key>INIntentParameterMetadataDefaultValue</key>
-						<string>skopje</string>
-					</dict>
 					<key>INIntentParameterName</key>
-					<string>cities</string>
+					<string>measures</string>
+					<key>INIntentParameterObjectType</key>
+					<string>MeasureConfig</string>
+					<key>INIntentParameterObjectTypeNamespace</key>
+					<string>88xZPY</string>
 					<key>INIntentParameterPromptDialogs</key>
 					<array>
 						<dict>
@@ -282,9 +101,9 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There are ${count} options matching ‘${cities}’.</string>
+							<string>There are ${count} options matching ‘${measures}’.</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>icH4Oy</string>
+							<string>3lFgGG</string>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>DisambiguationIntroduction</string>
 						</dict>
@@ -292,19 +111,19 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${cities}’?</string>
+							<string>Just to confirm, you wanted ‘${measures}’?</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>OH8Hqz</string>
+							<string>zk0LP5</string>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Confirmation</string>
 						</dict>
 					</array>
-					<key>INIntentParameterSupportsResolution</key>
+					<key>INIntentParameterSupportsDynamicEnumeration</key>
 					<true/>
 					<key>INIntentParameterTag</key>
-					<integer>6</integer>
+					<integer>15</integer>
 					<key>INIntentParameterType</key>
-					<string>Integer</string>
+					<string>Object</string>
 				</dict>
 			</array>
 			<key>INIntentResponse</key>
@@ -334,6 +153,133 @@
 		</dict>
 	</array>
 	<key>INTypes</key>
-	<array/>
+	<array>
+		<dict>
+			<key>INTypeDisplayName</key>
+			<string>City Config</string>
+			<key>INTypeDisplayNameID</key>
+			<string>XzWAHB</string>
+			<key>INTypeLastPropertyTag</key>
+			<integer>100</integer>
+			<key>INTypeName</key>
+			<string>CityConfig</string>
+			<key>INTypeProperties</key>
+			<array>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>1</integer>
+					<key>INTypePropertyName</key>
+					<string>identifier</string>
+					<key>INTypePropertyTag</key>
+					<integer>1</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>2</integer>
+					<key>INTypePropertyName</key>
+					<string>displayString</string>
+					<key>INTypePropertyTag</key>
+					<integer>2</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>3</integer>
+					<key>INTypePropertyName</key>
+					<string>pronunciationHint</string>
+					<key>INTypePropertyTag</key>
+					<integer>3</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>4</integer>
+					<key>INTypePropertyName</key>
+					<string>alternativeSpeakableMatches</string>
+					<key>INTypePropertySupportsMultipleValues</key>
+					<true/>
+					<key>INTypePropertyTag</key>
+					<integer>4</integer>
+					<key>INTypePropertyType</key>
+					<string>SpeakableString</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>INTypeDisplayName</key>
+			<string>Measure Config</string>
+			<key>INTypeDisplayNameID</key>
+			<string>LYEYOv</string>
+			<key>INTypeLastPropertyTag</key>
+			<integer>99</integer>
+			<key>INTypeName</key>
+			<string>MeasureConfig</string>
+			<key>INTypeProperties</key>
+			<array>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>1</integer>
+					<key>INTypePropertyName</key>
+					<string>identifier</string>
+					<key>INTypePropertyTag</key>
+					<integer>1</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>2</integer>
+					<key>INTypePropertyName</key>
+					<string>displayString</string>
+					<key>INTypePropertyTag</key>
+					<integer>2</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>3</integer>
+					<key>INTypePropertyName</key>
+					<string>pronunciationHint</string>
+					<key>INTypePropertyTag</key>
+					<integer>3</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>4</integer>
+					<key>INTypePropertyName</key>
+					<string>alternativeSpeakableMatches</string>
+					<key>INTypePropertySupportsMultipleValues</key>
+					<true/>
+					<key>INTypePropertyTag</key>
+					<integer>4</integer>
+					<key>INTypePropertyType</key>
+					<string>SpeakableString</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

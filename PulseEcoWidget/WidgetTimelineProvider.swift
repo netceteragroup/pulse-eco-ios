@@ -24,8 +24,9 @@ struct WidgetTimelineProvider: IntentTimelineProvider {
     func getTimeline(for configuration: ConfigurationIntent,
                      in context: Context,
                      completion: @escaping (Timeline<Entry>) -> ()) {
-        let city = city(for: configuration)
-        let measureId = measurement(for: configuration)
+        
+        let city = configuration.cities?.identifier ?? "skopje"
+        let measureId = configuration.measures?.identifier ?? "pm10"
          
         WidgetDataSource.sharedInstance.getValuesForCity(cityName: city, measureId: measureId) { result in
             switch result {
@@ -48,30 +49,6 @@ struct WidgetTimelineProvider: IntentTimelineProvider {
                 let timeline = Timeline(entries: [emptyEntry], policy: .after(nextUpdateDate))
                 completion(timeline)
             }
-        }
-    }
-    
-    private func measurement(for configuration: ConfigurationIntent) -> String {
-        switch configuration.measurements.rawValue {
-        case 1: return "pm10"
-        case 2: return "pm25"
-        case 3: return "noise_dba"
-        case 4: return "temperature"
-        case 5: return "humidity"
-        case 6: return "pressure"
-        default:
-            return "pm10"
-        }
-    }
-    
-    private func city(for configuration: ConfigurationIntent) -> String {
-        switch configuration.cities.rawValue {
-        case 1: return "Skopje"
-        case 2: return "Ohrid"
-        case 3: return "Bitola"
-        case 4: return "Strumica"
-        default:
-            return "Skopje"
         }
     }
     

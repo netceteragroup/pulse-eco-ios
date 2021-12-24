@@ -133,8 +133,25 @@
 		D03EC8FC2735E0F500E6E16F /* PulseEcoWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D03EC8EE2735E0F300E6E16F /* PulseEcoWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D03EC9022735E1DA00E6E16F /* WidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03EC9002735E1D600E6E16F /* WidgetEntryView.swift */; };
 		D03EC9052735E7EC00E6E16F /* WidgetTimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03EC9032735E77A00E6E16F /* WidgetTimelineProvider.swift */; };
+		D0A3F8C62775FC0700491666 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A3F8B42775FA2900491666 /* Intents.framework */; };
+		D0A3F8C92775FC0700491666 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3F8C82775FC0700491666 /* IntentHandler.swift */; };
+		D0A3F8CD2775FC0700491666 /* PulseEcoWidgetIntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D0A3F8C52775FC0700491666 /* PulseEcoWidgetIntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D0A3F8D12775FC3D00491666 /* PulseEcoWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D03EC8F42735E0F300E6E16F /* PulseEcoWidget.intentdefinition */; };
 		D0AA0A7D273766C20097D0B0 /* WidgetSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AA0A7C273766C20097D0B0 /* WidgetSmallView.swift */; };
 		D0AA0A7F2737678D0097D0B0 /* WidgetMediumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AA0A7E2737678D0097D0B0 /* WidgetMediumView.swift */; };
+		D0CBADF32776108900526050 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D12490C27200AC36A5 /* NetworkService.swift */; };
+		D0CBADF42776108E00526050 /* Measure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596619362492703800DACF67 /* Measure.swift */; };
+		D0CBADF52776108E00526050 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* City.swift */; };
+		D0CBADF62776108E00526050 /* SensorPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC09D8425E5183400F794F9 /* SensorPin.swift */; };
+		D0CBADF72776108E00526050 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
+		D0CBADF82776108E00526050 /* SensorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999C7FD24ADFAC40038EED7 /* SensorTypes.swift */; };
+		D0CBADF92776108E00526050 /* SensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* SensorData.swift */; };
+		D0CBADFA2776108E00526050 /* AverageUtilModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591642A82499FE9F000A4F7C /* AverageUtilModel.swift */; };
+		D0CBADFB27761A9600526050 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593C264224BC9E01005152BE /* UserSettings.swift */; };
+		D0CBADFC27761A9600526050 /* Trema.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB0D2611E3FE005BC654 /* Trema.swift */; };
+		D0CBADFD27761A9600526050 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A35AD12498F1C800C07786 /* AppColors.swift */; };
+		D0CBADFE27761A9E00526050 /* ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */; };
+		D0CBADFF27761A9E00526050 /* DateFormatterUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +161,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = D03EC8ED2735E0F300E6E16F;
 			remoteInfo = PulseEcoWidgetExtension;
+		};
+		D0A3F8CB2775FC0700491666 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59A4F683247FD2150089D523 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0A3F8C42775FC0700491666;
+			remoteInfo = PulseEcoWidgetIntentHandler;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -155,6 +179,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				D03EC8FC2735E0F500E6E16F /* PulseEcoWidgetExtension.appex in Embed App Extensions */,
+				D0A3F8CD2775FC0700491666 /* PulseEcoWidgetIntentHandler.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +297,10 @@
 		D03EC8F72735E0F500E6E16F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D03EC9002735E1D600E6E16F /* WidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEntryView.swift; sourceTree = "<group>"; };
 		D03EC9032735E77A00E6E16F /* WidgetTimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTimelineProvider.swift; sourceTree = "<group>"; };
+		D0A3F8B42775FA2900491666 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		D0A3F8C52775FC0700491666 /* PulseEcoWidgetIntentHandler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PulseEcoWidgetIntentHandler.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0A3F8C82775FC0700491666 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		D0A3F8CA2775FC0700491666 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0AA0A7C273766C20097D0B0 /* WidgetSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSmallView.swift; sourceTree = "<group>"; };
 		D0AA0A7E2737678D0097D0B0 /* WidgetMediumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetMediumView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -292,6 +321,14 @@
 			files = (
 				D03EC8F02735E0F300E6E16F /* SwiftUI.framework in Frameworks */,
 				D03EC8EF2735E0F300E6E16F /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0A3F8C22775FC0700491666 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0A3F8C62775FC0700491666 /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +477,7 @@
 				D03524C4273602AA0089E11C /* Shared */,
 				59A4F68D247FD2150089D523 /* PulseEco */,
 				D03EC8F12735E0F300E6E16F /* PulseEcoWidget */,
+				D0A3F8C72775FC0700491666 /* PulseEcoWidgetIntentHandler */,
 				D03EC8D52735C3D100E6E16F /* Frameworks */,
 				59A4F68C247FD2150089D523 /* Products */,
 			);
@@ -450,6 +488,7 @@
 			children = (
 				59A4F68B247FD2150089D523 /* pulse.eco.app */,
 				D03EC8EE2735E0F300E6E16F /* PulseEcoWidgetExtension.appex */,
+				D0A3F8C52775FC0700491666 /* PulseEcoWidgetIntentHandler.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -610,6 +649,7 @@
 			children = (
 				D03EC8D62735C3D100E6E16F /* WidgetKit.framework */,
 				D03EC8D82735C3D100E6E16F /* SwiftUI.framework */,
+				D0A3F8B42775FA2900491666 /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -626,6 +666,15 @@
 				D03EC8F72735E0F500E6E16F /* Info.plist */,
 			);
 			path = PulseEcoWidget;
+			sourceTree = "<group>";
+		};
+		D0A3F8C72775FC0700491666 /* PulseEcoWidgetIntentHandler */ = {
+			isa = PBXGroup;
+			children = (
+				D0A3F8C82775FC0700491666 /* IntentHandler.swift */,
+				D0A3F8CA2775FC0700491666 /* Info.plist */,
+			);
+			path = PulseEcoWidgetIntentHandler;
 			sourceTree = "<group>";
 		};
 		D0AA0A7B273765F20097D0B0 /* Views */ = {
@@ -657,6 +706,7 @@
 			);
 			dependencies = (
 				D03EC8FB2735E0F500E6E16F /* PBXTargetDependency */,
+				D0A3F8CC2775FC0700491666 /* PBXTargetDependency */,
 			);
 			name = PulseEco;
 			packageProductDependencies = (
@@ -684,13 +734,30 @@
 			productReference = D03EC8EE2735E0F300E6E16F /* PulseEcoWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		D0A3F8C42775FC0700491666 /* PulseEcoWidgetIntentHandler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0A3F8CE2775FC0700491666 /* Build configuration list for PBXNativeTarget "PulseEcoWidgetIntentHandler" */;
+			buildPhases = (
+				D0A3F8C12775FC0700491666 /* Sources */,
+				D0A3F8C22775FC0700491666 /* Frameworks */,
+				D0A3F8C32775FC0700491666 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PulseEcoWidgetIntentHandler;
+			productName = PulseEcoWidgetIntentHandler;
+			productReference = D0A3F8C52775FC0700491666 /* PulseEcoWidgetIntentHandler.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		59A4F683247FD2150089D523 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Monika Dimitrova";
 				TargetAttributes = {
@@ -699,6 +766,9 @@
 					};
 					D03EC8ED2735E0F300E6E16F = {
 						CreatedOnToolsVersion = 13.2;
+					};
+					D0A3F8C42775FC0700491666 = {
+						CreatedOnToolsVersion = 13.1;
 					};
 				};
 			};
@@ -721,6 +791,7 @@
 			targets = (
 				59A4F68A247FD2150089D523 /* PulseEco */,
 				D03EC8ED2735E0F300E6E16F /* PulseEcoWidgetExtension */,
+				D0A3F8C42775FC0700491666 /* PulseEcoWidgetIntentHandler */,
 			);
 		};
 /* End PBXProject section */
@@ -767,6 +838,13 @@
 				D03524D8273688600089E11C /* TitilliumWeb-LightItalic.ttf in Resources */,
 				D03524DF273688600089E11C /* TitilliumWeb-ExtraLight.ttf in Resources */,
 				D03524D6273688600089E11C /* TitilliumWeb-Black.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0A3F8C32775FC0700491666 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -919,6 +997,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D0A3F8C12775FC0700491666 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0A3F8D12775FC3D00491666 /* PulseEcoWidget.intentdefinition in Sources */,
+				D0CBADFF27761A9E00526050 /* DateFormatterUtils.swift in Sources */,
+				D0CBADF62776108E00526050 /* SensorPin.swift in Sources */,
+				D0CBADF52776108E00526050 /* City.swift in Sources */,
+				D0CBADFE27761A9E00526050 /* ConditionalModifier.swift in Sources */,
+				D0CBADFD27761A9600526050 /* AppColors.swift in Sources */,
+				D0CBADF82776108E00526050 /* SensorTypes.swift in Sources */,
+				D0CBADF32776108900526050 /* NetworkService.swift in Sources */,
+				D0CBADF42776108E00526050 /* Measure.swift in Sources */,
+				D0A3F8C92775FC0700491666 /* IntentHandler.swift in Sources */,
+				D0CBADFA2776108E00526050 /* AverageUtilModel.swift in Sources */,
+				D0CBADF72776108E00526050 /* CityOverallValues.swift in Sources */,
+				D0CBADF92776108E00526050 /* SensorData.swift in Sources */,
+				D0CBADFB27761A9600526050 /* UserSettings.swift in Sources */,
+				D0CBADFC27761A9600526050 /* Trema.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -926,6 +1026,11 @@
 			isa = PBXTargetDependency;
 			target = D03EC8ED2735E0F300E6E16F /* PulseEcoWidgetExtension */;
 			targetProxy = D03EC8FA2735E0F500E6E16F /* PBXContainerItemProxy */;
+		};
+		D0A3F8CC2775FC0700491666 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0A3F8C42775FC0700491666 /* PulseEcoWidgetIntentHandler */;
+			targetProxy = D0A3F8CB2775FC0700491666 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1157,6 +1262,56 @@
 			};
 			name = Release;
 		};
+		D0A3F8CF2775FC0700491666 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LAA69LK8PF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PulseEcoWidgetIntentHandler/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PulseEcoWidgetIntentHandler;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 Monika Dimitrova. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse.PulseEcoWidgetIntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D0A3F8D02775FC0700491666 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LAA69LK8PF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PulseEcoWidgetIntentHandler/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PulseEcoWidgetIntentHandler;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 Monika Dimitrova. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse.PulseEcoWidgetIntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1183,6 +1338,15 @@
 			buildConfigurations = (
 				D03EC8FE2735E0F500E6E16F /* Debug */,
 				D03EC8FF2735E0F500E6E16F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0A3F8CE2775FC0700491666 /* Build configuration list for PBXNativeTarget "PulseEcoWidgetIntentHandler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0A3F8CF2775FC0700491666 /* Debug */,
+				D0A3F8D02775FC0700491666 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
