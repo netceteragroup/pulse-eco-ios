@@ -1,3 +1,3 @@
-[submodule "PulseEcoSwiftUI/pulse-eco-i18n"]
-	path = PulseEcoSwiftUI/pulse-eco-i18n
-	url = https://github.com/netceteragroup/pulse-eco-i18n
+[submodule "pulse-eco-i18n"]
+	path = pulse-eco-i18n
+	url = https://github.com/netceteragroup/pulse-eco-i18n.git
