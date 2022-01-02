@@ -22,7 +22,10 @@ class Countries {
                          shortName: "de"),
                  Country(flagImageName: "",
                          languageName: Trema.text(for: "romanian", language: language),
-                         shortName: "ro")]
+                         shortName: "ro"),
+                 Country(flagImageName: "",
+                         languageName: Trema.text(for: "serbian", language: language),
+                         shortName: "rs")]
     }
 
     static func selectedCountry(for language: String) -> Country {
