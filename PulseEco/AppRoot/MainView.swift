@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct MainView: View {
+    let backgroundColorNav = #colorLiteral(red: 0.918249011, green: 0.9182489514, blue: 0.9182489514, alpha: 1)
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
@@ -24,7 +25,7 @@ struct MainView: View {
                                       sensorData24h: dataSource.sensorsData24h,
                                       dailyAverages: dataSource.sensorsDailyAverageData)
     }
-
+    
     var body: some View {
         Group {
             if dataSource.loadingCityData || dataSource.loadingMeasures {
@@ -40,17 +41,17 @@ struct MainView: View {
             case .cityListView:
                 CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
                              userSettings: self.dataSource.userSettings)
-                    .onDisappear(perform: {
-                        if self.dataSource.userSettings.favouriteCities.count == 0 {
-                            self.appState.citySelectorClicked = false
-                        }
-                        if self.$appState.newCitySelected.wrappedValue == true {
-                            self.refreshService.updateRefreshDate()
-                            self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
-                            self.appState.newCitySelected = false
-                            self.appState.citySelectorClicked = false
-                        }
-                    })
+                .onDisappear(perform: {
+                    if self.dataSource.userSettings.favouriteCities.count == 0 {
+                        self.appState.citySelectorClicked = false
+                    }
+                    if self.$appState.newCitySelected.wrappedValue == true {
+                        self.refreshService.updateRefreshDate()
+                        self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
+                        self.appState.newCitySelected = false
+                        self.appState.citySelectorClicked = false
+                    }
+                })
                 
             case .languageView: LanguageView()
             }
@@ -60,7 +61,7 @@ struct MainView: View {
     var loadingView: some View {
         LoadingDialog()
     }
-
+    
     var contentView: some View {
         GeometryReader { proxy in
             ZStack {
@@ -74,15 +75,18 @@ struct MainView: View {
                                                                  cityValues: dataSource.cityOverall,
                                                                  citySelectorClicked: appState.citySelectorClicked)
                             MeasureListView(viewModel: viewModel)
-                            Color.gray
-                                .frame(height: 64)
-                                .offset(x: 0, y: 0)
-                                .padding(.top, -7)
+
+                            ScrollView(.horizontal) {
+                               
+                            }
+                            .frame(height: 64)
+                            .background(Color(backgroundColorNav))
                         }
                         
                         CityMapView(userSettings: self.dataSource.userSettings,
                                     mapViewModel: mapViewModel,
                                     proxy: proxy)
+
                             .id("CityMapView")
                             .edgesIgnoringSafeArea([.horizontal, .bottom])
                     }
@@ -105,7 +109,7 @@ struct MainView: View {
             }
         }
     }
-
+    
     var trailingNavigationItems: some View {
         HStack {
             Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
@@ -130,7 +134,7 @@ struct MainView: View {
             }
         }
     }
-
+    
     var leadingNavigationItems: some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) {
