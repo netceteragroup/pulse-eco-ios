@@ -75,7 +75,7 @@ struct MainView: View {
                                                                  cityValues: dataSource.cityOverall,
                                                                  citySelectorClicked: appState.citySelectorClicked)
                             MeasureListView(viewModel: viewModel)
-                            
+
                             ScrollView(.horizontal) {
                                
                             }
@@ -86,9 +86,9 @@ struct MainView: View {
                         CityMapView(userSettings: self.dataSource.userSettings,
                                     mapViewModel: mapViewModel,
                                     proxy: proxy)
-                        .id("CityMapView")
-                        .edgesIgnoringSafeArea([.horizontal, .bottom])
-                        
+
+                            .id("CityMapView")
+                            .edgesIgnoringSafeArea([.horizontal, .bottom])
                     }
                     .navigationBarTitle("", displayMode: .inline)
                     .navigationBarItems(
