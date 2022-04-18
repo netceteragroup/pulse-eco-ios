@@ -26,7 +26,7 @@ struct MeasureListView: View {
                         }
                     Spacer()
                 }
-                .frame(height: 56)
+                .frame(height: 40)
             }
         }
     }
@@ -34,9 +34,10 @@ struct MeasureListView: View {
     var buttonStack: some View {
         HStack {
             ForEach(viewModel.measures, id: \.id) { item in
-                VStack {
-                    MeasureButtonView(viewModel: item)
-                }
+//                VStack {
+//                    MeasureButtonView(viewModel: item)
+//                }
+                MeasureButtonView(viewModel: item)
                 .id(item.id)
             }
         }

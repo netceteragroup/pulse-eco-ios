@@ -24,7 +24,7 @@ struct MainView: View {
                                       sensorData24h: dataSource.sensorsData24h,
                                       dailyAverages: dataSource.sensorsDailyAverageData)
     }
-
+    
     var body: some View {
         Group {
             if dataSource.loadingCityData || dataSource.loadingMeasures {
@@ -40,17 +40,17 @@ struct MainView: View {
             case .cityListView:
                 CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
                              userSettings: self.dataSource.userSettings)
-                    .onDisappear(perform: {
-                        if self.dataSource.userSettings.favouriteCities.count == 0 {
-                            self.appState.citySelectorClicked = false
-                        }
-                        if self.$appState.newCitySelected.wrappedValue == true {
-                            self.refreshService.updateRefreshDate()
-                            self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
-                            self.appState.newCitySelected = false
-                            self.appState.citySelectorClicked = false
-                        }
-                    })
+                .onDisappear(perform: {
+                    if self.dataSource.userSettings.favouriteCities.count == 0 {
+                        self.appState.citySelectorClicked = false
+                    }
+                    if self.$appState.newCitySelected.wrappedValue == true {
+                        self.refreshService.updateRefreshDate()
+                        self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
+                        self.appState.newCitySelected = false
+                        self.appState.citySelectorClicked = false
+                    }
+                })
                 
             case .languageView: LanguageView()
             }
@@ -60,34 +60,34 @@ struct MainView: View {
     var loadingView: some View {
         LoadingDialog()
     }
-
+    
     var contentView: some View {
         GeometryReader { proxy in
             ZStack {
                 NavigationView {
-                    ZStack {
-                        CityMapView(userSettings: self.dataSource.userSettings,
-                                    mapViewModel: mapViewModel,
-                                    proxy: proxy)
-                            .id("CityMapView")
-                            .edgesIgnoringSafeArea([.horizontal, .bottom])
-                            .padding(.top, 36)
-                        VStack {
-                            Rectangle()
-                                .frame(height: 36)
-                                .foregroundColor(backgroundColor)
-                                .shadow(color: shadow, radius: 0.8, x: 0, y: 0)
-                            Spacer()
-                        }
-                        VStack {
+                    VStack(spacing: 0) {
+                        
+                        VStack(spacing: 0) {
                             let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
                                                                  cityName: appState.selectedCity.cityName,
                                                                  measuresList: dataSource.measures,
                                                                  cityValues: dataSource.cityOverall,
                                                                  citySelectorClicked: appState.citySelectorClicked)
                             MeasureListView(viewModel: viewModel)
-                            Spacer()
+                            
+                            ScrollView(.horizontal) {
+                               
+                            }
+                            .frame(height: 64)
+                            .background(Color(Color.RGBColorSpace.sRGB, red: 229, green: 229, blue: 229))
                         }
+                        
+                        CityMapView(userSettings: self.dataSource.userSettings,
+                                    mapViewModel: mapViewModel,
+                                    proxy: proxy)
+                        .id("CityMapView")
+                        .edgesIgnoringSafeArea([.horizontal, .bottom])
+                        
                     }
                     .navigationBarTitle("", displayMode: .inline)
                     .navigationBarItems(
@@ -108,7 +108,7 @@ struct MainView: View {
             }
         }
     }
-
+    
     var trailingNavigationItems: some View {
         HStack {
             Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
@@ -133,7 +133,7 @@ struct MainView: View {
             }
         }
     }
-
+    
     var leadingNavigationItems: some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) {
