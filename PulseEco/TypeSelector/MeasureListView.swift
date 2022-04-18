@@ -18,7 +18,6 @@ struct MeasureListView: View {
             ScrollViewReader { scrollProxy in
                 VStack {
                     buttonStack
-                        .frame(height: 40)
                         .onReceive(appDataSource.$loadingMeasures) { value in
                             if !value {
                                 scrollProxy.scrollTo(appState.selectedMeasureId)
@@ -26,17 +25,16 @@ struct MeasureListView: View {
                         }
                     Spacer()
                 }
-                .frame(height: 56)
+                .frame(height: 40)
             }
         }
+        .frame(height: 40)
     }
 
     var buttonStack: some View {
         HStack {
             ForEach(viewModel.measures, id: \.id) { item in
-                VStack {
-                    MeasureButtonView(viewModel: item)
-                }
+                MeasureButtonView(viewModel: item)
                 .id(item.id)
             }
         }

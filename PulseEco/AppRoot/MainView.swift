@@ -65,29 +65,26 @@ struct MainView: View {
         GeometryReader { proxy in
             ZStack {
                 NavigationView {
-                    ZStack {
-                        CityMapView(userSettings: self.dataSource.userSettings,
-                                    mapViewModel: mapViewModel,
-                                    proxy: proxy)
-                            .id("CityMapView")
-                            .edgesIgnoringSafeArea([.horizontal, .bottom])
-                            .padding(.top, 36)
-                        VStack {
-                            Rectangle()
-                                .frame(height: 36)
-                                .foregroundColor(backgroundColor)
-                                .shadow(color: shadow, radius: 0.8, x: 0, y: 0)
-                            Spacer()
-                        }
-                        VStack {
+                    VStack(spacing: 0) {
+                        
+                        VStack(spacing: 0) {
                             let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
                                                                  cityName: appState.selectedCity.cityName,
                                                                  measuresList: dataSource.measures,
                                                                  cityValues: dataSource.cityOverall,
                                                                  citySelectorClicked: appState.citySelectorClicked)
                             MeasureListView(viewModel: viewModel)
-                            Spacer()
+                            Color.gray
+                                .frame(height: 64)
+                                .offset(x: 0, y: 0)
+                                .padding(.top, -7)
                         }
+                        
+                        CityMapView(userSettings: self.dataSource.userSettings,
+                                    mapViewModel: mapViewModel,
+                                    proxy: proxy)
+                            .id("CityMapView")
+                            .edgesIgnoringSafeArea([.horizontal, .bottom])
                     }
                     .navigationBarTitle("", displayMode: .inline)
                     .navigationBarItems(
