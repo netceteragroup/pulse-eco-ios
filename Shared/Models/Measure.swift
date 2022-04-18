@@ -52,7 +52,8 @@ struct Measure: Codable, Identifiable {
                  legendColor: "green",
                  markerColor: "green",
                  shortGrade: "Good air quality.",
-                 grade: "Good air quality. Air quality is considered satisfactory, and air pollution poses little or no risk",
+                 grade: "Good air quality. Air quality is considered satisfactory, and air pollution poses little " +
+                 "or no risk",
                  suggestion: "No preventive measures needed, enjoy the fresh air."),
             
             Band(from: 26,
@@ -61,7 +62,8 @@ struct Measure: Codable, Identifiable {
                  legendColor: "darkgreen",
                  markerColor: "darkgreen",
                  shortGrade: "Moderate air quality.",
-                 grade: "Moderate air quality. Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people.",
+                 grade: "Moderate air quality. Air quality is acceptable; however, for some pollutants there may be " +
+                 "a moderate health concern for a very small number of people.",
                  suggestion: "Consider limiting your outside exposure if you're sensitive to bad air."),
             
             Band(from: 51,
@@ -70,7 +72,8 @@ struct Measure: Codable, Identifiable {
                  legendColor: "orange",
                  markerColor: "orange",
                  shortGrade: "Bad air quality.",
-                 grade: "Bad air quality. Unhealthy for Sensitive Groups, people with heart lung disease, older adults and children.",
+                 grade: "Bad air quality. Unhealthy for Sensitive Groups, people with heart lung disease, older " +
+                 "adults and children.",
                  suggestion: "Limit your outside exposure if you're sensitive to bad air."),
             
             Band(from: 91,
@@ -79,7 +82,8 @@ struct Measure: Codable, Identifiable {
                  legendColor: "red",
                  markerColor: "red",
                  shortGrade: "Very bad air quality.",
-                 grade: "Very bad air quality. Everyone may begin to experience some adverse health effects, and members of the sensitive groups may experience more serious effects.",
+                 grade: "Very bad air quality. Everyone may begin to experience some adverse health effects, " +
+                 "and members of the sensitive groups may experience more serious effects.",
                  suggestion: "Stay indoors if you're sensitive to bad air. Everyone should limit outside exposure"),
             
             Band(from: 181,
@@ -88,7 +92,8 @@ struct Measure: Codable, Identifiable {
                  legendColor: "darkred",
                  markerColor: "darkred",
                  shortGrade: "Hazardous air quality!",
-                 grade: "Hazardous air quality! This would trigger a health warnings of emergency conditions. The entire population is more likely to be affected!",
+                 grade: "Hazardous air quality! This would trigger a health warnings of emergency conditions. " +
+                 "The entire population is more likely to be affected!",
                  suggestion: "Stay indoors as much as possible.")
         ]
         
@@ -138,7 +143,8 @@ struct Band: Codable {
              legendColor: "green",
              markerColor: "green",
              shortGrade: "Good air quality.",
-             grade: "Good air quality. Air quality is considered satisfactory, and air pollution poses little or no risk",
+             grade: "Good air quality. Air quality is considered satisfactory, and air pollution poses " +
+             "little or no risk",
              suggestion: "No preventive measures needed, enjoy the fresh air.")
     }
 }

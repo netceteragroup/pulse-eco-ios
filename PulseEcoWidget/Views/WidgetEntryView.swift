@@ -1,7 +1,7 @@
 import WidgetKit
 import SwiftUI
 
-struct WidgetEntryView : View {
+struct WidgetEntryView: View {
     @Environment(\.widgetFamily) var family: WidgetFamily
     var entry: WidgetTimelineProvider.Entry
     
