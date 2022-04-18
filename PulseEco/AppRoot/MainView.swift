@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct MainView: View {
+    let backgroundColorNav = #colorLiteral(red: 0.918249011, green: 0.9182489514, blue: 0.9182489514, alpha: 1)
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
@@ -79,7 +80,7 @@ struct MainView: View {
                                
                             }
                             .frame(height: 64)
-                            .background(Color(Color.RGBColorSpace.sRGB, red: 229, green: 229, blue: 229))
+                            .background(Color(backgroundColorNav))
                         }
                         
                         CityMapView(userSettings: self.dataSource.userSettings,

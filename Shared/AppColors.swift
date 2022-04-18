@@ -20,6 +20,8 @@ struct AppColors {
     static let white = UIColor(named: "white")!
     static let black = UIColor(named: "black")!
     
+
+    
     static var allColors: [UIColor] {
         return [blue, green, orange, purple, red, indigo, darkred, darkgreen]
     }
