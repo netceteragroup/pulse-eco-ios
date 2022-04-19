@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */; };
 		32479108261A6F7200E97C56 /* SlideOverCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32479107261A6F7200E97C56 /* SlideOverCard.swift */; };
 		3288686D24B513DA009CC56D /* LocationAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288686C24B513DA009CC56D /* LocationAnnotationView.swift */; };
 		3288687424B51F5E009CC56D /* SelectedSensorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3288687024B51F5E009CC56D /* SelectedSensorView.xib */; };
@@ -197,6 +198,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSlider.swift; sourceTree = "<group>"; };
 		32479107261A6F7200E97C56 /* SlideOverCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverCard.swift; sourceTree = "<group>"; };
 		3288686C24B513DA009CC56D /* LocationAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotationView.swift; sourceTree = "<group>"; };
 		3288687024B51F5E009CC56D /* SelectedSensorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedSensorView.xib; sourceTree = "<group>"; };
@@ -335,6 +337,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E3A38AD280EBC4B002C4A54 /* History and Forecast */ = {
+			isa = PBXGroup;
+			children = (
+				1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */,
+			);
+			path = "History and Forecast";
+			sourceTree = "<group>";
+		};
 		3288686E24B51F5E009CC56D /* UIKitViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -505,6 +515,7 @@
 				74E46614270326BE0010F80E /* Lottie */,
 				59A4F696247FD2160089D523 /* Preview Content */,
 				74F419AC26F4886500E433A7 /* Services */,
+				1E3A38AD280EBC4B002C4A54 /* History and Forecast */,
 				5997F73A24A370EF0035BEEB /* TypeSelector */,
 				D03524D22736055A0089E11C /* Utility */,
 				59A4F68E247FD2150089D523 /* AppDelegate.swift */,
@@ -907,6 +918,7 @@
 				59A35AC72498ECFF00C07786 /* MeasureListView.swift in Sources */,
 				59504C1124B46BF100EA4AFF /* NavigationBarModifier.swift in Sources */,
 				593C263624BC8969005152BE /* CityRowView.swift in Sources */,
+				1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */,
 				BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */,
 				59A35ADA2499057C00C07786 /* Constants.swift in Sources */,
 				5924C5DA249A4792007E0D78 /* MeasureListViewModel.swift in Sources */,

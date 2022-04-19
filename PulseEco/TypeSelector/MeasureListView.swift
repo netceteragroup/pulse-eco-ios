@@ -23,12 +23,13 @@ struct MeasureListView: View {
                                 scrollProxy.scrollTo(appState.selectedMeasureId)
                             }
                         }
-                    Spacer()
+//                    Spacer()
                 }
                 .frame(height: 40)
             }
         }
-        .frame(height: 40)
+//        .frame(height: 40)
+        .frame(height: 34)
     }
 
     var buttonStack: some View {
@@ -38,6 +39,5 @@ struct MeasureListView: View {
                 .id(item.id)
             }
         }
-
     }
 }

@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct MainView: View {
-    let backgroundColorNav = #colorLiteral(red: 0.918249011, green: 0.9182489514, blue: 0.9182489514, alpha: 1)
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
@@ -75,20 +74,15 @@ struct MainView: View {
                                                                  cityValues: dataSource.cityOverall,
                                                                  citySelectorClicked: appState.citySelectorClicked)
                             MeasureListView(viewModel: viewModel)
-
-                            ScrollView(.horizontal) {
-                               
-                            }
-                            .frame(height: 64)
-                            .background(Color(backgroundColorNav))
                         }
+                        
+                        DateSlider()
                         
                         CityMapView(userSettings: self.dataSource.userSettings,
                                     mapViewModel: mapViewModel,
                                     proxy: proxy)
-
-                            .id("CityMapView")
-                            .edgesIgnoringSafeArea([.horizontal, .bottom])
+                        .id("CityMapView")
+                        .edgesIgnoringSafeArea([.horizontal, .bottom])
                     }
                     .navigationBarTitle("", displayMode: .inline)
                     .navigationBarItems(
