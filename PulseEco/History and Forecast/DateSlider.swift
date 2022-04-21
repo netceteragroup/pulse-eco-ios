@@ -35,9 +35,9 @@ struct DateSlider: View {
                     .cornerRadius(3)
                     .padding(.leading, 10)
                 }
-                
-                WeekDayButton()
-                
+                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, value: "82", color: "red")
+                WeekDayButton(date: Date(), value: "34", color: "orange")
+                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: 1, to: Date())!, value: "22", color: "green")
             }
         }
         .frame(height: 64)
