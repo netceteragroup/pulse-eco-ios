@@ -17,12 +17,10 @@ struct DateSlider: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack {
-                
                 Button {
                     unimplementedAlert = true
                 } label: {
                     VStack(spacing: 0) {
-                        
                         Image("history")
                             .resizable()
                             .renderingMode(.template)
@@ -31,12 +29,15 @@ struct DateSlider: View {
                         Text("Explore")
                             .font(.system(size: 10, weight: .regular))
                     }
-                    .frame(width: 44, height: 44)
+                    .frame(width: 50, height: 50)
                     .foregroundColor(Color.white)
                     .background(Color(firstButtonColor))
                     .cornerRadius(3)
                     .padding(.leading, 10)
                 }
+                
+                WeekDayButton()
+                
             }
         }
         .frame(height: 64)
