@@ -12,13 +12,13 @@ struct DateSlider: View {
     
     let backgroundColorNav = #colorLiteral(red: 0.918249011, green: 0.9182489514, blue: 0.9182489514, alpha: 1)
     let firstButtonColor = #colorLiteral(red: 0.05490196078, green: 0.03921568627, blue: 0.2666666667, alpha: 1)
-    @State var unimplementedAlert = false
+    @Binding var unimplementedAlert: Bool
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack {
                 Button {
-                    unimplementedAlert = true
+                    unimplementedAlert.toggle()
                 } label: {
                     VStack(spacing: 0) {
                         Image("history")
@@ -42,10 +42,15 @@ struct DateSlider: View {
         }
         .frame(height: 64)
         .background(Color(backgroundColorNav))
-        .alert("Not yet implemented!", isPresented: $unimplementedAlert) {
-            Button("OK", role: .cancel) {
-                unimplementedAlert = false
-            }
-        }
+//        .alert("Not yet implemented!", isPresented: $unimplementedAlert) {
+//            Button("OK", role: .cancel) {
+//                unimplementedAlert = false
+//            }
+//        }
+        
+//        if unimplementedAlert {
+//            CustomCalendar()
+//                .padding(.horizontal)
+//        }
     }
 }

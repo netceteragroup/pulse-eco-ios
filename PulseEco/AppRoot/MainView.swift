@@ -13,10 +13,15 @@ struct MainView: View {
     @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
+    
+    @State var showingCalendar = false
     let mapViewModel: MapViewModel
+    
+    let shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2)
+    
     private let backgroundColor: Color = AppColors.white.color
     private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
-    
+
     private var sensorDetailsViewModel: SensorDetailsViewModel {
         let selectedMeasure = dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId)
         return SensorDetailsViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
@@ -76,13 +81,23 @@ struct MainView: View {
                             MeasureListView(viewModel: viewModel)
                         }
                         
-                        DateSlider()
+                        DateSlider(unimplementedAlert: $showingCalendar)
                         
-                        CityMapView(userSettings: self.dataSource.userSettings,
-                                    mapViewModel: mapViewModel,
-                                    proxy: proxy)
-                        .id("CityMapView")
-                        .edgesIgnoringSafeArea([.horizontal, .bottom])
+                        ZStack(alignment: .top) {
+                            
+                            CityMapView(userSettings: self.dataSource.userSettings,
+                                        mapViewModel: mapViewModel,
+                                        proxy: proxy)
+                            .id("CityMapView")
+                            .edgesIgnoringSafeArea([.horizontal, .bottom])
+                            
+                            if showingCalendar {
+                                CustomCalendar(showingCalendar: $showingCalendar)
+                                    .cornerRadius(4)
+                                    .shadow(color: Color(shadowColor), radius: 20)
+                                    .padding(.all)
+                            }
+                        }
                     }
                     .navigationBarTitle("", displayMode: .inline)
                     .navigationBarItems(
