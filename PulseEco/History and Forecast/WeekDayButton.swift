@@ -21,8 +21,7 @@ struct WeekDayButton: View {
     var opacity: Double {
         if date > Date.now {
             return 0.5
-        }
-        else {
+        } else {
             return 1.0
         }
     }
@@ -31,13 +30,11 @@ struct WeekDayButton: View {
         
         if Calendar.current.isDateInToday(date) {
             return "Today"
-        }
-        else if Calendar.current.isDayInCurrentWeek(date: date) {
+        } else if Calendar.current.isDayInCurrentWeek(date: date) {
             
             let dayOfWeek =  Calendar.current.dateComponents([.weekday], from: date).weekday!
             return Calendar.current.weekdayNameFrom(weekdayNumber: dayOfWeek)
-        }
-        else {
+        } else {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd MMM"
             return dateFormatter.string(from: date)

@@ -105,7 +105,7 @@ struct CustomCalendar: View {
                 
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(extractDate()) { value in
-                        CardView(value: value)
+                        cardView(value: value)
                             .onTapGesture {
                                 currentDate = value.date
                             }
@@ -147,7 +147,7 @@ struct CustomCalendar: View {
     }
     
     @ViewBuilder
-    func CardView(value: DateValueModel) -> some View {
+    func cardView(value: DateValueModel) -> some View {
         
         VStack {
             if value.day != -1 {
