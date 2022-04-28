@@ -11,6 +11,12 @@ import Charts
 
 struct WeekDayButton: View {
     
+    var calendar: Calendar = {
+        var cal = Calendar.current
+        cal.locale = Locale(identifier: Trema.appLanguageLocale)
+        return cal
+    }()
+    
     let borderColor = #colorLiteral(red: 0.06629675627, green: 0.06937607378, blue: 0.3369944096, alpha: 1)
     
     var date: Date
@@ -28,16 +34,17 @@ struct WeekDayButton: View {
     
     func labelFromDate(_ date: Date) -> String {
         
-        if Calendar.current.isDateInToday(date) {
-            return "Today"
-        } else if Calendar.current.isDayInCurrentWeek(date: date) {
+        if calendar.isDateInToday(date) {
+            return Trema.text(for: "today")
+        } else if calendar.isDayInCurrentWeek(date: date) {
             
-            let dayOfWeek =  Calendar.current.dateComponents([.weekday], from: date).weekday!
-            return Calendar.current.weekdayNameFrom(weekdayNumber: dayOfWeek)
+            let dayOfWeek = calendar.dateComponents([.weekday], from: date).weekday!
+            return calendar.weekdayNameFrom(weekdayNumber: dayOfWeek).capitalized
         } else {
             let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: Trema.appLanguageLocale)
             dateFormatter.dateFormat = "dd MMM"
-            return dateFormatter.string(from: date)
+            return dateFormatter.string(from: date).capitalized
         }
     }
     var body: some View {
@@ -70,8 +77,8 @@ struct WeekDayButton: View {
 
 extension Calendar {
     func isDayInCurrentWeek(date: Date) -> Bool {
-        let currentComponents = Calendar.current.dateComponents([.weekOfYear], from: Date())
-        let dateComponents = Calendar.current.dateComponents([.weekOfYear], from: date)
+        let currentComponents = self.dateComponents([.weekOfYear], from: Date())
+        let dateComponents = self.dateComponents([.weekOfYear], from: date)
         guard let currentWeekOfYear = currentComponents.weekOfYear, let dateWeekOfYear = dateComponents.weekOfYear else { return false }
         return currentWeekOfYear == dateWeekOfYear
     }

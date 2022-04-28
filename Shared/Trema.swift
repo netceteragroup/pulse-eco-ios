@@ -27,7 +27,7 @@ class Trema {
     static var appLanguageLocale: String {
         let lang = appLanguage
         switch lang {
-        case "rs": return "sr-rs"
+        case "rs": return "sr_Latn_RS"
         default: return lang
         }
     }

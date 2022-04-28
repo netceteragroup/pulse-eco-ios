@@ -26,7 +26,7 @@ struct DateSlider: View {
                             .renderingMode(.template)
                             .foregroundColor(Color.white)
                             .frame(width: 20, height: 20, alignment: .center)
-                        Text("Explore")
+                        Text(Trema.text(for: "explore"))
                             .font(.system(size: 10, weight: .regular))
                     }
                     .frame(width: 50, height: 50)
@@ -56,15 +56,5 @@ struct DateSlider: View {
         }
         .frame(height: 64)
         .background(Color(backgroundColorNav))
-//        .alert("Not yet implemented!", isPresented: $unimplementedAlert) {
-//            Button("OK", role: .cancel) {
-//                unimplementedAlert = false
-//            }
-//        }
-        
-//        if unimplementedAlert {
-//            CustomCalendar()
-//                .padding(.horizontal)
-//        }
     }
 }

@@ -23,38 +23,9 @@ struct CustomCalendar: View {
     
     var body: some View {
         
-        //ScrollView(.vertical, showsIndicators: false) {
-        
         VStack(spacing: 10) {
             
-            HStack() {
-                Button {
-                    
-                } label: {
-                    Text("Day")
-                        .font(.system(size: 13, weight: .regular))
-                        .frame(width: 59, height: 40, alignment: .center)
-                        .foregroundColor(Color.white)
-                        .background(Color(firstButtonColor))
-                        .cornerRadius(4)
-                }
-                
-                Button {
-                    
-                } label: {
-                    Text("Month")
-                        .font(.system(size: 13, weight: .regular))
-                        .frame(width: 59, height: 40, alignment: .center)
-                        .foregroundColor(firstButtonColor.color)
-                        .background(Color.white)
-                        .cornerRadius(4)
-                        .overlay(RoundedRectangle(cornerRadius: 3) .stroke(Color(firstButtonColor), lineWidth: 1))
-                }
-                Spacer()
-            }
-            
-            
-            let days: [String] = ["M", "T", "W", "T", "F", "S", "S"]
+            let days: [String] = daysOfWeekShort()
             
             HStack() {
                 
@@ -150,20 +121,40 @@ struct CustomCalendar: View {
     func cardView(value: DateValueModel) -> some View {
         
         VStack {
+
+            let flag = Calendar.current.isDate(value.date, equalTo: Date.now, toGranularity: .day)
+            
             if value.day != -1 {
-                Text("\(value.day)")
-                    .font(.system(size: 14, weight: .regular))
-                    .foregroundColor(Color(redColor))
-                    .frame(maxWidth:. infinity)
-                    .overlay(
-                        Circle()
-                            .stroke(Color(redColor), lineWidth: 1)
-                            .frame(width: 30, height: 30)
-                    )
+                
+                Button {
+                    
+                } label: {
+                    Text("\(value.day)")
+                        .font(.system(size: 14, weight: .regular))
+                        .foregroundColor(Color(redColor))
+                        .foregroundColor(flag ? Color.white : Color(redColor))
+                        .frame(maxWidth:. infinity)
+                        .overlay(overlayView(fill: flag) )
+                }
             }
         }
         .padding(.vertical, 5)
         .frame(height: 20, alignment: .top)
+    }
+    
+    @ViewBuilder
+    func overlayView(fill: Bool) -> some View {
+        
+        if fill {
+            Circle()
+                .fill(Color(redColor))
+                .frame(width: 30, height: 30)
+        } else {
+            Circle()
+                .stroke(Color(redColor), lineWidth: 1)
+                .frame(width: 30, height: 30)
+        }
+        
     }
     
     func extraDate() -> String {
@@ -174,6 +165,23 @@ struct CustomCalendar: View {
         let date = formatter.string(from: currentDate)
         
         return date
+    }
+    
+    private func daysOfWeekShort() -> [String] {
+        let arrey = [
+            Trema.text(for: "monday-short"),
+            Trema.text(for: "tuesday-short"),
+            Trema.text(for: "wednesday-short"),
+            Trema.text(for: "thursday-short"),
+            Trema.text(for: "friday-short"),
+            Trema.text(for: "saturday-short"),
+            Trema.text(for: "sunday-short")
+        ]
+        
+        return arrey
+            .map {
+                String($0.prefix(1)).capitalized
+            }
     }
     
     func getCurrentMonth() -> Date {
@@ -221,3 +229,4 @@ extension Date{
         }
     }
 }
+
