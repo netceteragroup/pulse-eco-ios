@@ -12,7 +12,18 @@ struct CustomCalendar: View {
     
     @State var currentDate: Date = Date()
     @State var currentMonth: Int = 0
+    
     @Binding var showingCalendar: Bool
+    @Binding var showPicker: Bool
+    
+    @State var selectedYear: Int = Calendar.current.component(.year, from: Date())
+    @State var selectedMonth: Int = Calendar.current.component(.month, from: Date()) - 1
+    
+    var calendar: Calendar = {
+        var cal = Calendar.current
+        cal.locale = Locale(identifier: Trema.appLanguageLocale)
+        return cal
+    }()
     
     let firstButtonColor = #colorLiteral(red: 0.05490196078, green: 0.03921568627, blue: 0.2666666667, alpha: 1)
     let greenColor = #colorLiteral(red: 0.3035327792, green: 0.6464360356, blue: 0.4156317115, alpha: 1)
@@ -25,90 +36,11 @@ struct CustomCalendar: View {
         
         VStack(spacing: 10) {
             
-            let days: [String] = daysOfWeekShort()
-            
-            HStack() {
-                
-                Text("\(extraDate())")
-                    .font(.system(size: 14, weight: .regular))
-                    .foregroundColor(Color(greyColor))
-                
-                Spacer(minLength: 0)
-                
-                Button {
-                    withAnimation {
-                        currentMonth -= 1
-                    }
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .resizable()
-                        .foregroundColor(Color(chevronColor))
-                        .frame(width: 7.41, height: 12)
-                }
-                .padding(.all)
-                
-                Button {
-                    withAnimation {
-                        currentMonth += 1
-                    }
-                } label: {
-                    Image(systemName: "chevron.right")
-                        .resizable()
-                        .foregroundColor(Color(chevronColor))
-                        .frame(width: 7.41, height: 12)
-                }
-                .padding(.all)
+            if !showPicker {
+                calendarPicker
+            } else {
+                datePicker
             }
-            
-            HStack(spacing: 0) {
-                ForEach(days, id: \.self) { day in
-                    
-                    Text(day)
-                        .frame(maxWidth: .infinity)
-                        .font(.system(size: 12, weight: .regular))
-                        .foregroundColor(Color(greyColor))
-                }
-            }
-            
-            HStack(spacing: 0) {
-                
-                let columns = Array(repeating: GridItem(.flexible()), count: 7)
-                
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(extractDate()) { value in
-                        cardView(value: value)
-                            .onTapGesture {
-                                currentDate = value.date
-                            }
-                    }
-                }
-            }
-            
-            HStack() {
-                
-                Spacer()
-                
-                Button {
-                    showingCalendar = false
-                } label: {
-                    Text("CANCEL")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(Color(greyColor))
-                }
-                .padding(.top)
-                
-                Button {
-                    showingCalendar = false
-                } label: {
-                    Text("OK")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(Color(firstButtonColor))
-                }
-                .padding(.top)
-                
-            }
-            .padding(.all)
-            
         }
         .onChange(of: currentMonth) { newValue in
             currentDate = getCurrentMonth()
@@ -118,10 +50,10 @@ struct CustomCalendar: View {
     }
     
     @ViewBuilder
-    func cardView(value: DateValueModel) -> some View {
+    private func cardView(value: DateValueModel) -> some View {
         
         VStack {
-
+            
             let flag = Calendar.current.isDate(value.date, equalTo: Date.now, toGranularity: .day)
             
             if value.day != -1 {
@@ -131,10 +63,14 @@ struct CustomCalendar: View {
                 } label: {
                     Text("\(value.day)")
                         .font(.system(size: 14, weight: .regular))
-                        .foregroundColor(Color(redColor))
-                        .foregroundColor(flag ? Color.white : Color(redColor))
                         .frame(maxWidth:. infinity)
-                        .overlay(overlayView(fill: flag) )
+                        .foregroundColor(flag ? Color.white : Color(redColor))
+                        .frame(width: 30, height: 30)
+                        .overlay(Circle()
+                            .stroke(Color(redColor), lineWidth: 1) )
+                        .background(flag ?
+                                    Circle()
+                            .fill(Color(redColor)) : nil )
                 }
             }
         }
@@ -142,22 +78,7 @@ struct CustomCalendar: View {
         .frame(height: 20, alignment: .top)
     }
     
-    @ViewBuilder
-    func overlayView(fill: Bool) -> some View {
-        
-        if fill {
-            Circle()
-                .fill(Color(redColor))
-                .frame(width: 30, height: 30)
-        } else {
-            Circle()
-                .stroke(Color(redColor), lineWidth: 1)
-                .frame(width: 30, height: 30)
-        }
-        
-    }
-    
-    func extraDate() -> String {
+    private func extraDate() -> String {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM YYYY"
@@ -184,7 +105,7 @@ struct CustomCalendar: View {
             }
     }
     
-    func getCurrentMonth() -> Date {
+    private func getCurrentMonth() -> Date {
         let calendar = Calendar.current
         
         guard let currentMonth = calendar.date(byAdding: .month, value: self.currentMonth, to: Date()) else {
@@ -193,7 +114,7 @@ struct CustomCalendar: View {
         return currentMonth
     }
     
-    func extractDate() -> [DateValueModel] {
+    private func extractDate() -> [DateValueModel] {
         
         let calendar = Calendar.current
         
@@ -212,6 +133,158 @@ struct CustomCalendar: View {
         }
         return days
     }
+    
+    @ViewBuilder
+    var calendarPicker: some View {
+        
+        let days: [String] = daysOfWeekShort()
+        
+        HStack() {
+            
+            Button {
+                showPicker.toggle()
+            } label: {
+                Text("\(extraDate())")
+                    .font(.system(size: 14, weight: .regular))
+                    .foregroundColor(Color(greyColor))
+            }
+            Spacer(minLength: 0)
+            
+            Button {
+                withAnimation {
+                    currentMonth -= 1
+                }
+            } label: {
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .foregroundColor(Color(chevronColor))
+                    .frame(width: 7.41, height: 12)
+            }
+            .padding(.all)
+            
+            Button {
+                withAnimation {
+                    currentMonth += 1
+                }
+            } label: {
+                Image(systemName: "chevron.right")
+                    .resizable()
+                    .foregroundColor(Color(chevronColor))
+                    .frame(width: 7.41, height: 12)
+            }
+            .padding(.all)
+        }
+        
+        VStack {
+            HStack(spacing: 0) {
+                ForEach(days, id: \.self) { day in
+                    
+                    Text(day)
+                        .frame(maxWidth: .infinity)
+                        .font(.system(size: 12, weight: .regular))
+                        .foregroundColor(Color(greyColor))
+                }
+            }
+            
+            HStack(spacing: 0) {
+                
+                let columns = Array(repeating: GridItem(.flexible()), count: 7)
+                
+                LazyVGrid(columns: columns, spacing: 20) {
+                    ForEach(extractDate()) { value in
+                        cardView(value: value)
+                            .onTapGesture {
+                                currentDate = value.date
+                            }
+                    }
+                }
+            }
+        }
+        
+        HStack() {
+            
+            Spacer()
+            
+            Button {
+                showingCalendar = false
+            } label: {
+                Text(Trema.text(for: "cancel"))
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(Color(greyColor))
+            }
+            .padding(.top)
+            
+            Button {
+                showingCalendar = false
+            } label: {
+                Text(Trema.text(for: "ok"))
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(Color(firstButtonColor))
+            }
+            .padding(.top)
+        }
+        .padding(.all)
+        
+    }
+    
+    @ViewBuilder
+    var datePicker: some View {
+        
+        let currentYear = calendar.component(.year, from: currentDate)
+        let monthsArray = calendar.monthSymbols
+        GeometryReader { proxy in
+            VStack {
+                
+                HStack (spacing: 0){
+                    
+                    Picker("Month", selection: $selectedMonth) {
+                        ForEach(0..<monthsArray.count, id: \.self) { month in
+                            Text(monthsArray[month].capitalized)
+                                .font(.system(size: 14, weight: .regular))
+                                .frame(alignment: .center)
+                        }
+                    }
+                    .pickerStyle(.wheel)
+                    .frame(width: proxy.size.width/2, alignment: .center)
+                    
+                    Picker("Year", selection: $selectedYear) {
+                        ForEach(2000...currentYear+1, id: \.self) {
+                            Text(String($0))
+                                .font(.system(size: 14, weight: .regular))
+                                .frame(alignment: .center)
+                        }
+                    }
+                    .pickerStyle(.wheel)
+                    .frame(width: proxy.size.width/2, alignment: .center)
+                }
+                .onAppear {
+                    print(proxy.size)
+                }
+                HStack {
+                    Button {
+                        showingCalendar = true
+                        showPicker = false
+                    } label: {
+                        Text(Trema.text(for: "cancel"))
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(Color(greyColor))
+                    }
+                    .padding(.top)
+                    
+                    Button {
+                        showingCalendar = true
+                        showPicker = false
+                        print("Choosen year and month: ", selectedMonth, selectedYear)
+                    } label: {
+                        Text(Trema.text(for: "ok"))
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(Color(firstButtonColor))
+                    }
+                    .padding(.top)
+                }
+            }
+        }
+    }
 }
 
 extension Date{
@@ -229,4 +302,3 @@ extension Date{
         }
     }
 }
-

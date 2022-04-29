@@ -15,6 +15,7 @@ struct MainView: View {
     @EnvironmentObject var dataSource: AppDataSource
     
     @State var showingCalendar = false
+    @State var showingPicker = false
     let mapViewModel: MapViewModel
     
     let shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2)
@@ -92,7 +93,7 @@ struct MainView: View {
                             .edgesIgnoringSafeArea([.horizontal, .bottom])
                             
                             if showingCalendar {
-                                CustomCalendar(showingCalendar: $showingCalendar)
+                                CustomCalendar(showingCalendar: $showingCalendar, showPicker: $showingPicker)
                                     .cornerRadius(4)
                                     .shadow(color: Color(shadowColor), radius: 20)
                                     .padding(.all)
