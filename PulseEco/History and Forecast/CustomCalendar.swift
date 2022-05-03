@@ -82,6 +82,7 @@ struct CustomCalendar: View {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM YYYY"
+        formatter.locale = Locale(identifier: Trema.appLanguageLocale)
         
         let date = formatter.string(from: currentDate)
         
@@ -144,9 +145,14 @@ struct CustomCalendar: View {
             Button {
                 showPicker.toggle()
             } label: {
-                Text("\(extraDate())")
-                    .font(.system(size: 14, weight: .regular))
-                    .foregroundColor(Color(greyColor))
+                HStack {
+                    Text("\(extraDate().capitalized)")
+                        .font(.system(size: 14, weight: .regular))
+                        .foregroundColor(Color(greyColor))
+                    Image(systemName: "arrowtriangle.down.fill")
+                        .foregroundColor(Color(greyColor))
+                        .imageScale(.small)
+                }
             }
             Spacer(minLength: 0)
             
@@ -178,7 +184,6 @@ struct CustomCalendar: View {
         VStack {
             HStack(spacing: 0) {
                 ForEach(days, id: \.self) { day in
-                    
                     Text(day)
                         .frame(maxWidth: .infinity)
                         .font(.system(size: 12, weight: .regular))
@@ -232,11 +237,10 @@ struct CustomCalendar: View {
         
         let currentYear = calendar.component(.year, from: currentDate)
         let monthsArray = calendar.monthSymbols
+        
         GeometryReader { proxy in
             VStack {
-                
-                HStack (spacing: 0){
-                    
+                HStack (spacing: 0) {
                     Picker("Month", selection: $selectedMonth) {
                         ForEach(0..<monthsArray.count, id: \.self) { month in
                             Text(monthsArray[month].capitalized)
@@ -258,7 +262,6 @@ struct CustomCalendar: View {
                     .frame(width: proxy.size.width/2, alignment: .center)
                 }
                 .onAppear {
-                    print(proxy.size)
                 }
                 HStack {
                     Button {
@@ -274,7 +277,6 @@ struct CustomCalendar: View {
                     Button {
                         showingCalendar = true
                         showPicker = false
-                        print("Choosen year and month: ", selectedMonth, selectedYear)
                     } label: {
                         Text(Trema.text(for: "ok"))
                             .font(.system(size: 14, weight: .semibold))
@@ -284,6 +286,7 @@ struct CustomCalendar: View {
                 }
             }
         }
+        .frame(height: 280)
     }
 }
 

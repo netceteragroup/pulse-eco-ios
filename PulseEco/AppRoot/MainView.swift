@@ -82,7 +82,7 @@ struct MainView: View {
                             MeasureListView(viewModel: viewModel)
                         }
                         
-                        DateSlider(unimplementedAlert: $showingCalendar)
+                        DateSlider(unimplementedAlert: $showingCalendar, unimplementedPicker: $showingPicker)
                         
                         ZStack(alignment: .top) {
                             
