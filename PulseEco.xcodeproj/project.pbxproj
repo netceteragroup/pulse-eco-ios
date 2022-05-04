@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */; };
+		1E96776F280FFEB60085C37A /* WeekDayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E96776E280FFEB60085C37A /* WeekDayButton.swift */; };
+		1EAF05F82817E89B001C1EEA /* CustomCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAF05F72817E89B001C1EEA /* CustomCalendar.swift */; };
+		1EAF05FA2817F653001C1EEA /* DateValueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAF05F92817F653001C1EEA /* DateValueModel.swift */; };
 		32479108261A6F7200E97C56 /* SlideOverCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32479107261A6F7200E97C56 /* SlideOverCard.swift */; };
 		3288686D24B513DA009CC56D /* LocationAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288686C24B513DA009CC56D /* LocationAnnotationView.swift */; };
 		3288687424B51F5E009CC56D /* SelectedSensorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3288687024B51F5E009CC56D /* SelectedSensorView.xib */; };
@@ -197,6 +201,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSlider.swift; sourceTree = "<group>"; };
+		1E96776E280FFEB60085C37A /* WeekDayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayButton.swift; sourceTree = "<group>"; };
+		1EAF05F72817E89B001C1EEA /* CustomCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendar.swift; sourceTree = "<group>"; };
+		1EAF05F92817F653001C1EEA /* DateValueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValueModel.swift; sourceTree = "<group>"; };
 		32479107261A6F7200E97C56 /* SlideOverCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverCard.swift; sourceTree = "<group>"; };
 		3288686C24B513DA009CC56D /* LocationAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotationView.swift; sourceTree = "<group>"; };
 		3288687024B51F5E009CC56D /* SelectedSensorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedSensorView.xib; sourceTree = "<group>"; };
@@ -335,6 +343,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E3A38AD280EBC4B002C4A54 /* History and Forecast */ = {
+			isa = PBXGroup;
+			children = (
+				1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */,
+				1E96776E280FFEB60085C37A /* WeekDayButton.swift */,
+				1EAF05F72817E89B001C1EEA /* CustomCalendar.swift */,
+				1EAF05F92817F653001C1EEA /* DateValueModel.swift */,
+			);
+			path = "History and Forecast";
+			sourceTree = "<group>";
+		};
 		3288686E24B51F5E009CC56D /* UIKitViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -505,6 +524,7 @@
 				74E46614270326BE0010F80E /* Lottie */,
 				59A4F696247FD2160089D523 /* Preview Content */,
 				74F419AC26F4886500E433A7 /* Services */,
+				1E3A38AD280EBC4B002C4A54 /* History and Forecast */,
 				5997F73A24A370EF0035BEEB /* TypeSelector */,
 				D03524D22736055A0089E11C /* Utility */,
 				59A4F68E247FD2150089D523 /* AppDelegate.swift */,
@@ -907,6 +927,8 @@
 				59A35AC72498ECFF00C07786 /* MeasureListView.swift in Sources */,
 				59504C1124B46BF100EA4AFF /* NavigationBarModifier.swift in Sources */,
 				593C263624BC8969005152BE /* CityRowView.swift in Sources */,
+				1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */,
+				1EAF05F82817E89B001C1EEA /* CustomCalendar.swift in Sources */,
 				BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */,
 				59A35ADA2499057C00C07786 /* Constants.swift in Sources */,
 				5924C5DA249A4792007E0D78 /* MeasureListViewModel.swift in Sources */,
@@ -935,6 +957,7 @@
 				59A35AC22498EBB600C07786 /* MainView.swift in Sources */,
 				591642A92499FE9F000A4F7C /* AverageUtilModel.swift in Sources */,
 				593C263A24BC8B59005152BE /* CityListViewModel.swift in Sources */,
+				1E96776F280FFEB60085C37A /* WeekDayButton.swift in Sources */,
 				3288687724B51F5E009CC56D /* MarkerView.swift in Sources */,
 				BA718F0D25BED6B100EC87E0 /* SensorDetailsView.swift in Sources */,
 				593D8C9E249A17C1006B88AC /* FavouriteCitiesViewModel.swift in Sources */,
@@ -950,6 +973,7 @@
 				59A4F691247FD2150089D523 /* SceneDelegate.swift in Sources */,
 				BA5C405025D3D1E80010291F /* DailyAverageView.swift in Sources */,
 				592201AB24AA55D900025F1F /* ExpandableView.swift in Sources */,
+				1EAF05FA2817F653001C1EEA /* DateValueModel.swift in Sources */,
 				BA12EB0E2611E3FE005BC654 /* Trema.swift in Sources */,
 				59FAD1D22490C27200AC36A5 /* NetworkService.swift in Sources */,
 				59B0018E24C9BC6A006EA796 /* ChartViewModel.swift in Sources */,

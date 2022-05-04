@@ -23,6 +23,14 @@ class Trema {
                      language: String = appLanguage) -> String {
         key.localizedFor(language)
     }
+    
+    static var appLanguageLocale: String {
+        let lang = appLanguage
+        switch lang {
+        case "rs": return "sr_Latn_RS"
+        default: return lang
+        }
+    }
 }
 
 private extension String {
@@ -32,5 +40,15 @@ private extension String {
         }
         let bundle = Bundle(path: path)
         return bundle?.localizedString(forKey: self, value: nil, table: "messages") ?? self
+    }
+}
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
     }
 }

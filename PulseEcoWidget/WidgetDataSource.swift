@@ -11,7 +11,7 @@ class WidgetDataSource {
 
     func getValuesForCity(cityName: String,
                           measureId: String,
-                          completion: @escaping (Result<WidgetData, Error>) -> ()) {
+                          completion: @escaping (Result<WidgetData, Error>) -> Void) {
         
         Publishers.Zip(networkService.downloadMeasures(),
                        networkService.downloadOverallValuesForCity(cityName: cityName))

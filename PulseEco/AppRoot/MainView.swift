@@ -13,10 +13,14 @@ struct MainView: View {
     @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
+    
+    @State var showingCalendar = false
+    @State var showingPicker = false
     let mapViewModel: MapViewModel
+    let shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2)
     private let backgroundColor: Color = AppColors.white.color
     private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
-    
+
     private var sensorDetailsViewModel: SensorDetailsViewModel {
         let selectedMeasure = dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId)
         return SensorDetailsViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
@@ -24,7 +28,6 @@ struct MainView: View {
                                       sensorData24h: dataSource.sensorsData24h,
                                       dailyAverages: dataSource.sensorsDailyAverageData)
     }
-
     var body: some View {
         Group {
             if dataSource.loadingCityData || dataSource.loadingMeasures {
@@ -40,17 +43,17 @@ struct MainView: View {
             case .cityListView:
                 CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
                              userSettings: self.dataSource.userSettings)
-                    .onDisappear(perform: {
-                        if self.dataSource.userSettings.favouriteCities.count == 0 {
-                            self.appState.citySelectorClicked = false
-                        }
-                        if self.$appState.newCitySelected.wrappedValue == true {
-                            self.refreshService.updateRefreshDate()
-                            self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
-                            self.appState.newCitySelected = false
-                            self.appState.citySelectorClicked = false
-                        }
-                    })
+                .onDisappear(perform: {
+                    if self.dataSource.userSettings.favouriteCities.count == 0 {
+                        self.appState.citySelectorClicked = false
+                    }
+                    if self.$appState.newCitySelected.wrappedValue == true {
+                        self.refreshService.updateRefreshDate()
+                        self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
+                        self.appState.newCitySelected = false
+                        self.appState.citySelectorClicked = false
+                    }
+                })
                 
             case .languageView: LanguageView()
             }
@@ -60,33 +63,38 @@ struct MainView: View {
     var loadingView: some View {
         LoadingDialog()
     }
-
+    
     var contentView: some View {
         GeometryReader { proxy in
             ZStack {
                 NavigationView {
-                    ZStack {
-                        CityMapView(userSettings: self.dataSource.userSettings,
-                                    mapViewModel: mapViewModel,
-                                    proxy: proxy)
-                            .id("CityMapView")
-                            .edgesIgnoringSafeArea([.horizontal, .bottom])
-                            .padding(.top, 36)
-                        VStack {
-                            Rectangle()
-                                .frame(height: 36)
-                                .foregroundColor(backgroundColor)
-                                .shadow(color: shadow, radius: 0.8, x: 0, y: 0)
-                            Spacer()
-                        }
-                        VStack {
+                    VStack(spacing: 0) {
+                        
+                        VStack(spacing: 0) {
                             let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
                                                                  cityName: appState.selectedCity.cityName,
                                                                  measuresList: dataSource.measures,
                                                                  cityValues: dataSource.cityOverall,
                                                                  citySelectorClicked: appState.citySelectorClicked)
                             MeasureListView(viewModel: viewModel)
-                            Spacer()
+                        }
+                        
+                        DateSlider(unimplementedAlert: $showingCalendar, unimplementedPicker: $showingPicker)
+                        
+                        ZStack(alignment: .top) {
+                            
+                            CityMapView(userSettings: self.dataSource.userSettings,
+                                        mapViewModel: mapViewModel,
+                                        proxy: proxy)
+                            .id("CityMapView")
+                            .edgesIgnoringSafeArea([.horizontal, .bottom])
+                            
+                            if showingCalendar {
+                                CustomCalendar(showingCalendar: $showingCalendar, showPicker: $showingPicker)
+                                    .cornerRadius(4)
+                                    .shadow(color: Color(shadowColor), radius: 20)
+                                    .padding(.all)
+                            }
                         }
                     }
                     .navigationBarTitle("", displayMode: .inline)
@@ -108,7 +116,7 @@ struct MainView: View {
             }
         }
     }
-
+    
     var trailingNavigationItems: some View {
         HStack {
             Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
@@ -133,7 +141,7 @@ struct MainView: View {
             }
         }
     }
-
+    
     var leadingNavigationItems: some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) {

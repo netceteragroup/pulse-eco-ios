@@ -17,13 +17,13 @@ struct WidgetTimelineProvider: IntentTimelineProvider {
 
     func getSnapshot(for configuration: ConfigurationIntent,
                      in context: Context,
-                     completion: @escaping (Entry) -> ()) {
+                     completion: @escaping (Entry) -> Void) {
         completion(emptyEntry)
     }
     
     func getTimeline(for configuration: ConfigurationIntent,
                      in context: Context,
-                     completion: @escaping (Timeline<Entry>) -> ()) {
+                     completion: @escaping (Timeline<Entry>) -> Void) {
         
         let city = configuration.cities?.identifier ?? "skopje"
         let measureId = configuration.measures?.identifier ?? "pm10"

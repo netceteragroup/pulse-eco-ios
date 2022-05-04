@@ -25,7 +25,8 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
     }
     
     func provideMeasuresOptionsCollection(for intent: ConfigurationIntent,
-                                          with completion: @escaping (INObjectCollection<MeasureConfig>?, Error?) -> Void) {
+                                          with completion:
+                                          @escaping (INObjectCollection<MeasureConfig>?, Error?) -> Void) {
         networkService.downloadMeasures()
             .replaceError(with: [Measure.empty()])
             .map({ measures in
