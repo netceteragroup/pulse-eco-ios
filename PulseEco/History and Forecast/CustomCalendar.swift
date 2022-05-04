@@ -12,12 +12,11 @@ struct CustomCalendar: View {
     
     @State var currentDate: Date = Date()
     @State var currentMonth: Int = 0
+    @State var selectedYear: Int = Calendar.current.component(.year, from: Date())
+    @State var selectedMonth: Int = Calendar.current.component(.month, from: Date()) - 1
     
     @Binding var showingCalendar: Bool
     @Binding var showPicker: Bool
-    
-    @State var selectedYear: Int = Calendar.current.component(.year, from: Date())
-    @State var selectedMonth: Int = Calendar.current.component(.month, from: Date()) - 1
     
     var calendar: Calendar = {
         var cal = Calendar.current
@@ -50,25 +49,24 @@ struct CustomCalendar: View {
     }
     
     @ViewBuilder
-    private func cardView(value: DateValueModel) -> some View {
+    private func callendarDaysView(value: DateValueModel) -> some View {
         
         VStack {
             
-            let flag = Calendar.current.isDate(value.date, equalTo: Date.now, toGranularity: .day)
+            let isDateToday = Calendar.current.isDate(value.date, equalTo: Date.now, toGranularity: .day)
             
             if value.day != -1 {
-                
                 Button {
                     
                 } label: {
                     Text("\(value.day)")
                         .font(.system(size: 14, weight: .regular))
                         .frame(maxWidth:. infinity)
-                        .foregroundColor(flag ? Color.white : Color(redColor))
+                        .foregroundColor(isDateToday ? Color.white : Color(redColor))
                         .frame(width: 30, height: 30)
                         .overlay(Circle()
                             .stroke(Color(redColor), lineWidth: 1) )
-                        .background(flag ?
+                        .background(isDateToday ?
                                     Circle()
                             .fill(Color(redColor)) : nil )
                 }
@@ -90,7 +88,8 @@ struct CustomCalendar: View {
     }
     
     private func daysOfWeekShort() -> [String] {
-        let arrey = [
+        
+        return [
             Trema.text(for: "monday-short"),
             Trema.text(for: "tuesday-short"),
             Trema.text(for: "wednesday-short"),
@@ -99,8 +98,6 @@ struct CustomCalendar: View {
             Trema.text(for: "saturday-short"),
             Trema.text(for: "sunday-short")
         ]
-        
-        return arrey
             .map {
                 String($0.prefix(1)).capitalized
             }
@@ -118,7 +115,6 @@ struct CustomCalendar: View {
     private func extractDate() -> [DateValueModel] {
         
         let calendar = Calendar.current
-        
         let currentMonth = getCurrentMonth()
         
         var days = currentMonth.getAllDates().compactMap { date -> DateValueModel in
@@ -141,7 +137,6 @@ struct CustomCalendar: View {
         let days: [String] = daysOfWeekShort()
         
         HStack() {
-            
             Button {
                 showPicker.toggle()
             } label: {
@@ -155,7 +150,6 @@ struct CustomCalendar: View {
                 }
             }
             Spacer(minLength: 0)
-            
             Button {
                 withAnimation {
                     currentMonth -= 1
@@ -180,7 +174,6 @@ struct CustomCalendar: View {
             }
             .padding(.all)
         }
-        
         VStack {
             HStack(spacing: 0) {
                 ForEach(days, id: \.self) { day in
@@ -190,14 +183,13 @@ struct CustomCalendar: View {
                         .foregroundColor(Color(greyColor))
                 }
             }
-            
             HStack(spacing: 0) {
                 
                 let columns = Array(repeating: GridItem(.flexible()), count: 7)
                 
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(extractDate()) { value in
-                        cardView(value: value)
+                        callendarDaysView(value: value)
                             .onTapGesture {
                                 currentDate = value.date
                             }
@@ -205,11 +197,8 @@ struct CustomCalendar: View {
                 }
             }
         }
-        
         HStack() {
-            
             Spacer()
-            
             Button {
                 showingCalendar = false
             } label: {
@@ -218,7 +207,7 @@ struct CustomCalendar: View {
                     .foregroundColor(Color(greyColor))
             }
             .padding(.top)
-            
+        
             Button {
                 showingCalendar = false
             } label: {
@@ -229,7 +218,6 @@ struct CustomCalendar: View {
             .padding(.top)
         }
         .padding(.all)
-        
     }
     
     @ViewBuilder
@@ -251,9 +239,6 @@ struct CustomCalendar: View {
                     .pickerStyle(.wheel)
                     .frame(width: 180, alignment: .center)
                     .clipped()
-//                    .frame(width: proxy.size.width/2, alignment: .center)
-                   
-//                    Spacer(minLength: 0)
                     
                     Picker("Year", selection: $selectedYear) {
                         ForEach(2000...currentYear+1, id: \.self) {
@@ -265,7 +250,6 @@ struct CustomCalendar: View {
                     .pickerStyle(.wheel)
                     .frame(width: 180, alignment: .center)
                     .clipped()
-//                    .frame(width: proxy.size.width/2, alignment: .center)
                 }
                 .onAppear {
                 }
@@ -296,14 +280,12 @@ struct CustomCalendar: View {
     }
 }
 
-extension Date{
+extension Date {
     
     func getAllDates()->[Date] {
         
         let calendar = Calendar.current
-        
         let startDate = calendar.date(from: Calendar.current.dateComponents([.year, .month], from: self))!
-        
         let range = calendar.range(of: .day, in: .month, for: startDate)!
         
         return range.compactMap { day->Date in

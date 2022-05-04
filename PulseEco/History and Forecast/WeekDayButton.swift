@@ -51,7 +51,7 @@ struct WeekDayButton: View {
         
         LazyHStack {
                 Button {
-                    
+                    //TODO: Select date
                 } label: {
                     VStack(spacing: 3) {
                         Text(labelFromDate(date))

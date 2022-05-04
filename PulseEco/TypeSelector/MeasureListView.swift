@@ -12,7 +12,7 @@ struct MeasureListView: View {
     @ObservedObject var viewModel: MeasureListViewModel
     @EnvironmentObject var appDataSource: AppDataSource
     @EnvironmentObject var appState: AppState
-
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { scrollProxy in
@@ -23,20 +23,17 @@ struct MeasureListView: View {
                                 scrollProxy.scrollTo(appState.selectedMeasureId)
                             }
                         }
-//                    Spacer()
                 }
                 .frame(height: 40)
             }
         }
-//        .frame(height: 40)
         .frame(height: 34)
     }
-
     var buttonStack: some View {
         HStack {
             ForEach(viewModel.measures, id: \.id) { item in
                 MeasureButtonView(viewModel: item)
-                .id(item.id)
+                    .id(item.id)
             }
         }
     }
