@@ -249,7 +249,11 @@ struct CustomCalendar: View {
                         }
                     }
                     .pickerStyle(.wheel)
-                    .frame(width: proxy.size.width/2, alignment: .center)
+                    .frame(width: 180, alignment: .center)
+                    .clipped()
+//                    .frame(width: proxy.size.width/2, alignment: .center)
+                   
+//                    Spacer(minLength: 0)
                     
                     Picker("Year", selection: $selectedYear) {
                         ForEach(2000...currentYear+1, id: \.self) {
@@ -259,7 +263,9 @@ struct CustomCalendar: View {
                         }
                     }
                     .pickerStyle(.wheel)
-                    .frame(width: proxy.size.width/2, alignment: .center)
+                    .frame(width: 180, alignment: .center)
+                    .clipped()
+//                    .frame(width: proxy.size.width/2, alignment: .center)
                 }
                 .onAppear {
                 }
