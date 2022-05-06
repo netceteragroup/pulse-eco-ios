@@ -158,12 +158,12 @@ class NetworkService {
         
         var history: [SensorData] = []
         
-        let startDate = Date.from(1, 1, 2018)!
-        let endDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        let dayDurationInSeconds: TimeInterval = 60*60*24
-        
-        for date in stride(from: startDate, to: endDate, by: dayDurationInSeconds) {
-            let result = await downloadAverageData(for: cityName, from: date, to: date, timeUnit: .day, sensorType: sensorType)!
+        for var year in 2018...2022 {
+            
+            let startDate = Date.from(1, 1, year)!
+            let endDate = Date.from(31, 12, year)!
+            let result = await downloadAverageData(for: cityName, from: startDate, to: endDate, timeUnit: .day, sensorType: sensorType)!
+            year = year + 1
             
             history.append(contentsOf: result)
         }

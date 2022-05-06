@@ -217,7 +217,7 @@ struct CustomCalendar: View {
 //                                                                       to: Date(),
 //                                                                       timeUnit: .day,
 //                                                                       sensorType: "pm10")!
-                    let b = await NetworkService().downloadAverageDayData(for: "strumica", sensorType: "pm25")
+//                    let b = await NetworkService().downloadAverageDayData(for: "strumica", sensorType: "pm25")
                 }
                 
             } label: {

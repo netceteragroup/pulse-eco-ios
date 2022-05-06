@@ -108,10 +108,9 @@ class AppDataSource: ObservableObject {
     }
     
     func getAverageDayData(city: City,
-                           measure: Measure?) async {
+                                      measure: Measure?) async {
         guard let measure = measure else { return }
-        let response = await networkService.downloadAverageDayData(for: city.cityName, sensorType: measure.id)
-        self.sensorsAverageHistoryData = response
+        self.sensorsAverageHistoryData = await networkService
+            .downloadAverageDayData(for: city.cityName, sensorType: measure.id)
     }
-    
 }
