@@ -31,7 +31,7 @@ struct SensorData: Codable, Identifiable {
     let sensorID: String
     let stamp: String
     let type: String
-    let position: String
+    let position: String?
     let value: String
 
     enum CodingKeys: String, CodingKey {

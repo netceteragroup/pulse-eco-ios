@@ -210,6 +210,16 @@ struct CustomCalendar: View {
         
             Button {
                 showingCalendar = false
+                
+                Task {
+//                    let a = await NetworkService().downloadAverageData(for: "strumica",
+//                                                                       from: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
+//                                                                       to: Date(),
+//                                                                       timeUnit: .day,
+//                                                                       sensorType: "pm10")!
+                    let b = await NetworkService().downloadAverageDayData(for: "strumica", sensorType: "pm25")
+                }
+                
             } label: {
                 Text(Trema.text(for: "ok"))
                     .font(.system(size: 14, weight: .semibold))

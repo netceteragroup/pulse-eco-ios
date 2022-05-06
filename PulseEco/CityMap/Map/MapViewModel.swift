@@ -36,6 +36,10 @@ class MapViewModel: ObservableObject {
                                                    sensorId: sensorId)
     }
     
+    func getAverageDayData() async {
+        await appDataSource.getAverageDayData(city: selectedCity, measure: measure)
+    }
+    
     private var cancellables = Set<AnyCancellable>()
     
     private func observeStateChanges() {

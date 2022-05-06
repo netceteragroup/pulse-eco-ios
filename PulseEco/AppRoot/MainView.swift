@@ -26,7 +26,8 @@ struct MainView: View {
         return SensorDetailsViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
                                       selectedMeasure: selectedMeasure,
                                       sensorData24h: dataSource.sensorsData24h,
-                                      dailyAverages: dataSource.sensorsDailyAverageData)
+                                      dailyAverages: dataSource.sensorsDailyAverageData,
+                                      historyAverage: dataSource.sensorsAverageHistoryData)
     }
     var body: some View {
         Group {
@@ -54,7 +55,6 @@ struct MainView: View {
                         self.appState.citySelectorClicked = false
                     }
                 })
-                
             case .languageView: LanguageView()
             }
         }
@@ -69,7 +69,6 @@ struct MainView: View {
             ZStack {
                 NavigationView {
                     VStack(spacing: 0) {
-                        
                         VStack(spacing: 0) {
                             let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
                                                                  cityName: appState.selectedCity.cityName,
@@ -78,9 +77,7 @@ struct MainView: View {
                                                                  citySelectorClicked: appState.citySelectorClicked)
                             MeasureListView(viewModel: viewModel)
                         }
-                        
                         DateSlider(unimplementedAlert: $showingCalendar, unimplementedPicker: $showingPicker)
-                        
                         ZStack(alignment: .top) {
                             
                             CityMapView(userSettings: self.dataSource.userSettings,

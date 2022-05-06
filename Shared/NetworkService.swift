@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import SwiftUI
 
 class NetworkService {
     
@@ -21,7 +22,6 @@ class NetworkService {
             .decode(type: [Measure].self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
-        
     }
     
     func downloadSensors(cityName: String) -> AnyPublisher<[Sensor], Error> {
@@ -68,14 +68,13 @@ class NetworkService {
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
-
-//    The request returns timestamp for the average data records exactly at noon GMT of the target day
-//    i.e exactly at 13:00
-//    if the request is made before 13h and the daysAgo's value is set to -7, it returns exactly seven values
-//    counting from yesterday's date
-//    for some reason if the request is made after 13h and the daysAgo's value is set to -7, it returns values for
-//    exactly six days from yesterday's date,
-//    that's why daysAgo in this case is set to -8, so we can have data for the past seven days
+    //    The request returns timestamp for the average data records exactly at noon GMT of the target day
+    //    i.e exactly at 13:00
+    //    if the request is made before 13h and the daysAgo's value is set to -7, it returns exactly seven values
+    //    counting from yesterday's date
+    //    for some reason if the request is made after 13h and the daysAgo's value is set to -7, it returns values for
+    //    exactly six days from yesterday's date,
+    //    that's why daysAgo in this case is set to -8, so we can have data for the past seven days
     func downloadDailyAverageDataForSensor(cityName: String,
                                            measureType: String,
                                            sensorId: String) -> AnyPublisher<[SensorData], Error> {
@@ -98,4 +97,105 @@ class NetworkService {
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
+    
+    enum AverageTimeUnit {
+        case day, week, month
+    }
+    
+    func downloadAverageData(for cityName: String,
+                             from startDate: Date,
+                             to endDate: Date,
+                             timeUnit: AverageTimeUnit,
+                             sensorType: String) async -> [SensorData]? {
+        
+        let sensorId = -1 // for average
+        let from = DateFormatter.iso8601Full.string(from: startDate)
+        let to = DateFormatter.iso8601Full.string(from: endDate)
+        
+        let path = "https://\(cityName).pulse.eco/rest/avgData/\(timeUnit)?sensorId=\(sensorId)&type=\(sensorType)&from=\(from)&to=\(to)"
+        let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
+        let url = URL(string: formattedRequest)!
+        let urlSession = URLSession.shared
+        do {
+            let (data, _) = try await urlSession.data(from: url)
+            let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
+            
+            return response
+        }
+        catch {
+            print("Error loading \(url)")
+            return nil
+        }
+    }
+    
+    func downloadCurrentData(for cityName: String,
+                             sensorType: String ) async -> [SensorData]? {
+        
+        let path = "https://\(cityName).pulse.eco/rest/current"
+        let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
+        let url = URL(string: formattedRequest)!
+        let urlSession = URLSession.shared
+        do {
+            let (data, _) = try await urlSession.data(from: url)
+            let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
+            
+            var res: [SensorData] = []
+            for r in response {
+                if r.type == sensorType {
+                    res.append(r)
+                }
+            }
+            return res
+        }
+        catch {
+            print("Error loading \(url)")
+            return nil
+        }
+    }
+    
+    func downloadAverageDayData(for cityName: String,
+                                sensorType: String) async -> [SensorData] {
+        
+        var history: [SensorData] = []
+        
+        let startDate = Date.from(1, 1, 2018)!
+        let endDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        let dayDurationInSeconds: TimeInterval = 60*60*24
+        
+        for date in stride(from: startDate, to: endDate, by: dayDurationInSeconds) {
+            let result = await downloadAverageData(for: cityName, from: date, to: date, timeUnit: .day, sensorType: sensorType)!
+            
+            history.append(contentsOf: result)
+        }
+        
+        let currentSensorData: [SensorData] = await downloadCurrentData(for: cityName, sensorType: sensorType)!
+        history.append(contentsOf: currentSensorData)
+        
+        return history
+    }
+    
 }
+extension Date {
+    static func from(_ day: Int, _ month: Int, _ year: Int) -> Date? {
+        let calendar = Calendar(identifier: .gregorian)
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+        dateComponents.hour = 14
+        dateComponents.minute = 00
+        dateComponents.second = 00
+        dateComponents.timeZone = TimeZone(secondsFromGMT: 7200)
+        return calendar.date(from: dateComponents) ?? nil
+    }
+}
+
+extension Date: Strideable {
+    public func distance(to other: Date) -> TimeInterval {
+        return other.timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
+    }
+    public func advanced(by n: TimeInterval) -> Date {
+        return self + n
+    }
+}
+

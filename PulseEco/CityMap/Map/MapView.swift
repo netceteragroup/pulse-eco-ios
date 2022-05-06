@@ -110,6 +110,10 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         }
     }
     
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) async {
+        await map.viewModel.getAverageDayData()
+    }
+    
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         guard let annotationView = view as? LocationAnnotationView else {
             return

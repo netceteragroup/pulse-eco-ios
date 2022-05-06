@@ -21,6 +21,8 @@ class AppDataSource: ObservableObject {
     @Published var cancellationTokens: [AnyCancellable] = []
     @Published var loadingCityData: Bool = true
     @Published var loadingMeasures: Bool = true
+    
+    @Published var sensorsAverageHistoryData: [SensorData] = []
 
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
@@ -104,4 +106,12 @@ class AppDataSource: ObservableObject {
             })
             .store(in: &cancelables)
     }
+    
+    func getAverageDayData(city: City,
+                           measure: Measure?) async {
+        guard let measure = measure else { return }
+        let response = await networkService.downloadAverageDayData(for: city.cityName, sensorType: measure.id)
+        self.sensorsAverageHistoryData = response
+    }
+    
 }
