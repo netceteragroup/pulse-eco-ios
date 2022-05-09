@@ -38,13 +38,13 @@ struct DateSlider: View {
                     .padding(.leading, 10)
                 }
                 Group {
-                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!, value: "82", color: "red")
-                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!, value: "82", color: "red")
-                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, value: "82", color: "red")
-                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, value: "82", color: "red")
-                WeekDayButton(date: Date(), value: "34", color: "orange")
-                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: 1, to: Date())!, value: "22", color: "green")
-                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: +2, to: Date())!, value: "82", color: "red")
+                    WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!, value: "82", color: "red")
+                    WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!, value: "82", color: "red")
+                    WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, value: "82", color: "red")
+                    WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, value: "82", color: "red")
+                    WeekDayButton(date: Date(), value: "34", color: "orange")
+                    WeekDayButton(date: Calendar.current.date(byAdding: .day, value: 1, to: Date())!, value: "22", color: "green")
+                    WeekDayButton(date: Calendar.current.date(byAdding: .day, value: +2, to: Date())!, value: "82", color: "red")
                 }
             }
         }

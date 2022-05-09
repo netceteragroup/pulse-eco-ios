@@ -107,7 +107,6 @@ class NetworkService {
                              to endDate: Date,
                              timeUnit: AverageTimeUnit,
                              sensorType: String) async -> [SensorData]? {
-        
         let sensorId = -1 // for average
         let from = DateFormatter.iso8601Full.string(from: startDate)
         let to = DateFormatter.iso8601Full.string(from: endDate)
@@ -128,24 +127,16 @@ class NetworkService {
         }
     }
     
-    func downloadCurrentData(for cityName: String,
-                             sensorType: String ) async -> [SensorData]? {
-        
-        let path = "https://\(cityName).pulse.eco/rest/current"
+    func downloadCurrentData(for cityName: String) async -> CityOverallValues? {
+        let path = "https://\(cityName).pulse.eco/rest/overall"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
         let url = URL(string: formattedRequest)!
         let urlSession = URLSession.shared
         do {
             let (data, _) = try await urlSession.data(from: url)
-            let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
-            
-            var res: [SensorData] = []
-            for r in response {
-                if r.type == sensorType {
-                    res.append(r)
-                }
-            }
-            return res
+            let response: CityOverallValues = try JSONDecoder().decode(CityOverallValues.self, from: data)
+        
+            return response
         }
         catch {
             print("Error loading \(url)")
@@ -155,10 +146,10 @@ class NetworkService {
     
     func downloadAverageDayData(for cityName: String,
                                 sensorType: String) async -> [SensorData] {
-        
         var history: [SensorData] = []
-        
-        for var year in 2018...2022 {
+        let components = Calendar.current.dateComponents([.year], from: Date())
+        let year = components.year!
+        for var year in 2016...year {
             
             let startDate = Date.from(1, 1, year)!
             let endDate = Date.from(31, 12, year)!
@@ -167,13 +158,37 @@ class NetworkService {
             
             history.append(contentsOf: result)
         }
-        
-        let currentSensorData: [SensorData] = await downloadCurrentData(for: cityName, sensorType: sensorType)!
-        history.append(contentsOf: currentSensorData)
-        
         return history
     }
     
+    func downloadMeasures() async -> [Measure]? {
+        let path = "https://pulse.eco/rest/measures?\(language)"
+        let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
+        let url = URL(string: formattedRequest)!
+        let urlSession = URLSession.shared
+        do {
+            let (data, _) = try await urlSession.data(from: url)
+            let response: [Measure] = try JSONDecoder().decode([Measure].self, from: data)
+           
+            return response
+        }
+        catch {
+            print("Error loading \(url)")
+            return nil
+        }
+    }
+    
+    func downloadOverallCurrentMeasures(cityName: String,
+                                        sensorType: String) async -> Void {
+        Task {
+            let history = await downloadAverageDayData(for: cityName, sensorType: sensorType)
+            let current = await downloadCurrentData(for: cityName)
+            let measures = await downloadMeasures()
+            
+//            await return [history, current, measures]
+        }
+        
+    }
 }
 extension Date {
     static func from(_ day: Int, _ month: Int, _ year: Int) -> Date? {
