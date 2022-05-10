@@ -152,7 +152,7 @@ class NetworkService {
         for var year in 2016...year {
             
             let startDate = Date.from(1, 1, year)!
-            let endDate = Date.from(31, 12, year)!
+            let endDate = Date.from(1, 1, year+1)!
             let result = await downloadAverageData(for: cityName, from: startDate, to: endDate, timeUnit: .day, sensorType: sensorType)!
             year = year + 1
             
@@ -179,15 +179,12 @@ class NetworkService {
     }
     
     func downloadOverallCurrentMeasures(cityName: String,
-                                        sensorType: String) async -> Void {
-        Task {
-            let history = await downloadAverageDayData(for: cityName, sensorType: sensorType)
-            let current = await downloadCurrentData(for: cityName)
-            let measures = await downloadMeasures()
-            
-//            await return [history, current, measures]
-        }
+                                        sensorType: String) async -> CityDataWrapper {
+        async let history = downloadAverageDayData(for: cityName, sensorType: sensorType)
+        async let current = downloadCurrentData(for: cityName)
+        async let measures = downloadMeasures()
         
+        return await CityDataWrapper(sensorData: history, currentValue: current, measures: measures)
     }
 }
 extension Date {

@@ -26,8 +26,7 @@ struct MainView: View {
         return SensorDetailsViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
                                       selectedMeasure: selectedMeasure,
                                       sensorData24h: dataSource.sensorsData24h,
-                                      dailyAverages: dataSource.sensorsDailyAverageData,
-                                      historyAverage: dataSource.sensorsAverageHistoryData)
+                                      dailyAverages: dataSource.sensorsDailyAverageData)
     }
     var body: some View {
         Group {

@@ -22,8 +22,8 @@ class AppDataSource: ObservableObject {
     @Published var loadingCityData: Bool = true
     @Published var loadingMeasures: Bool = true
     
-    @Published var sensorsAverageHistoryData: [SensorData] = []
-
+    @MainActor static var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
+    
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
     private let networkService = NetworkService()
@@ -53,6 +53,8 @@ class AppDataSource: ObservableObject {
     }
     
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
+        getValues(cityName: cityName, measureId: self.appState.selectedMeasureId)
+        
         self.loadingCityData = true
         Publishers.Zip4(networkService.downloadOverallValuesForCity(cityName: cityName),
                         networkService.downloadSensors(cityName: cityName),
@@ -107,10 +109,9 @@ class AppDataSource: ObservableObject {
             .store(in: &cancelables)
     }
     
-    func getAverageDayData(city: City,
-                                      measure: Measure?) async {
-        guard let measure = measure else { return }
-        self.sensorsAverageHistoryData = await networkService
-            .downloadAverageDayData(for: city.cityName, sensorType: measure.id)
+    func getValues(cityName: String = UserSettings.selectedCity.cityName, measureId: String) {
+        Task { @MainActor in
+            AppDataSource.cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName, sensorType: measureId)
+        }
     }
 }

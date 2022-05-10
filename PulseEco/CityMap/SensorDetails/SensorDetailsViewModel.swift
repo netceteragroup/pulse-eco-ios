@@ -22,13 +22,11 @@ class SensorDetailsViewModel: ObservableObject {
     var color = Color(AppColors.darkblue)
     @Published var sensorData24h: [SensorData]
     @Published var dailyAverages: [SensorData]
-    @Published var historyAverage: [SensorData]
 
     init(sensor: SensorPinModel,
          selectedMeasure: Measure,
          sensorData24h: [SensorData],
-         dailyAverages: [SensorData],
-         historyAverage: [SensorData]) {
+         dailyAverages: [SensorData]) {
         self.sensorID = sensor.sensorID
         self.sensorType = sensor.type
         self.title = sensor.title ?? "Sensor"
@@ -40,6 +38,5 @@ class SensorDetailsViewModel: ObservableObject {
         self.image = sensorType.imageForType ?? UIImage()
         self.sensorData24h = sensorData24h
         self.dailyAverages = dailyAverages
-        self.historyAverage = historyAverage
     }
 }
