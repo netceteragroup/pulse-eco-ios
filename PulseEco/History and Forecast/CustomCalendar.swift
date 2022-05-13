@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct CustomCalendar: View {
+    @EnvironmentObject var dataSource: AppDataSource
     
     @State var currentDate: Date = Date()
     @State var currentMonth: Int = 0
@@ -49,26 +50,17 @@ struct CustomCalendar: View {
     }
     
     @ViewBuilder
-    private func callendarDaysView(value: DateValueModel) -> some View {
+    private func callendarDaysView(value: DateValueModel, color: String) -> some View {
         
         VStack {
             
             let isDateToday = Calendar.current.isDate(value.date, equalTo: Date.now, toGranularity: .day)
-            
             if value.day != -1 {
+                
                 Button {
-                    
+
                 } label: {
-                    Text("\(value.day)")
-                        .font(.system(size: 14, weight: .regular))
-                        .frame(maxWidth:. infinity)
-                        .foregroundColor(isDateToday ? Color.white : Color(redColor))
-                        .frame(width: 30, height: 30)
-                        .overlay(Circle()
-                            .stroke(Color(redColor), lineWidth: 1) )
-                        .background(isDateToday ?
-                                    Circle()
-                            .fill(Color(redColor)) : nil )
+                    CalendarButtonView(day: value.day, date: value.date, color: color, isDateToday: isDateToday)
                 }
             }
         }
@@ -117,16 +109,28 @@ struct CustomCalendar: View {
         let calendar = Calendar.current
         let currentMonth = getCurrentMonth()
         
+        let history: [DayDataWrapper] = dataSource.monthlyData
+        var color: String = "grey"
+        
         var days = currentMonth.getAllDates().compactMap { date -> DateValueModel in
             
             let day = calendar.component(.day, from: date)
-            
-            return DateValueModel(day: day, date: date)
+            for element in history {
+                if element.date == date {
+                    color = element.color
+                }
+            }
+            return DateValueModel(day: day, date: date, color: color)
         }
         let firstWeekday = calendar.component(.weekday, from: days.first?.date ?? Date())
         
         for _ in 0..<firstWeekday - 1 {
-            days.insert(DateValueModel(day: -1, date: Date()), at: 0)
+            for element in history {
+                if element.date == Date() {
+                    color = element.color
+                }
+            }
+            days.insert(DateValueModel(day: -1, date: Date(), color: color), at: 0)
         }
         return days
     }
@@ -189,7 +193,7 @@ struct CustomCalendar: View {
                 
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(extractDate()) { value in
-                        callendarDaysView(value: value)
+                        callendarDaysView(value: value, color: value.color)
                             .onTapGesture {
                                 currentDate = value.date
                             }

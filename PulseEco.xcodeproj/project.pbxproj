@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */; };
+		1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */; };
 		1E515D0A282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
 		1E515D0B282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
 		1E515D0C282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
@@ -208,6 +209,7 @@
 
 /* Begin PBXFileReference section */
 		1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSlider.swift; sourceTree = "<group>"; };
+		1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarButtonView.swift; sourceTree = "<group>"; };
 		1E515D09282BC115009EFC4D /* DayDataWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataWrapper.swift; sourceTree = "<group>"; };
 		1E96776E280FFEB60085C37A /* WeekDayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayButton.swift; sourceTree = "<group>"; };
 		1EAF05F72817E89B001C1EEA /* CustomCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendar.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 				1E96776E280FFEB60085C37A /* WeekDayButton.swift */,
 				1EAF05F72817E89B001C1EEA /* CustomCalendar.swift */,
 				1EAF05F92817F653001C1EEA /* DateValueModel.swift */,
+				1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */,
 			);
 			path = "History and Forecast";
 			sourceTree = "<group>";
@@ -943,6 +946,7 @@
 				BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */,
 				59A35ADA2499057C00C07786 /* Constants.swift in Sources */,
 				5924C5DA249A4792007E0D78 /* MeasureListViewModel.swift in Sources */,
+				1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */,
 				59F01AD724AC7B1300AD2802 /* AppDataSource.swift in Sources */,
 				5908ADE224AF2DA500C79BC9 /* DateFormatterUtils.swift in Sources */,
 				59103AA024A4B64C00ED9617 /* DisclaimerView.swift in Sources */,

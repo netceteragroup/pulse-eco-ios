@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DayDataWrapper {
+struct DayDataWrapper: Hashable{
     let date: Date
     let value: String
     let color: String

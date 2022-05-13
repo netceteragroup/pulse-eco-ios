@@ -24,11 +24,12 @@ class AppDataSource: ObservableObject {
     
     @MainActor var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
     var weeklyData: [DayDataWrapper] = []
+    var monthlyData: [DayDataWrapper] = []
     
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
     private let networkService = NetworkService()
-
+    
     init(appState: AppState) {
         self.appState = appState
         
@@ -49,20 +50,21 @@ class AppDataSource: ObservableObject {
             if let firstMeasureId = measures.first?.id {
                 self?.appState.selectedMeasureId = firstMeasureId
             }
-
+            
         }).store(in: &cancelables)
     }
     
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
         getValues(cityName: cityName, measureId: self.appState.selectedMeasureId)
+        getMonthlyValues(cityName: cityName, measureId: self.appState.selectedMeasureId)
         
         self.loadingCityData = true
         Publishers.Zip4(networkService.downloadOverallValuesForCity(cityName: cityName),
                         networkService.downloadSensors(cityName: cityName),
                         networkService.downloadCurrentDataForSensors(cityName: cityName),
                         networkService.download24hDataForSensors(cityName: cityName))
-            .sink { [weak self] _ in
-                self?.loadingCityData = false
+        .sink { [weak self] _ in
+            self?.loadingCityData = false
         } receiveValue: { [weak self] (cityOverallValues, sensors, sensorsData, sensorsData24) in
             self?.cityOverall = cityOverallValues
             self?.citySensors = sensors
@@ -71,17 +73,17 @@ class AppDataSource: ObservableObject {
         }
         .store(in: &cancelables)
     }
-
+    
     func emptyCityOverallValueList() {
         self.userSettings.cityValues.removeAll()
     }
-
+    
     func getCities() {
         networkService.downloadCities().sink(receiveCompletion: { _ in
             self.cities.forEach { city in
                 self.cancellationTokens.append(NetworkService().downloadOverallValuesForCity(cityName: city.cityName)
-                                                .sink(receiveCompletion: { _ in },
-                                                      receiveValue: { values in
+                    .sink(receiveCompletion: { _ in },
+                          receiveValue: { values in
                     self.userSettings.cityValues.append(values)
                 }))
             }
@@ -90,11 +92,11 @@ class AppDataSource: ObservableObject {
         })
         .store(in: &cancelables)
     }
-
+    
     func getCurrentMeasure(selectedMeasure: String) -> Measure {
         measures.filter { $0.id.lowercased() == selectedMeasure.lowercased()}.first ?? Measure.empty()
     }
-
+    
     func getDailyAverageDataForSensor(city: City,
                                       measure: Measure?,
                                       sensorId: String) {
@@ -121,5 +123,18 @@ class AppDataSource: ObservableObject {
                                                                to: Calendar.current.date(byAdding: .day, value: +1, to: Date.now)!)
         }
     }
+    
+    func getMonthlyValues(cityName: String = UserSettings.selectedCity.cityName,
+                          measureId: String) {
+        Task { @MainActor in
+            cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
+                                                                                       sensorType: measureId)
+            
+            self.monthlyData = cityDataWrapper.getDataFromRange(cityName: cityName,
+                                                                sensorType: measureId,
+                                                                from: Calendar.current.date(byAdding: .day, value: -12, to: Date.now)!,
+                                                                to: Date.now)
+        }
+    }
 }
- 
+
