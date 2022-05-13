@@ -148,3 +148,15 @@ struct Band: Codable {
              suggestion: "No preventive measures needed, enjoy the fresh air.")
     }
 }
+
+extension Array where Element == Band {
+    func color(for value: Int?) -> String? {
+        guard let value = value else {
+            return nil
+        }
+        let first = self.first {
+            value <= $0.to && value >= $0.from
+        }
+        return first?.legendColor
+    }
+}

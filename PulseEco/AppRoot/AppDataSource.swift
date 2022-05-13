@@ -22,7 +22,8 @@ class AppDataSource: ObservableObject {
     @Published var loadingCityData: Bool = true
     @Published var loadingMeasures: Bool = true
     
-    @MainActor static var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
+    @MainActor var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
+    var weeklyData: [DayDataWrapper] = []
     
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
@@ -109,9 +110,16 @@ class AppDataSource: ObservableObject {
             .store(in: &cancelables)
     }
     
-    func getValues(cityName: String = UserSettings.selectedCity.cityName, measureId: String) {
+    func getValues(cityName: String = UserSettings.selectedCity.cityName,
+                   measureId: String) {
         Task { @MainActor in
-            AppDataSource.cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName, sensorType: measureId)
+            cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
+                                                                                       sensorType: measureId)
+            self.weeklyData = cityDataWrapper.getDataFromRange(cityName: cityName,
+                                                               sensorType: measureId,
+                                                               from: Calendar.current.date(byAdding: .day, value: -4, to: Date.now)!,
+                                                               to: Calendar.current.date(byAdding: .day, value: +1, to: Date.now)!)
         }
     }
 }
+ 

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */; };
+		1E515D0A282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
+		1E515D0B282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
+		1E515D0C282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
 		1E96776F280FFEB60085C37A /* WeekDayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E96776E280FFEB60085C37A /* WeekDayButton.swift */; };
 		1EAF05F82817E89B001C1EEA /* CustomCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAF05F72817E89B001C1EEA /* CustomCalendar.swift */; };
 		1EAF05FA2817F653001C1EEA /* DateValueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAF05F92817F653001C1EEA /* DateValueModel.swift */; };
@@ -205,6 +208,7 @@
 
 /* Begin PBXFileReference section */
 		1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSlider.swift; sourceTree = "<group>"; };
+		1E515D09282BC115009EFC4D /* DayDataWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataWrapper.swift; sourceTree = "<group>"; };
 		1E96776E280FFEB60085C37A /* WeekDayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayButton.swift; sourceTree = "<group>"; };
 		1EAF05F72817E89B001C1EEA /* CustomCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendar.swift; sourceTree = "<group>"; };
 		1EAF05F92817F653001C1EEA /* DateValueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValueModel.swift; sourceTree = "<group>"; };
@@ -577,6 +581,7 @@
 				596619362492703800DACF67 /* Measure.swift */,
 				BAC09D8425E5183400F794F9 /* SensorPin.swift */,
 				1EBC79C8282A55D700D18968 /* CityDataWrapper.swift */,
+				1E515D09282BC115009EFC4D /* DayDataWrapper.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -933,6 +938,7 @@
 				59504C1124B46BF100EA4AFF /* NavigationBarModifier.swift in Sources */,
 				593C263624BC8969005152BE /* CityRowView.swift in Sources */,
 				1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */,
+				1E515D0A282BC115009EFC4D /* DayDataWrapper.swift in Sources */,
 				1EAF05F82817E89B001C1EEA /* CustomCalendar.swift in Sources */,
 				BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */,
 				59A35ADA2499057C00C07786 /* Constants.swift in Sources */,
@@ -1007,6 +1013,7 @@
 				D03524C7273603800089E11C /* Measure.swift in Sources */,
 				D0AA0A7D273766C20097D0B0 /* WidgetSmallView.swift in Sources */,
 				D03524CF273605410089E11C /* ConditionalModifier.swift in Sources */,
+				1E515D0B282BC115009EFC4D /* DayDataWrapper.swift in Sources */,
 				D03EC8F82735E0F500E6E16F /* PulseEcoWidget.intentdefinition in Sources */,
 				D03524CA273603800089E11C /* SensorData.swift in Sources */,
 				D03524E927372EBC0089E11C /* WidgetDataSource.swift in Sources */,
@@ -1035,6 +1042,7 @@
 				D0A3F8D12775FC3D00491666 /* PulseEcoWidget.intentdefinition in Sources */,
 				D0CBADFF27761A9E00526050 /* DateFormatterUtils.swift in Sources */,
 				D0CBADF62776108E00526050 /* SensorPin.swift in Sources */,
+				1E515D0C282BC115009EFC4D /* DayDataWrapper.swift in Sources */,
 				D0CBADF52776108E00526050 /* City.swift in Sources */,
 				D0CBADFE27761A9E00526050 /* ConditionalModifier.swift in Sources */,
 				D0CBADFD27761A9600526050 /* AppColors.swift in Sources */,

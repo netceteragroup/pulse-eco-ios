@@ -38,7 +38,7 @@ struct SensorData: Codable, Identifiable {
         case sensorID = "sensorId"
         case stamp, type, position, value
     }
-    func getDate() -> Date {
-        return DateFormatter.iso8601Full.date(from: self.stamp) ?? Date()
+    func getDate() -> Date? {
+        return DateFormatter.iso8601Full.date(from: self.stamp)
     }
 }
