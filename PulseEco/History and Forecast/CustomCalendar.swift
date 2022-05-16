@@ -12,7 +12,7 @@ struct CustomCalendar: View {
     @EnvironmentObject var dataSource: AppDataSource
     
     @State var currentDate: Date = Date()
-    @State var currentMonth: Int = 0
+    @State var currentMonth = 0
     @State var selectedYear: Int = Calendar.current.component(.year, from: Date())
     @State var selectedMonth: Int = Calendar.current.component(.month, from: Date()) - 1
     
@@ -95,7 +95,7 @@ struct CustomCalendar: View {
             }
     }
     
-    private func getCurrentMonth() -> Date {
+    func getCurrentMonth() -> Date {
         let calendar = Calendar.current
         
         guard let currentMonth = calendar.date(byAdding: .month, value: self.currentMonth, to: Date()) else {

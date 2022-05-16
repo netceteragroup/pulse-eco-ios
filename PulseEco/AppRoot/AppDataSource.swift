@@ -21,6 +21,8 @@ class AppDataSource: ObservableObject {
     @Published var cancellationTokens: [AnyCancellable] = []
     @Published var loadingCityData: Bool = true
     @Published var loadingMeasures: Bool = true
+    @Published var currentMonth: Int = 0
+    @Published var currentYear: Int = 0
     
     @MainActor var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
     var weeklyData: [DayDataWrapper] = []
@@ -56,7 +58,7 @@ class AppDataSource: ObservableObject {
     
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
         getValues(cityName: cityName, measureId: self.appState.selectedMeasureId)
-        getMonthlyValues(cityName: cityName, measureId: self.appState.selectedMeasureId)
+        getMonthlyValues(cityName: cityName, measureId: self.appState.selectedMeasureId, currentMonth: currentMonth, currentYear: currentYear)
         
         self.loadingCityData = true
         Publishers.Zip4(networkService.downloadOverallValuesForCity(cityName: cityName),
@@ -131,18 +133,16 @@ class AppDataSource: ObservableObject {
     }
     
     func getMonthlyValues(cityName: String = UserSettings.selectedCity.cityName,
-                          measureId: String) {
+                          measureId: String,
+                          currentMonth: Int,
+                          currentYear: Int) {
         Task { @MainActor in
             cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
                                                                                        sensorType: measureId)
             
             self.monthlyData = cityDataWrapper.getDataFromRange(cityName: cityName,
                                                                 sensorType: measureId,
-                                                                from: Calendar
-                                                                    .current
-                                                                    .date(byAdding: .day,
-                                                                          value: -12,
-                                                                          to: Date.now)!,
+                                                                from: Date.from(1, currentMonth, currentYear)!,
                                                                 to: Date.now)
         }
     }

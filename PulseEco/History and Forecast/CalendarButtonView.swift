@@ -27,6 +27,5 @@ struct CalendarButtonView: View {
             .background(isDateToday ?
                         Circle()
                 .fill(Color(color)) : nil )
-        
     }
 }
