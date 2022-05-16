@@ -109,13 +109,12 @@ struct CustomCalendar: View {
         let calendar = Calendar.current
         let currentMonth = getCurrentMonth()
         
-        let history: [DayDataWrapper] = dataSource.monthlyData
-        var color: String = "grey"
+        var color: String = "gray"
         
         var days = currentMonth.getAllDates().compactMap { date -> DateValueModel in
-            
+            color = "gray"
             let day = calendar.component(.day, from: date)
-            for element in history where element.date == date {
+            for element in dataSource.monthlyData where isSameDay(date1: element.date, date2: date) {
                 color = element.color
             }
             return DateValueModel(day: day, date: date, color: color)
@@ -123,7 +122,7 @@ struct CustomCalendar: View {
         let firstWeekday = calendar.component(.weekday, from: days.first?.date ?? Date())
         
         for _ in 0..<firstWeekday - 1 {
-            for element in history {
+            for element in dataSource.monthlyData {
                 if element.date == Date() {
                     color = element.color
                 }
@@ -131,6 +130,15 @@ struct CustomCalendar: View {
             days.insert(DateValueModel(day: -1, date: Date(), color: color), at: 0)
         }
         return days
+    }
+    
+    func isSameDay(date1: Date, date2: Date) -> Bool {
+        let diff = Calendar.current.dateComponents([.day], from: date1, to: date2)
+        if diff.day == 0 {
+            return true
+        } else {
+            return false
+        }
     }
     
     @ViewBuilder
@@ -192,9 +200,6 @@ struct CustomCalendar: View {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(extractDate()) { value in
                         callendarDaysView(value: value, color: value.color)
-                            .onTapGesture {
-                                currentDate = value.date
-                            }
                     }
                 }
             }
