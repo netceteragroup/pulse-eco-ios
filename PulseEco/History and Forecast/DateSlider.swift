@@ -23,7 +23,7 @@ struct DateSlider: View {
             LazyHStack {
                 Button {
                     unimplementedAlert.toggle()
-                    unimplementedPicker = false
+                    unimplementedPicker = true
                 } label: {
                     VStack(spacing: 0) {
                         Image("history")

@@ -7,6 +7,8 @@
 //
 
 import SwiftUI
+import MapKit
+import WidgetKit
 
 struct CustomCalendar: View {
     @EnvironmentObject var dataSource: AppDataSource
@@ -17,7 +19,9 @@ struct CustomCalendar: View {
     @State var selectedMonth: Int = Calendar.current.component(.month, from: Date()) - 1
     
     @Binding var showingCalendar: Bool
-    @Binding var showPicker: Bool
+    @Binding var showingPicker: Bool
+    @Binding var showYearPicker: Bool
+    @Binding var showMonthPicker: Bool
     
     var calendar: Calendar = {
         var cal = Calendar.current
@@ -31,15 +35,20 @@ struct CustomCalendar: View {
     let redColor = #colorLiteral(red: 0.6941176471, green: 0.168627451, blue: 0.2196078431, alpha: 1)
     let greyColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.6)
     let chevronColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.54)
+    let pickerColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
     
     var body: some View {
         
         VStack(spacing: 10) {
             
-            if !showPicker {
+            if showingPicker {
                 calendarPicker
             } else {
-                datePicker
+                if showYearPicker {
+                    yearPicker
+                } else {
+                    monthPicker
+                }
             }
         }
         .onChange(of: currentMonth) { _ in
@@ -148,7 +157,8 @@ struct CustomCalendar: View {
         
         HStack {
             Button {
-                showPicker.toggle()
+                showingPicker.toggle()
+                showYearPicker = true
             } label: {
                 HStack {
                     Text("\(extraDate().capitalized)")
@@ -226,43 +236,45 @@ struct CustomCalendar: View {
         }
         .padding(.all)
     }
-    
+ 
     @ViewBuilder
-    var datePicker: some View {
+    var yearPicker: some View {
         
         let currentYear = calendar.component(.year, from: currentDate)
-        let monthsArray = calendar.monthSymbols
+        let years = 2017...currentYear
         
         VStack {
+            
             HStack(spacing: 0) {
-                Picker("Month", selection: $selectedMonth) {
-                    ForEach(0..<monthsArray.count, id: \.self) { month in
-                        Text(monthsArray[month].capitalized)
-                            .font(.system(size: 14, weight: .regular))
-                            .frame(alignment: .center)
-                    }
-                }
-                .pickerStyle(.wheel)
-                .frame(width: 180, alignment: .center)
-                .clipped()
                 
-                Picker("Year", selection: $selectedYear) {
-                    ForEach(2000...currentYear+1, id: \.self) {
-                        Text(String($0))
-                            .font(.system(size: 14, weight: .regular))
-                            .frame(alignment: .center)
+                let columns = Array(repeating: GridItem(.flexible()), count: 4)
+                
+                LazyVGrid(columns: columns, spacing: 20) {
+                    ForEach(years, id: \.self) { year in
+                        Button {
+                            showingCalendar = true
+                            showMonthPicker = false
+                            showYearPicker = false
+                            showingPicker = false
+                            
+                        } label: {
+                            Text(String(year))
+                                .font(.system(size: 14, weight: .regular))
+                                .frame(alignment: .center)
+                                .foregroundColor(.black)
+                                .padding()
+                                .background(Color(pickerColor))
+                                .clipShape(Circle())
+                        }
                     }
-                }
-                .pickerStyle(.wheel)
-                .frame(width: 180, alignment: .center)
-                .clipped()
-            }
-            .onAppear {
-            }
+                }            }
+        
             HStack {
                 Button {
                     showingCalendar = true
-                    showPicker = false
+                    showingPicker = true
+                    showYearPicker = false
+                    showMonthPicker = false
                 } label: {
                     Text(Trema.text(for: "cancel"))
                         .font(.system(size: 14, weight: .semibold))
@@ -271,8 +283,7 @@ struct CustomCalendar: View {
                 .padding(.top)
                 
                 Button {
-                    showingCalendar = true
-                    showPicker = false
+                    //TODO: save chosen year
                 } label: {
                     Text(Trema.text(for: "ok"))
                         .font(.system(size: 14, weight: .semibold))
@@ -281,7 +292,64 @@ struct CustomCalendar: View {
                 .padding(.top)
             }
         }
-        .frame(height: 280)
+        .frame(width: 360, height: 360)
+    }
+    
+    @ViewBuilder
+    var monthPicker: some View {
+       
+        let monthsArray = calendar.monthSymbols
+        
+        VStack {
+            
+            HStack(spacing: 0) {
+                
+                let columns = Array(repeating: GridItem(.flexible()), count: 4)
+                
+                LazyVGrid(columns: columns, spacing: 10) {
+                    ForEach(monthsArray, id: \.self) { month in
+                        Button {
+                            showingCalendar = true
+                            showingPicker = true
+                            showMonthPicker = false
+                            showYearPicker = false
+                        } label: {
+                            Text(String(month.capitalized))
+                                .font(.system(size: 12, weight: .regular))
+                                .frame(alignment: .center)
+                                .foregroundColor(.black)
+                                .padding()
+                                .background(Color(pickerColor))
+                                .clipShape(Circle())
+                        }
+                    }
+                }
+            }
+            
+            HStack {
+                Button {
+                    showingCalendar = true
+                    showingPicker = true
+                    showYearPicker = false
+                    showMonthPicker = false
+                } label: {
+                    Text(Trema.text(for: "cancel"))
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(Color(greyColor))
+                }
+                .padding(.top)
+                
+                Button {
+                    //TODO: save chosen month
+                } label: {
+                    Text(Trema.text(for: "ok"))
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(Color(firstButtonColor))
+                }
+                .padding(.top)
+            }
+        }
+        .frame(width: 360, height: 360)
     }
 }
 
