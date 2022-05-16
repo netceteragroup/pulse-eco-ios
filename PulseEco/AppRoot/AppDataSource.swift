@@ -58,7 +58,10 @@ class AppDataSource: ObservableObject {
     
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
         getValues(cityName: cityName, measureId: self.appState.selectedMeasureId)
-        getMonthlyValues(cityName: cityName, measureId: self.appState.selectedMeasureId, currentMonth: currentMonth, currentYear: currentYear)
+        getMonthlyValues(cityName: cityName,
+                         measureId: self.appState.selectedMeasureId,
+                         currentMonth: currentMonth,
+                         currentYear: currentYear)
         
         self.loadingCityData = true
         Publishers.Zip4(networkService.downloadOverallValuesForCity(cityName: cityName),
