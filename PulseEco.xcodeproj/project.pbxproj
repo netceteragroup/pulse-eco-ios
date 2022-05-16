@@ -88,6 +88,7 @@
 		59FAD1D42490C82600AC36A5 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* City.swift */; };
 		59FAD1D62490D76200AC36A5 /* SensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* SensorData.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
+		74699B50282D366100326288 /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74699B4F282D366100326288 /* ViewModelProtocol.swift */; };
 		746C4EC226FDFDB500183A91 /* ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */; };
 		74E46618270327000010F80E /* logo-pulse-loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 74E46617270327000010F80E /* logo-pulse-loader.json */; };
 		74E4661A2703272F0010F80E /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E466192703272F0010F80E /* LottieView.swift */; };
@@ -287,6 +288,7 @@
 		59FAD1D32490C82600AC36A5 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		59FAD1D52490D76200AC36A5 /* SensorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorData.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
+		74699B4F282D366100326288 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
 		746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalModifier.swift; sourceTree = "<group>"; };
 		74E46617270327000010F80E /* logo-pulse-loader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "logo-pulse-loader.json"; sourceTree = "<group>"; };
 		74E466192703272F0010F80E /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -497,6 +499,7 @@
 				59A35AC12498EBB600C07786 /* MainView.swift */,
 				59A3954D24A206F400D39D64 /* AppState.swift */,
 				59F01AD624AC7B1300AD2802 /* AppDataSource.swift */,
+				74699B4F282D366100326288 /* ViewModelProtocol.swift */,
 			);
 			path = AppRoot;
 			sourceTree = "<group>";
@@ -985,6 +988,7 @@
 				591EA1D224C99D5500CA61AE /* ShadowOnTopOfView.swift in Sources */,
 				59A3954E24A206F400D39D64 /* AppState.swift in Sources */,
 				1EBC79C9282A55D700D18968 /* CityDataWrapper.swift in Sources */,
+				74699B50282D366100326288 /* ViewModelProtocol.swift in Sources */,
 				BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */,
 				59A4F691247FD2150089D523 /* SceneDelegate.swift in Sources */,
 				BA5C405025D3D1E80010291F /* DailyAverageView.swift in Sources */,

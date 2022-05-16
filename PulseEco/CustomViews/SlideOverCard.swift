@@ -23,7 +23,8 @@ struct SlideOverCard<Content: View>: View {
         .offset(y: max(self.position + self.dragState.translation.height, CardPosition.top - 120, 0))
         .animation(self.dragState.isDragging ? nil : .interpolatingSpring(stiffness: 250,
                                                                           damping: 30.0,
-                                                                          initialVelocity: 10))
+                                                                          initialVelocity: 10),
+                   value: dragState.isDragging)
         .gesture(drag)
     }
 

@@ -42,7 +42,7 @@ struct CustomCalendar: View {
                 datePicker
             }
         }
-        .onChange(of: currentMonth) { newValue in
+        .onChange(of: currentMonth) { _ in
             currentDate = getCurrentMonth()
         }
         .padding(.all)
@@ -115,10 +115,8 @@ struct CustomCalendar: View {
         var days = currentMonth.getAllDates().compactMap { date -> DateValueModel in
             
             let day = calendar.component(.day, from: date)
-            for element in history {
-                if element.date == date {
-                    color = element.color
-                }
+            for element in history where element.date == date {
+                color = element.color
             }
             return DateValueModel(day: day, date: date, color: color)
         }
@@ -140,7 +138,7 @@ struct CustomCalendar: View {
         
         let days: [String] = daysOfWeekShort()
         
-        HStack() {
+        HStack {
             Button {
                 showPicker.toggle()
             } label: {
@@ -201,7 +199,7 @@ struct CustomCalendar: View {
                 }
             }
         }
-        HStack() {
+        HStack {
             Spacer()
             Button {
                 showingCalendar = false
@@ -230,54 +228,52 @@ struct CustomCalendar: View {
         let currentYear = calendar.component(.year, from: currentDate)
         let monthsArray = calendar.monthSymbols
         
-        GeometryReader { proxy in
-            VStack {
-                HStack (spacing: 0) {
-                    Picker("Month", selection: $selectedMonth) {
-                        ForEach(0..<monthsArray.count, id: \.self) { month in
-                            Text(monthsArray[month].capitalized)
-                                .font(.system(size: 14, weight: .regular))
-                                .frame(alignment: .center)
-                        }
+        VStack {
+            HStack(spacing: 0) {
+                Picker("Month", selection: $selectedMonth) {
+                    ForEach(0..<monthsArray.count, id: \.self) { month in
+                        Text(monthsArray[month].capitalized)
+                            .font(.system(size: 14, weight: .regular))
+                            .frame(alignment: .center)
                     }
-                    .pickerStyle(.wheel)
-                    .frame(width: 180, alignment: .center)
-                    .clipped()
-                    
-                    Picker("Year", selection: $selectedYear) {
-                        ForEach(2000...currentYear+1, id: \.self) {
-                            Text(String($0))
-                                .font(.system(size: 14, weight: .regular))
-                                .frame(alignment: .center)
-                        }
-                    }
-                    .pickerStyle(.wheel)
-                    .frame(width: 180, alignment: .center)
-                    .clipped()
                 }
-                .onAppear {
-                }
-                HStack {
-                    Button {
-                        showingCalendar = true
-                        showPicker = false
-                    } label: {
-                        Text(Trema.text(for: "cancel"))
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(Color(greyColor))
+                .pickerStyle(.wheel)
+                .frame(width: 180, alignment: .center)
+                .clipped()
+                
+                Picker("Year", selection: $selectedYear) {
+                    ForEach(2000...currentYear+1, id: \.self) {
+                        Text(String($0))
+                            .font(.system(size: 14, weight: .regular))
+                            .frame(alignment: .center)
                     }
-                    .padding(.top)
-                    
-                    Button {
-                        showingCalendar = true
-                        showPicker = false
-                    } label: {
-                        Text(Trema.text(for: "ok"))
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(Color(firstButtonColor))
-                    }
-                    .padding(.top)
                 }
+                .pickerStyle(.wheel)
+                .frame(width: 180, alignment: .center)
+                .clipped()
+            }
+            .onAppear {
+            }
+            HStack {
+                Button {
+                    showingCalendar = true
+                    showPicker = false
+                } label: {
+                    Text(Trema.text(for: "cancel"))
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(Color(greyColor))
+                }
+                .padding(.top)
+                
+                Button {
+                    showingCalendar = true
+                    showPicker = false
+                } label: {
+                    Text(Trema.text(for: "ok"))
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(Color(firstButtonColor))
+                }
+                .padding(.top)
             }
         }
         .frame(height: 280)
@@ -286,7 +282,7 @@ struct CustomCalendar: View {
 
 extension Date {
     
-    func getAllDates()->[Date] {
+    func getAllDates() -> [Date] {
         
         let calendar = Calendar.current
         let startDate = calendar.date(from: Calendar.current.dateComponents([.year, .month], from: self))!

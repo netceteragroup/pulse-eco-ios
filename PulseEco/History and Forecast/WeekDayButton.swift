@@ -51,7 +51,7 @@ struct WeekDayButton: View {
         
         LazyHStack {
                 Button {
-                    //TODO: Select date
+                    // TODO: Select date
                 } label: {
                     VStack(spacing: 3) {
                         Text(labelFromDate(date))
@@ -79,7 +79,9 @@ extension Calendar {
     func isDayInCurrentWeek(date: Date) -> Bool {
         let currentComponents = self.dateComponents([.weekOfYear], from: Date())
         let dateComponents = self.dateComponents([.weekOfYear], from: date)
-        guard let currentWeekOfYear = currentComponents.weekOfYear, let dateWeekOfYear = dateComponents.weekOfYear else { return false }
+        guard let currentWeekOfYear = currentComponents.weekOfYear,
+              let dateWeekOfYear = dateComponents.weekOfYear
+        else { return false }
         return currentWeekOfYear == dateWeekOfYear
     }
     

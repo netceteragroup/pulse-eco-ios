@@ -9,7 +9,7 @@
 import Foundation
 
 @MainActor
-class CityDataWrapper: ObservableObject  {
+class CityDataWrapper: ObservableObject {
     
     var sensorData: [SensorData]?
     var currentValue: CityOverallValues?
@@ -46,7 +46,9 @@ class CityDataWrapper: ObservableObject  {
             }
             return DayDataWrapper(date: date, value: $0.value, color: color)
         }
-        if Date.now >= from && Date.now <= to, let today = currentValue?.values[sensorType], let color = measure.bands.color(for: Int(today)) {
+        if Date.now >= from && Date.now <= to,
+           let today = currentValue?.values[sensorType],
+           let color = measure.bands.color(for: Int(today)) {
             history.append(DayDataWrapper(date: Date.now, value: today, color: color))
         }
         return history

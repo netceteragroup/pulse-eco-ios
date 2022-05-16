@@ -119,8 +119,14 @@ class AppDataSource: ObservableObject {
                                                                                        sensorType: measureId)
             self.weeklyData = cityDataWrapper.getDataFromRange(cityName: cityName,
                                                                sensorType: measureId,
-                                                               from: Calendar.current.date(byAdding: .day, value: -4, to: Date.now)!,
-                                                               to: Calendar.current.date(byAdding: .day, value: +1, to: Date.now)!)
+                                                               from: Calendar
+                                                                .current
+                                                                .date(byAdding: .day,
+                                                                      value: -4,
+                                                                      to: Date.now)!,
+                                                               to: Calendar
+                                                                .current
+                                                                .date(byAdding: .day, value: +1, to: Date.now)!)
         }
     }
     
@@ -132,9 +138,12 @@ class AppDataSource: ObservableObject {
             
             self.monthlyData = cityDataWrapper.getDataFromRange(cityName: cityName,
                                                                 sensorType: measureId,
-                                                                from: Calendar.current.date(byAdding: .day, value: -12, to: Date.now)!,
+                                                                from: Calendar
+                                                                    .current
+                                                                    .date(byAdding: .day,
+                                                                          value: -12,
+                                                                          to: Date.now)!,
                                                                 to: Date.now)
         }
     }
 }
-

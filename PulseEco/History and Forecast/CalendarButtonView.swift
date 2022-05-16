@@ -19,7 +19,7 @@ struct CalendarButtonView: View {
     var body: some View {
         Text("\(day)")
             .font(.system(size: 14, weight: .regular))
-            .frame(maxWidth:. infinity)
+            .frame(maxWidth: .infinity)
             .foregroundColor(isDateToday ? Color.white : Color(color))
             .frame(width: 30, height: 30)
             .overlay(Circle()

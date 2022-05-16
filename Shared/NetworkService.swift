@@ -111,7 +111,8 @@ class NetworkService {
         let from = DateFormatter.iso8601Full.string(from: startDate)
         let to = DateFormatter.iso8601Full.string(from: endDate)
         
-        let path = "https://\(cityName).pulse.eco/rest/avgData/\(timeUnit)?sensorId=\(sensorId)&type=\(sensorType)&from=\(from)&to=\(to)"
+        let path = "https://\(cityName).pulse.eco/rest/avgData/" +
+        "\(timeUnit)?sensorId=\(sensorId)&type=\(sensorType)&from=\(from)&to=\(to)"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
         let url = URL(string: formattedRequest)!
         let urlSession = URLSession.shared
@@ -120,8 +121,7 @@ class NetworkService {
             let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
             
             return response
-        }
-        catch {
+        } catch {
             print("Error loading \(url)")
             return nil
         }
@@ -137,8 +137,7 @@ class NetworkService {
             let response: CityOverallValues = try JSONDecoder().decode(CityOverallValues.self, from: data)
         
             return response
-        }
-        catch {
+        } catch {
             print("Error loading \(url)")
             return nil
         }
@@ -153,8 +152,12 @@ class NetworkService {
             
             let startDate = Date.from(1, 1, year)!
             let endDate = Date.from(1, 1, year+1)!
-            let result = await downloadAverageData(for: cityName, from: startDate, to: endDate, timeUnit: .day, sensorType: sensorType)!
-            year = year + 1
+            let result = await downloadAverageData(for: cityName,
+                                                      from: startDate,
+                                                      to: endDate,
+                                                      timeUnit: .day,
+                                                      sensorType: sensorType)!
+            year += 1
             
             history.append(contentsOf: result)
         }
@@ -171,8 +174,7 @@ class NetworkService {
             let response: [Measure] = try JSONDecoder().decode([Measure].self, from: data)
            
             return response
-        }
-        catch {
+        } catch {
             print("Error loading \(url)")
             return nil
         }
@@ -206,8 +208,7 @@ extension Date: Strideable {
     public func distance(to other: Date) -> TimeInterval {
         return other.timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
     }
-    public func advanced(by n: TimeInterval) -> Date {
-        return self + n
+    public func advanced(by amount: TimeInterval) -> Date {
+        return self + amount
     }
 }
-

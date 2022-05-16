@@ -28,6 +28,7 @@ struct MainView: View {
                                       sensorData24h: dataSource.sensorsData24h,
                                       dailyAverages: dataSource.sensorsDailyAverageData)
     }
+    
     var body: some View {
         Group {
             if dataSource.loadingCityData || dataSource.loadingMeasures {

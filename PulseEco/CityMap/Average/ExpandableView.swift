@@ -35,11 +35,11 @@ struct ExpandableView: View {
                             .foregroundColor(AppColors.white.color)
                             .fixedSize(horizontal: true, vertical: false)
                             .padding(.top, 5)
-                            .animation(.none)
+                            .animation(nil, value: viewModel.rounderValueString)
                         Text(viewModel.unit)
                             .font(.system(size: 15))
                             .foregroundColor(AppColors.white.color).padding(.top, 15)
-                            .animation(.none)
+                            .animation(nil, value: viewModel.unit)
                     }
                     .padding(.leading, 10)
                     Spacer()

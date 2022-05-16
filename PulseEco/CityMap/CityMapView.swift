@@ -65,7 +65,7 @@ struct CityMapView: View {
                                     userSettings: self.userSettings,
                                     proxy: proxy)
                     .overlay(ShadowOnTopOfView())
-                    .animation(nil)
+                    .animation(nil, value: self.appState.citySelectorClicked)
             }
         }
     }
