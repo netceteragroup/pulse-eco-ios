@@ -10,7 +10,7 @@ import SwiftUI
 import MapKit
 import WidgetKit
 
-struct CustomCalendar: View {
+struct CalendarView: View {
     @EnvironmentObject var dataSource: AppDataSource
     
     @State var currentDate: Date = Date()
