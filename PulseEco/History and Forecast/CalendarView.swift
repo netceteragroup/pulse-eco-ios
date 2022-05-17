@@ -8,13 +8,6 @@
 
 import SwiftUI
 
-private enum CalendarColors {
-    static let firstButtonColor = #colorLiteral(red: 0.05490196078, green: 0.03921568627, blue: 0.2666666667, alpha: 1)
-    static let greyColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.6)
-    static let chevronColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.54)
-    static let pickerColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
-}
-
 private enum PickerType {
     case day, month, year
 }
@@ -28,7 +21,7 @@ struct CalendarView: View {
     @State private var dateValues: [DateValueModel] = []
     @Binding var showingCalendar: Bool
     @StateObject private var viewModel: CalendarViewModel
- 
+    
     init(showingCalendar: Binding<Bool>, viewModelClosure: @autoclosure @escaping () -> CalendarViewModel) {
         _viewModel = StateObject(wrappedValue: viewModelClosure())
         _showingCalendar = showingCalendar
@@ -72,7 +65,7 @@ struct CalendarView: View {
             if value.day != -1 {
                 
                 Button {
-
+                    
                 } label: {
                     CalendarButtonView(day: value.day, date: value.date, color: color, isDateToday: isDateToday)
                 }
@@ -117,7 +110,7 @@ struct CalendarView: View {
     }
     
     private func extractDate() -> [DateValueModel] {
-
+        
         let currentMonth = getCurrentMonth()
         
         var days = currentMonth.getDaysOfMonth().compactMap { date -> DateValueModel in
@@ -129,9 +122,12 @@ struct CalendarView: View {
             return DateValueModel(day: day, date: date, color: color)
         }
         
-        let firstWeekday = calendar.component(.weekday, from: days.first?.date ?? Date())
+        let firstWeekDay: Int = {
+            let first = calendar.component(.weekday, from: days.first?.date ?? Date()) - 1
+            return first > 0 ? first : 7
+        }()
         
-        for _ in 0..<firstWeekday - 1 {
+        for _ in 1..<firstWeekDay {
             days.insert(DateValueModel(day: -1, date: Date(), color: "gray"), at: 0)
         }
         
@@ -154,13 +150,13 @@ struct CalendarView: View {
                     Text( String(day.prefix(1)).capitalized )
                         .frame(maxWidth: .infinity)
                         .font(.system(size: 12, weight: .regular))
-                        .foregroundColor(Color(CalendarColors.greyColor))
+                        .foregroundColor(Color(AppColors.greyColor))
                 }
             }
             HStack(spacing: 0) {
-
+                
                 let columns = Array(repeating: GridItem(.flexible()), count: 7)
-
+                
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(dateValues, id: \.id) { value in
                         calendarDaysView(value: value, color: value.color)
@@ -179,16 +175,16 @@ struct CalendarView: View {
             } label: {
                 Text(Trema.text(for: "cancel"))
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(Color(CalendarColors.greyColor))
+                    .foregroundColor(Color(AppColors.greyColor))
             }
             .padding(.top)
-        
+            
             Button {
                 showingCalendar = false
             } label: {
                 Text(Trema.text(for: "ok"))
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(Color(CalendarColors.firstButtonColor))
+                    .foregroundColor(Color(AppColors.firstButtonColor))
             }
             .padding(.top)
         }
@@ -205,9 +201,9 @@ struct CalendarView: View {
                 HStack {
                     Text("\(extraDate().capitalized)")
                         .font(.system(size: 14, weight: .regular))
-                        .foregroundColor(Color(CalendarColors.greyColor))
+                        .foregroundColor(Color(AppColors.greyColor))
                     Image(systemName: "arrowtriangle.down.fill")
-                        .foregroundColor(Color(CalendarColors.greyColor))
+                        .foregroundColor(Color(AppColors.greyColor))
                         .imageScale(.small)
                 }
             }
@@ -216,11 +212,12 @@ struct CalendarView: View {
             Button {
                 withAnimation {
                     currentMonthOffset -= 1
+                    selectedMonth -= 1
                 }
             } label: {
                 Image(systemName: "chevron.left")
                     .resizable()
-                    .foregroundColor(Color(CalendarColors.chevronColor))
+                    .foregroundColor(Color(AppColors.chevronColor))
                     .frame(width: 7.41, height: 12)
             }
             .padding(.all)
@@ -228,25 +225,38 @@ struct CalendarView: View {
             Button {
                 withAnimation {
                     currentMonthOffset += 1
+                    selectedMonth += 1
                 }
             } label: {
                 Image(systemName: "chevron.right")
                     .resizable()
-                    .foregroundColor(Color(CalendarColors.chevronColor))
+                    .foregroundColor(Color(AppColors.chevronColor))
                     .frame(width: 7.41, height: 12)
             }
             .padding(.all)
         }
     }
- 
+    
     @ViewBuilder
     private var yearPicker: some View {
         
         let currentYear = calendar.component(.year, from: currentDate)
         let years = 2017...currentYear
+        let monthsArray = calendar.shortMonthSymbols
         
-        VStack {
-            
+        LazyVStack {
+            HStack {
+                Button {
+                    pickerType = .day
+                } label: {
+                    Text("\(monthsArray[selectedMonth].capitalized) " + "\(selectedYear)")
+                        .font(.system(size: 14, weight: .regular))
+                        .frame(alignment: .center)
+                        .foregroundColor(Color(AppColors.black))
+                        .padding(.all)
+                }
+                Spacer()
+            }
             HStack(spacing: 0) {
                 
                 let columns = Array(repeating: GridItem(.flexible()), count: 4)
@@ -255,48 +265,62 @@ struct CalendarView: View {
                     ForEach(years, id: \.self) { year in
                         Button {
                             pickerType = .day
-                            
+                            selectedYear = year
                         } label: {
                             Text(String(year))
                                 .font(.system(size: 14, weight: .regular))
                                 .frame(alignment: .center)
                                 .foregroundColor(.black)
                                 .padding()
-                                .background(Color(CalendarColors.pickerColor))
+                                .background(Color(AppColors.pickerColor))
                                 .clipShape(Circle())
                         }
                     }
-                }            }
-        
+                }
+            }
+            Spacer()
             HStack {
+                Spacer()
                 Button {
-                    pickerType = .day
+                    pickerType = .month
                 } label: {
                     Text(Trema.text(for: "cancel"))
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(Color(CalendarColors.greyColor))
+                        .foregroundColor(Color(AppColors.greyColor))
                 }
                 .padding(.top)
                 
                 Button {
-                    //TODO: save chosen year
+                    pickerType = .day
                 } label: {
                     Text(Trema.text(for: "ok"))
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(Color(CalendarColors.firstButtonColor))
+                        .foregroundColor(Color(AppColors.firstButtonColor))
                 }
                 .padding(.top)
             }
+            .padding(.all)
         }
-        .frame(width: 360, height: 360)
     }
     
     @ViewBuilder
     private var monthPicker: some View {
-       
-        let monthsArray = calendar.monthSymbols
         
-        VStack {
+        let monthsArray = calendar.shortMonthSymbols
+        
+        LazyVStack {
+            HStack {
+                Button {
+                    pickerType = .year
+                } label: {
+                    Text("" + "\(selectedYear)")
+                        .font(.system(size: 14, weight: .regular))
+                        .frame(alignment: .center)
+                        .foregroundColor(Color(AppColors.black))
+                        .padding(.all)
+                }
+                Spacer()
+            }
             HStack(spacing: 0) {
                 
                 let columns = Array(repeating: GridItem(.flexible()), count: 4)
@@ -304,47 +328,48 @@ struct CalendarView: View {
                 LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(monthsArray, id: \.self) { month in
                         Button {
-                            pickerType = .day
+                            selectedMonth = monthsArray.firstIndex(of: month) ?? selectedMonth
+                            pickerType = .year
                         } label: {
                             Text(String(month.capitalized))
-                                .font(.system(size: 12, weight: .regular))
+                                .font(.system(size: 14, weight: .regular))
                                 .frame(alignment: .center)
                                 .foregroundColor(.black)
                                 .padding()
-                                .background(Color(CalendarColors.pickerColor))
+                                .background(Color(AppColors.pickerColor))
                                 .clipShape(Circle())
                         }
                     }
                 }
             }
-            
             HStack {
+                Spacer()
                 Button {
                     pickerType = .day
                 } label: {
                     Text(Trema.text(for: "cancel"))
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(Color(CalendarColors.greyColor))
+                        .foregroundColor(Color(AppColors.greyColor))
                 }
                 .padding(.top)
                 
                 Button {
-                    //TODO: save chosen month
+                    pickerType = .year
                 } label: {
                     Text(Trema.text(for: "ok"))
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(Color(CalendarColors.firstButtonColor))
+                        .foregroundColor(Color(AppColors.firstButtonColor))
                 }
                 .padding(.top)
             }
+            .padding(.all)
         }
-        .frame(width: 360, height: 360)
     }
 }
 
 private extension Date {
     func getDaysOfMonth() -> [Date] {
-
+        
         let calendar = Calendar.current
         let startDate = calendar.date(from: Calendar.current.dateComponents([.year, .month], from: self))!
         let range = calendar.range(of: .day, in: .month, for: startDate)!

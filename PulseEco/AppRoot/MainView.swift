@@ -18,9 +18,8 @@ struct MainView: View {
     @State var showingPicker = false
     
     let mapViewModel: MapViewModel
-    let shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2)
+    
     private let backgroundColor: Color = AppColors.white.color
-    private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
 
     private var sensorDetailsViewModel: SensorDetailsViewModel {
         let selectedMeasure = dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId)
@@ -95,7 +94,7 @@ struct MainView: View {
                                              viewModelClosure: CalendarViewModel(appState: self.appState,
                                                                                  appDataSource: self.dataSource))
                                     .cornerRadius(4)
-                                    .shadow(color: Color(shadowColor), radius: 20)
+                                    .shadow(color: Color(AppColors.shadowColor), radius: 20)
                                     .padding(.all)
                             }
                         }

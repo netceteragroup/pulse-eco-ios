@@ -13,8 +13,6 @@ struct DateSlider: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     
-    let backgroundColorNav = #colorLiteral(red: 0.918249011, green: 0.9182489514, blue: 0.9182489514, alpha: 1)
-    let firstButtonColor = #colorLiteral(red: 0.05490196078, green: 0.03921568627, blue: 0.2666666667, alpha: 1)
     @Binding var unimplementedAlert: Bool
     @Binding var unimplementedPicker: Bool
     
@@ -36,7 +34,7 @@ struct DateSlider: View {
                     }
                     .frame(width: 50, height: 50)
                     .foregroundColor(Color.white)
-                    .background(Color(firstButtonColor))
+                    .background(Color(AppColors.firstButtonColor))
                     .cornerRadius(3)
                     .padding(.leading, 10)
                 }
@@ -60,6 +58,6 @@ struct DateSlider: View {
             }
         }
         .frame(height: 64)
-        .background(Color(backgroundColorNav))
+        .background(Color(AppColors.backgroundColorNav))
     }
 }
