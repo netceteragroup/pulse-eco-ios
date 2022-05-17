@@ -1,7 +1,7 @@
 import Foundation
 import Combine
 
-class AppDataSource: ObservableObject {
+class AppDataSource: ObservableObject, ViewModelDependency {
     private let appState: AppState
     @Published var measures: [Measure] = [Measure.empty("PM10"),
                                           Measure.empty("PM25"),
@@ -25,8 +25,8 @@ class AppDataSource: ObservableObject {
     @Published var currentYear: Int = 0
     
     @MainActor var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
-    var weeklyData: [DayDataWrapper] = []
-    var monthlyData: [DayDataWrapper] = []
+    @Published var weeklyData: [DayDataWrapper] = []
+    @Published var monthlyData: [DayDataWrapper] = []
     
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?

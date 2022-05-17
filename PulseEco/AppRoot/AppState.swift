@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class AppState: ObservableObject {
+class AppState: ObservableObject, ViewModelDependency {
     var cancelables = Set<AnyCancellable>()
     
     @Published var selectedMeasureId: String = "pm10"

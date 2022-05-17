@@ -6,4 +6,23 @@
 //  Copyright © 2022 Monika Dimitrova. All rights reserved.
 //
 
-import Foundation
+import Combine
+
+class CalendarViewModel: ViewModelProtocol {
+    private let appState: AppState
+    private let appDataSource: AppDataSource
+    
+    @Published var monthlyData: [DayDataWrapper] = []
+    private var cancelables = Set<AnyCancellable>()
+    
+    init(appState: AppState, appDataSource: AppDataSource) {
+        self.appState = appState
+        self.appDataSource = appDataSource
+        
+        self.appDataSource.$monthlyData.sink {
+            self.monthlyData = $0
+        }
+        .store(in: &cancelables)
+    }
+    
+}
