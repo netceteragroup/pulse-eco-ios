@@ -3,7 +3,6 @@
 //  PulseEco
 //
 //  Created by Sara Karachanakova on 10.5.22.
-//  Copyright © 2022 Monika Dimitrova. All rights reserved.
 //
 
 import Foundation
