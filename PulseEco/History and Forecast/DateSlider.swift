@@ -41,18 +41,6 @@ struct DateSlider: View {
                     ForEach(dataSource.weeklyData, id: \.date) {
                         WeekDayButton(date: $0.date, value: $0.value, color: $0.color)
                     }
-                    WeekDayButton(date: Calendar
-                                    .current
-                                    .date(byAdding: .day,
-                                          value: 1,
-                                          to: Date.now)!,
-                                  value: "50", color: "orange")
-                    WeekDayButton(date: Calendar
-                                    .current
-                                    .date(byAdding: .day,
-                                          value: 2,
-                                          to: Date.now)!,
-                                  value: "50", color: "orange")
                 }
             }
         }

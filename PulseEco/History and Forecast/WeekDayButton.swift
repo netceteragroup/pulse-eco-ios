@@ -16,12 +16,9 @@ struct WeekDayButton: View {
         return cal
     }()
     
-    let borderColor = #colorLiteral(red: 0.06629675627, green: 0.06937607378, blue: 0.3369944096, alpha: 1)
-    
     var date: Date
     var value: String
     var color: String
-    var highlighted: Bool = false
 
     var opacity: Double {
         if date > Date.now {
@@ -46,11 +43,12 @@ struct WeekDayButton: View {
             return dateFormatter.string(from: date).capitalized
         }
     }
+    @State private var highlighted: Bool = false
     var body: some View {
         
         LazyHStack {
                 Button {
-                    // TODO: Select date
+                    self.highlighted = !self.highlighted
                 } label: {
                     VStack(spacing: 3) {
                         Text(labelFromDate(date))
@@ -68,8 +66,8 @@ struct WeekDayButton: View {
                     .cornerRadius(3)
                 }
                 .opacity(opacity)
-                .overlay(highlighted ?
-                    RoundedRectangle(cornerRadius: 3) .stroke(Color(borderColor), lineWidth: 1) : nil)
+                .overlay(self.highlighted ?
+                         RoundedRectangle(cornerRadius: 3) .stroke(Color(AppColors.borderColor), lineWidth: 1) : nil)
         }
     }
 }

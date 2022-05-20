@@ -16,6 +16,7 @@ struct CalendarView: View {
     @State private var currentMonthOffset = 0
     @State private var selectedYear: Int = Calendar.current.component(.year, from: Date())
     @State private var selectedMonth: Int = Calendar.current.component(.month, from: Date()) - 1
+//    @State private var newMonth: Int = Calendar.current.component(.month, from: Date()) - 1
     @State private var pickerType: PickerType = .day
     @State private var dateValues: [DateValueModel] = []
     @Binding var showingCalendar: Bool
@@ -193,7 +194,6 @@ struct CalendarView: View {
     @ViewBuilder
     private var monthSelectionStack: some View {
         HStack {
-            
             Button {
                 pickerType = .month
             } label: {
@@ -241,72 +241,54 @@ struct CalendarView: View {
         
         let currentYear = calendar.component(.year, from: currentDate)
         let years = 2017...currentYear
-        let monthsArray = calendar.shortMonthSymbols
         
         LazyVStack {
-            HStack {
-                Button {
-                    pickerType = .day
-                } label: {
-                    Text("\(monthsArray[selectedMonth].capitalized) " + "\(selectedYear)")
-                        .font(.system(size: 14, weight: .regular))
-                        .frame(alignment: .center)
-                        .foregroundColor(Color(AppColors.black))
-                        .padding(.all)
-                }
-                Spacer()
-            }
-            HStack(spacing: 0) {
-                
-                let columns = Array(repeating: GridItem(.flexible()), count: 4)
-                
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(years, id: \.self) { year in
-                        Button {
-                            pickerType = .day
-                            selectedYear = year
-                        } label: {
-                            Text(String(year))
-                                .font(.system(size: 14, weight: .regular))
-                                .frame(alignment: .center)
-                                .foregroundColor(.black)
-                                .padding()
-                                .background(Color(AppColors.pickerColor))
-                                .clipShape(Circle())
-                        }
+            let columns = Array(repeating: GridItem(.flexible()), count: 4)
+            Spacer()
+            LazyVGrid(columns: columns, spacing: 20) {
+                ForEach(years, id: \.self) { year in
+                    Button {
+                        pickerType = .day
+                        selectedYear = year
+//                        if newMonth != selectedMonth {
+//                            pickerType = .month
+//                        }
+                    } label: {
+                        Text(String(year))
+                            .font(.system(size: 14, weight: .regular))
+                            .frame(alignment: .center)
+                            .foregroundColor(.black)
+                            .padding()
+                            .background(Color(AppColors.pickerColor))
+                            .clipShape(Circle())
                     }
                 }
             }
+            .frame(maxHeight: .infinity)
             Spacer()
+                .frame(height: 150)
             HStack {
                 Spacer()
                 Button {
-                    pickerType = .month
+                    pickerType = .day
                 } label: {
                     Text(Trema.text(for: "cancel"))
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(Color(AppColors.greyColor))
                 }
                 .padding(.top)
-                
-                Button {
-                    pickerType = .day
-                } label: {
-                    Text(Trema.text(for: "ok"))
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(Color(AppColors.firstButtonColor))
-                }
-                .padding(.top)
             }
             .padding(.all)
+            .frame(maxHeight: .infinity)
         }
+        .fixedSize(horizontal: false, vertical: true)
+        .frame(maxHeight: 350)
     }
     
     @ViewBuilder
     private var monthPicker: some View {
         
         let monthsArray = calendar.shortMonthSymbols
-        
         LazyVStack {
             HStack {
                 Button {
@@ -320,15 +302,22 @@ struct CalendarView: View {
                 }
                 Spacer()
             }
+            .frame(maxHeight: .infinity)
             HStack(spacing: 0) {
-                
                 let columns = Array(repeating: GridItem(.flexible()), count: 4)
                 
                 LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(monthsArray, id: \.self) { month in
+                        let highlighted: Bool = {
+                            if monthsArray.firstIndex(of: month) == selectedMonth {
+                                return true
+                            }
+                            return false
+                        }()
                         Button {
                             selectedMonth = monthsArray.firstIndex(of: month) ?? selectedMonth
-                            pickerType = .year
+//                            newMonth = selectedMonth
+                            pickerType = .day
                         } label: {
                             Text(String(month.capitalized))
                                 .font(.system(size: 14, weight: .regular))
@@ -337,10 +326,13 @@ struct CalendarView: View {
                                 .padding()
                                 .background(Color(AppColors.pickerColor))
                                 .clipShape(Circle())
+                                .overlay(highlighted ?
+                                         Circle() .stroke(Color(AppColors.borderColor), lineWidth: 1) : nil)
                         }
                     }
                 }
             }
+            .frame(maxHeight: .infinity)
             HStack {
                 Spacer()
                 Button {
@@ -351,18 +343,12 @@ struct CalendarView: View {
                         .foregroundColor(Color(AppColors.greyColor))
                 }
                 .padding(.top)
-                
-                Button {
-                    pickerType = .year
-                } label: {
-                    Text(Trema.text(for: "ok"))
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(Color(AppColors.firstButtonColor))
-                }
-                .padding(.top)
             }
             .padding(.all)
+            .frame(maxHeight: .infinity)
         }
+        .fixedSize(horizontal: false, vertical: true)
+        .frame(maxHeight: 350)
     }
 }
 

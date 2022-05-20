@@ -11,6 +11,7 @@ struct AppColors {
     static let greyColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.6)
     static let chevronColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.54)
     static let pickerColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+    static let borderColor = #colorLiteral(red: 0.06629675627, green: 0.06937607378, blue: 0.3369944096, alpha: 1)
     
     static let darkred = UIColor(named: "darkred")!
     static let red = UIColor(named: "red")!
