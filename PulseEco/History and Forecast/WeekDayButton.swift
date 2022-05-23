@@ -28,6 +28,9 @@ struct WeekDayButton: View {
         }
     }
     
+    var highlighted: Bool = false
+    var action: () -> Void
+    
     func labelFromDate(_ date: Date) -> String {
         
         if calendar.isDateInToday(date) {
@@ -43,12 +46,12 @@ struct WeekDayButton: View {
             return dateFormatter.string(from: date).capitalized
         }
     }
-    @State private var highlighted: Bool = false
+    
     var body: some View {
         
         LazyHStack {
                 Button {
-                    self.highlighted = !self.highlighted
+                    action()
                 } label: {
                     VStack(spacing: 3) {
                         Text(labelFromDate(date))

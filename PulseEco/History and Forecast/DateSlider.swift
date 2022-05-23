@@ -15,6 +15,8 @@ struct DateSlider: View {
     @Binding var unimplementedAlert: Bool
     @Binding var unimplementedPicker: Bool
     
+    @State var selectedDate: Date?
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack {
@@ -38,8 +40,13 @@ struct DateSlider: View {
                     .padding(.leading, 10)
                 }
                 Group {
-                    ForEach(dataSource.weeklyData, id: \.date) {
-                        WeekDayButton(date: $0.date, value: $0.value, color: $0.color)
+                    ForEach(dataSource.weeklyData, id: \.date) { item in
+                        WeekDayButton(date: item.date,
+                                      value: item.value,
+                                      color: item.color,
+                                      highlighted: selectedDate == item.date) {
+                            selectedDate = item.date
+                        }
                     }
                 }
             }
