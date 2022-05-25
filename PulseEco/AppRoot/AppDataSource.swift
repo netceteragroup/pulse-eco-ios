@@ -57,12 +57,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
-        getValues(cityName: cityName, measureId: self.appState.selectedMeasureId)
-        getMonthlyValues(cityName: cityName,
-                         measureId: self.appState.selectedMeasureId,
-                         currentMonth: currentMonth,
-                         currentYear: currentYear)
-        
+        fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
         self.loadingCityData = true
         Publishers.Zip4(networkService.downloadOverallValuesForCity(cityName: cityName),
                         networkService.downloadSensors(cityName: cityName),
@@ -127,7 +122,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                                from: Calendar
                                                                 .current
                                                                 .date(byAdding: .day,
-                                                                      value: -4,
+                                                                      value: -7,
                                                                       to: Date.now)!,
                                                                to: Calendar
                                                                 .current
@@ -148,5 +143,13 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                                 from: Date.from(1, currentMonth, currentYear)!,
                                                                 to: Date.now)
         }
+    }
+    
+    func fetchHistory(for cityName: String, measureId: String) {
+        getValues(cityName: cityName, measureId: measureId)
+        getMonthlyValues(cityName: cityName,
+                         measureId: measureId,
+                         currentMonth: currentMonth,
+                         currentYear: currentYear)
     }
 }

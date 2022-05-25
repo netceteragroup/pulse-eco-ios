@@ -192,10 +192,10 @@ struct CalendarView: View {
                         Text(String(year))
                             .font(.system(size: 14, weight: .regular))
                             .frame(alignment: .center)
-                            .foregroundColor(.black)
+                            .foregroundColor(Color.gray)
                             .padding()
-                            .background(Color(AppColors.pickerColor))
-                            .clipShape(Circle())
+                            .overlay(Circle()
+                                .stroke(Color.gray, lineWidth: 1))
                     }
                 }
             }
@@ -252,12 +252,10 @@ struct CalendarView: View {
                         Text(String(month.capitalized))
                             .font(.system(size: 14, weight: .regular))
                             .frame(alignment: .center)
-                            .foregroundColor(.black)
+                            .foregroundColor(Color.gray)
                             .padding()
-                            .background(Color(AppColors.pickerColor))
-                            .clipShape(Circle())
-                            .overlay(highlighted ?
-                                     Circle() .stroke(Color(AppColors.borderColor), lineWidth: 1) : nil)
+                            .overlay(Circle()
+                                .stroke(Color.gray, lineWidth: 1))
                     }
                 }
             }

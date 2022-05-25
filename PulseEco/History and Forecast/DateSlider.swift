@@ -50,6 +50,7 @@ struct DateSlider: View {
                     }
                 }
             }
+            .padding(.trailing)
         }
         .frame(height: 64)
         .background(Color(AppColors.backgroundColorNav))

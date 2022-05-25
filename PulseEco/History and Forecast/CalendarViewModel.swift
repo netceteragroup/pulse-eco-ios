@@ -33,6 +33,7 @@ class CalendarViewModel: ViewModelProtocol {
         
         self.appDataSource.$monthlyData.sink {
             self.monthlyData = $0
+            self.dateValues = self.extractDate()
         }
         .store(in: &cancelables)
     }
