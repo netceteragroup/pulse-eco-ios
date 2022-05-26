@@ -69,7 +69,7 @@ struct WeekDayButton: View {
                     .cornerRadius(3)
                 }
                 .opacity(opacity)
-                .overlay(self.highlighted ?
+                .overlay((self.highlighted) ?
                          RoundedRectangle(cornerRadius: 3) .stroke(Color(AppColors.borderColor), lineWidth: 1) : nil)
         }
     }

@@ -202,6 +202,12 @@ extension Date {
         dateComponents.timeZone = TimeZone(secondsFromGMT: 7200)
         return calendar.date(from: dateComponents) ?? nil
     }
+    
+    func isSameDay(with date: Date) -> Bool {
+        let components1 = Calendar.current.dateComponents([.day, .month, .year], from: self)
+        let components2 = Calendar.current.dateComponents([.day, .month, .year], from: date)
+        return components1 == components2
+    }
 }
 
 extension Date: Strideable {

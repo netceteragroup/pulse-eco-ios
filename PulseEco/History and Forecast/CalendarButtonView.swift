@@ -13,17 +13,17 @@ struct CalendarButtonView: View {
     let day: Int
     let date: Date
     let color: String
-    let isDateToday: Bool
+    let highlighted: Bool
     
     var body: some View {
         Text("\(day)")
             .font(.system(size: 14, weight: .regular))
             .frame(maxWidth: .infinity)
-            .foregroundColor(isDateToday ? Color.white : Color(color))
+            .foregroundColor(highlighted ? Color.white : Color(color))
             .frame(width: 30, height: 30)
             .overlay(Circle()
                 .stroke(Color(color), lineWidth: 1))
-            .background(isDateToday ?
+            .background(highlighted ?
                         Circle()
                 .fill(Color(color)) : nil )
     }

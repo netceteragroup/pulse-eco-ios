@@ -14,11 +14,14 @@ struct CalendarView: View {
     
     @StateObject private var viewModel: CalendarViewModel
     @State private var pickerType: PickerType = .day
-    @Binding var showingCalendar: Bool
     
-    init(showingCalendar: Binding<Bool>, viewModelClosure: @autoclosure @escaping () -> CalendarViewModel) {
+    @Binding var showingCalendar: Bool
+    @Binding var selectedDate: Date
+    
+    init(showingCalendar: Binding<Bool>, selectedDate: Binding<Date>, viewModelClosure: @autoclosure @escaping () -> CalendarViewModel) {
         _viewModel = StateObject(wrappedValue: viewModelClosure())
         _showingCalendar = showingCalendar
+        _selectedDate = selectedDate
     }
     
     var body: some View {
@@ -49,17 +52,14 @@ struct CalendarView: View {
         
         VStack {
             
-            let isDateToday = viewModel.calendar.isDate(value.date,
-                                                        equalTo: Date.now,
-                                                        toGranularity: .day)
             if value.day != -1 {
                 Button {
-                    
+                    self.selectedDate = value.date
                 } label: {
                     CalendarButtonView(day: value.day,
                                        date: value.date,
                                        color: color,
-                                       isDateToday: isDateToday)
+                                       highlighted: value.date.isSameDay(with: selectedDate))
                 }
             }
         }
@@ -239,12 +239,6 @@ struct CalendarView: View {
             
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(viewModel.calendar.shortMonthSymbols, id: \.self) { month in
-                    let highlighted: Bool = {
-                        if viewModel.calendar.shortMonthSymbols.firstIndex(of: month) == viewModel.selectedMonth - 1 {
-                            return true
-                        }
-                        return false
-                    }()
                     Button {
                         viewModel.selectNewMonth(month: month)
                         pickerType = .day
