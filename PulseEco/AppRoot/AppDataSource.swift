@@ -23,10 +23,11 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     @Published var loadingMeasures: Bool = true
     @Published var currentMonth: Int = 0
     @Published var currentYear: Int = 0
-    
-    @MainActor var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
     @Published var weeklyData: [DayDataWrapper] = []
     @Published var monthlyData: [DayDataWrapper] = []
+    @Published var dailySensorData: [SensorData] = []
+
+    @MainActor var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
     
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
@@ -151,5 +152,29 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                          measureId: measureId,
                          currentMonth: currentMonth,
                          currentYear: currentYear)
+    }
+    
+    func updatePins(selectedDate: Date) async {
+       
+        let from: Date = selectedDate
+        let to: Date = Calendar.current.date(bySettingHour: 23,
+                                             minute: 59,
+                                             second: 00,
+                                             of: selectedDate)!
+        
+        Task { @MainActor in
+            dailySensorData = await networkService.downloadSensorData(cityName: UserSettings.selectedCity.cityName,
+                                                                      measureId: self.appState.selectedMeasureId,
+                                                                      from: from,
+                                                                      to: to)!
+        }
+        
+        var result: [SensorPinModel] = combine(sensors: citySensors, sensorsData: dailySensorData, selectedMeasure: getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
+        
+        result = result.filter {
+            return !$0.value.isEmpty
+        }
+        print(result)
+        
     }
 }

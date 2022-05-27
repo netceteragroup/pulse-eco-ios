@@ -116,36 +116,6 @@ class MapViewModel: ObservableObject {
         return MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
     }
     
-    private func pinColorForSensorValue(selectedMeasure: Measure, sensorValue: String) -> UIColor {
-        return AppColors.colorFrom(string: selectedMeasure.bands.first { band in
-            Int(sensorValue) ?? 0 >= band.from && Int(sensorValue) ?? 0 <= band.to
-        }?.legendColor ?? "gray")
-    }
-
-    private func combine(sensors: [Sensor],
-                         sensorsData: [SensorData],
-                         selectedMeasure: Measure) -> [SensorPinModel] {
-        var commonSensors = [SensorPinModel]()
-        let sensorMeasurements = sensorsData.filter { sensor in
-            sensor.type.lowercased() == selectedMeasure.id.lowercased()
-        }
-        _ = sensors.compactMap { sensor in
-            sensorMeasurements.compactMap { sensorMeasurement in
-                if sensorMeasurement.sensorID == sensor.sensorID {
-                    commonSensors.append(
-                        SensorPinModel(title: sensor.description,
-                                       sensorID: sensor.sensorID, value: sensorMeasurement.value,
-                                       position: sensor.position,
-                                       type: sensor.type,
-                                       color: pinColorForSensorValue(selectedMeasure: selectedMeasure,
-                                       sensorValue: sensorMeasurement.value),
-                                       stamp: sensorMeasurement.stamp)
-                    )
-                }
-            }
-        }
-        return commonSensors
-    }
 
     private func areIdentical(_ lhs: [SensorPinModel]?, _ rhs: [SensorPinModel]?) -> Bool {
         guard let lhs = lhs, let rhs = rhs, lhs.count == rhs.count else { return false }
@@ -154,4 +124,44 @@ class MapViewModel: ObservableObject {
         }
         return true
     }
+}
+
+private func pinColorForSensorValue(selectedMeasure: Measure, sensorValue: String) -> UIColor {
+    return AppColors.colorFrom(string: selectedMeasure.bands.first { band in
+        Int(sensorValue) ?? 0 >= band.from && Int(sensorValue) ?? 0 <= band.to
+    }?.legendColor ?? "gray")
+}
+
+func combine(sensors: [Sensor],
+                     sensorsData: [SensorData],
+                     selectedMeasure: Measure) -> [SensorPinModel] {
+    var commonSensors = [SensorPinModel]()
+    let sensorMeasurements = sensorsData.filter { sensor in
+        sensor.type.lowercased() == selectedMeasure.id.lowercased()
+    }
+    _ = sensors.compactMap { sensor in
+        sensorMeasurements.compactMap { sensorMeasurement in
+            if sensorMeasurement.sensorID == sensor.sensorID {
+                let model: SensorPinModel = SensorPinModel(title: sensor.description,
+                                                           sensorID: sensor.sensorID,
+                                                           value: sensorMeasurement.value,
+                                                           position: sensor.position,
+                                                           type: sensor.type,
+                                                           color: pinColorForSensorValue(selectedMeasure: selectedMeasure, sensorValue: sensorMeasurement.value),
+                                                           stamp: sensorMeasurement.stamp)
+                commonSensors.append(model)
+//                commonSensors.append(
+//                    SensorPinModel(title: sensor.description,
+//                                   sensorID: sensor.sensorID,
+//                                   value: sensorMeasurement.value,
+//                                   position: sensor.position,
+//                                   type: sensor.type,
+//                                   color: pinColorForSensorValue(selectedMeasure: selectedMeasure,
+//                                                                 sensorValue: sensorMeasurement.value),
+//                                   stamp: sensorMeasurement.stamp)
+//                )
+            }
+        }
+    }
+    return commonSensors
 }

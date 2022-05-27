@@ -17,8 +17,8 @@ struct DateSlider: View {
     @Binding var selectedDate: Date
     
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView(.horizontal, showsIndicators: false) {
+        ScrollView(.horizontal, showsIndicators: false) {
+            ScrollViewReader { proxy in
                 LazyHStack {
                     Button {
                         unimplementedAlert.toggle()
@@ -46,18 +46,25 @@ struct DateSlider: View {
                                           color: item.color,
                                           highlighted: selectedDate.isSameDay(with: item.date)) {
                                 selectedDate = item.date
+                                Task {
+                                    do {
+                                        await try dataSource.updatePins(selectedDate: selectedDate)
+                                    } catch {
+                                        print(error)
+                                    }
+                                }
                             }
                                           .id(item.date)
                         }
                     }
                 }
                 .padding(.trailing)
+                .onAppear(perform: {
+                    proxy.scrollTo(Date(), anchor: .trailing)
+                })
             }
             .frame(height: 64)
             .background(Color(AppColors.backgroundColorNav))
-            .onAppear(perform: {
-                proxy.scrollTo(Date(), anchor: .trailing)
-            })
         }
     }
 }

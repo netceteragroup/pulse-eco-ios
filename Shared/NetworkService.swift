@@ -98,6 +98,22 @@ class NetworkService {
             .eraseToAnyPublisher()
     }
     
+    func downloadSensorsAsync(cityName: String) async -> [Sensor]? {
+        let path = "https://\(cityName).pulse.eco/rest/sensor"
+        let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
+        let url = URL(string: formattedRequest)!
+        let urlSession = URLSession.shared
+        do {
+            let (data, _) = try await urlSession.data(from: url)
+            let response: [Sensor] = try JSONDecoder().decode([Sensor].self, from: data)
+            
+            return response
+        } catch {
+            print("Error loading \(url)")
+            return nil
+        }
+    }
+    
     enum AverageTimeUnit {
         case day, week, month
     }
@@ -187,6 +203,27 @@ class NetworkService {
         async let measures = downloadMeasures()
         
         return await CityDataWrapper(sensorData: history, currentValue: current, measures: measures)
+    }
+    
+    func downloadSensorData(cityName: String,
+                            measureId: String,
+                            from: Date,
+                            to: Date) async -> [SensorData]? {
+        
+        let from = DateFormatter.iso8601Full.string(from: from)
+        let to = DateFormatter.iso8601Full.string(from: to)
+        let path = "https://\(cityName).pulse.eco/rest/dataRaw?type=\(measureId)&from=\(from)&to=\(to)"
+        let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
+        let url = URL(string: formattedRequest)!
+        let urlSession = URLSession.shared
+        do {
+            let (data, _) = try await urlSession.data(from: url)
+            let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
+            return response
+        } catch {
+            print("Error loading \(url)")
+            return nil
+        }
     }
 }
 extension Date {

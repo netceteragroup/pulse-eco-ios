@@ -16,6 +16,7 @@ struct MainView: View {
     @State var showingCalendar = false
     @State var showingPicker = false
     @State var selectedDate = Date()
+    @State var confirmSelectedDate = Date()
     
     let mapViewModel: MapViewModel
     

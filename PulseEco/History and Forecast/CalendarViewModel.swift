@@ -18,7 +18,7 @@ class CalendarViewModel: ViewModelProtocol {
     @Published var dateValues: [DateValueModel] = []
     
     private let appState: AppState
-    private let appDataSource: AppDataSource
+    let appDataSource: AppDataSource
     private var cancelables = Set<AnyCancellable>()
     
     var calendar: Calendar = {

@@ -110,6 +110,14 @@ struct CalendarView: View {
             .padding(.top)
             
             Button {
+                Task {
+                    do {
+                        await try viewModel.appDataSource.updatePins(selectedDate: selectedDate)
+                    } catch {
+                        print(error)
+                    }
+                }
+                
                 showingCalendar = false
             } label: {
                 Text(Trema.text(for: "ok"))
