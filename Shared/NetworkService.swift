@@ -172,10 +172,11 @@ class NetworkService {
                                                       from: startDate,
                                                       to: endDate,
                                                       timeUnit: .day,
-                                                      sensorType: sensorType)!
+                                                      sensorType: sensorType)
             year += 1
-            
-            history.append(contentsOf: result)
+            if let result = result {
+                history.append(contentsOf: result)
+            }
         }
         return history
     }

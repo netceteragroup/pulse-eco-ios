@@ -58,7 +58,7 @@ class MapViewModel: ObservableObject {
                                   selectedMeasure: selectedMeasure)
             guard !areIdentical(self.sensors, sensors) else { return }
             self.shouldUpdateSensors = true
-            self.sensors = sensors
+//            self.sensors = sensors
         }.store(in: &cancellables)
         
         self.appDataSource.$sensorsData.sink { [unowned self] data in
@@ -68,7 +68,12 @@ class MapViewModel: ObservableObject {
                                   selectedMeasure: selectedMeasure)
             guard !areIdentical(self.sensors, sensors) else { return }
             self.shouldUpdateSensors = true
-            self.sensors = sensors
+//            self.sensors = sensors
+        }.store(in: &cancellables)
+        
+        self.appDataSource.$sensorPins.sink { [unowned self] pins in
+            self.shouldUpdateSensors = true
+            self.sensors = pins
         }.store(in: &cancellables)
     }
     
@@ -115,7 +120,6 @@ class MapViewModel: ObservableObject {
         let lonDelta = abs((longitudes.max() ?? 0) - (longitudes.min() ?? 0))
         return MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
     }
-    
 
     private func areIdentical(_ lhs: [SensorPinModel]?, _ rhs: [SensorPinModel]?) -> Bool {
         guard let lhs = lhs, let rhs = rhs, lhs.count == rhs.count else { return false }
@@ -133,8 +137,8 @@ private func pinColorForSensorValue(selectedMeasure: Measure, sensorValue: Strin
 }
 
 func combine(sensors: [Sensor],
-                     sensorsData: [SensorData],
-                     selectedMeasure: Measure) -> [SensorPinModel] {
+             sensorsData: [SensorData],
+             selectedMeasure: Measure) -> [SensorPinModel] {
     var commonSensors = [SensorPinModel]()
     let sensorMeasurements = sensorsData.filter { sensor in
         sensor.type.lowercased() == selectedMeasure.id.lowercased()
@@ -142,24 +146,16 @@ func combine(sensors: [Sensor],
     _ = sensors.compactMap { sensor in
         sensorMeasurements.compactMap { sensorMeasurement in
             if sensorMeasurement.sensorID == sensor.sensorID {
-                let model: SensorPinModel = SensorPinModel(title: sensor.description,
-                                                           sensorID: sensor.sensorID,
-                                                           value: sensorMeasurement.value,
-                                                           position: sensor.position,
-                                                           type: sensor.type,
-                                                           color: pinColorForSensorValue(selectedMeasure: selectedMeasure, sensorValue: sensorMeasurement.value),
-                                                           stamp: sensorMeasurement.stamp)
-                commonSensors.append(model)
-//                commonSensors.append(
-//                    SensorPinModel(title: sensor.description,
-//                                   sensorID: sensor.sensorID,
-//                                   value: sensorMeasurement.value,
-//                                   position: sensor.position,
-//                                   type: sensor.type,
-//                                   color: pinColorForSensorValue(selectedMeasure: selectedMeasure,
-//                                                                 sensorValue: sensorMeasurement.value),
-//                                   stamp: sensorMeasurement.stamp)
-//                )
+                commonSensors.append(
+                    SensorPinModel(title: sensor.description,
+                                   sensorID: sensor.sensorID,
+                                   value: sensorMeasurement.value,
+                                   position: sensor.position,
+                                   type: sensor.type,
+                                   color: pinColorForSensorValue(selectedMeasure: selectedMeasure,
+                                                                 sensorValue: sensorMeasurement.value),
+                                   stamp: sensorMeasurement.stamp)
+                )
             }
         }
     }

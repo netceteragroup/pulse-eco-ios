@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import UIKit
 
 class AppDataSource: ObservableObject, ViewModelDependency {
     private let appState: AppState
@@ -25,8 +26,8 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     @Published var currentYear: Int = 0
     @Published var weeklyData: [DayDataWrapper] = []
     @Published var monthlyData: [DayDataWrapper] = []
-    @Published var dailySensorData: [SensorData] = []
-
+    @Published var sensorPins: [SensorPinModel] = []
+    
     @MainActor var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
     
     var cancelables = Set<AnyCancellable>()
@@ -121,13 +122,13 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             self.weeklyData = cityDataWrapper.getDataFromRange(cityName: cityName,
                                                                sensorType: measureId,
                                                                from: Calendar
-                                                                .current
-                                                                .date(byAdding: .day,
-                                                                      value: -7,
-                                                                      to: Date.now)!,
+                .current
+                .date(byAdding: .day,
+                      value: -7,
+                      to: Date.now)!,
                                                                to: Calendar
-                                                                .current
-                                                                .date(byAdding: .day, value: +1, to: Date.now)!)
+                .current
+                .date(byAdding: .day, value: +1, to: Date.now)!)
         }
     }
     
@@ -155,7 +156,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     func updatePins(selectedDate: Date) async {
-       
+        
         let from: Date = selectedDate
         let to: Date = Calendar.current.date(bySettingHour: 23,
                                              minute: 59,
@@ -163,18 +164,37 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                              of: selectedDate)!
         
         Task { @MainActor in
-            dailySensorData = await networkService.downloadSensorData(cityName: UserSettings.selectedCity.cityName,
-                                                                      measureId: self.appState.selectedMeasureId,
-                                                                      from: from,
-                                                                      to: to)!
+            guard let dailySensorData = await networkService.downloadSensorData(cityName:   UserSettings.selectedCity.cityName,
+                                                                                measureId: self.appState.selectedMeasureId,
+                                                                                from: from,
+                                                                                to: to)
+            else { return }
+            
+            let groupById = Dictionary(grouping: dailySensorData, by: \.sensorID)
+            var processedSensorData: [SensorData] = []
+            
+            for (key, value) in groupById {
+                let average = String(value.averageValue())
+                if let sensor = value.first {
+                    processedSensorData.append(SensorData(sensorID: key, stamp: sensor.stamp, type: sensor.type, position: sensor.position, value: average))
+                }
+            }
+            let result: [SensorPinModel] = combine(sensors: citySensors, sensorsData: processedSensorData, selectedMeasure: getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
+            
+            self.sensorPins = result
         }
-        
-        var result: [SensorPinModel] = combine(sensors: citySensors, sensorsData: dailySensorData, selectedMeasure: getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
-        
-        result = result.filter {
-            return !$0.value.isEmpty
+    }
+}
+extension Array where Element == SensorData {
+    func averageValue () -> Int {
+        var count = 0
+        var i = 0
+        for element in self where Int(element.value) != nil {
+            count += Int(element.value)!
+            i += 1
         }
-        print(result)
+        if i==0 { i=1 }
         
+        return count/i
     }
 }
