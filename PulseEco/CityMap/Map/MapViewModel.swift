@@ -58,7 +58,7 @@ class MapViewModel: ObservableObject {
                                   selectedMeasure: selectedMeasure)
             guard !areIdentical(self.sensors, sensors) else { return }
             self.shouldUpdateSensors = true
-//            self.sensors = sensors
+            self.sensors = sensors
         }.store(in: &cancellables)
         
         self.appDataSource.$sensorsData.sink { [unowned self] data in
@@ -68,7 +68,7 @@ class MapViewModel: ObservableObject {
                                   selectedMeasure: selectedMeasure)
             guard !areIdentical(self.sensors, sensors) else { return }
             self.shouldUpdateSensors = true
-//            self.sensors = sensors
+            self.sensors = sensors
         }.store(in: &cancellables)
         
         self.appDataSource.$sensorPins.sink { [unowned self] pins in

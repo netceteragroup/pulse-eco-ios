@@ -31,12 +31,14 @@ struct WeekDayButton: View {
     var highlighted: Bool = false
     var action: () -> Void
     
+    var sevenDaysAgo = Calendar.current.date(byAdding: .day,
+                                             value: -6,
+                                             to: Date.now)
     func labelFromDate(_ date: Date) -> String {
         
         if calendar.isDateInToday(date) {
             return Trema.text(for: "today")
-        } else if calendar.isDayInCurrentWeek(date: date) {
-            
+        } else if date > sevenDaysAgo! {
             let dayOfWeek = calendar.dateComponents([.weekday], from: date).weekday!
             return calendar.weekdayNameFrom(weekdayNumber: dayOfWeek).capitalized
         } else {

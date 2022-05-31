@@ -199,11 +199,14 @@ class NetworkService {
     
     func downloadOverallCurrentMeasures(cityName: String,
                                         sensorType: String) async -> CityDataWrapper {
+        
         async let history = downloadAverageDayData(for: cityName, sensorType: sensorType)
         async let current = downloadCurrentData(for: cityName)
         async let measures = downloadMeasures()
         
-        return await CityDataWrapper(sensorData: history, currentValue: current, measures: measures)
+        return await CityDataWrapper(sensorData: history,
+                                     currentValue: current,
+                                     measures: measures)
     }
     
     func downloadSensorData(cityName: String,
@@ -211,8 +214,12 @@ class NetworkService {
                             from: Date,
                             to: Date) async -> [SensorData]? {
         
-        let from = DateFormatter.iso8601Full.string(from: from)
+        let fromDate = Date.from(Calendar.current.dateComponents([.day], from: from).day!,
+                                 Calendar.current.dateComponents([.month], from: from).month!,
+                                 Calendar.current.dateComponents([.year], from: from).year!)
+        let from = DateFormatter.iso8601Full.string(from: fromDate!)
         let to = DateFormatter.iso8601Full.string(from: to)
+        
         let path = "https://\(cityName).pulse.eco/rest/dataRaw?type=\(measureId)&from=\(from)&to=\(to)"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
         let url = URL(string: formattedRequest)!
@@ -234,7 +241,7 @@ extension Date {
         dateComponents.year = year
         dateComponents.month = month
         dateComponents.day = day
-        dateComponents.hour = 14
+        dateComponents.hour = 00
         dateComponents.minute = 00
         dateComponents.second = 00
         dateComponents.timeZone = TimeZone(secondsFromGMT: 7200)

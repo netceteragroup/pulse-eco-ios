@@ -122,13 +122,11 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             self.weeklyData = cityDataWrapper.getDataFromRange(cityName: cityName,
                                                                sensorType: measureId,
                                                                from: Calendar
-                .current
-                .date(byAdding: .day,
-                      value: -7,
-                      to: Date.now)!,
+                                                                        .current
+                                                                        .date(byAdding: .day, value: -7, to: Date.now)!,
                                                                to: Calendar
-                .current
-                .date(byAdding: .day, value: +1, to: Date.now)!)
+                                                                        .current
+                                                                        .date(byAdding: .day, value: +1, to: Date.now)!)
         }
     }
     

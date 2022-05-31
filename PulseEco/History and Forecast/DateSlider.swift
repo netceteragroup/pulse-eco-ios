@@ -66,5 +66,6 @@ struct DateSlider: View {
             .frame(height: 64)
             .background(Color(AppColors.backgroundColorNav))
         }
+        .background(Color(AppColors.backgroundColorNav))
     }
 }

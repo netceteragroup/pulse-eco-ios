@@ -18,7 +18,10 @@ struct CalendarView: View {
     @Binding var showingCalendar: Bool
     @Binding var selectedDate: Date
     
-    init(showingCalendar: Binding<Bool>, selectedDate: Binding<Date>, viewModelClosure: @autoclosure @escaping () -> CalendarViewModel) {
+    init(showingCalendar: Binding<Bool>,
+         selectedDate: Binding<Date>,
+         viewModelClosure: @autoclosure @escaping () -> CalendarViewModel) {
+        
         _viewModel = StateObject(wrappedValue: viewModelClosure())
         _showingCalendar = showingCalendar
         _selectedDate = selectedDate
@@ -112,12 +115,11 @@ struct CalendarView: View {
             Button {
                 Task {
                     do {
-                        await try viewModel.appDataSource.updatePins(selectedDate: selectedDate)
+                        try await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
                     } catch {
                         print(error)
                     }
                 }
-                
                 showingCalendar = false
             } label: {
                 Text(Trema.text(for: "ok"))
