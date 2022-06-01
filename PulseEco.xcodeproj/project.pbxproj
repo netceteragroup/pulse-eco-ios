@@ -440,9 +440,9 @@
 		5997F73624A36F780035BEEB /* CityMap */ = {
 			isa = PBXGroup;
 			children = (
+				5997F73724A36F8F0035BEEB /* Average */,
 				3288686E24B51F5E009CC56D /* UIKitViews */,
 				5997F73824A36FB90035BEEB /* SensorDetails */,
-				5997F73724A36F8F0035BEEB /* Average */,
 				5997F73524A36F570035BEEB /* Map */,
 				591642A42499FD70000A4F7C /* CityMapView.swift */,
 			);

@@ -15,8 +15,6 @@ struct MainView: View {
     
     @State var showingCalendar = false
     @State var showingPicker = false
-    @State var selectedDate = Date()
-    @State var confirmSelectedDate = Date()
     
     let mapViewModel: MapViewModel
     
@@ -81,7 +79,7 @@ struct MainView: View {
                         
                         DateSlider(unimplementedAlert: $showingCalendar,
                                    unimplementedPicker: $showingPicker,
-                                   selectedDate: $selectedDate)
+                                   selectedDate: $dataSource.selectedDate)
                         
                         ZStack(alignment: .top) {
                             
@@ -93,7 +91,7 @@ struct MainView: View {
                             
                             if showingCalendar {
                                 CalendarView(showingCalendar: $showingCalendar,
-                                             selectedDate: $selectedDate,
+                                             selectedDate: $dataSource.selectedDate,
                                              viewModelClosure: CalendarViewModel(appState: self.appState,
                                                                                  appDataSource: self.dataSource))
                                     .cornerRadius(4)

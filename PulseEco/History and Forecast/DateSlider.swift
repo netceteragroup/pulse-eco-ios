@@ -19,7 +19,7 @@ struct DateSlider: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { proxy in
-                LazyHStack {
+                LazyHStack() {
                     Button {
                         unimplementedAlert.toggle()
                         unimplementedPicker = true
@@ -40,28 +40,27 @@ struct DateSlider: View {
                         .padding(.leading, 10)
                     }
                     Group {
-                        ForEach(dataSource.weeklyData, id: \.date) { item in
+                        ForEach(dataSource.weeklyData, id: \.dateId) { item in
                             WeekDayButton(date: item.date,
                                           value: item.value,
                                           color: item.color,
                                           highlighted: selectedDate.isSameDay(with: item.date)) {
-                                selectedDate = item.date
+                                selectedDate = Calendar.current.startOfDay(for: item.date)
                                 Task {
                                     do {
-                                        await try dataSource.updatePins(selectedDate: selectedDate)
-                                    } catch {
-                                        print(error)
+                                        await dataSource.updatePins(selectedDate: selectedDate)
                                     }
                                 }
                             }
-                                          .id(item.date)
+                        }
+                        .onAppear {
+                            withAnimation {
+                                proxy.scrollTo(selectedDate)
+                            }
                         }
                     }
                 }
-                .padding(.trailing)
-                .onAppear(perform: {
-                    proxy.scrollTo(Date(), anchor: .trailing)
-                })
+                .padding(.trailing, 8)
             }
             .frame(height: 64)
             .background(Color(AppColors.backgroundColorNav))

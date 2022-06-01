@@ -30,6 +30,8 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     
     @MainActor var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
     
+    @Published var selectedDate: Date = Calendar.current.startOfDay(for: Date.now)
+    
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
     private let networkService = NetworkService()
@@ -119,14 +121,29 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         Task { @MainActor in
             cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
                                                                                        sensorType: measureId)
-            self.weeklyData = cityDataWrapper.getDataFromRange(cityName: cityName,
-                                                               sensorType: measureId,
-                                                               from: Calendar
-                                                                        .current
-                                                                        .date(byAdding: .day, value: -7, to: Date.now)!,
-                                                               to: Calendar
-                                                                        .current
-                                                                        .date(byAdding: .day, value: +1, to: Date.now)!)
+            
+            let threeDaysAgo = Calendar.current.date(byAdding: .day, value: -3, to: selectedDate)!
+            let threeDaysAfter = Calendar.current.date(byAdding: .day, value: +4, to: selectedDate)!
+            
+            let today: [DayDataWrapper] = cityDataWrapper.getDataFromRange(cityName: cityName, sensorType: measureId, from: Date.now, to: Calendar.current.date(byAdding: .day, value: +1, to: Calendar.current.startOfDay(for: Date.now))!)
+            
+            if threeDaysAfter <= Date.now {
+                self.weeklyData = cityDataWrapper.getDataFromRange(cityName: cityName,
+                                                                   sensorType: measureId,
+                                                                   from: threeDaysAgo,
+                                                                   to: threeDaysAfter)
+                
+                self.weeklyData.append(contentsOf: today)
+            } else {
+                self.weeklyData = cityDataWrapper.getDataFromRange(cityName: cityName,
+                                                                   sensorType: measureId,
+                                                                   from: Calendar.current.date(byAdding: .day,
+                                                                                               value: -7,
+                                                                                               to: Date.now)!,
+                                                                   to: Calendar.current.date(byAdding: .day,
+                                                                                             value: +1,
+                                                                                             to: Date.now)!)
+            }
         }
     }
     
@@ -162,7 +179,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                              of: selectedDate)!
         
         Task { @MainActor in
-            guard let dailySensorData = await networkService.downloadSensorData(cityName:   UserSettings.selectedCity.cityName,
+            guard let dailySensorData = await networkService.downloadSensorData(cityName:                                                                         UserSettings.selectedCity.cityName,
                                                                                 measureId: self.appState.selectedMeasureId,
                                                                                 from: from,
                                                                                 to: to)

@@ -28,6 +28,7 @@ class RefreshService: ObservableObject {
 
     func updateRefreshDate() {
         refreshDate = Date()
+        appDataSource.selectedDate = Calendar.current.startOfDay(for: Date.now)
     }
     
     func refreshData() {

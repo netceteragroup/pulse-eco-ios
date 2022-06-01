@@ -11,4 +11,8 @@ struct DayDataWrapper: Hashable {
     let date: Date
     let value: String
     let color: String
+    
+    var dateId: Date {
+        Calendar.current.startOfDay(for: date)
+    }
 }

@@ -12,6 +12,8 @@ private enum PickerType {
 }
 struct CalendarView: View {
     
+    @EnvironmentObject var dataSource: AppDataSource
+    
     @StateObject private var viewModel: CalendarViewModel
     @State private var pickerType: PickerType = .day
     
@@ -57,7 +59,7 @@ struct CalendarView: View {
             
             if value.day != -1 {
                 Button {
-                    self.selectedDate = value.date
+                    self.selectedDate = Calendar.current.startOfDay(for: value.date)
                 } label: {
                     CalendarButtonView(day: value.day,
                                        date: value.date,

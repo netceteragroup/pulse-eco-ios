@@ -219,14 +219,40 @@ class NetworkService {
                                  Calendar.current.dateComponents([.year], from: from).year!)
         let from = DateFormatter.iso8601Full.string(from: fromDate!)
         let to = DateFormatter.iso8601Full.string(from: to)
+      
+        if ((Date().isSameDay(with: fromDate!)) == true) {
+            let response = await currentDataSensor(cityName: cityName, measureId: measureId)
+            return response
+        } else {
+            let path = "https://\(cityName).pulse.eco/rest/dataRaw?type=\(measureId)&from=\(from)&to=\(to)"
+            let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
+            let url = URL(string: formattedRequest)!
+            let urlSession = URLSession.shared
+            do {
+                let (data, _) = try await urlSession.data(from: url)
+                let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
+                return response
+            } catch {
+                print("Error loading \(url)")
+                return nil
+            }
+        }
+    }
+    
+    func currentDataSensor (cityName: String, measureId: String) async -> [SensorData]? {
         
-        let path = "https://\(cityName).pulse.eco/rest/dataRaw?type=\(measureId)&from=\(from)&to=\(to)"
+        let path = "https://\(cityName).pulse.eco/rest/current"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
         let url = URL(string: formattedRequest)!
         let urlSession = URLSession.shared
         do {
             let (data, _) = try await urlSession.data(from: url)
-            let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
+            var response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
+            
+            response = response.filter {
+                $0.type == measureId
+            }
+            
             return response
         } catch {
             print("Error loading \(url)")
