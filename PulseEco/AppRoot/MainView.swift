@@ -13,7 +13,6 @@ struct MainView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     
-//    @State var showingCalendar = false
     @State var showingPicker = false
     
     let mapViewModel: MapViewModel
@@ -124,11 +123,11 @@ struct MainView: View {
                                                                          appDataSource: self.dataSource))
                             .cornerRadius(4)
                             .shadow(color: Color(AppColors.shadowColor), radius: 20)
-                            .padding(.top, 160)
+                            .padding(.top, 180)
                             .padding(.all)
                             Spacer()
                     }
-                    .background(Color.gray.opacity(0.5).onTapGesture {
+                    .background(Color.gray.opacity(0.8).onTapGesture {
                         dataSource.showingCalendar = false
                     })
                     .edgesIgnoringSafeArea(.all)

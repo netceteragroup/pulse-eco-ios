@@ -10,6 +10,7 @@ struct AverageUtilModel {
     var currBand: BandUtilModel = BandUtilModel()
     var selectedMeasure: Measure
     
+//    @EnvironmentObject var cityDataWrapper: CityDataWrapper
     // MARK: - Init
     init(measureId: String, cityName: String, measuresList: [Measure], cityValues: CityOverallValues?) {
         if let averageValue = cityValues?.values[measureId.lowercased()] {
@@ -34,6 +35,11 @@ struct AverageUtilModel {
         self.setBandsRange(bands: selectedMeasure.bands)
     }
     
+//    func newAvgValues() ->  [DayDataWrapper] {
+//    var newValues = cityDataWrapper.getDataFromRange(cityName: cityName, sensorType: selectedMeasure.id, from: AppDataS.selectedDate, to: AppDataSource.selectedDate)
+//
+//        return newValues
+//    }
     // MARK: - Public methods
     var sliderValue: Double {
         if isHugeValue {
