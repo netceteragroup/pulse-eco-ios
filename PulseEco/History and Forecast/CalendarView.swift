@@ -77,7 +77,6 @@ struct CalendarView: View {
         
         VStack {
             monthSelectionStack
-            
             VStack {
                 HStack(spacing: 0) {
                     ForEach(viewModel.daysOfWeekShort, id: \.self) { day in
@@ -117,9 +116,7 @@ struct CalendarView: View {
             Button {
                 Task {
                     do {
-                        try await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
-                    } catch {
-                        print(error)
+                        await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
                     }
                 }
                 showingCalendar = false
@@ -151,7 +148,7 @@ struct CalendarView: View {
             Spacer(minLength: 0)
             Button {
                 withAnimation {
-                    viewModel.nextMonth()
+                    viewModel.previousMonth()
                 }
             } label: {
                 Image(systemName: "chevron.left")
@@ -163,7 +160,7 @@ struct CalendarView: View {
             
             Button {
                 withAnimation {
-                    viewModel.previousMonth()
+                    viewModel.nextMonth()
                 }
             } label: {
                 Image(systemName: "chevron.right")

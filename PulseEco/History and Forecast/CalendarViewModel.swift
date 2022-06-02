@@ -111,22 +111,26 @@ class CalendarViewModel: ViewModelProtocol {
         return date
     }
     
-    func nextMonth() {
+    func previousMonth() {
         if selectedMonth < 1 {
             selectedMonth += 11
             selectedYear -= 1
         }
+        else {
+            selectedMonth -= 1
+        }
         currentMonthOffset -= 1
-        selectedMonth -= 1
         currentMonthOffset = selectedMonth - Calendar.current.component(.month, from: Date())
     }
-    func previousMonth() {
+    func nextMonth() {
         if selectedMonth > 10 {
             selectedMonth -= 11
             selectedYear += 1
         }
+        else {
+            selectedMonth += 1
+        }
         currentMonthOffset += 1
-        selectedMonth += 1
         currentMonthOffset = selectedMonth - Calendar.current.component(.month, from: Date())
     }
     func selectNewMonth(month: String) {

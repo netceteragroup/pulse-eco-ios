@@ -214,13 +214,11 @@ class NetworkService {
                             from: Date,
                             to: Date) async -> [SensorData]? {
         
-        let fromDate = Date.from(Calendar.current.dateComponents([.day], from: from).day!,
-                                 Calendar.current.dateComponents([.month], from: from).month!,
-                                 Calendar.current.dateComponents([.year], from: from).year!)
-        let from = DateFormatter.iso8601Full.string(from: fromDate!)
+        let fromDate = Calendar.current.startOfDay(for: from)
+        let from = DateFormatter.iso8601Full.string(from: fromDate)
         let to = DateFormatter.iso8601Full.string(from: to)
       
-        if ((Date().isSameDay(with: fromDate!)) == true) {
+        if ((Date().isSameDay(with: fromDate)) == true) {
             let response = await currentDataSensor(cityName: cityName, measureId: measureId)
             return response
         } else {
@@ -252,8 +250,8 @@ class NetworkService {
             response = response.filter {
                 $0.type == measureId
             }
-            
             return response
+            
         } catch {
             print("Error loading \(url)")
             return nil

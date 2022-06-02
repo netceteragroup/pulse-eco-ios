@@ -13,7 +13,7 @@ struct MainView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     
-    @State var showingCalendar = false
+//    @State var showingCalendar = false
     @State var showingPicker = false
     
     let mapViewModel: MapViewModel
@@ -65,8 +65,8 @@ struct MainView: View {
     
     var contentView: some View {
         GeometryReader { proxy in
-            ZStack {
-                NavigationView {
+            ZStack(alignment: .top) {
+                NavigationView  {
                     VStack(spacing: 0) {
                         VStack(spacing: 0) {
                             let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
@@ -77,7 +77,7 @@ struct MainView: View {
                             MeasureListView(viewModel: viewModel)
                         }
                         
-                        DateSlider(unimplementedAlert: $showingCalendar,
+                        DateSlider(unimplementedAlert: $dataSource.showingCalendar,
                                    unimplementedPicker: $showingPicker,
                                    selectedDate: $dataSource.selectedDate)
                         
@@ -89,15 +89,15 @@ struct MainView: View {
                             .id("CityMapView")
                             .edgesIgnoringSafeArea([.horizontal, .bottom])
                             
-                            if showingCalendar {
-                                CalendarView(showingCalendar: $showingCalendar,
-                                             selectedDate: $dataSource.selectedDate,
-                                             viewModelClosure: CalendarViewModel(appState: self.appState,
-                                                                                 appDataSource: self.dataSource))
-                                    .cornerRadius(4)
-                                    .shadow(color: Color(AppColors.shadowColor), radius: 20)
-                                    .padding(.all)
-                            }
+//                            if dataSource.showingCalendar {
+//                                CalendarView(showingCalendar: $dataSource.showingCalendar,
+//                                             selectedDate: $dataSource.selectedDate,
+//                                             viewModelClosure: CalendarViewModel(appState: self.appState,
+//                                                                                 appDataSource: self.dataSource))
+//                                    .cornerRadius(4)
+//                                    .shadow(color: Color(AppColors.shadowColor), radius: 20)
+//                                    .padding(.all)
+//                            }
                         }
                     }
                     .navigationBarTitle("", displayMode: .inline)
@@ -115,6 +115,24 @@ struct MainView: View {
                     }
                     .transition(.move(edge: .bottom))
                     .zIndex(2) // zIndexes are needed to maintain dismiss transition
+                }
+                if dataSource.showingCalendar {
+                    VStack {
+                        CalendarView(showingCalendar: $dataSource.showingCalendar,
+                                     selectedDate: $dataSource.selectedDate,
+                                     viewModelClosure: CalendarViewModel(appState: self.appState,
+                                                                         appDataSource: self.dataSource))
+                            .cornerRadius(4)
+                            .shadow(color: Color(AppColors.shadowColor), radius: 20)
+                            .padding(.top, 160)
+                            .padding(.all)
+                            Spacer()
+                    }
+                    .background(Color.gray.opacity(0.5).onTapGesture {
+                        dataSource.showingCalendar = false
+                    })
+                    .edgesIgnoringSafeArea(.all)
+                    .zIndex(3)
                 }
             }
         }

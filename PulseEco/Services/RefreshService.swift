@@ -29,6 +29,8 @@ class RefreshService: ObservableObject {
     func updateRefreshDate() {
         refreshDate = Date()
         appDataSource.selectedDate = Calendar.current.startOfDay(for: Date.now)
+        appDataSource.showingCalendar = false
+        appViewModel.selectedMeasureId = "pm10"
     }
     
     func refreshData() {

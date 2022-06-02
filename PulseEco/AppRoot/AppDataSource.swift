@@ -27,10 +27,10 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     @Published var weeklyData: [DayDataWrapper] = []
     @Published var monthlyData: [DayDataWrapper] = []
     @Published var sensorPins: [SensorPinModel] = []
+    @Published var selectedDate: Date = Calendar.current.startOfDay(for: Date.now)
+    @Published var showingCalendar = false
     
     @MainActor var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
-    
-    @Published var selectedDate: Date = Calendar.current.startOfDay(for: Date.now)
     
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
@@ -56,7 +56,6 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             if let firstMeasureId = measures.first?.id {
                 self?.appState.selectedMeasureId = firstMeasureId
             }
-            
         }).store(in: &cancelables)
     }
     
@@ -125,9 +124,12 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             let threeDaysAgo = Calendar.current.date(byAdding: .day, value: -3, to: selectedDate)!
             let threeDaysAfter = Calendar.current.date(byAdding: .day, value: +4, to: selectedDate)!
             
-            let today: [DayDataWrapper] = cityDataWrapper.getDataFromRange(cityName: cityName, sensorType: measureId, from: Date.now, to: Calendar.current.date(byAdding: .day, value: +1, to: Calendar.current.startOfDay(for: Date.now))!)
+            let today: [DayDataWrapper] = cityDataWrapper.getDataFromRange(cityName: cityName,
+                                                                           sensorType: measureId,
+                                                                           from: Calendar.current.startOfDay(for: Date.now),
+                                                                           to: Calendar.current.date(byAdding: .day, value: +1, to: Calendar.current.startOfDay(for: Date.now))!)
             
-            if threeDaysAfter <= Date.now {
+            if threeDaysAfter <= Calendar.current.startOfDay(for: Date.now) {
                 self.weeklyData = cityDataWrapper.getDataFromRange(cityName: cityName,
                                                                    sensorType: measureId,
                                                                    from: threeDaysAgo,
@@ -171,7 +173,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     func updatePins(selectedDate: Date) async {
-        
+        getValues(cityName: UserSettings.selectedCity.cityName, measureId: self.appState.selectedMeasureId)
         let from: Date = selectedDate
         let to: Date = Calendar.current.date(bySettingHour: 23,
                                              minute: 59,

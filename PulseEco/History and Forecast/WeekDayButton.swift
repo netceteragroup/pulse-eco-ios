@@ -33,7 +33,7 @@ struct WeekDayButton: View {
     
     var sevenDaysAgo = Calendar.current.date(byAdding: .day,
                                              value: -6,
-                                             to: Date.now)
+                                             to: Calendar.current.startOfDay(for: Date.now))
     func labelFromDate(_ date: Date) -> String {
         
         if calendar.isDateInToday(date) {
