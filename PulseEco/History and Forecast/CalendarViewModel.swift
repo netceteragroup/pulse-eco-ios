@@ -115,8 +115,7 @@ class CalendarViewModel: ViewModelProtocol {
         if selectedMonth < 1 {
             selectedMonth += 11
             selectedYear -= 1
-        }
-        else {
+        } else {
             selectedMonth -= 1
         }
         currentMonthOffset -= 1
@@ -126,8 +125,7 @@ class CalendarViewModel: ViewModelProtocol {
         if selectedMonth > 10 {
             selectedMonth -= 11
             selectedYear += 1
-        }
-        else {
+        } else {
             selectedMonth += 1
         }
         currentMonthOffset += 1

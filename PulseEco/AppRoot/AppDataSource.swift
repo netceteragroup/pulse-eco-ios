@@ -100,9 +100,9 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         measures.filter { $0.id.lowercased() == selectedMeasure.lowercased()}.first ?? Measure.empty()
     }
     
-    func getDailyAverageDataForSensor(city: City,
-                                      measure: Measure?,
-                                      sensorId: String) {
+    func fetchDailyAverageDataForSensor(city: City,
+                                        measure: Measure?,
+                                        sensorId: String) {
         guard let measure = measure else { return }
         networkService
             .downloadDailyAverageDataForSensor(cityName: city.cityName,
@@ -115,8 +115,8 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             .store(in: &cancelables)
     }
     
-    func getValues(cityName: String = UserSettings.selectedCity.cityName,
-                   measureId: String) {
+    func fetchWeeklyAverages(cityName: String = UserSettings.selectedCity.cityName,
+                             measureId: String) {
         Task { @MainActor in
             cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
                                                                                        sensorType: measureId)
@@ -124,10 +124,14 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             let threeDaysAgo = Calendar.current.date(byAdding: .day, value: -3, to: selectedDate)!
             let threeDaysAfter = Calendar.current.date(byAdding: .day, value: +4, to: selectedDate)!
             
-            let today: [DayDataWrapper] = cityDataWrapper.getDataFromRange(cityName: cityName,
-                                                                           sensorType: measureId,
-                                                                           from: Calendar.current.startOfDay(for: Date.now),
-                                                                           to: Calendar.current.date(byAdding: .day, value: +1, to: Calendar.current.startOfDay(for: Date.now))!)
+            let today: [DayDataWrapper] =
+            cityDataWrapper.getDataFromRange(cityName: cityName,
+                                             sensorType: measureId,
+                                             from: Calendar.current.startOfDay(for: Date.now),
+                                             to: Calendar.current
+                                                .date(byAdding: .day,
+                                                      value: +1,
+                                                      to: Calendar.current.startOfDay(for: Date.now))!)
             
             if threeDaysAfter <= Calendar.current.startOfDay(for: Date.now) {
                 self.weeklyData = cityDataWrapper.getDataFromRange(cityName: cityName,
@@ -165,7 +169,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     func fetchHistory(for cityName: String, measureId: String) {
-        getValues(cityName: cityName, measureId: measureId)
+        fetchWeeklyAverages(cityName: cityName, measureId: measureId)
         getMonthlyValues(cityName: cityName,
                          measureId: measureId,
                          currentMonth: currentMonth,
@@ -181,10 +185,11 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                              of: selectedDate)!
         
         Task { @MainActor in
-            guard let dailySensorData = await networkService.downloadSensorData(cityName:                                                                         UserSettings.selectedCity.cityName,
-                                                                                measureId: self.appState.selectedMeasureId,
-                                                                                from: from,
-                                                                                to: to)
+            guard let dailySensorData =
+                    await networkService.downloadSensorData(cityName: UserSettings.selectedCity.cityName,
+                                                            measureId: self.appState.selectedMeasureId,
+                                                            from: from,
+                                                            to: to)
             else { return }
             
             let groupById = Dictionary(grouping: dailySensorData, by: \.sensorID)
@@ -193,25 +198,19 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             for (key, value) in groupById {
                 let average = String(value.averageValue())
                 if let sensor = value.first {
-                    processedSensorData.append(SensorData(sensorID: key, stamp: sensor.stamp, type: sensor.type, position: sensor.position, value: average))
+                    processedSensorData.append(SensorData(sensorID: key,
+                                                          stamp: sensor.stamp,
+                                                          type: sensor.type,
+                                                          position: sensor.position,
+                                                          value: average))
                 }
             }
-            let result: [SensorPinModel] = combine(sensors: citySensors, sensorsData: processedSensorData, selectedMeasure: getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
+            let result: [SensorPinModel] = combine(sensors: citySensors,
+                                                   sensorsData: processedSensorData,
+                                                   selectedMeasure:
+                                                    getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
             
             self.sensorPins = result
         }
-    }
-}
-extension Array where Element == SensorData {
-    func averageValue () -> Int {
-        var count = 0
-        var i = 0
-        for element in self where Int(element.value) != nil {
-            count += Int(element.value)!
-            i += 1
-        }
-        if i==0 { i=1 }
-        
-        return count/i
     }
 }

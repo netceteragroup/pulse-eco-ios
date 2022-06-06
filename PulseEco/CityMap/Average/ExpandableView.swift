@@ -97,17 +97,4 @@ struct ExpandableView: View {
                 .shadow(color: Color.black.opacity(0.5), radius: 3, x: 0, y: 0)
         }
     }
-    
-    func newAvgValues() ->  DayDataWrapper? {
-        let newValues = cityDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
-                                                         sensorType: appState.selectedMeasureId,
-                                                         from: dataSource.selectedDate,
-                                                         to: Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: +1, to: dataSource.selectedDate)!))
-        
-        let val: DayDataWrapper = newValues.filter {
-            $0.dateId == dataSource.selectedDate
-        }.first ?? DayDataWrapper(date: Date.now, value: "N/A", color: "gray")
-        
-        return val
-    }
 }

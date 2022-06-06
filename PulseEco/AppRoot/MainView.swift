@@ -65,7 +65,7 @@ struct MainView: View {
     var contentView: some View {
         GeometryReader { proxy in
             ZStack(alignment: .top) {
-                NavigationView  {
+                NavigationView {
                     VStack(spacing: 0) {
                         VStack(spacing: 0) {
                             let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,

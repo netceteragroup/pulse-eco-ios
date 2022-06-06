@@ -218,7 +218,7 @@ class NetworkService {
         let from = DateFormatter.iso8601Full.string(from: fromDate)
         let to = DateFormatter.iso8601Full.string(from: to)
       
-        if ((Date().isSameDay(with: fromDate)) == true) {
+        if Date().isSameDay(with: fromDate) {
             let response = await currentDataSensor(cityName: cityName, measureId: measureId)
             return response
         } else {

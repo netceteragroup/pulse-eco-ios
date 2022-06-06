@@ -19,7 +19,7 @@ struct DateSlider: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { proxy in
-                LazyHStack() {
+                LazyHStack {
                     Button {
                         unimplementedAlert.toggle()
                         unimplementedPicker = true

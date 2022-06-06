@@ -30,7 +30,7 @@ class MapViewModel: ObservableObject {
     }
     
     func getDailyAverageDataForSensor(_ sensorId: String) {
-        appDataSource.getDailyAverageDataForSensor(city: selectedCity,
+        appDataSource.fetchDailyAverageDataForSensor(city: selectedCity,
                                                    measure: measure,
                                                    sensorId: sensorId)
     }

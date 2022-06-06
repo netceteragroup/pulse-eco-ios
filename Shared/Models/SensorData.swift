@@ -41,3 +41,18 @@ struct SensorData: Codable, Identifiable {
         return DateFormatter.iso8601Full.date(from: self.stamp)
     }
 }
+
+/// Extension that allows average data to be found from an array of SensorDataElements
+extension Array where Element == SensorData {
+    func averageValue () -> Int {
+        var count = 0
+        var increment = 0
+        for element in self where Int(element.value) != nil {
+            count += Int(element.value)!
+            increment += 1
+        }
+        if increment == 0 { increment = 1 }
+        
+        return count / increment
+    }
+}
