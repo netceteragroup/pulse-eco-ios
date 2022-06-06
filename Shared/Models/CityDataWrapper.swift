@@ -50,6 +50,7 @@ class CityDataWrapper: ObservableObject {
            let color = measure.bands.color(for: Int(today)) {
             history.append(DayDataWrapper(date: Date.now, value: today, color: color))
         }
+        print(sensorData)
         return history
     }
 }

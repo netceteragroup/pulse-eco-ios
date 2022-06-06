@@ -3,6 +3,9 @@ import Combine
 
 struct ExpandableView: View {
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var dataSource: AppDataSource
+    @MainActor var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
+    
     @State var isExpanded = false
     @State var width: CGFloat = 115
     @State var geometry: GeometryProxy
@@ -93,5 +96,18 @@ struct ExpandableView: View {
                 .frame(height: 10)
                 .shadow(color: Color.black.opacity(0.5), radius: 3, x: 0, y: 0)
         }
+    }
+    
+    func newAvgValues() ->  DayDataWrapper? {
+        let newValues = cityDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
+                                                         sensorType: appState.selectedMeasureId,
+                                                         from: dataSource.selectedDate,
+                                                         to: Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: +1, to: dataSource.selectedDate)!))
+        
+        let val: DayDataWrapper = newValues.filter {
+            $0.dateId == dataSource.selectedDate
+        }.first ?? DayDataWrapper(date: Date.now, value: "N/A", color: "gray")
+        
+        return val
     }
 }

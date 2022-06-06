@@ -173,7 +173,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     func updatePins(selectedDate: Date) async {
-        getValues(cityName: UserSettings.selectedCity.cityName, measureId: self.appState.selectedMeasureId)
+//        getValues(cityName: UserSettings.selectedCity.cityName, measureId: self.appState.selectedMeasureId)
         let from: Date = selectedDate
         let to: Date = Calendar.current.date(bySettingHour: 23,
                                              minute: 59,
