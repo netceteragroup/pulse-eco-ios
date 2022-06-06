@@ -57,7 +57,7 @@ struct CityMapView: View {
                                                     cityName: self.appState.selectedCity.cityName,
                                                     measuresList: self.dataSource.measures,
                                                     cityValues: self.dataSource.cityOverall,
-                                                    currentValue: self.dataSource.selectedDateAverageValue))
+                                                    currentValue: self.appState.selectedDateAverageValue))
             
             if self.appState.citySelectorClicked {
                 FavouriteCitiesView(viewModel:

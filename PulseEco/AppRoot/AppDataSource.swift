@@ -14,37 +14,13 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                           Measure.empty("O3")]
     @Published var citySensors: [Sensor] = []
     @Published var cityOverall: CityOverallValues?
-    @Published var userSettings: UserSettings = UserSettings()
     @Published var sensorsData: [SensorData] = []
     @Published var sensorsDailyAverageData: [SensorData] = []
     @Published var sensorsData24h: [SensorData] = []
     @Published var cities: [City] = []
     @Published var cancellationTokens: [AnyCancellable] = []
-    @Published var loadingCityData: Bool = true
-    @Published var loadingMeasures: Bool = true
-    @Published var currentMonth: Int = 0
-    @Published var currentYear: Int = 0
     @Published var weeklyData: [DayDataWrapper] = []
     @Published var monthlyData: [DayDataWrapper] = []
-    @Published var sensorPins: [SensorPinModel] = []
-    @Published var showingCalendar = false
-    
-    @Published var selectedDate: Date = Calendar.current.startOfDay(for: Date.now) {
-        didSet {
-            selectedDateAverageValue = nil
-            self.selectedDateAverageValue =
-            self.cityDataWrapper.getDataFromRange(cityName: UserSettings.selectedCity.cityName,
-                                                  sensorType: self.appState.selectedMeasureId,
-                                                  from: selectedDate,
-                                                  to: Calendar.current.date(byAdding: .day,
-                                                                            value: 1,
-                                                                            to: selectedDate)!).first?.value
-        }
-    }
-    
-    @Published var selectedDateAverageValue: String?
-    
-    @Published var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
     
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
@@ -64,7 +40,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     
     func getMeasures() {
         networkService.downloadMeasures().sink(receiveCompletion: { [weak self] _ in
-            self?.loadingMeasures = false
+            self?.appState.loadingMeasures = false
         }, receiveValue: { [weak self] measures in
             self?.measures = measures
             if let firstMeasureId = measures.first?.id {
@@ -77,13 +53,13 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         Task {
             await fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
         }
-        self.loadingCityData = true
+        self.appState.loadingCityData = true
         Publishers.Zip4(networkService.downloadOverallValuesForCity(cityName: cityName),
                         networkService.downloadSensors(cityName: cityName),
                         networkService.downloadCurrentDataForSensors(cityName: cityName),
                         networkService.download24hDataForSensors(cityName: cityName))
         .sink { [weak self] _ in
-            self?.loadingCityData = false
+            self?.appState.loadingCityData = false
         } receiveValue: { [weak self] (cityOverallValues, sensors, sensorsData, sensorsData24) in
             self?.cityOverall = cityOverallValues
             self?.citySensors = sensors
@@ -94,7 +70,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     func emptyCityOverallValueList() {
-        self.userSettings.cityValues.removeAll()
+        self.appState.userSettings.cityValues.removeAll()
     }
     
     func getCities() {
@@ -103,7 +79,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                 self.cancellationTokens.append(NetworkService().downloadOverallValuesForCity(cityName: city.cityName)
                     .sink(receiveCompletion: { _ in },
                           receiveValue: { values in
-                    self.userSettings.cityValues.append(values)
+                    self.appState.userSettings.cityValues.append(values)
                 }))
             }
         }, receiveValue: { cities in
@@ -134,38 +110,25 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     @MainActor func fetchWeeklyAverages(cityName: String = UserSettings.selectedCity.cityName,
                                         measureId: String) {
         Task {
-            cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
+            appState.cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
                                                                                        sensorType: measureId)
             
-            let threeDaysAgo = Calendar.current.date(byAdding: .day, value: -3, to: selectedDate)!
-            let threeDaysAfter = Calendar.current.date(byAdding: .day, value: +4, to: selectedDate)!
+            self.weeklyData =
+            appState.cityDataWrapper.getDataFromRange(cityName: cityName,
+                                             sensorType: measureId,
+                                             from: Calendar.current.date(byAdding: .day, value: -8, to: Date.now)!,
+                                             to: Calendar.current.date(byAdding: .day, value: +1, to: Date.now)!)
             
             let today: [DayDataWrapper] =
-            cityDataWrapper.getDataFromRange(cityName: cityName,
-                                             sensorType: measureId,
-                                             from: Calendar.current.startOfDay(for: Date.now),
-                                             to: Calendar.current
-                                                .date(byAdding: .day,
-                                                      value: +1,
-                                                      to: Calendar.current.startOfDay(for: Date.now))!)
+            appState.cityDataWrapper.getDataFromRange(cityName: cityName,
+                                                      sensorType: measureId,
+                                                      from: Calendar.current.startOfDay(for: Date.now),
+                                                      to: Calendar.current
+                .date(byAdding: .day,
+                      value: +1,
+                      to: Calendar.current.startOfDay(for: Date.now))!)
             
-            if threeDaysAfter <= Calendar.current.startOfDay(for: Date.now) {
-                self.weeklyData = cityDataWrapper.getDataFromRange(cityName: cityName,
-                                                                   sensorType: measureId,
-                                                                   from: threeDaysAgo,
-                                                                   to: threeDaysAfter)
-                
-                self.weeklyData.append(contentsOf: today)
-            } else {
-                self.weeklyData = cityDataWrapper.getDataFromRange(cityName: cityName,
-                                                                   sensorType: measureId,
-                                                                   from: Calendar.current.date(byAdding: .day,
-                                                                                               value: -7,
-                                                                                               to: Date.now)!,
-                                                                   to: Calendar.current.date(byAdding: .day,
-                                                                                             value: +1,
-                                                                                             to: Date.now)!)
-            }
+            self.weeklyData.append(contentsOf: today)
         }
     }
     
@@ -174,10 +137,10 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                           currentMonth: Int,
                           currentYear: Int) {
         Task { @MainActor in
-            cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
+            appState.cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
                                                                                        sensorType: measureId)
             
-            self.monthlyData = cityDataWrapper.getDataFromRange(cityName: cityName,
+            self.monthlyData = appState.cityDataWrapper.getDataFromRange(cityName: cityName,
                                                                 sensorType: measureId,
                                                                 from: Date.from(1, currentMonth, currentYear)!,
                                                                 to: Date.now)
@@ -188,16 +151,15 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         fetchWeeklyAverages(cityName: cityName, measureId: measureId)
         getMonthlyValues(cityName: cityName,
                          measureId: measureId,
-                         currentMonth: currentMonth,
-                         currentYear: currentYear)
+                         currentMonth: appState.currentMonth,
+                         currentYear: appState.currentYear)
     }
     
     func updatePins(selectedDate: Date) async {
-//        getValues(cityName: UserSettings.selectedCity.cityName, measureId: self.appState.selectedMeasureId)
         let from: Date = selectedDate
         let to: Date = Calendar.current.date(bySettingHour: 23,
                                              minute: 59,
-                                             second: 00,
+                                             second: 59,
                                              of: selectedDate)!
         
         Task { @MainActor in
@@ -226,7 +188,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                    selectedMeasure:
                                                     getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
             
-            self.sensorPins = result
+            self.appState.sensorPins = result
         }
     }
 }

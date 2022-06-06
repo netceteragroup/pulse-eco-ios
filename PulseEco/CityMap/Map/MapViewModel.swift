@@ -50,7 +50,7 @@ class MapViewModel: ObservableObject {
             self?.findSelectedMeasure(self?.measure?.id, measures: measures)
         }.store(in: &cancellables)
         
-        self.appDataSource.$loadingCityData.sink { [unowned self] isLoading in
+        self.appState.$loadingCityData.sink { [unowned self] isLoading in
             guard !isLoading, let selectedMeasure = self.measure else { return }
             
             let sensors = combine(sensors: self.appDataSource.citySensors,
@@ -71,7 +71,7 @@ class MapViewModel: ObservableObject {
             self.sensors = sensors
         }.store(in: &cancellables)
         
-        self.appDataSource.$sensorPins.sink { [unowned self] pins in
+        self.appState.$sensorPins.sink { [unowned self] pins in
             self.shouldUpdateSensors = true
             self.sensors = pins
         }.store(in: &cancellables)

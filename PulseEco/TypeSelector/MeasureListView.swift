@@ -17,7 +17,7 @@ struct MeasureListView: View {
             ScrollViewReader { scrollProxy in
                 VStack {
                     buttonStack
-                        .onReceive(appDataSource.$loadingMeasures) { value in
+                        .onReceive(appState.$loadingMeasures) { value in
                             if !value {
                                 scrollProxy.scrollTo(appState.selectedMeasureId)
                             }

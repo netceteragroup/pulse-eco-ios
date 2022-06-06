@@ -29,7 +29,7 @@ struct MainView: View {
     
     var body: some View {
         Group {
-            if dataSource.loadingCityData || dataSource.loadingMeasures {
+            if appState.loadingCityData || appState.loadingMeasures {
                 loadingView
             } else {
                 contentView
@@ -41,9 +41,9 @@ struct MainView: View {
             case .disclaimerView: DisclaimerView()
             case .cityListView:
                 CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
-                             userSettings: self.dataSource.userSettings)
+                             userSettings: self.appState.userSettings)
                 .onDisappear(perform: {
-                    if self.dataSource.userSettings.favouriteCities.count == 0 {
+                    if self.appState.userSettings.favouriteCities.count == 0 {
                         self.appState.citySelectorClicked = false
                     }
                     if self.$appState.newCitySelected.wrappedValue == true {
@@ -76,13 +76,13 @@ struct MainView: View {
                             MeasureListView(viewModel: viewModel)
                         }
                         
-                        DateSlider(unimplementedAlert: $dataSource.showingCalendar,
+                        DateSlider(unimplementedAlert: $appState.showingCalendar,
                                    unimplementedPicker: $showingPicker,
-                                   selectedDate: $dataSource.selectedDate)
+                                   selectedDate: $appState.selectedDate)
                         
                         ZStack(alignment: .top) {
                             
-                            CityMapView(userSettings: self.dataSource.userSettings,
+                            CityMapView(userSettings: self.appState.userSettings,
                                         mapViewModel: mapViewModel,
                                         proxy: proxy)
                             .id("CityMapView")
@@ -106,10 +106,10 @@ struct MainView: View {
                     .transition(.move(edge: .bottom))
                     .zIndex(2) // zIndexes are needed to maintain dismiss transition
                 }
-                if dataSource.showingCalendar {
+                if appState.showingCalendar {
                     VStack {
-                        CalendarView(showingCalendar: $dataSource.showingCalendar,
-                                     selectedDate: $dataSource.selectedDate,
+                        CalendarView(showingCalendar: $appState.showingCalendar,
+                                     selectedDate: $appState.selectedDate,
                                      viewModelClosure: CalendarViewModel(appState: self.appState,
                                                                          appDataSource: self.dataSource))
                             .cornerRadius(4)
@@ -119,7 +119,7 @@ struct MainView: View {
                             Spacer()
                     }
                     .background(Color.gray.opacity(0.8).onTapGesture {
-                        dataSource.showingCalendar = false
+                        appState.showingCalendar = false
                     })
                     .edgesIgnoringSafeArea(.all)
                     .zIndex(3)

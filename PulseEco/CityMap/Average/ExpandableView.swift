@@ -3,8 +3,6 @@ import Combine
 
 struct ExpandableView: View {
     @EnvironmentObject var appState: AppState
-    @EnvironmentObject var dataSource: AppDataSource
-    @MainActor var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
     
     @State var isExpanded = false
     @State var width: CGFloat = 115

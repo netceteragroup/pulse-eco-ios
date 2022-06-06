@@ -28,8 +28,8 @@ class RefreshService: ObservableObject {
 
     func updateRefreshDate() {
         refreshDate = Date()
-        appDataSource.selectedDate = Calendar.current.startOfDay(for: Date.now)
-        appDataSource.showingCalendar = false
+        appViewModel.selectedDate = Calendar.current.startOfDay(for: Date.now)
+        appViewModel.showingCalendar = false
         appViewModel.selectedMeasureId = "pm10"
     }
     
@@ -38,7 +38,7 @@ class RefreshService: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.appViewModel.showSensorDetails = false
             self.appViewModel.selectedSensor = nil
-            self.appDataSource.loadingMeasures = true
+            self.appViewModel.loadingMeasures = true
             self.appDataSource.getMeasures()
             self.appDataSource.getValuesForCity(cityName: self.appViewModel.selectedCity.cityName)
         }

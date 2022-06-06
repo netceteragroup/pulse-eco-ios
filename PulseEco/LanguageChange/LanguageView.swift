@@ -73,7 +73,7 @@ struct LanguageView: View {
         Trema.appLanguage = country.shortName
         self.appState.selectedLanguage = Trema.appLanguage
         self.dataSource.getMeasures()
-        self.dataSource.loadingMeasures = true
+        self.appState.loadingMeasures = true
         self.refreshService.updateRefreshDate()
         self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
         presentationMode.wrappedValue.dismiss()
