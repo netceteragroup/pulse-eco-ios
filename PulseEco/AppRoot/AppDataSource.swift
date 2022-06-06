@@ -27,10 +27,24 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     @Published var weeklyData: [DayDataWrapper] = []
     @Published var monthlyData: [DayDataWrapper] = []
     @Published var sensorPins: [SensorPinModel] = []
-    @Published var selectedDate: Date = Calendar.current.startOfDay(for: Date.now)
     @Published var showingCalendar = false
     
-    @MainActor var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
+    @Published var selectedDate: Date = Calendar.current.startOfDay(for: Date.now) {
+        didSet {
+            selectedDateAverageValue = nil
+            self.selectedDateAverageValue =
+            self.cityDataWrapper.getDataFromRange(cityName: UserSettings.selectedCity.cityName,
+                                                  sensorType: self.appState.selectedMeasureId,
+                                                  from: selectedDate,
+                                                  to: Calendar.current.date(byAdding: .day,
+                                                                            value: 1,
+                                                                            to: selectedDate)!).first?.value
+        }
+    }
+    
+    @Published var selectedDateAverageValue: String?
+    
+    @Published var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
     
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
@@ -60,7 +74,9 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
-        fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
+        Task {
+            await fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
+        }
         self.loadingCityData = true
         Publishers.Zip4(networkService.downloadOverallValuesForCity(cityName: cityName),
                         networkService.downloadSensors(cityName: cityName),
@@ -115,9 +131,9 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             .store(in: &cancelables)
     }
     
-    func fetchWeeklyAverages(cityName: String = UserSettings.selectedCity.cityName,
-                             measureId: String) {
-        Task { @MainActor in
+    @MainActor func fetchWeeklyAverages(cityName: String = UserSettings.selectedCity.cityName,
+                                        measureId: String) {
+        Task {
             cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
                                                                                        sensorType: measureId)
             
@@ -168,7 +184,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         }
     }
     
-    func fetchHistory(for cityName: String, measureId: String) {
+    @MainActor func fetchHistory(for cityName: String, measureId: String) {
         fetchWeeklyAverages(cityName: cityName, measureId: measureId)
         getMonthlyValues(cityName: cityName,
                          measureId: measureId,

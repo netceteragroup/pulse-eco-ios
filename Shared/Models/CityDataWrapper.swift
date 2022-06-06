@@ -7,14 +7,15 @@
 
 import Foundation
 
-@MainActor
 class CityDataWrapper: ObservableObject {
     
     var sensorData: [SensorData]?
     var currentValue: CityOverallValues?
     var measures: [Measure]?
     
-    init (sensorData: [SensorData]?, currentValue: CityOverallValues?, measures: [Measure]?) {
+    init (sensorData: [SensorData]?,
+          currentValue: CityOverallValues?,
+          measures: [Measure]?) {
         self.sensorData = sensorData
         self.currentValue = currentValue
         self.measures = measures
@@ -50,7 +51,6 @@ class CityDataWrapper: ObservableObject {
            let color = measure.bands.color(for: Int(today)) {
             history.append(DayDataWrapper(date: Date.now, value: today, color: color))
         }
-        print(sensorData)
         return history
     }
 }

@@ -18,7 +18,9 @@ struct CityMapView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var userSettings: UserSettings
+    
     let mapViewModel: MapViewModel
+    
     let proxy: GeometryProxy
     
     var body: some View {
@@ -54,7 +56,8 @@ struct CityMapView: View {
             AverageView(viewModel: AverageUtilModel(measureId: self.appState.selectedMeasureId,
                                                     cityName: self.appState.selectedCity.cityName,
                                                     measuresList: self.dataSource.measures,
-                                                    cityValues: self.dataSource.cityOverall))
+                                                    cityValues: self.dataSource.cityOverall,
+                                                    currentValue: self.dataSource.selectedDateAverageValue))
             
             if self.appState.citySelectorClicked {
                 FavouriteCitiesView(viewModel:

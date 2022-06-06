@@ -109,7 +109,6 @@ class NetworkService {
             
             return response
         } catch {
-            print("Error loading \(url)")
             return nil
         }
     }
@@ -138,7 +137,6 @@ class NetworkService {
             
             return response
         } catch {
-            print("Error loading \(url)")
             return nil
         }
     }
@@ -154,7 +152,6 @@ class NetworkService {
         
             return response
         } catch {
-            print("Error loading \(url)")
             return nil
         }
     }
@@ -192,7 +189,6 @@ class NetworkService {
            
             return response
         } catch {
-            print("Error loading \(url)")
             return nil
         }
     }
@@ -231,7 +227,6 @@ class NetworkService {
                 let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
                 return response
             } catch {
-                print("Error loading \(url)")
                 return nil
             }
         }
@@ -253,7 +248,6 @@ class NetworkService {
             return response
             
         } catch {
-            print("Error loading \(url)")
             return nil
         }
     }

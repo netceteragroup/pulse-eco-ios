@@ -88,15 +88,6 @@ struct MainView: View {
                             .id("CityMapView")
                             .edgesIgnoringSafeArea([.horizontal, .bottom])
                             
-//                            if dataSource.showingCalendar {
-//                                CalendarView(showingCalendar: $dataSource.showingCalendar,
-//                                             selectedDate: $dataSource.selectedDate,
-//                                             viewModelClosure: CalendarViewModel(appState: self.appState,
-//                                                                                 appDataSource: self.dataSource))
-//                                    .cornerRadius(4)
-//                                    .shadow(color: Color(AppColors.shadowColor), radius: 20)
-//                                    .padding(.all)
-//                            }
                         }
                     }
                     .navigationBarTitle("", displayMode: .inline)
