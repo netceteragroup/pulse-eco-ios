@@ -110,23 +110,23 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     @MainActor func fetchWeeklyAverages(cityName: String = UserSettings.selectedCity.cityName,
                                         measureId: String) {
         Task {
-            appState.cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
-                                                                                       sensorType: measureId)
+            appState.cityDataWrapper =
+            await self.networkService.downloadOverallCurrentMeasures(cityName: cityName, sensorType: measureId)
             
             self.weeklyData =
             appState.cityDataWrapper.getDataFromRange(cityName: cityName,
-                                             sensorType: measureId,
-                                             from: Calendar.current.date(byAdding: .day, value: -8, to: Date.now)!,
-                                             to: Calendar.current.date(byAdding: .day, value: +1, to: Date.now)!)
+                                                      sensorType: measureId,
+                                                      from: Calendar.current.date(byAdding: .day, value: -7, to: Date.now)!,
+                                                      to: Calendar.current.date(byAdding: .day, value: +1, to: Date.now)!)
             
             let today: [DayDataWrapper] =
             appState.cityDataWrapper.getDataFromRange(cityName: cityName,
                                                       sensorType: measureId,
                                                       from: Calendar.current.startOfDay(for: Date.now),
-                                                      to: Calendar.current
-                .date(byAdding: .day,
-                      value: +1,
-                      to: Calendar.current.startOfDay(for: Date.now))!)
+                                                      to: Calendar.current.date(byAdding: .day,
+                                                                                value: +1,
+                                                                                to: Calendar.current
+                                                                                    .startOfDay(for: Date.now))!)
             
             self.weeklyData.append(contentsOf: today)
         }
@@ -137,13 +137,13 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                           currentMonth: Int,
                           currentYear: Int) {
         Task { @MainActor in
-            appState.cityDataWrapper = await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
-                                                                                       sensorType: measureId)
+            appState.cityDataWrapper =
+            await self.networkService.downloadOverallCurrentMeasures(cityName: cityName, sensorType: measureId)
             
             self.monthlyData = appState.cityDataWrapper.getDataFromRange(cityName: cityName,
-                                                                sensorType: measureId,
-                                                                from: Date.from(1, currentMonth, currentYear)!,
-                                                                to: Date.now)
+                                                                         sensorType: measureId,
+                                                                         from: Date.from(1, currentMonth, currentYear)!,
+                                                                         to: Date.now)
         }
     }
     

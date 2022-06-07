@@ -18,7 +18,6 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var activeSheet: ActiveSheet?
     @Published var selectedLanguage: String = Trema.appLanguage
     @Published var newCitySelected: Bool = false
-    
     @Published var sensorPins: [SensorPinModel] = []
     @Published var loadingCityData: Bool = true
     @Published var loadingMeasures: Bool = true
@@ -40,7 +39,6 @@ class AppState: ObservableObject, ViewModelDependency {
         }
     }
     @Published var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
-    
     
     var cityIcon: Image {
         citySelectorClicked ? Image(systemName: "chevron.up") : Image(systemName: "chevron.down")

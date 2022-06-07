@@ -78,15 +78,6 @@ struct WeekDayButton: View {
 }
 
 extension Calendar {
-    func isDayInCurrentWeek(date: Date) -> Bool {
-        let currentComponents = self.dateComponents([.weekOfYear], from: Date())
-        let dateComponents = self.dateComponents([.weekOfYear], from: date)
-        guard let currentWeekOfYear = currentComponents.weekOfYear,
-              let dateWeekOfYear = dateComponents.weekOfYear
-        else { return false }
-        return currentWeekOfYear == dateWeekOfYear
-    }
-    
     func weekdayNameFrom(weekdayNumber: Int) -> String {
         let dayIndex = ((weekdayNumber - 1) + (self.firstWeekday - 1)) % 7
         return self.shortWeekdaySymbols[dayIndex]

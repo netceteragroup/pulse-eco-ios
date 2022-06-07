@@ -133,7 +133,8 @@ class CalendarViewModel: ViewModelProtocol {
     }
     func selectNewMonth(month: String) {
         selectedMonth = calendar.shortMonthSymbols.firstIndex(of: month) ?? selectedMonth
-        currentMonthOffset = selectedMonth - Calendar.current.component(.month, from: Date()) + 1
+        currentMonthOffset = selectedMonth - Calendar.current.component(.month, from: Date())
+        nextMonth()
     }
 }
 

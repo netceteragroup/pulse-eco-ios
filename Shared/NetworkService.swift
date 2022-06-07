@@ -272,12 +272,3 @@ extension Date {
         return components1 == components2
     }
 }
-
-extension Date: Strideable {
-    public func distance(to other: Date) -> TimeInterval {
-        return other.timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
-    }
-    public func advanced(by amount: TimeInterval) -> Date {
-        return self + amount
-    }
-}
