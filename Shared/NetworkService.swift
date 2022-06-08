@@ -251,6 +251,27 @@ class NetworkService {
             return nil
         }
     }
+    
+//    func fetchDataForSelectedMonth(cityName: String,
+//                                   sensorType: String,
+//                                   selectedMonth: Int,
+//                                   selectedYear: Int) async -> [SensorData] {
+//        var history: [SensorData] = []
+//        let startDate = Date.from(1, selectedMonth, selectedYear)
+//
+//        let endDate = Date.from(1, selectedMonth+1, selectedYear)
+//        let result = await downloadAverageData(for: cityName,
+//                                               from: startDate!,
+//                                               to: endDate!,
+//                                               timeUnit: .day,
+//                                               sensorType: sensorType)
+//
+//        if let result = result {
+//            history.append(contentsOf: result)
+//        }
+//        return history
+//    }
+
 }
 extension Date {
     static func from(_ day: Int, _ month: Int, _ year: Int) -> Date? {

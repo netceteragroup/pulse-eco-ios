@@ -52,6 +52,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
         Task {
             await fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
+//            await fetchMonthlyData()
         }
         self.appState.loadingCityData = true
         Publishers.Zip4(networkService.downloadOverallValuesForCity(cityName: cityName),
@@ -116,7 +117,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             self.weeklyData =
             appState.cityDataWrapper.getDataFromRange(cityName: cityName,
                                                       sensorType: measureId,
-                                                      from: Calendar.current.date(byAdding: .day, value: -7, to: Date.now)!,
+                                                      from: Calendar.current.date(byAdding: .day, value: -8, to: Date.now)!,
                                                       to: Calendar.current.date(byAdding: .day, value: +1, to: Date.now)!)
             
             let today: [DayDataWrapper] =
@@ -191,4 +192,19 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             self.appState.sensorPins = result
         }
     }
+//
+//    func fetchMonthlyData () async -> [SensorData] {
+//
+//        let selectedMonth = Calendar.current.dateComponents([.month], from: appState.selectedDate).month!
+//        let selectedYear = Calendar.current.dateComponents([.year], from: appState.selectedDate).year!
+//
+//        let result: [SensorData] =
+//        await self.networkService.fetchDataForSelectedMonth(cityName: appState.selectedCity.cityName,
+//                                                            sensorType: appState.selectedMeasureId,
+//                                                            selectedMonth: selectedMonth,
+//                                                            selectedYear: selectedYear)
+//
+//        return result
+//
+//    }
 }
