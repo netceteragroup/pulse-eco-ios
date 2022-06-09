@@ -86,7 +86,9 @@ class MapViewModel: ObservableObject {
         defer { self.measure = selectedMeasure }
         
         guard let measure = selectedMeasure else { return }
-        appDataSource.fetchHistory(for: UserSettings.selectedCity.cityName, measureId: measure.id)
+        Task {
+            await appDataSource.fetchHistory(for: UserSettings.selectedCity.cityName, measureId: measure.id)
+        }
         
         let sensors = combine(sensors: appDataSource.citySensors,
                               sensorsData: appDataSource.sensorsData,

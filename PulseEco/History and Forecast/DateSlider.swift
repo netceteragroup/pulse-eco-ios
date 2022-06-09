@@ -23,6 +23,11 @@ struct DateSlider: View {
                     Button {
                         unimplementedAlert.toggle()
                         unimplementedPicker = true
+                        Task {
+                            await dataSource.fetchMonthlyData(selectedMonth: Calendar.current.dateComponents([.month], from: Date.now).month!,
+                                                              selectedYear: Calendar.current.dateComponents([.year], from: Date.now).year!)
+                        }
+                        
                     } label: {
                         VStack(spacing: 0) {
                             Image("history")

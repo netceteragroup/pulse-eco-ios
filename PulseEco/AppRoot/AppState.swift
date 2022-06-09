@@ -5,7 +5,18 @@ import Combine
 class AppState: ObservableObject, ViewModelDependency {
     var cancelables = Set<AnyCancellable>()
     
-    @Published var selectedMeasureId: String = "pm10"
+    @Published var selectedMeasureId: String = "pm10" {
+        didSet {
+            selectedDateAverageValue = nil
+            self.selectedDateAverageValue =
+            self.cityDataWrapper.getDataFromRange(cityName: UserSettings.selectedCity.cityName,
+                                                  sensorType: self.selectedMeasureId,
+                                                  from: selectedDate,
+                                                  to: Calendar.current.date(byAdding: .day,
+                                                                            value: 1,
+                                                                            to: selectedDate)!).first?.value
+        }
+    }
     @Published var citySelectorClicked: Bool = false
     @Published var selectedCity: City = UserSettings.selectedCity {
         didSet {

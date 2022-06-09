@@ -137,22 +137,21 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     func getMonthlyValues(cityName: String = UserSettings.selectedCity.cityName,
                           measureId: String,
                           currentMonth: Int,
-                          currentYear: Int) {
+                          currentYear: Int) async {
         Task { @MainActor in
             appState.cityDataWrapper =
             await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
                                                                      sensorType: measureId,
                                                                      selectedDate: appState.selectedDate)
             
-            
-            
             await fetchMonthlyData(selectedMonth: currentMonth, selectedYear: currentYear)
         }
+        
     }
     
-    @MainActor func fetchHistory(for cityName: String, measureId: String) {
+    @MainActor func fetchHistory(for cityName: String, measureId: String) async {
         fetchWeeklyAverages(cityName: cityName, measureId: measureId)
-        getMonthlyValues(cityName: cityName,
+        await getMonthlyValues(cityName: cityName,
                          measureId: measureId,
                          currentMonth: appState.currentMonth,
                          currentYear: appState.currentYear)
@@ -190,17 +189,14 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                    sensorsData: processedSensorData,
                                                    selectedMeasure:
                                                     getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
-            
             self.appState.sensorPins = result
         }
     }
 
     func fetchMonthlyData (selectedMonth: Int, selectedYear: Int) async {
 
-        
         let newMonth = (selectedMonth != 0) ? selectedMonth : Calendar.current.dateComponents([.month], from: Date.now).month!
         let newYear = (selectedYear != 0) ? selectedYear : Calendar.current.dateComponents([.year], from: Date.now).year!
-        
         
         Task { @MainActor in 
             self.appState.cityDataWrapper.sensorData = await self.networkService.fetchDataForSelectedMonth(cityName: appState.selectedCity.cityName,
@@ -208,14 +204,10 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                                 selectedMonth: newMonth,
                                                                 selectedYear: newYear)
             
-             
-            
             self.monthlyData = appState.cityDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
                                                                          sensorType: appState.selectedMeasureId,
                                                                          from: Date.from(1, newMonth, newYear)!,
                                                                          to: Date.now)
         }
-        
-        
     }
 }
