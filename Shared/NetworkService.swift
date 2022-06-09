@@ -194,9 +194,27 @@ class NetworkService {
     }
     
     func downloadOverallCurrentMeasures(cityName: String,
-                                        sensorType: String) async -> CityDataWrapper {
+                                        sensorType: String,
+                                        selectedDate: Date) async -> CityDataWrapper {
         
-        async let history = downloadAverageDayData(for: cityName, sensorType: sensorType)
+        let selectedMonth = Calendar.current.dateComponents([.month], from: selectedDate).month!
+        let selectedYear = Calendar.current.dateComponents([.year], from: selectedDate).year!
+        
+        return await downloadOverallCurrentMeasures(cityName: cityName,
+                                              sensorType: sensorType,
+                                              selectedMonth: selectedMonth,
+                                              selectedYear: selectedYear)
+    }
+    
+    func downloadOverallCurrentMeasures(cityName: String,
+                                        sensorType: String,
+                                        selectedMonth: Int,
+                                        selectedYear: Int) async -> CityDataWrapper {
+    
+        async let history = fetchDataForSelectedMonth(cityName: cityName,
+                                                      sensorType: sensorType,
+                                                      selectedMonth: selectedMonth,
+                                                      selectedYear: selectedYear)
         async let current = downloadCurrentData(for: cityName)
         async let measures = downloadMeasures()
         
@@ -252,25 +270,35 @@ class NetworkService {
         }
     }
     
-//    func fetchDataForSelectedMonth(cityName: String,
-//                                   sensorType: String,
-//                                   selectedMonth: Int,
-//                                   selectedYear: Int) async -> [SensorData] {
-//        var history: [SensorData] = []
-//        let startDate = Date.from(1, selectedMonth, selectedYear)
-//
-//        let endDate = Date.from(1, selectedMonth+1, selectedYear)
-//        let result = await downloadAverageData(for: cityName,
-//                                               from: startDate!,
-//                                               to: endDate!,
-//                                               timeUnit: .day,
-//                                               sensorType: sensorType)
-//
-//        if let result = result {
-//            history.append(contentsOf: result)
-//        }
-//        return history
-//    }
+    func fetchDataForSelectedMonth(cityName: String,
+                                   sensorType: String,
+                                   selectedMonth: Int,
+                                   selectedYear: Int) async -> [SensorData] {
+        var newYear = selectedYear
+        var newMonth = selectedMonth + 1
+        var history: [SensorData] = []
+        
+        let startDate = Date.from(1, selectedMonth, selectedYear)
+        if selectedMonth == 12 {
+            newYear += 1
+            newMonth = 1
+        }
+        if selectedMonth == 1 {
+            newYear -= 1
+            newMonth = 12
+        }
+        let endDate = Date.from(1, newMonth, newYear)
+        let result = await downloadAverageData(for: cityName,
+                                               from: startDate!,
+                                               to: endDate!,
+                                               timeUnit: .day,
+                                               sensorType: sensorType)
+
+        if let result = result {
+            history.append(contentsOf: result)
+        }
+        return history
+    }
 
 }
 extension Date {

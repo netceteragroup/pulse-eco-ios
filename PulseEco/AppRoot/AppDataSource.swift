@@ -52,7 +52,6 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
         Task {
             await fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
-//            await fetchMonthlyData()
         }
         self.appState.loadingCityData = true
         Publishers.Zip4(networkService.downloadOverallValuesForCity(cityName: cityName),
@@ -112,12 +111,14 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                         measureId: String) {
         Task {
             appState.cityDataWrapper =
-            await self.networkService.downloadOverallCurrentMeasures(cityName: cityName, sensorType: measureId)
+            await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
+                                                                     sensorType: measureId,
+                                                                     selectedDate: appState.selectedDate)
             
             self.weeklyData =
             appState.cityDataWrapper.getDataFromRange(cityName: cityName,
                                                       sensorType: measureId,
-                                                      from: Calendar.current.date(byAdding: .day, value: -8, to: Date.now)!,
+                                                      from: Calendar.current.date(byAdding: .day, value: -7, to: Date.now)!,
                                                       to: Calendar.current.date(byAdding: .day, value: +1, to: Date.now)!)
             
             let today: [DayDataWrapper] =
@@ -139,12 +140,13 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                           currentYear: Int) {
         Task { @MainActor in
             appState.cityDataWrapper =
-            await self.networkService.downloadOverallCurrentMeasures(cityName: cityName, sensorType: measureId)
+            await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
+                                                                     sensorType: measureId,
+                                                                     selectedDate: appState.selectedDate)
             
-            self.monthlyData = appState.cityDataWrapper.getDataFromRange(cityName: cityName,
-                                                                         sensorType: measureId,
-                                                                         from: Date.from(1, currentMonth, currentYear)!,
-                                                                         to: Date.now)
+            
+            
+            await fetchMonthlyData(selectedMonth: currentMonth, selectedYear: currentYear)
         }
     }
     
@@ -192,19 +194,28 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             self.appState.sensorPins = result
         }
     }
-//
-//    func fetchMonthlyData () async -> [SensorData] {
-//
-//        let selectedMonth = Calendar.current.dateComponents([.month], from: appState.selectedDate).month!
-//        let selectedYear = Calendar.current.dateComponents([.year], from: appState.selectedDate).year!
-//
-//        let result: [SensorData] =
-//        await self.networkService.fetchDataForSelectedMonth(cityName: appState.selectedCity.cityName,
-//                                                            sensorType: appState.selectedMeasureId,
-//                                                            selectedMonth: selectedMonth,
-//                                                            selectedYear: selectedYear)
-//
-//        return result
-//
-//    }
+
+    func fetchMonthlyData (selectedMonth: Int, selectedYear: Int) async {
+
+        
+        let newMonth = (selectedMonth != 0) ? selectedMonth : Calendar.current.dateComponents([.month], from: Date.now).month!
+        let newYear = (selectedYear != 0) ? selectedYear : Calendar.current.dateComponents([.year], from: Date.now).year!
+        
+        
+        Task { @MainActor in 
+            self.appState.cityDataWrapper.sensorData = await self.networkService.fetchDataForSelectedMonth(cityName: appState.selectedCity.cityName,
+                                                                sensorType: appState.selectedMeasureId,
+                                                                selectedMonth: newMonth,
+                                                                selectedYear: newYear)
+            
+             
+            
+            self.monthlyData = appState.cityDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
+                                                                         sensorType: appState.selectedMeasureId,
+                                                                         from: Date.from(1, newMonth, newYear)!,
+                                                                         to: Date.now)
+        }
+        
+        
+    }
 }

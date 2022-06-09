@@ -60,6 +60,12 @@ struct CalendarView: View {
             if value.day != -1 {
                 Button {
                     self.selectedDate = Calendar.current.startOfDay(for: value.date)
+                    Task {
+                        do {
+                            await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
+                        }
+                    }
+                    showingCalendar = false
                 } label: {
                     CalendarButtonView(day: value.day,
                                        date: value.date,
@@ -112,20 +118,6 @@ struct CalendarView: View {
                     .foregroundColor(Color(AppColors.greyColor))
             }
             .padding(.top)
-            
-            Button {
-                Task {
-                    do {
-                        await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
-                    }
-                }
-                showingCalendar = false
-            } label: {
-                Text(Trema.text(for: "ok"))
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(Color(AppColors.firstButtonColor))
-            }
-            .padding(.top)
         }
         .padding(.all)
     }
@@ -147,9 +139,9 @@ struct CalendarView: View {
             }
             Spacer(minLength: 0)
             Button {
-                withAnimation {
-                    viewModel.previousMonth()
-                }
+                    Task {
+                        await viewModel.previousMonth()
+                    }
             } label: {
                 Image(systemName: "chevron.left")
                     .resizable()
@@ -159,9 +151,9 @@ struct CalendarView: View {
             .padding(.all)
             
             Button {
-                withAnimation {
-                    viewModel.nextMonth()
-                }
+                    Task {
+                        await viewModel.nextMonth()
+                    }
             } label: {
                 Image(systemName: "chevron.right")
                     .resizable()
@@ -249,7 +241,9 @@ struct CalendarView: View {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(viewModel.calendar.shortMonthSymbols, id: \.self) { month in
                     Button {
-                        viewModel.selectNewMonth(month: month)
+                        Task {
+                            await viewModel.selectNewMonth(month: month)
+                        }
                         pickerType = .day
                     } label: {
                         Text(String(month.capitalized))
