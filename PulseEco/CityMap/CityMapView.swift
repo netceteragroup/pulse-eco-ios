@@ -3,7 +3,6 @@
 //  PulseEco
 //
 //  Created by Monika Dimitrova on 6/17/20.
-//  Copyright © 2020 Monika Dimitrova. All rights reserved.
 //
 
 import SwiftUI
@@ -19,7 +18,9 @@ struct CityMapView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var userSettings: UserSettings
+    
     let mapViewModel: MapViewModel
+    
     let proxy: GeometryProxy
     
     var body: some View {
@@ -53,7 +54,8 @@ struct CityMapView: View {
             AverageView(viewModel: AverageUtilModel(measureId: self.appState.selectedMeasureId,
                                                     cityName: self.appState.selectedCity.cityName,
                                                     measuresList: self.dataSource.measures,
-                                                    cityValues: self.dataSource.cityOverall))
+                                                    cityValues: self.dataSource.cityOverall,
+                                                    currentValue: self.appState.selectedDateAverageValue))
             
             if self.appState.citySelectorClicked {
                 FavouriteCitiesView(viewModel:
@@ -65,7 +67,7 @@ struct CityMapView: View {
                                     userSettings: self.userSettings,
                                     proxy: proxy)
                     .overlay(ShadowOnTopOfView())
-                    .animation(nil)
+                    .animation(nil, value: self.appState.citySelectorClicked)
             }
         }
     }

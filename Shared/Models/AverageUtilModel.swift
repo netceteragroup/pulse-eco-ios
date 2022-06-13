@@ -11,15 +11,16 @@ struct AverageUtilModel {
     var selectedMeasure: Measure
     
     // MARK: - Init
-    init(measureId: String, cityName: String, measuresList: [Measure], cityValues: CityOverallValues?) {
-        if let averageValue = cityValues?.values[measureId.lowercased()] {
-            if let floatValue = Float(averageValue) {
-                self.value = floatValue
-                self.clickDisabled = false
-            } else {
-                self.clickDisabled = true
-                self.value = 0
-            }
+    init(measureId: String,
+         cityName: String,
+         measuresList: [Measure],
+         cityValues: CityOverallValues? = nil,
+         currentValue: String? = nil ) {
+        if
+            let shownValue = currentValue ?? cityValues?.values[measureId.lowercased()],
+            let floatValue = Float(shownValue) {
+            self.value = floatValue
+            self.clickDisabled = false
         } else {
             self.clickDisabled = true
             self.value = 0

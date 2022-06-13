@@ -3,52 +3,76 @@
 //  PulseEco
 //
 //  Created by Sara Karachanakova on 19.4.22.
-//  Copyright © 2022 Monika Dimitrova. All rights reserved.
 //
 
 import SwiftUI
 
 struct DateSlider: View {
     
-    let backgroundColorNav = #colorLiteral(red: 0.918249011, green: 0.9182489514, blue: 0.9182489514, alpha: 1)
-    let firstButtonColor = #colorLiteral(red: 0.05490196078, green: 0.03921568627, blue: 0.2666666667, alpha: 1)
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var dataSource: AppDataSource
+    
     @Binding var unimplementedAlert: Bool
     @Binding var unimplementedPicker: Bool
+    @Binding var selectedDate: Date
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack {
-                Button {
-                    unimplementedAlert.toggle()
-                    unimplementedPicker = false
-                } label: {
-                    VStack(spacing: 0) {
-                        Image("history")
-                            .resizable()
-                            .renderingMode(.template)
-                            .foregroundColor(Color.white)
-                            .frame(width: 20, height: 20, alignment: .center)
-                        Text(Trema.text(for: "explore"))
-                            .font(.system(size: 10, weight: .regular))
+            ScrollViewReader { proxy in
+                HStack {
+                    Button {
+                        unimplementedAlert.toggle()
+                        unimplementedPicker = true
+                        Task {
+                            await dataSource
+                                .fetchMonthlyData(selectedMonth: calendar.dateComponents([.month],
+                                                                                                 from: Date.now).month!,
+                                                  selectedYear: calendar.dateComponents([.year],
+                                                                                                from: Date.now).year!)
+                        }
+                        
+                    } label: {
+                        VStack(spacing: 0) {
+                            Image("history")
+                                .resizable()
+                                .renderingMode(.template)
+                                .foregroundColor(Color.white)
+                                .frame(width: 20, height: 20, alignment: .center)
+                            Text(Trema.text(for: "explore"))
+                                .font(.system(size: 10, weight: .regular))
+                        }
+                        .frame(width: 50, height: 50)
+                        .foregroundColor(Color.white)
+                        .background(Color(AppColors.firstButtonColor))
+                        .cornerRadius(3)
+                        .padding(.leading, 10)
                     }
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(Color.white)
-                    .background(Color(firstButtonColor))
-                    .cornerRadius(3)
-                    .padding(.leading, 10)
+                    LazyHStack {
+                        ForEach(dataSource.weeklyData, id: \.dateId) { item in
+                            WeekDayButton(date: item.date,
+                                          value: item.value,
+                                          color: item.color,
+                                          highlighted: selectedDate.isSameDay(with: item.date)) {
+                                selectedDate = calendar.startOfDay(for: item.date)
+                                Task {
+                                    do {
+                                        await dataSource.updatePins(selectedDate: selectedDate)
+                                    }
+                                }
+                            }
+                        }
+                        .onAppear {
+                            withAnimation {
+                                proxy.scrollTo(selectedDate)
+                            }
+                        }
+                    }
                 }
-                Group {
-                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!, value: "82", color: "red")
-                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!, value: "82", color: "red")
-                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, value: "82", color: "red")
-                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, value: "82", color: "red")
-                WeekDayButton(date: Date(), value: "34", color: "orange")
-                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: 1, to: Date())!, value: "22", color: "green")
-                WeekDayButton(date: Calendar.current.date(byAdding: .day, value: +2, to: Date())!, value: "82", color: "red")
-                }
+                .padding(.trailing, 8)
             }
+            .frame(height: 64)
+            .background(Color(AppColors.backgroundColorNav))
         }
-        .frame(height: 64)
-        .background(Color(backgroundColorNav))
+        .background(Color(AppColors.backgroundColorNav))
     }
 }

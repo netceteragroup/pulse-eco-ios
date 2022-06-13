@@ -3,7 +3,6 @@
 //  PulseEco
 //
 //  Created by Monika Dimitrova on 6/16/20.
-//  Copyright © 2020 Monika Dimitrova. All rights reserved.
 //
 
 import Foundation
@@ -31,7 +30,7 @@ class MapViewModel: ObservableObject {
     }
     
     func getDailyAverageDataForSensor(_ sensorId: String) {
-        appDataSource.getDailyAverageDataForSensor(city: selectedCity,
+        appDataSource.fetchDailyAverageDataForSensor(city: selectedCity,
                                                    measure: measure,
                                                    sensorId: sensorId)
     }
@@ -51,7 +50,7 @@ class MapViewModel: ObservableObject {
             self?.findSelectedMeasure(self?.measure?.id, measures: measures)
         }.store(in: &cancellables)
         
-        self.appDataSource.$loadingCityData.sink { [unowned self] isLoading in
+        self.appState.$loadingCityData.sink { [unowned self] isLoading in
             guard !isLoading, let selectedMeasure = self.measure else { return }
             
             let sensors = combine(sensors: self.appDataSource.citySensors,
@@ -71,6 +70,11 @@ class MapViewModel: ObservableObject {
             self.shouldUpdateSensors = true
             self.sensors = sensors
         }.store(in: &cancellables)
+        
+        self.appState.$sensorPins.sink { [unowned self] pins in
+            self.shouldUpdateSensors = true
+            self.sensors = pins
+        }.store(in: &cancellables)
     }
     
     private func findSelectedMeasure(_ measure: String?, measures: [Measure]? = nil) {
@@ -82,6 +86,9 @@ class MapViewModel: ObservableObject {
         defer { self.measure = selectedMeasure }
         
         guard let measure = selectedMeasure else { return }
+        Task {
+            await appDataSource.fetchHistory(for: UserSettings.selectedCity.cityName, measureId: measure.id)
+        }
         
         let sensors = combine(sensors: appDataSource.citySensors,
                               sensorsData: appDataSource.sensorsData,
@@ -115,37 +122,6 @@ class MapViewModel: ObservableObject {
         let lonDelta = abs((longitudes.max() ?? 0) - (longitudes.min() ?? 0))
         return MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
     }
-    
-    private func pinColorForSensorValue(selectedMeasure: Measure, sensorValue: String) -> UIColor {
-        return AppColors.colorFrom(string: selectedMeasure.bands.first { band in
-            Int(sensorValue) ?? 0 >= band.from && Int(sensorValue) ?? 0 <= band.to
-        }?.legendColor ?? "gray")
-    }
-
-    private func combine(sensors: [Sensor],
-                         sensorsData: [SensorData],
-                         selectedMeasure: Measure) -> [SensorPinModel] {
-        var commonSensors = [SensorPinModel]()
-        let sensorMeasurements = sensorsData.filter { sensor in
-            sensor.type.lowercased() == selectedMeasure.id.lowercased()
-        }
-        _ = sensors.compactMap { sensor in
-            sensorMeasurements.compactMap { sensorMeasurement in
-                if sensorMeasurement.sensorID == sensor.sensorID {
-                    commonSensors.append(
-                        SensorPinModel(title: sensor.description,
-                                       sensorID: sensor.sensorID, value: sensorMeasurement.value,
-                                       position: sensor.position,
-                                       type: sensor.type,
-                                       color: pinColorForSensorValue(selectedMeasure: selectedMeasure,
-                                       sensorValue: sensorMeasurement.value),
-                                       stamp: sensorMeasurement.stamp)
-                    )
-                }
-            }
-        }
-        return commonSensors
-    }
 
     private func areIdentical(_ lhs: [SensorPinModel]?, _ rhs: [SensorPinModel]?) -> Bool {
         guard let lhs = lhs, let rhs = rhs, lhs.count == rhs.count else { return false }
@@ -154,4 +130,36 @@ class MapViewModel: ObservableObject {
         }
         return true
     }
+}
+
+private func pinColorForSensorValue(selectedMeasure: Measure, sensorValue: String) -> UIColor {
+    return AppColors.colorFrom(string: selectedMeasure.bands.first { band in
+        Int(sensorValue) ?? 0 >= band.from && Int(sensorValue) ?? 0 <= band.to
+    }?.legendColor ?? "gray")
+}
+
+func combine(sensors: [Sensor],
+             sensorsData: [SensorData],
+             selectedMeasure: Measure) -> [SensorPinModel] {
+    var commonSensors = [SensorPinModel]()
+    let sensorMeasurements = sensorsData.filter { sensor in
+        sensor.type.lowercased() == selectedMeasure.id.lowercased()
+    }
+    _ = sensors.compactMap { sensor in
+        sensorMeasurements.compactMap { sensorMeasurement in
+            if sensorMeasurement.sensorID == sensor.sensorID {
+                commonSensors.append(
+                    SensorPinModel(title: sensor.description,
+                                   sensorID: sensor.sensorID,
+                                   value: sensorMeasurement.value,
+                                   position: sensor.position,
+                                   type: sensor.type,
+                                   color: pinColorForSensorValue(selectedMeasure: selectedMeasure,
+                                                                 sensorValue: sensorMeasurement.value),
+                                   stamp: sensorMeasurement.stamp)
+                )
+            }
+        }
+    }
+    return commonSensors
 }

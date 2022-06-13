@@ -3,7 +3,6 @@
 //  PulseEco
 //
 //  Created by Monika Dimitrova on 6/16/20.
-//  Copyright © 2020 Monika Dimitrova. All rights reserved.
 //
 
 import SwiftUI
@@ -14,12 +13,11 @@ struct MainView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     
-    @State var showingCalendar = false
     @State var showingPicker = false
+    
     let mapViewModel: MapViewModel
-    let shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2)
+    
     private let backgroundColor: Color = AppColors.white.color
-    private let shadow: Color = Color(red: 0.87, green: 0.89, blue: 0.92)
 
     private var sensorDetailsViewModel: SensorDetailsViewModel {
         let selectedMeasure = dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId)
@@ -28,9 +26,10 @@ struct MainView: View {
                                       sensorData24h: dataSource.sensorsData24h,
                                       dailyAverages: dataSource.sensorsDailyAverageData)
     }
+    
     var body: some View {
         Group {
-            if dataSource.loadingCityData || dataSource.loadingMeasures {
+            if appState.loadingCityData || appState.loadingMeasures {
                 loadingView
             } else {
                 contentView
@@ -42,9 +41,9 @@ struct MainView: View {
             case .disclaimerView: DisclaimerView()
             case .cityListView:
                 CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
-                             userSettings: self.dataSource.userSettings)
+                             userSettings: self.appState.userSettings)
                 .onDisappear(perform: {
-                    if self.dataSource.userSettings.favouriteCities.count == 0 {
+                    if self.appState.userSettings.favouriteCities.count == 0 {
                         self.appState.citySelectorClicked = false
                     }
                     if self.$appState.newCitySelected.wrappedValue == true {
@@ -54,7 +53,6 @@ struct MainView: View {
                         self.appState.citySelectorClicked = false
                     }
                 })
-                
             case .languageView: LanguageView()
             }
         }
@@ -66,10 +64,9 @@ struct MainView: View {
     
     var contentView: some View {
         GeometryReader { proxy in
-            ZStack {
+            ZStack(alignment: .top) {
                 NavigationView {
                     VStack(spacing: 0) {
-                        
                         VStack(spacing: 0) {
                             let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
                                                                  cityName: appState.selectedCity.cityName,
@@ -79,22 +76,18 @@ struct MainView: View {
                             MeasureListView(viewModel: viewModel)
                         }
                         
-                        DateSlider(unimplementedAlert: $showingCalendar, unimplementedPicker: $showingPicker)
+                        DateSlider(unimplementedAlert: $appState.showingCalendar,
+                                   unimplementedPicker: $showingPicker,
+                                   selectedDate: $appState.selectedDate)
                         
                         ZStack(alignment: .top) {
                             
-                            CityMapView(userSettings: self.dataSource.userSettings,
+                            CityMapView(userSettings: self.appState.userSettings,
                                         mapViewModel: mapViewModel,
                                         proxy: proxy)
                             .id("CityMapView")
                             .edgesIgnoringSafeArea([.horizontal, .bottom])
                             
-                            if showingCalendar {
-                                CustomCalendar(showingCalendar: $showingCalendar, showPicker: $showingPicker)
-                                    .cornerRadius(4)
-                                    .shadow(color: Color(shadowColor), radius: 20)
-                                    .padding(.all)
-                            }
                         }
                     }
                     .navigationBarTitle("", displayMode: .inline)
@@ -112,6 +105,24 @@ struct MainView: View {
                     }
                     .transition(.move(edge: .bottom))
                     .zIndex(2) // zIndexes are needed to maintain dismiss transition
+                }
+                if appState.showingCalendar {
+                    VStack {
+                        CalendarView(showingCalendar: $appState.showingCalendar,
+                                     selectedDate: $appState.selectedDate,
+                                     viewModelClosure: CalendarViewModel(appState: self.appState,
+                                                                         appDataSource: self.dataSource))
+                            .cornerRadius(4)
+                            .shadow(color: Color(AppColors.shadowColor), radius: 20)
+                            .padding(.top, 180)
+                            .padding(.all)
+                            Spacer()
+                    }
+                    .background(Color.gray.opacity(0.8).onTapGesture {
+                        appState.showingCalendar = false
+                    })
+                    .edgesIgnoringSafeArea(.all)
+                    .zIndex(3)
                 }
             }
         }

@@ -3,7 +3,6 @@
 //  PulseEco
 //
 //  Created by Monika Dimitrova on 6/11/20.
-//  Copyright © 2020 Monika Dimitrova. All rights reserved.
 //
 
 import Foundation
@@ -146,5 +145,17 @@ struct Band: Codable {
              grade: "Good air quality. Air quality is considered satisfactory, and air pollution poses " +
              "little or no risk",
              suggestion: "No preventive measures needed, enjoy the fresh air.")
+    }
+}
+
+extension Array where Element == Band {
+    func color(for value: Int?) -> String? {
+        guard let value = value else {
+            return nil
+        }
+        let first = self.first {
+            value <= $0.to && value >= $0.from
+        }
+        return first?.legendColor
     }
 }

@@ -20,7 +20,7 @@ class RefreshService: ObservableObject {
     }
     
     func refreshDataIfNeeded() {
-        if let diff = Calendar.current.dateComponents([.minute], from: refreshDate, to: Date()).minute, diff >= 15 {
+        if let diff = calendar.dateComponents([.minute], from: refreshDate, to: Date()).minute, diff >= 15 {
             self.appViewModel.selectedSensor = nil
             self.refreshData()
         }
@@ -28,6 +28,9 @@ class RefreshService: ObservableObject {
 
     func updateRefreshDate() {
         refreshDate = Date()
+        appViewModel.selectedDate = calendar.startOfDay(for: Date.now)
+        appViewModel.showingCalendar = false
+        appViewModel.selectedMeasureId = "pm10"
     }
     
     func refreshData() {
@@ -35,7 +38,7 @@ class RefreshService: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.appViewModel.showSensorDetails = false
             self.appViewModel.selectedSensor = nil
-            self.appDataSource.loadingMeasures = true
+            self.appViewModel.loadingMeasures = true
             self.appDataSource.getMeasures()
             self.appDataSource.getValuesForCity(cityName: self.appViewModel.selectedCity.cityName)
         }

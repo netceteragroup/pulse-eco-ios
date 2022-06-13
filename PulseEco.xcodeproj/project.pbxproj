@@ -8,9 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */; };
+		1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */; };
+		1E515D0A282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
+		1E515D0B282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
+		1E515D0C282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
 		1E96776F280FFEB60085C37A /* WeekDayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E96776E280FFEB60085C37A /* WeekDayButton.swift */; };
-		1EAF05F82817E89B001C1EEA /* CustomCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAF05F72817E89B001C1EEA /* CustomCalendar.swift */; };
+		1EAF05F82817E89B001C1EEA /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAF05F72817E89B001C1EEA /* CalendarView.swift */; };
 		1EAF05FA2817F653001C1EEA /* DateValueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAF05F92817F653001C1EEA /* DateValueModel.swift */; };
+		1EBC79C9282A55D700D18968 /* CityDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBC79C8282A55D700D18968 /* CityDataWrapper.swift */; };
+		1EBC79CA282A55D700D18968 /* CityDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBC79C8282A55D700D18968 /* CityDataWrapper.swift */; };
+		1EBC79CB282A55D700D18968 /* CityDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBC79C8282A55D700D18968 /* CityDataWrapper.swift */; };
 		32479108261A6F7200E97C56 /* SlideOverCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32479107261A6F7200E97C56 /* SlideOverCard.swift */; };
 		3288686D24B513DA009CC56D /* LocationAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288686C24B513DA009CC56D /* LocationAnnotationView.swift */; };
 		3288687424B51F5E009CC56D /* SelectedSensorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3288687024B51F5E009CC56D /* SelectedSensorView.xib */; };
@@ -81,7 +88,12 @@
 		59FAD1D42490C82600AC36A5 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* City.swift */; };
 		59FAD1D62490D76200AC36A5 /* SensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* SensorData.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
+		744A9DEF28575C3000A91789 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744A9DEE28575C3000A91789 /* Calendar.swift */; };
+		744A9DF028575CA600A91789 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744A9DEE28575C3000A91789 /* Calendar.swift */; };
+		744A9DF128575CA700A91789 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744A9DEE28575C3000A91789 /* Calendar.swift */; };
+		74699B50282D366100326288 /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74699B4F282D366100326288 /* ViewModelProtocol.swift */; };
 		746C4EC226FDFDB500183A91 /* ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */; };
+		74A0D84D2833A9010043222E /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A0D84C2833A9010043222E /* CalendarViewModel.swift */; };
 		74E46618270327000010F80E /* logo-pulse-loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 74E46617270327000010F80E /* logo-pulse-loader.json */; };
 		74E4661A2703272F0010F80E /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E466192703272F0010F80E /* LottieView.swift */; };
 		BA00D30F25D2B59600FA2C26 /* WeeklyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */; };
@@ -202,9 +214,12 @@
 
 /* Begin PBXFileReference section */
 		1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSlider.swift; sourceTree = "<group>"; };
+		1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarButtonView.swift; sourceTree = "<group>"; };
+		1E515D09282BC115009EFC4D /* DayDataWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataWrapper.swift; sourceTree = "<group>"; };
 		1E96776E280FFEB60085C37A /* WeekDayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayButton.swift; sourceTree = "<group>"; };
-		1EAF05F72817E89B001C1EEA /* CustomCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendar.swift; sourceTree = "<group>"; };
+		1EAF05F72817E89B001C1EEA /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		1EAF05F92817F653001C1EEA /* DateValueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValueModel.swift; sourceTree = "<group>"; };
+		1EBC79C8282A55D700D18968 /* CityDataWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDataWrapper.swift; sourceTree = "<group>"; };
 		32479107261A6F7200E97C56 /* SlideOverCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverCard.swift; sourceTree = "<group>"; };
 		3288686C24B513DA009CC56D /* LocationAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotationView.swift; sourceTree = "<group>"; };
 		3288687024B51F5E009CC56D /* SelectedSensorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedSensorView.xib; sourceTree = "<group>"; };
@@ -277,7 +292,10 @@
 		59FAD1D32490C82600AC36A5 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		59FAD1D52490D76200AC36A5 /* SensorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorData.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
+		744A9DEE28575C3000A91789 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		74699B4F282D366100326288 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
 		746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalModifier.swift; sourceTree = "<group>"; };
+		74A0D84C2833A9010043222E /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		74E46617270327000010F80E /* logo-pulse-loader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "logo-pulse-loader.json"; sourceTree = "<group>"; };
 		74E466192703272F0010F80E /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageViewModel.swift; sourceTree = "<group>"; };
@@ -348,8 +366,10 @@
 			children = (
 				1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */,
 				1E96776E280FFEB60085C37A /* WeekDayButton.swift */,
-				1EAF05F72817E89B001C1EEA /* CustomCalendar.swift */,
+				1EAF05F72817E89B001C1EEA /* CalendarView.swift */,
 				1EAF05F92817F653001C1EEA /* DateValueModel.swift */,
+				1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */,
+				74A0D84C2833A9010043222E /* CalendarViewModel.swift */,
 			);
 			path = "History and Forecast";
 			sourceTree = "<group>";
@@ -424,9 +444,9 @@
 		5997F73624A36F780035BEEB /* CityMap */ = {
 			isa = PBXGroup;
 			children = (
+				5997F73724A36F8F0035BEEB /* Average */,
 				3288686E24B51F5E009CC56D /* UIKitViews */,
 				5997F73824A36FB90035BEEB /* SensorDetails */,
-				5997F73724A36F8F0035BEEB /* Average */,
 				5997F73524A36F570035BEEB /* Map */,
 				591642A42499FD70000A4F7C /* CityMapView.swift */,
 			);
@@ -486,6 +506,8 @@
 				59A35AC12498EBB600C07786 /* MainView.swift */,
 				59A3954D24A206F400D39D64 /* AppState.swift */,
 				59F01AD624AC7B1300AD2802 /* AppDataSource.swift */,
+				74699B4F282D366100326288 /* ViewModelProtocol.swift */,
+				744A9DEE28575C3000A91789 /* Calendar.swift */,
 			);
 			path = AppRoot;
 			sourceTree = "<group>";
@@ -572,6 +594,8 @@
 				59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */,
 				596619362492703800DACF67 /* Measure.swift */,
 				BAC09D8425E5183400F794F9 /* SensorPin.swift */,
+				1EBC79C8282A55D700D18968 /* CityDataWrapper.swift */,
+				1E515D09282BC115009EFC4D /* DayDataWrapper.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -779,7 +803,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1250;
-				ORGANIZATIONNAME = "Monika Dimitrova";
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					59A4F68A247FD2150089D523 = {
 						CreatedOnToolsVersion = 11.2.1;
@@ -928,14 +952,17 @@
 				59504C1124B46BF100EA4AFF /* NavigationBarModifier.swift in Sources */,
 				593C263624BC8969005152BE /* CityRowView.swift in Sources */,
 				1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */,
-				1EAF05F82817E89B001C1EEA /* CustomCalendar.swift in Sources */,
+				1E515D0A282BC115009EFC4D /* DayDataWrapper.swift in Sources */,
+				1EAF05F82817E89B001C1EEA /* CalendarView.swift in Sources */,
 				BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */,
 				59A35ADA2499057C00C07786 /* Constants.swift in Sources */,
 				5924C5DA249A4792007E0D78 /* MeasureListViewModel.swift in Sources */,
+				1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */,
 				59F01AD724AC7B1300AD2802 /* AppDataSource.swift in Sources */,
 				5908ADE224AF2DA500C79BC9 /* DateFormatterUtils.swift in Sources */,
 				59103AA024A4B64C00ED9617 /* DisclaimerView.swift in Sources */,
 				59504C1724B46CA700EA4AFF /* LineGraph.swift in Sources */,
+				74A0D84D2833A9010043222E /* CalendarViewModel.swift in Sources */,
 				593C263824BC89BE005152BE /* CityRowViewModel.swift in Sources */,
 				59504C0C24B4625400EA4AFF /* FavouriteCityRowViewModel.swift in Sources */,
 				C5E8E7B926EB5CA2002B532C /* RefreshService.swift in Sources */,
@@ -968,7 +995,10 @@
 				74E4661A2703272F0010F80E /* LottieView.swift in Sources */,
 				59504C0F24B46B9F00EA4AFF /* RoundedCorners.swift in Sources */,
 				591EA1D224C99D5500CA61AE /* ShadowOnTopOfView.swift in Sources */,
+				744A9DEF28575C3000A91789 /* Calendar.swift in Sources */,
 				59A3954E24A206F400D39D64 /* AppState.swift in Sources */,
+				1EBC79C9282A55D700D18968 /* CityDataWrapper.swift in Sources */,
+				74699B50282D366100326288 /* ViewModelProtocol.swift in Sources */,
 				BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */,
 				59A4F691247FD2150089D523 /* SceneDelegate.swift in Sources */,
 				BA5C405025D3D1E80010291F /* DailyAverageView.swift in Sources */,
@@ -997,9 +1027,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EBC79CA282A55D700D18968 /* CityDataWrapper.swift in Sources */,
 				D03524C7273603800089E11C /* Measure.swift in Sources */,
 				D0AA0A7D273766C20097D0B0 /* WidgetSmallView.swift in Sources */,
 				D03524CF273605410089E11C /* ConditionalModifier.swift in Sources */,
+				1E515D0B282BC115009EFC4D /* DayDataWrapper.swift in Sources */,
 				D03EC8F82735E0F500E6E16F /* PulseEcoWidget.intentdefinition in Sources */,
 				D03524CA273603800089E11C /* SensorData.swift in Sources */,
 				D03524E927372EBC0089E11C /* WidgetDataSource.swift in Sources */,
@@ -1014,6 +1046,7 @@
 				D03EC9022735E1DA00E6E16F /* WidgetEntryView.swift in Sources */,
 				D03524E72736E6140089E11C /* AverageUtilModel.swift in Sources */,
 				D03524D32736876C0089E11C /* AppColors.swift in Sources */,
+				744A9DF028575CA600A91789 /* Calendar.swift in Sources */,
 				D03524CC273603FB0089E11C /* NetworkService.swift in Sources */,
 				D0AA0A7F2737678D0097D0B0 /* WidgetMediumView.swift in Sources */,
 				D03524C9273603800089E11C /* CityOverallValues.swift in Sources */,
@@ -1026,8 +1059,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0A3F8D12775FC3D00491666 /* PulseEcoWidget.intentdefinition in Sources */,
+				744A9DF128575CA700A91789 /* Calendar.swift in Sources */,
 				D0CBADFF27761A9E00526050 /* DateFormatterUtils.swift in Sources */,
 				D0CBADF62776108E00526050 /* SensorPin.swift in Sources */,
+				1E515D0C282BC115009EFC4D /* DayDataWrapper.swift in Sources */,
 				D0CBADF52776108E00526050 /* City.swift in Sources */,
 				D0CBADFE27761A9E00526050 /* ConditionalModifier.swift in Sources */,
 				D0CBADFD27761A9600526050 /* AppColors.swift in Sources */,
@@ -1035,6 +1070,7 @@
 				D0CBADF32776108900526050 /* NetworkService.swift in Sources */,
 				D0CBADF42776108E00526050 /* Measure.swift in Sources */,
 				D0A3F8C92775FC0700491666 /* IntentHandler.swift in Sources */,
+				1EBC79CB282A55D700D18968 /* CityDataWrapper.swift in Sources */,
 				D0CBADFA2776108E00526050 /* AverageUtilModel.swift in Sources */,
 				D0CBADF72776108E00526050 /* CityOverallValues.swift in Sources */,
 				D0CBADF92776108E00526050 /* SensorData.swift in Sources */,

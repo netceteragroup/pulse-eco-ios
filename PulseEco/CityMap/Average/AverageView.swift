@@ -8,7 +8,7 @@ struct AverageView: View {
                 if self.viewModel.clickDisabled {
                     NoReadingsView()
                 } else {
-                    ExpandableView(viewModel: self.viewModel, geometry: geo)
+                    ExpandableView(geometry: geo, viewModel: self.viewModel)
                 }
             }
         }

@@ -3,7 +3,6 @@
 //  PulseEco
 //
 //  Created by Maja Mitreska on 2/9/21.
-//  Copyright © 2021 Monika Dimitrova. All rights reserved.
 //
 
 import Foundation
@@ -36,7 +35,7 @@ class WeeklyAverageViewModel: ObservableObject {
      
         let week = (-7...(-1)).compactMap {
             DateFormatter.iso8601Full
-                .string(from: Calendar.current.date(byAdding: .day, value: $0, to: Date()) ?? Date())
+                .string(from: calendar.date(byAdding: .day, value: $0, to: Date()) ?? Date())
         }
         
         for date in week {

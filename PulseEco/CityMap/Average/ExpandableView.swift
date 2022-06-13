@@ -3,10 +3,12 @@ import Combine
 
 struct ExpandableView: View {
     @EnvironmentObject var appState: AppState
+    
     @State var isExpanded = false
     @State var width: CGFloat = 115
-    var viewModel: AverageUtilModel
     @State var geometry: GeometryProxy
+    
+    var viewModel: AverageUtilModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -35,11 +37,11 @@ struct ExpandableView: View {
                             .foregroundColor(AppColors.white.color)
                             .fixedSize(horizontal: true, vertical: false)
                             .padding(.top, 5)
-                            .animation(.none)
+                            .animation(nil, value: viewModel.rounderValueString)
                         Text(viewModel.unit)
                             .font(.system(size: 15))
                             .foregroundColor(AppColors.white.color).padding(.top, 15)
-                            .animation(.none)
+                            .animation(nil, value: viewModel.unit)
                     }
                     .padding(.leading, 10)
                     Spacer()

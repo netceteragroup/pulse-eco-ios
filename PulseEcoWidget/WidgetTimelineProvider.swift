@@ -39,13 +39,13 @@ struct WidgetTimelineProvider: IntentTimelineProvider {
                                         displaySize: context.displaySize,
                                         averageUtilModel: averageUtilModel)
                 // update again in 10 mins
-                let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 10, to: Date())!
+                let nextUpdateDate = calendar.date(byAdding: .minute, value: 10, to: Date())!
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
                 completion(timeline)
             case .failure(let error):
                 print("Download overall values for \(city) with error: \(error)")
                 // try again in 30 secs
-                let nextUpdateDate = Calendar.current.date(byAdding: .second, value: 30, to: Date())!
+                let nextUpdateDate = calendar.date(byAdding: .second, value: 30, to: Date())!
                 let timeline = Timeline(entries: [emptyEntry], policy: .after(nextUpdateDate))
                 completion(timeline)
             }

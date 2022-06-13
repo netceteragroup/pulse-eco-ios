@@ -3,7 +3,6 @@
 //  PulseEco
 //
 //  Created by Monika Dimitrova on 6/16/20.
-//  Copyright © 2020 Monika Dimitrova. All rights reserved.
 //
 
 import SwiftUI
@@ -18,7 +17,7 @@ struct MeasureListView: View {
             ScrollViewReader { scrollProxy in
                 VStack {
                     buttonStack
-                        .onReceive(appDataSource.$loadingMeasures) { value in
+                        .onReceive(appState.$loadingMeasures) { value in
                             if !value {
                                 scrollProxy.scrollTo(appState.selectedMeasureId)
                             }
