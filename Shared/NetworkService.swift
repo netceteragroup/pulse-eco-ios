@@ -122,7 +122,7 @@ class NetworkService {
                              to endDate: Date,
                              timeUnit: AverageTimeUnit,
                              sensorType: String) async -> [SensorData]? {
-        let sensorId = -1 
+        let sensorId = -1
         let from = DateFormatter.iso8601Full.string(from: startDate)
         let to = DateFormatter.iso8601Full.string(from: endDate)
         
@@ -156,28 +156,6 @@ class NetworkService {
         }
     }
     
-//    func downloadAverageDayData(for cityName: String,
-//                                sensorType: String) async -> [SensorData] {
-//        var history: [SensorData] = []
-//        let components = Calendar.current.dateComponents([.year], from: Date())
-//        let year = components.year!
-//        for var year in 2016...year {
-//            
-//            let startDate = Date.from(1, 1, year)!
-//            let endDate = Date.from(1, 1, year+1)!
-//            let result = await downloadAverageData(for: cityName,
-//                                                   from: startDate,
-//                                                   to: endDate,
-//                                                   timeUnit: .day,
-//                                                   sensorType: sensorType)
-//            year += 1
-//            if let result = result {
-//                history.append(contentsOf: result)
-//            }
-//        }
-//        return history
-//    }
-    
     func downloadMeasures() async -> [Measure]? {
         let path = "https://pulse.eco/rest/measures?\(language)"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
@@ -210,15 +188,30 @@ class NetworkService {
                                         sensorType: String,
                                         selectedMonth: Int,
                                         selectedYear: Int) async -> CityDataWrapper {
+        var history: [SensorData] = []
+        var historyCombined: [SensorData] = []
+        let currentMonth = Calendar.current.dateComponents([.month], from: Date.now).month!
+        let currentYear = Calendar.current.dateComponents([.year], from: Date.now).year!
         
-        async let history = fetchDataForSelectedMonth(cityName: cityName,
+        async let weekly = fetchDataForSelectedMonth(cityName: cityName,
+                                                     sensorType: sensorType,
+                                                     selectedMonth: currentMonth,
+                                                     selectedYear: currentYear)
+        
+        if !(selectedYear == currentYear && selectedMonth == currentMonth) {
+            await history = fetchDataForSelectedMonth(cityName: cityName,
                                                       sensorType: sensorType,
                                                       selectedMonth: selectedMonth,
                                                       selectedYear: selectedYear)
+        }
+        
+        
+        await historyCombined.append(contentsOf: weekly)
+        await historyCombined.append(contentsOf: history)
         async let current = downloadCurrentData(for: cityName)
         async let measures = downloadMeasures()
         
-        return await CityDataWrapper(sensorData: history,
+        return await CityDataWrapper(sensorData: historyCombined,
                                      currentValue: current,
                                      measures: measures)
     }
@@ -299,7 +292,6 @@ class NetworkService {
         }
         return history
     }
-    
 }
 extension Date {
     static func from(_ day: Int, _ month: Int, _ year: Int) -> Date? {

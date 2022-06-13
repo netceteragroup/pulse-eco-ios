@@ -146,15 +146,15 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             
             await fetchMonthlyData(selectedMonth: currentMonth, selectedYear: currentYear)
         }
-        
     }
     
     @MainActor func fetchHistory(for cityName: String, measureId: String) async {
         fetchWeeklyAverages(cityName: cityName, measureId: measureId)
+    
         await getMonthlyValues(cityName: cityName,
-                         measureId: measureId,
-                         currentMonth: appState.currentMonth,
-                         currentYear: appState.currentYear)
+                               measureId: measureId,
+                               currentMonth: appState.currentMonth,
+                               currentYear: appState.currentYear)
     }
     
     func updatePins(selectedDate: Date) async {
@@ -198,8 +198,9 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         let newMonth = (selectedMonth != 0) ? selectedMonth : Calendar.current.dateComponents([.month], from: Date.now).month!
         let newYear = (selectedYear != 0) ? selectedYear : Calendar.current.dateComponents([.year], from: Date.now).year!
         
-        Task { @MainActor in 
-            self.appState.cityDataWrapper.sensorData = await self.networkService.fetchDataForSelectedMonth(cityName: appState.selectedCity.cityName,
+        Task { @MainActor in
+            self.appState.cityDataWrapper.sensorData =
+            await self.networkService.fetchDataForSelectedMonth(cityName: appState.selectedCity.cityName,
                                                                 sensorType: appState.selectedMeasureId,
                                                                 selectedMonth: newMonth,
                                                                 selectedYear: newYear)
