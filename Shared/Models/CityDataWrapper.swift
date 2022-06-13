@@ -51,6 +51,9 @@ class CityDataWrapper: ObservableObject {
            let color = measure.bands.color(for: Int(today)) {
             history.append(DayDataWrapper(date: Date.now, value: today, color: color))
         }
-        return history
+        
+        return Array(Set(history)).sorted {
+            $0.date < $1.date
+        }
     }
 }

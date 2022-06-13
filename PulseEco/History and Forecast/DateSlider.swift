@@ -19,13 +19,16 @@ struct DateSlider: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { proxy in
-                LazyHStack {
+                HStack {
                     Button {
                         unimplementedAlert.toggle()
                         unimplementedPicker = true
                         Task {
-                            await dataSource.fetchMonthlyData(selectedMonth: Calendar.current.dateComponents([.month], from: Date.now).month!,
-                                                              selectedYear: Calendar.current.dateComponents([.year], from: Date.now).year!)
+                            await dataSource
+                                .fetchMonthlyData(selectedMonth: calendar.dateComponents([.month],
+                                                                                                 from: Date.now).month!,
+                                                  selectedYear: calendar.dateComponents([.year],
+                                                                                                from: Date.now).year!)
                         }
                         
                     } label: {
@@ -44,13 +47,13 @@ struct DateSlider: View {
                         .cornerRadius(3)
                         .padding(.leading, 10)
                     }
-                    Group {
+                    LazyHStack {
                         ForEach(dataSource.weeklyData, id: \.dateId) { item in
                             WeekDayButton(date: item.date,
                                           value: item.value,
                                           color: item.color,
                                           highlighted: selectedDate.isSameDay(with: item.date)) {
-                                selectedDate = Calendar.current.startOfDay(for: item.date)
+                                selectedDate = calendar.startOfDay(for: item.date)
                                 Task {
                                     do {
                                         await dataSource.updatePins(selectedDate: selectedDate)

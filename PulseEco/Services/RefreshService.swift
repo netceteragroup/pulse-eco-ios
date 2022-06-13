@@ -20,7 +20,7 @@ class RefreshService: ObservableObject {
     }
     
     func refreshDataIfNeeded() {
-        if let diff = Calendar.current.dateComponents([.minute], from: refreshDate, to: Date()).minute, diff >= 15 {
+        if let diff = calendar.dateComponents([.minute], from: refreshDate, to: Date()).minute, diff >= 15 {
             self.appViewModel.selectedSensor = nil
             self.refreshData()
         }
@@ -28,7 +28,7 @@ class RefreshService: ObservableObject {
 
     func updateRefreshDate() {
         refreshDate = Date()
-        appViewModel.selectedDate = Calendar.current.startOfDay(for: Date.now)
+        appViewModel.selectedDate = calendar.startOfDay(for: Date.now)
         appViewModel.showingCalendar = false
         appViewModel.selectedMeasureId = "pm10"
     }

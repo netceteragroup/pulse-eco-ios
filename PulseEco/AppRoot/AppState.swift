@@ -12,7 +12,7 @@ class AppState: ObservableObject, ViewModelDependency {
             self.cityDataWrapper.getDataFromRange(cityName: UserSettings.selectedCity.cityName,
                                                   sensorType: self.selectedMeasureId,
                                                   from: selectedDate,
-                                                  to: Calendar.current.date(byAdding: .day,
+                                                  to: calendar.date(byAdding: .day,
                                                                             value: 1,
                                                                             to: selectedDate)!).first?.value
         }
@@ -37,14 +37,14 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var selectedDateAverageValue: String?
     @Published var currentMonth: Int = 0
     @Published var currentYear: Int = 0
-    @Published var selectedDate: Date = Calendar.current.startOfDay(for: Date.now) {
+    @Published var selectedDate: Date = calendar.startOfDay(for: Date.now) {
         didSet {
             selectedDateAverageValue = nil
             self.selectedDateAverageValue =
             self.cityDataWrapper.getDataFromRange(cityName: UserSettings.selectedCity.cityName,
                                                   sensorType: self.selectedMeasureId,
                                                   from: selectedDate,
-                                                  to: Calendar.current.date(byAdding: .day,
+                                                  to: calendar.date(byAdding: .day,
                                                                             value: 1,
                                                                             to: selectedDate)!).first?.value
         }

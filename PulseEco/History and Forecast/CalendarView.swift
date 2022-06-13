@@ -59,7 +59,7 @@ struct CalendarView: View {
             
             if value.day != -1 {
                 Button {
-                    self.selectedDate = Calendar.current.startOfDay(for: value.date)
+                    self.selectedDate = calendar.startOfDay(for: value.date)
                     Task {
                         do {
                             await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
@@ -167,7 +167,7 @@ struct CalendarView: View {
     @ViewBuilder
     private var yearPicker: some View {
         
-        let currentYear = viewModel.calendar.component(.year, from: Date())
+        let currentYear = calendar.component(.year, from: Date())
         let years = 2017...currentYear
         
         VStack {
@@ -239,7 +239,7 @@ struct CalendarView: View {
             let columns = Array(repeating: GridItem(.flexible()), count: 4)
             
             LazyVGrid(columns: columns, spacing: 10) {
-                ForEach(viewModel.calendar.shortMonthSymbols, id: \.self) { month in
+                ForEach(calendar.shortMonthSymbols, id: \.self) { month in
                     Button {
                         Task {
                             await viewModel.selectNewMonth(month: month)

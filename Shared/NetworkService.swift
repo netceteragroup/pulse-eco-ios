@@ -82,7 +82,7 @@ class NetworkService {
         var daysAgo: Int {
             time >= "13:00" ? -8 : -7
         }
-        let from = DateFormatter.iso8601Full.string(from: Calendar.current.date(byAdding: .day,
+        let from = DateFormatter.iso8601Full.string(from: calendar.date(byAdding: .day,
                                                                                 value: daysAgo,
                                                                                 to: Date())!)
         let to = DateFormatter.iso8601Full.string(from: Date())
@@ -171,47 +171,48 @@ class NetworkService {
         }
     }
     
-    func downloadOverallCurrentMeasures(cityName: String,
-                                        sensorType: String,
-                                        selectedDate: Date) async -> CityDataWrapper {
+    func fetchAndWrapCityData(cityName: String,
+                              sensorType: String,
+                              selectedDate: Date) async -> CityDataWrapper {
         
-        let selectedMonth = Calendar.current.dateComponents([.month], from: selectedDate).month!
-        let selectedYear = Calendar.current.dateComponents([.year], from: selectedDate).year!
+        let selectedMonth = calendar.dateComponents([.month], from: selectedDate).month!
+        let selectedYear = calendar.dateComponents([.year], from: selectedDate).year!
         
-        return await downloadOverallCurrentMeasures(cityName: cityName,
-                                                    sensorType: sensorType,
-                                                    selectedMonth: selectedMonth,
-                                                    selectedYear: selectedYear)
+        return await fetchAndWrapCityData(cityName: cityName,
+                                          sensorType: sensorType,
+                                          selectedMonth: selectedMonth,
+                                          selectedYear: selectedYear)
     }
     
-    func downloadOverallCurrentMeasures(cityName: String,
-                                        sensorType: String,
-                                        selectedMonth: Int,
-                                        selectedYear: Int) async -> CityDataWrapper {
-        var history: [SensorData] = []
-        var historyCombined: [SensorData] = []
-        let currentMonth = Calendar.current.dateComponents([.month], from: Date.now).month!
-        let currentYear = Calendar.current.dateComponents([.year], from: Date.now).year!
+    func fetchAndWrapCityData(cityName: String,
+                              sensorType: String,
+                              selectedMonth: Int,
+                              selectedYear: Int) async -> CityDataWrapper {
         
-        async let weekly = fetchDataForSelectedMonth(cityName: cityName,
+        let currentMonth = calendar.dateComponents([.month], from: Date.now).month!
+        let currentYear = calendar.dateComponents([.year], from: Date.now).year!
+        
+        async let currentMonthSensorData = fetchDataForSelectedMonth(cityName: cityName,
                                                      sensorType: sensorType,
                                                      selectedMonth: currentMonth,
                                                      selectedYear: currentYear)
         
+        var allSensorData: [SensorData] = await currentMonthSensorData
+        
         if !(selectedYear == currentYear && selectedMonth == currentMonth) {
-            await history = fetchDataForSelectedMonth(cityName: cityName,
+            async let selectedMonthSensorData = fetchDataForSelectedMonth(cityName: cityName,
                                                       sensorType: sensorType,
                                                       selectedMonth: selectedMonth,
                                                       selectedYear: selectedYear)
+            
+            await allSensorData.append(contentsOf: selectedMonthSensorData)
+            
         }
         
-        
-        await historyCombined.append(contentsOf: weekly)
-        await historyCombined.append(contentsOf: history)
         async let current = downloadCurrentData(for: cityName)
         async let measures = downloadMeasures()
         
-        return await CityDataWrapper(sensorData: historyCombined,
+        return await CityDataWrapper(sensorData: allSensorData,
                                      currentValue: current,
                                      measures: measures)
     }
@@ -221,7 +222,7 @@ class NetworkService {
                             from: Date,
                             to: Date) async -> [SensorData]? {
         
-        let fromDate = Calendar.current.startOfDay(for: from)
+        let fromDate = calendar.startOfDay(for: from)
         let from = DateFormatter.iso8601Full.string(from: fromDate)
         let to = DateFormatter.iso8601Full.string(from: to)
         
@@ -291,25 +292,5 @@ class NetworkService {
             history.append(contentsOf: result)
         }
         return history
-    }
-}
-extension Date {
-    static func from(_ day: Int, _ month: Int, _ year: Int) -> Date? {
-        let calendar = Calendar(identifier: .gregorian)
-        var dateComponents = DateComponents()
-        dateComponents.year = year
-        dateComponents.month = month
-        dateComponents.day = day
-        dateComponents.hour = 00
-        dateComponents.minute = 00
-        dateComponents.second = 00
-        dateComponents.timeZone = TimeZone(secondsFromGMT: 7200)
-        return calendar.date(from: dateComponents) ?? nil
-    }
-    
-    func isSameDay(with date: Date) -> Bool {
-        let components1 = Calendar.current.dateComponents([.day, .month, .year], from: self)
-        let components2 = Calendar.current.dateComponents([.day, .month, .year], from: date)
-        return components1 == components2
     }
 }

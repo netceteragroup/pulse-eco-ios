@@ -111,26 +111,16 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                         measureId: String) {
         Task {
             appState.cityDataWrapper =
-            await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
+            await self.networkService.fetchAndWrapCityData(cityName: cityName,
                                                                      sensorType: measureId,
                                                                      selectedDate: appState.selectedDate)
             
             self.weeklyData =
-            appState.cityDataWrapper.getDataFromRange(cityName: cityName,
-                                                      sensorType: measureId,
-                                                      from: Calendar.current.date(byAdding: .day, value: -7, to: Date.now)!,
-                                                      to: Calendar.current.date(byAdding: .day, value: +1, to: Date.now)!)
-            
-            let today: [DayDataWrapper] =
-            appState.cityDataWrapper.getDataFromRange(cityName: cityName,
-                                                      sensorType: measureId,
-                                                      from: Calendar.current.startOfDay(for: Date.now),
-                                                      to: Calendar.current.date(byAdding: .day,
-                                                                                value: +1,
-                                                                                to: Calendar.current
-                                                                                    .startOfDay(for: Date.now))!)
-            
-            self.weeklyData.append(contentsOf: today)
+            appState.cityDataWrapper
+                .getDataFromRange(cityName: cityName,
+                                  sensorType: measureId,
+                                  from: calendar.date(byAdding: .day, value: -7, to: Date.now)!,
+                                  to: calendar.date(byAdding: .day, value: +1, to: Date.now)!)
         }
     }
     
@@ -140,7 +130,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                           currentYear: Int) async {
         Task { @MainActor in
             appState.cityDataWrapper =
-            await self.networkService.downloadOverallCurrentMeasures(cityName: cityName,
+            await self.networkService.fetchAndWrapCityData(cityName: cityName,
                                                                      sensorType: measureId,
                                                                      selectedDate: appState.selectedDate)
             
@@ -159,7 +149,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     
     func updatePins(selectedDate: Date) async {
         let from: Date = selectedDate
-        let to: Date = Calendar.current.date(bySettingHour: 23,
+        let to: Date = calendar.date(bySettingHour: 23,
                                              minute: 59,
                                              second: 59,
                                              of: selectedDate)!
@@ -195,8 +185,10 @@ class AppDataSource: ObservableObject, ViewModelDependency {
 
     func fetchMonthlyData (selectedMonth: Int, selectedYear: Int) async {
 
-        let newMonth = (selectedMonth != 0) ? selectedMonth : Calendar.current.dateComponents([.month], from: Date.now).month!
-        let newYear = (selectedYear != 0) ? selectedYear : Calendar.current.dateComponents([.year], from: Date.now).year!
+        let newMonth = (selectedMonth != 0) ?
+        selectedMonth : calendar.dateComponents([.month], from: Date.now).month!
+        let newYear = (selectedYear != 0) ?
+        selectedYear : calendar.dateComponents([.year], from: Date.now).year!
         
         Task { @MainActor in
             self.appState.cityDataWrapper.sensorData =

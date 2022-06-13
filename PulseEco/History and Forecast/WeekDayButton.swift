@@ -10,12 +10,6 @@ import Charts
 
 struct WeekDayButton: View {
     
-    var calendar: Calendar = {
-        var cal = Calendar.current
-        cal.locale = Locale(identifier: Trema.appLanguageLocale)
-        return cal
-    }()
-    
     var date: Date
     var value: String
     var color: String
@@ -31,9 +25,9 @@ struct WeekDayButton: View {
     var highlighted: Bool = false
     var action: () -> Void
     
-    var sevenDaysAgo = Calendar.current.date(byAdding: .day,
+    var sevenDaysAgo = calendar.date(byAdding: .day,
                                              value: -6,
-                                             to: Calendar.current.startOfDay(for: Date.now))
+                                             to: calendar.startOfDay(for: Date.now))
     func labelFromDate(_ date: Date) -> String {
         
         if calendar.isDateInToday(date) {
@@ -51,7 +45,7 @@ struct WeekDayButton: View {
     
     var body: some View {
         
-        LazyHStack {
+        HStack {
                 Button {
                     action()
                 } label: {

@@ -51,8 +51,6 @@ struct CityMapView: View {
                 }.padding(.trailing, 15.0)
             }
             
-            // TODO: We want the averageUtilModel to take up the value of the current date
-            
             AverageView(viewModel: AverageUtilModel(measureId: self.appState.selectedMeasureId,
                                                     cityName: self.appState.selectedCity.cityName,
                                                     measuresList: self.dataSource.measures,

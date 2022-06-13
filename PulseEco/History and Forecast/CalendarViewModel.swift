@@ -13,19 +13,13 @@ class CalendarViewModel: ViewModelProtocol {
     @Published var monthlyData: [DayDataWrapper] = []
     @Published var currentDate: Date = Date()
     @Published var currentMonthOffset = 0
-    @Published var selectedYear: Int = Calendar.current.component(.year, from: Date())
-    @Published var selectedMonth: Int = Calendar.current.component(.month, from: Date())
+    @Published var selectedYear: Int = calendar.component(.year, from: Date())
+    @Published var selectedMonth: Int = calendar.component(.month, from: Date())
     @Published var dateValues: [DateValueModel] = []
     
     private let appState: AppState
     let appDataSource: AppDataSource
     private var cancelables = Set<AnyCancellable>()
-    
-    var calendar: Calendar = {
-        var cal = Calendar.current
-        cal.locale = Locale(identifier: Trema.appLanguageLocale)
-        return cal
-    }()
     
     init(appState: AppState, appDataSource: AppDataSource) {
         self.appState = appState
@@ -40,7 +34,7 @@ class CalendarViewModel: ViewModelProtocol {
     
     func getCurrentMonth() -> Date {
         
-        let yearOffset = self.selectedYear - Calendar.current.component(.year, from: Date())
+        let yearOffset = self.selectedYear - calendar.component(.year, from: Date())
         
         guard let newDate = calendar.date(byAdding: .year,
                                           value: yearOffset,
@@ -119,7 +113,7 @@ class CalendarViewModel: ViewModelProtocol {
             selectedMonth -= 1
         }
         currentMonthOffset -= 1
-        currentMonthOffset = selectedMonth - Calendar.current.component(.month, from: Date())
+        currentMonthOffset = selectedMonth - calendar.component(.month, from: Date())
         await appDataSource.fetchMonthlyData(selectedMonth: selectedMonth, selectedYear: selectedYear)
     }
     func nextMonth() async {
@@ -130,29 +124,12 @@ class CalendarViewModel: ViewModelProtocol {
             selectedMonth += 1
         }
         currentMonthOffset += 1
-        currentMonthOffset = selectedMonth - Calendar.current.component(.month, from: Date())
+        currentMonthOffset = selectedMonth - calendar.component(.month, from: Date())
         await appDataSource.fetchMonthlyData(selectedMonth: selectedMonth, selectedYear: selectedYear)
     }
     func selectNewMonth(month: String) async {
         selectedMonth = calendar.shortMonthSymbols.firstIndex(of: month) ?? selectedMonth
-        currentMonthOffset = selectedMonth - Calendar.current.component(.month, from: Date())
+        currentMonthOffset = selectedMonth - calendar.component(.month, from: Date())
         await nextMonth()
-    }
-}
-
-private extension Date {
-    func getDaysOfMonth() -> [Date] {
-        
-        let calendar = Calendar.current
-        let startDate = calendar.date(from: Calendar.current.dateComponents([.year, .month], from: self))!
-        let range = calendar.range(of: .day,
-                                   in: .month,
-                                   for: startDate)!
-        
-        return range.compactMap { day -> Date in
-            return calendar.date(byAdding: .day,
-                                 value: day - 1,
-                                 to: startDate)!
-        }
     }
 }
