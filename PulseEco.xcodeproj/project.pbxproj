@@ -1235,6 +1235,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulseEco/Preview Content\"";
 				DEVELOPMENT_TEAM = LAA69LK8PF;
 				ENABLE_PREVIEWS = YES;
@@ -1243,6 +1244,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 4.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse;
 				PRODUCT_MODULE_NAME = PulseEco;
 				PRODUCT_NAME = pulse.eco;
@@ -1259,6 +1261,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulseEco/Preview Content\"";
 				DEVELOPMENT_TEAM = LAA69LK8PF;
 				ENABLE_PREVIEWS = YES;
@@ -1267,6 +1270,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 4.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netcetera.skopjepulse;
 				PRODUCT_MODULE_NAME = PulseEco;
 				PRODUCT_NAME = pulse.eco;
