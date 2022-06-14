@@ -39,34 +39,28 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     func getMeasures() {
-        networkService.downloadMeasures().sink(receiveCompletion: { [weak self] _ in
-            self?.appState.loadingMeasures = false
-        }, receiveValue: { [weak self] measures in
-            self?.measures = measures
+        self.appState.loadingMeasures = true
+        Task { @MainActor in
+            self.measures = await networkService.fetchMeasures() ?? []
             if let firstMeasureId = measures.first?.id {
-                self?.appState.selectedMeasureId = firstMeasureId
+                self.appState.selectedMeasureId = firstMeasureId
             }
-        }).store(in: &cancelables)
+        }
+        self.appState.loadingMeasures = false
     }
     
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
-        Task {
-            await fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
-        }
         self.appState.loadingCityData = true
-        Publishers.Zip4(networkService.downloadOverallValuesForCity(cityName: cityName),
-                        networkService.downloadSensors(cityName: cityName),
-                        networkService.downloadCurrentDataForSensors(cityName: cityName),
-                        networkService.download24hDataForSensors(cityName: cityName))
-        .sink { [weak self] _ in
-            self?.appState.loadingCityData = false
-        } receiveValue: { [weak self] (cityOverallValues, sensors, sensorsData, sensorsData24) in
-            self?.cityOverall = cityOverallValues
-            self?.citySensors = sensors
-            self?.sensorsData = sensorsData
-            self?.sensorsData24h = sensorsData24
+        Task { @MainActor in
+            await fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
+            self.cityOverall = await networkService.downloadCurrentData(for: cityName)
+            self.citySensors = await networkService.downloadSensorsAsync(cityName: cityName) ?? []
+            self.sensorsData =
+                await networkService.currentDataSensor(cityName: cityName,
+                                                       measureId: self.appState.selectedMeasureId) ?? []
+            self.sensorsData24h = await networkService.fetch24hDataForSensors(cityName: cityName) ?? []
         }
-        .store(in: &cancelables)
+        self.appState.loadingCityData = false
     }
     
     func emptyCityOverallValueList() {
@@ -74,18 +68,10 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     func getCities() {
-        networkService.downloadCities().sink(receiveCompletion: { _ in
-            self.cities.forEach { city in
-                self.cancellationTokens.append(NetworkService().downloadOverallValuesForCity(cityName: city.cityName)
-                    .sink(receiveCompletion: { _ in },
-                          receiveValue: { values in
-                    self.appState.userSettings.cityValues.append(values)
-                }))
-            }
-        }, receiveValue: { cities in
-            self.cities = cities
-        })
-        .store(in: &cancelables)
+        
+        Task { @MainActor in
+            self.cities = await networkService.fetchCities() ?? []
+        }
     }
     
     func getCurrentMeasure(selectedMeasure: String) -> Measure {
@@ -96,15 +82,17 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                         measure: Measure?,
                                         sensorId: String) {
         guard let measure = measure else { return }
-        networkService
-            .downloadDailyAverageDataForSensor(cityName: city.cityName,
-                                               measureType: measure.id,
-                                               sensorId: sensorId)
-            .sink(receiveCompletion: { _ in },
-                  receiveValue: { dailyAverage in
-                self.sensorsDailyAverageData = dailyAverage
-            })
-            .store(in: &cancelables)
+        Task {
+            self.sensorsDailyAverageData =
+            await networkService.downloadDailyAverageDataForSensor(cityName: city.cityName,
+                                                                   measureType: measure.id,
+                                                                   sensorId: sensorId) ?? []
+        }
+//            .sink(receiveCompletion: { _ in },
+//                  receiveValue: { dailyAverage in
+//                self.sensorsDailyAverageData = dailyAverage
+//            })
+//            .store(in: &cancelables)
     }
     
     @MainActor func fetchWeeklyAverages(cityName: String = UserSettings.selectedCity.cityName,
@@ -121,6 +109,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                   sensorType: measureId,
                                   from: calendar.date(byAdding: .day, value: -7, to: Date.now)!,
                                   to: calendar.date(byAdding: .day, value: +1, to: Date.now)!)
+            await updatePins(selectedDate: appState.selectedDate)
         }
     }
     
@@ -156,7 +145,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         
         Task { @MainActor in
             guard let dailySensorData =
-                    await networkService.downloadSensorData(cityName: UserSettings.selectedCity.cityName,
+                    await networkService.fetchSensorData(cityName: UserSettings.selectedCity.cityName,
                                                             measureId: self.appState.selectedMeasureId,
                                                             from: from,
                                                             to: to)

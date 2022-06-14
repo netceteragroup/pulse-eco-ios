@@ -7,38 +7,31 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
     
     func provideCitiesOptionsCollection(for intent: ConfigurationIntent,
                                         with completion: @escaping (INObjectCollection<CityConfig>?, Error?) -> Void) {
-        
-        networkService.downloadCities()
-            .replaceError(with: [City.defaultCity()])
-            .map { cities in
-                cities
-                    .sorted { $0.siteName < $1.siteName }
-                    .map { city in
-                        CityConfig(identifier: city.cityName, display: "\(city.siteName), \(city.countryName)")
-                    }
-            }
-            .sink(receiveValue: { cityConfigs in
-                let items = INObjectCollection(items: cityConfigs)
-                completion(items, nil)
-            })
-            .store(in: &subscripitons)
+        Task {
+            await networkService.fetchCities()
+                .map ({ cities in
+                    cities
+                        .sorted { $0.cityName < $1.cityName}
+                        .map { city in
+                            CityConfig(identifier: city.cityName,
+                                       display: "\(city.cityName), \(city.countryName)")
+                        }
+                })
+        }
     }
     
     func provideMeasuresOptionsCollection(for intent: ConfigurationIntent,
                                           with completion:
                                           @escaping (INObjectCollection<MeasureConfig>?, Error?) -> Void) {
-        networkService.downloadMeasures()
-            .replaceError(with: [Measure.empty()])
-            .map({ measures in
-                measures.map { measure in
-                    MeasureConfig(identifier: measure.id, display: measure.buttonTitle)
-                }
-            })
-            .sink(receiveValue: { measureConfigs in
-                let items = INObjectCollection(items: measureConfigs)
-                completion(items, nil)
-            })
-            .store(in: &subscripitons)
+        
+        Task {
+            await networkService.fetchMeasures()
+                .map ({ measures in
+                    measures.map { measure in
+                        MeasureConfig(identifier: measure.id, display: measure.buttonTitle)
+                    }
+                })
+        }
     }
     
     override func handler(for intent: INIntent) -> Any {
