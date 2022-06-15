@@ -31,8 +31,8 @@ class MapViewModel: ObservableObject {
     
     func getDailyAverageDataForSensor(_ sensorId: String) {
         appDataSource.fetchDailyAverageDataForSensor(city: selectedCity,
-                                                   measure: measure,
-                                                   sensorId: sensorId)
+                                                     measure: measure,
+                                                     sensorId: sensorId)
     }
     
     private var cancellables = Set<AnyCancellable>()

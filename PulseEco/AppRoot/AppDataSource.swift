@@ -45,8 +45,8 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             if let firstMeasureId = measures.first?.id {
                 self.appState.selectedMeasureId = firstMeasureId
             }
+            self.appState.loadingMeasures = false
         }
-        self.appState.loadingMeasures = false
     }
     
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
@@ -70,7 +70,15 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     func getCities() {
         
         Task { @MainActor in
-            self.cities = await networkService.fetchCities() ?? []
+            
+            async let cities = await networkService.fetchCities() ?? []
+            self.cities = await cities
+            for city in await cities {
+                let value = await NetworkService().downloadCurrentData(for: city.cityName)
+                self.appState.userSettings.cityValues.append(value ??
+                                                             CityOverallValues(cityName: city.cityName,
+                                                                               values: [:]))
+            }
         }
     }
     
@@ -88,11 +96,6 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                                    measureType: measure.id,
                                                                    sensorId: sensorId) ?? []
         }
-//            .sink(receiveCompletion: { _ in },
-//                  receiveValue: { dailyAverage in
-//                self.sensorsDailyAverageData = dailyAverage
-//            })
-//            .store(in: &cancelables)
     }
     
     @MainActor func fetchWeeklyAverages(cityName: String = UserSettings.selectedCity.cityName,
