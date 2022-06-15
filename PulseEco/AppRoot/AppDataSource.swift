@@ -59,8 +59,8 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                 await networkService.currentDataSensor(cityName: cityName,
                                                        measureId: self.appState.selectedMeasureId) ?? []
             self.sensorsData24h = await networkService.fetch24hDataForSensors(cityName: cityName) ?? []
+            self.appState.loadingCityData = false
         }
-        self.appState.loadingCityData = false
     }
     
     func emptyCityOverallValueList() {

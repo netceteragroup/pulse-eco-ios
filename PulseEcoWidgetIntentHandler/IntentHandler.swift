@@ -9,7 +9,7 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
                                         with completion: @escaping (INObjectCollection<CityConfig>?, Error?) -> Void) {
         Task {
             await networkService.fetchCities()
-                .map ({ cities in
+                .map({ cities in
                     cities
                         .sorted { $0.cityName < $1.cityName}
                         .map { city in
@@ -26,7 +26,7 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
         
         Task {
             await networkService.fetchMeasures()
-                .map ({ measures in
+                .map({ measures in
                     measures.map { measure in
                         MeasureConfig(identifier: measure.id, display: measure.buttonTitle)
                     }

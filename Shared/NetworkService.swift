@@ -254,7 +254,9 @@ class NetworkService {
                                                                         value: daysAgo,
                                                                         to: Date())!)
         let to = DateFormatter.iso8601Full.string(from: Date())
-        let requestString = "https://\(cityName).pulse.eco/rest/avgData/day?sensorId=\(sensorId)&type=\(measureType)&from=\(from)&to=\(to)"
+        let requestString =
+        "https://\(cityName).pulse.eco/rest/avgData/day?" +
+        "sensorId=\(sensorId)&type=\(measureType)&from=\(from)&to=\(to)"
         let formattedRequest = requestString.replacingOccurrences(of: "+", with: "%2b")
         let url = URL(string: formattedRequest)!
         let urlSession = URLSession.shared
