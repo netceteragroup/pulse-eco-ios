@@ -194,17 +194,12 @@ class NetworkService {
             newYear += 1
             newMonth = 1
         }
-        if selectedMonth == 1 {
-            newYear -= 1
-            newMonth = 12
-        }
         let endDate = Date.from(1, newMonth, newYear)
         let result = await downloadAverageData(for: cityName,
                                                from: startDate!,
                                                to: endDate!,
                                                timeUnit: .day,
                                                sensorType: sensorType)
-        
         if let result = result {
             history.append(contentsOf: result)
         }

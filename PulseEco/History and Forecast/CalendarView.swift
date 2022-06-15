@@ -147,6 +147,7 @@ struct CalendarView: View {
                     .resizable()
                     .foregroundColor(Color(AppColors.chevronColor))
                     .frame(width: 7.41, height: 12)
+                    .padding(.leading)
             }
             .padding(.all)
             
@@ -159,6 +160,7 @@ struct CalendarView: View {
                     .resizable()
                     .foregroundColor(Color(AppColors.chevronColor))
                     .frame(width: 7.41, height: 12)
+                    .padding(.trailing)
             }
             .padding(.all)
         }
