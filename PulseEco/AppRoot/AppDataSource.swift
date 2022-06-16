@@ -53,14 +53,15 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         self.appState.loadingCityData = true
         Task { @MainActor in
             await withThrowingTaskGroup(of: Void.self) { group in
-                group.addTask { [self] in
-                    await fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
-                    self.cityOverall = await networkService.downloadCurrentData(for: cityName)
-                    self.citySensors = await networkService.downloadSensorsAsync(cityName: cityName) ?? []
+                group.addTask { [weak self] in
+                    guard let self = self else { return }
+                    await self.fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
+                    self.cityOverall = await self.networkService.downloadCurrentData(for: cityName)
+                    self.citySensors = await self.networkService.downloadSensorsAsync(cityName: cityName) ?? []
                     self.sensorsData =
-                        await networkService.currentDataSensor(cityName: cityName,
+                    await self.networkService.currentDataSensor(cityName: cityName,
                                                                measureId: self.appState.selectedMeasureId) ?? []
-                    self.sensorsData24h = await networkService.fetch24hDataForSensors(cityName: cityName) ?? []
+                    self.sensorsData24h = await self.networkService.fetch24hDataForSensors(cityName: cityName) ?? []
                 }
             }
             self.appState.loadingCityData = false
@@ -129,8 +130,8 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         Task { @MainActor in
             appState.cityDataWrapper =
             await self.networkService.fetchAndWrapCityData(cityName: cityName,
-                                                                     sensorType: measureId,
-                                                                     selectedDate: appState.selectedDate)
+                                                           sensorType: measureId,
+                                                           selectedDate: appState.selectedDate)
             
             await fetchMonthlyData(selectedMonth: currentMonth, selectedYear: currentYear)
         }
