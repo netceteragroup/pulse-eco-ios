@@ -33,7 +33,7 @@ extension DateFormatter {
 
 extension Date {
     static func from(_ day: Int, _ month: Int, _ year: Int) -> Date? {
-        let calendar = Calendar(identifier: .gregorian)
+        let calendar = Calendar(identifier: .iso8601)
         var dateComponents = DateComponents()
         dateComponents.year = year
         dateComponents.month = month

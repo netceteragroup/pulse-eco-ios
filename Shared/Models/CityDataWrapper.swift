@@ -9,9 +9,9 @@ import Foundation
 
 class CityDataWrapper: ObservableObject {
     
-    var sensorData: [SensorData]?
-    var currentValue: CityOverallValues?
-    var measures: [Measure]?
+    private (set) var sensorData: [SensorData]?
+    private (set) var currentValue: CityOverallValues?
+    private (set) var measures: [Measure]?
     
     init (sensorData: [SensorData]?,
           currentValue: CityOverallValues?,
@@ -19,6 +19,10 @@ class CityDataWrapper: ObservableObject {
         self.sensorData = sensorData
         self.currentValue = currentValue
         self.measures = measures
+    }
+    
+    func updateSensorData(_ sensorData: [SensorData]) {
+        self.sensorData = sensorData
     }
     
     func getDataFromRange(cityName: String,

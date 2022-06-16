@@ -28,12 +28,13 @@ struct WeekDayButton: View {
     var sevenDaysAgo = calendar.date(byAdding: .day,
                                              value: -6,
                                              to: calendar.startOfDay(for: Date.now))
+    
     func labelFromDate(_ date: Date) -> String {
         
         if calendar.isDateInToday(date) {
             return Trema.text(for: "today")
         } else if date > sevenDaysAgo! {
-            let dayOfWeek = calendar.dateComponents([.weekday], from: date).weekday!
+            let dayOfWeek = calendar.dateComponents([.weekday], from: calendar.startOfDay(for: date)).weekday!
             return calendar.weekdayNameFrom(weekdayNumber: dayOfWeek).capitalized
         } else {
             let dateFormatter = DateFormatter()
@@ -73,7 +74,7 @@ struct WeekDayButton: View {
 
 extension Calendar {
     func weekdayNameFrom(weekdayNumber: Int) -> String {
-        let dayIndex = ((weekdayNumber - 1) + (self.firstWeekday - 1)) % 7
+        let dayIndex = (weekdayNumber - 1) % 7
         return self.shortWeekdaySymbols[dayIndex]
     }
 }

@@ -198,12 +198,14 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     func fetchMonthlyData (selectedMonth: Int, selectedYear: Int) async {
 
         Task { @MainActor in
-            self.appState.cityDataWrapper.sensorData =
+            let newSensorData =
             await self.networkService.fetchDataForSelectedMonth(cityName: appState.selectedCity.cityName,
                                                                 sensorType: appState.selectedMeasureId,
                                                                 selectedMonth: selectedMonth,
                                                                 selectedYear: selectedYear)
-            
+
+            self.appState.cityDataWrapper.updateSensorData(newSensorData)
+                        
             self.monthlyData = appState.cityDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
                                                                          sensorType: appState.selectedMeasureId,
                                                                          from: Date.from(1, selectedMonth,
