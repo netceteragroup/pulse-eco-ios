@@ -41,7 +41,7 @@ extension Date {
         dateComponents.hour = 00
         dateComponents.minute = 00
         dateComponents.second = 00
-        dateComponents.timeZone = TimeZone(secondsFromGMT: 7200)
+//        dateComponents.timeZone = TimeZone(secondsFromGMT: 7200)
         return calendar.date(from: dateComponents) ?? nil
     }
     

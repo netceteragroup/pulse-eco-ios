@@ -15,4 +15,10 @@ struct DayDataWrapper: Hashable {
     var dateId: Date {
         calendar.startOfDay(for: date)
     }
+    var month: Int {
+        calendar.dateComponents([.month], from: date).month!
+    }
+    var monthName: String {
+        Trema.text(for: DateFormatter().monthSymbols[month - 1])
+    }
 }

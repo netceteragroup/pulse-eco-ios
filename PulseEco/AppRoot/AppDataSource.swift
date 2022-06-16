@@ -21,6 +21,9 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     @Published var cancellationTokens: [AnyCancellable] = []
     @Published var weeklyData: [DayDataWrapper] = []
     @Published var monthlyData: [DayDataWrapper] = []
+    @Published var monthlyAverage: CityDataWrapper = CityDataWrapper(sensorData: nil,
+                                                                     currentValue: nil,
+                                                                     measures: nil)
     
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
@@ -77,6 +80,10 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             self.sensorsData = wrapper.sensorsData
             self.sensorsData24h = wrapper.sensorsData24h
             self.appState.loadingCityData = false
+            
+            self.monthlyAverage =
+            await networkService.wrapperForMonthlyAverage(cityName: cityName,
+                                                          measureType: self.appState.selectedMeasureId)
         }
     }
     

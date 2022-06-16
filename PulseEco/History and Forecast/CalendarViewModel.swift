@@ -16,6 +16,7 @@ class CalendarViewModel: ViewModelProtocol {
     @Published var selectedYear: Int = calendar.component(.year, from: Date())
     @Published var selectedMonth: Int = calendar.component(.month, from: Date())
     @Published var dateValues: [DateValueModel] = []
+    @Published var monthValues: [DayDataWrapper] = []
     
     private let appState: AppState
     let appDataSource: AppDataSource
@@ -131,5 +132,31 @@ class CalendarViewModel: ViewModelProtocol {
         selectedMonth = calendar.shortMonthSymbols.firstIndex(of: month) ?? selectedMonth
         currentMonthOffset = selectedMonth - calendar.component(.month, from: Date())
         await nextMonth()
+    }
+    
+    func function () {
+        let currentYear = Calendar.current.dateComponents([.year], from: Date.now).year!
+        let from = Date.from(1, 1, currentYear)!
+        let to = Date.from(31, 12, currentYear)!
+        
+        monthValues = appDataSource.monthlyAverage.getDataFromRange(cityName: appState.selectedCity.cityName, sensorType: appState.selectedMeasureId, from: from, to: to)
+        let allMonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ,12]
+        var containing:[Int] = []
+        for val in monthValues {
+            containing.append(val.month)
+        }
+        
+        let missingMonths = allMonths.difference(from: containing)
+        for month in missingMonths {
+            monthValues.append(DayDataWrapper(date: Date.from(1, month, currentYear)!, value: "", color: "gray"))
+        }
+        monthValues = monthValues.sorted(by: { $0.month < $1.month})
+    }
+}
+extension Array where Element: Hashable {
+    func difference(from other: [Element]) -> [Element] {
+        let thisSet = Set(self)
+        let otherSet = Set(other)
+        return Array(thisSet.symmetricDifference(otherSet))
     }
 }

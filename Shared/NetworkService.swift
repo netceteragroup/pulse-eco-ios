@@ -264,4 +264,37 @@ class NetworkService {
             return nil
         }
     }
+    
+    func fetchMonthlyAverage(cityName: String,
+                             measureType: String) async -> [SensorData]? {
+        let currentYear = Calendar.current.dateComponents([.year], from: Date.now).year!
+        let from = Date.from(1, 1, currentYear)!
+        let to = Date.from(31, 12, currentYear)!
+        
+        let fromDate = DateFormatter.iso8601Full.string(from: from)
+        let toDate = DateFormatter.iso8601Full.string(from: to)
+        let sensorId = -1
+    
+        let path = "https://\(cityName).pulse.eco/rest/avgData/month?sensorId=\(sensorId)&type=\(measureType)&from=\(fromDate)&to=\(toDate)"
+    
+        let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
+        let url = URL(string: formattedRequest)!
+        let urlSession = URLSession.shared
+        do {
+            let (data, _) = try await urlSession.data(from: url)
+            let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
+            
+            return response
+        } catch {
+            return nil
+        }
+    }
+    
+    func wrapperForMonthlyAverage(cityName: String,
+                                  measureType: String) async -> CityDataWrapper {
+        let measures = await self.fetchMeasures()
+        let sensorData = await self.fetchMonthlyAverage(cityName: cityName, measureType: measureType)
+        
+        return CityDataWrapper(sensorData: sensorData, currentValue: nil, measures: measures)
+    }
 }

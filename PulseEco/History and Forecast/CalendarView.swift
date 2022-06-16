@@ -127,6 +127,7 @@ struct CalendarView: View {
         HStack {
             Button {
                 pickerType = .month
+                viewModel.function()
             } label: {
                 HStack {
                     Text("\(viewModel.extraDate().capitalized)")
@@ -241,20 +242,17 @@ struct CalendarView: View {
             let columns = Array(repeating: GridItem(.flexible()), count: 4)
             
             LazyVGrid(columns: columns, spacing: 10) {
-                ForEach(calendar.shortMonthSymbols, id: \.self) { month in
+                ForEach(viewModel.monthValues, id: \.self) { val in
                     Button {
                         Task {
-                            await viewModel.selectNewMonth(month: month)
+                            await viewModel.selectNewMonth(month: val.monthName)
                         }
                         pickerType = .day
                     } label: {
-                        Text(String(month.capitalized))
-                            .font(.system(size: 14, weight: .regular))
-                            .frame(alignment: .center)
-                            .foregroundColor(Color.gray)
-                            .padding()
-                            .overlay(Circle()
-                                .stroke(Color.gray, lineWidth: 1))
+                        MonthButtonView(month: val.monthName,
+                                        date: val.date,
+                                        color: val.color,
+                                        highlighted: val.date.isSameDay(with: selectedDate))
                     }
                 }
             }
