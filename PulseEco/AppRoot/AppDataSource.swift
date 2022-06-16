@@ -49,21 +49,33 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         }
     }
     
+    private struct CityValueWrapper {
+        let cityOverall: CityOverallValues?
+        let citySensors: [Sensor]
+        let sensorsData: [SensorData]
+        let sensorsData24h: [SensorData]
+    }
+    
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
         self.appState.loadingCityData = true
         Task { @MainActor in
-            await withThrowingTaskGroup(of: Void.self) { group in
-                group.addTask { [weak self] in
-                    guard let self = self else { return }
-                    await self.fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
-                    self.cityOverall = await self.networkService.downloadCurrentData(for: cityName)
-                    self.citySensors = await self.networkService.downloadSensorsAsync(cityName: cityName) ?? []
-                    self.sensorsData =
-                    await self.networkService.currentDataSensor(cityName: cityName,
-                                                               measureId: self.appState.selectedMeasureId) ?? []
-                    self.sensorsData24h = await self.networkService.fetch24hDataForSensors(cityName: cityName) ?? []
-                }
-            }
+            async let cityOverall = self.networkService.downloadCurrentData(for: cityName)
+            async let citySensors = self.networkService.downloadSensorsAsync(cityName: cityName) ?? []
+            async let sensorsData =
+            self.networkService.currentDataSensor(cityName: cityName,
+                                                  measureId: self.appState.selectedMeasureId) ?? []
+            async let sensorsData24h = self.networkService.fetch24hDataForSensors(cityName: cityName) ?? []
+            
+            await self.fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
+            
+            let wrapper = await CityValueWrapper(cityOverall: cityOverall,
+                                                 citySensors: citySensors,
+                                                 sensorsData: sensorsData,
+                                                 sensorsData24h: sensorsData24h)
+            self.cityOverall = wrapper.cityOverall
+            self.citySensors = wrapper.citySensors
+            self.sensorsData = wrapper.sensorsData
+            self.sensorsData24h = wrapper.sensorsData24h
             self.appState.loadingCityData = false
         }
     }
@@ -76,19 +88,20 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         Task {@MainActor in
             let cities = await networkService.fetchCities() ?? []
             self.cities = cities
-            await withThrowingTaskGroup(of: Void.self) { group in
+            try await withThrowingTaskGroup(of: CityOverallValues.self) { group in
                 for city in cities {
                     group.addTask {
                         let value = await NetworkService().downloadCurrentData(for: city.cityName)
-                        self.appState.userSettings.cityValues.append(value ??
-                                                                     CityOverallValues(cityName: city.cityName,
-                                                                                       values: [:]))
+                        return value ?? CityOverallValues(cityName: city.cityName, values: [:])
                     }
+                }
+                
+                for try await overallValue in group {
+                    self.appState.userSettings.cityValues.append(overallValue)
                 }
             }
         }
     }
-    
     func getCurrentMeasure(selectedMeasure: String) -> Measure {
         measures.filter { $0.id.lowercased() == selectedMeasure.lowercased()}.first ?? Measure.empty()
     }
