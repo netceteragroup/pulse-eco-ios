@@ -134,7 +134,7 @@ class CalendarViewModel: ViewModelProtocol {
         await nextMonth()
     }
     
-    func function () {
+    func colorMonths() {
         let currentYear = selectedYear
         let from = Date.from(1, 1, currentYear)!
         let to = Date.from(31, 12, currentYear)!
@@ -151,6 +151,9 @@ class CalendarViewModel: ViewModelProtocol {
             monthValues.append(DayDataWrapper(date: Date.from(1, month, currentYear)!, value: "", color: "gray"))
         }
         monthValues = monthValues.sorted(by: { $0.month < $1.month})
+        Task {
+            await appDataSource.fetchMonthlyData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+        }
     }
 }
 extension Array where Element: Hashable {

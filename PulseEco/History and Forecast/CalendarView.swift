@@ -127,7 +127,7 @@ struct CalendarView: View {
         HStack {
             Button {
                 pickerType = .month
-                viewModel.function()
+                viewModel.colorMonths()
             } label: {
                 HStack {
                     Text("\(viewModel.extraDate().capitalized)")
@@ -193,7 +193,7 @@ struct CalendarView: View {
                         pickerType = .day
                         viewModel.selectedYear = year
                         Task {
-                            viewModel.function()
+                            viewModel.colorMonths()
                             await dataSource.updateMonthlyColors(selectedYear: year)
                         }
                     } label: {
@@ -250,6 +250,7 @@ struct CalendarView: View {
                     Button {
                         Task {
                             await viewModel.selectNewMonth(month: val.monthName)
+                            viewModel.colorMonths()
                         }
                         pickerType = .day
                     } label: {
