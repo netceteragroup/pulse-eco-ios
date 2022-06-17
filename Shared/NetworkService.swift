@@ -266,8 +266,10 @@ class NetworkService {
     }
     
     func fetchMonthlyAverage(cityName: String,
-                             measureType: String) async -> [SensorData]? {
-        let currentYear = Calendar.current.dateComponents([.year], from: Date.now).year!
+                             measureType: String,
+                             selectedDate: Date) async -> [SensorData]? {
+        
+        let currentYear = Calendar.current.dateComponents([.year], from: selectedDate).year!
         let from = Date.from(1, 1, currentYear)!
         let to = Date.from(31, 12, currentYear)!
         
@@ -291,10 +293,15 @@ class NetworkService {
     }
     
     func wrapperForMonthlyAverage(cityName: String,
-                                  measureType: String) async -> CityDataWrapper {
+                                  measureType: String,
+                                  selectedDate: Date) async -> CityDataWrapper {
         let measures = await self.fetchMeasures()
-        let sensorData = await self.fetchMonthlyAverage(cityName: cityName, measureType: measureType)
+        let sensorData = await self.fetchMonthlyAverage(cityName: cityName,
+                                                        measureType: measureType,
+                                                        selectedDate: selectedDate)
         
-        return CityDataWrapper(sensorData: sensorData, currentValue: nil, measures: measures)
+        return CityDataWrapper(sensorData: sensorData,
+                               currentValue: nil,
+                               measures: measures)
     }
 }

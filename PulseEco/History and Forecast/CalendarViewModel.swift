@@ -135,7 +135,7 @@ class CalendarViewModel: ViewModelProtocol {
     }
     
     func function () {
-        let currentYear = Calendar.current.dateComponents([.year], from: Date.now).year!
+        let currentYear = selectedYear
         let from = Date.from(1, 1, currentYear)!
         let to = Date.from(31, 12, currentYear)!
         

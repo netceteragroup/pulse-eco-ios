@@ -83,7 +83,8 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             
             self.monthlyAverage =
             await networkService.wrapperForMonthlyAverage(cityName: cityName,
-                                                          measureType: self.appState.selectedMeasureId)
+                                                          measureType: self.appState.selectedMeasureId,
+                                                          selectedDate: self.appState.selectedDate)
         }
     }
     
@@ -140,6 +141,10 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                   from: calendar.date(byAdding: .day, value: -7, to: Date.now)!,
                                   to: calendar.date(byAdding: .day, value: +1, to: Date.now)!)
             await updatePins(selectedDate: appState.selectedDate)
+            self.monthlyAverage =
+            await networkService.wrapperForMonthlyAverage(cityName: cityName,
+                                                          measureType: self.appState.selectedMeasureId,
+                                                          selectedDate: self.appState.selectedDate)
         }
     }
     
@@ -219,5 +224,12 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                                                          selectedYear)!,
                                                                          to: Date.now)
         }
+    }
+    func updateMonthlyColors (selectedYear: Int) async {
+        let date = Date.from(1, 1, selectedYear)!
+        self.monthlyAverage =
+        await networkService.wrapperForMonthlyAverage(cityName: appState.selectedCity.cityName,
+                                                      measureType: self.appState.selectedMeasureId,
+                                                      selectedDate: date)
     }
 }

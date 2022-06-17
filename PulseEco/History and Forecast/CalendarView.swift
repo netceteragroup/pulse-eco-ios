@@ -192,14 +192,18 @@ struct CalendarView: View {
                     Button {
                         pickerType = .day
                         viewModel.selectedYear = year
+                        Task {
+                            viewModel.function()
+                            await dataSource.updateMonthlyColors(selectedYear: year)
+                        }
                     } label: {
                         Text(String(year))
                             .font(.system(size: 14, weight: .regular))
                             .frame(alignment: .center)
-                            .foregroundColor(Color.gray)
+                            .foregroundColor(Color(AppColors.firstButtonColor))
                             .padding()
                             .overlay(Circle()
-                                .stroke(Color.gray, lineWidth: 1))
+                                .stroke(Color(AppColors.firstButtonColor), lineWidth: 1))
                     }
                 }
             }

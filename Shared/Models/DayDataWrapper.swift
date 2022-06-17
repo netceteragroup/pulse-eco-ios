@@ -19,6 +19,6 @@ struct DayDataWrapper: Hashable {
         calendar.dateComponents([.month], from: date).month!
     }
     var monthName: String {
-        Trema.text(for: DateFormatter().monthSymbols[month - 1])
+        calendar.shortMonthSymbols[month - 1]
     }
 }
