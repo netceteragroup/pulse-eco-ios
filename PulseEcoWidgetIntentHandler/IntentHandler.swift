@@ -8,7 +8,7 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
     func provideCitiesOptionsCollection(for intent: ConfigurationIntent,
                                         with completion: @escaping (INObjectCollection<CityConfig>?, Error?) -> Void) {
         Task {
-            await networkService.fetchCities()
+            async let cityConfigs = await networkService.fetchCities()
                 .map({ cities in
                     cities
                         .sorted { $0.cityName < $1.cityName}
@@ -17,6 +17,11 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
                                        display: "\(city.cityName), \(city.countryName)")
                         }
                 })
+            if let cityConfigs = await cityConfigs {
+                completion(INObjectCollection(items: cityConfigs), nil)
+            } else {
+                completion(nil, nil)
+            }
         }
     }
     
@@ -25,12 +30,17 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
                                           @escaping (INObjectCollection<MeasureConfig>?, Error?) -> Void) {
         
         Task {
-            await networkService.fetchMeasures()
+            async let cityConfigs = await networkService.fetchMeasures()
                 .map({ measures in
                     measures.map { measure in
                         MeasureConfig(identifier: measure.id, display: measure.buttonTitle)
                     }
                 })
+            if let cityConfigs = await cityConfigs {
+                completion(INObjectCollection(items: cityConfigs), nil)
+            } else {
+                completion(nil, nil)
+            }
         }
     }
     

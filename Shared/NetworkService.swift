@@ -196,10 +196,10 @@ class NetworkService {
         }
         let endDate = Date.from(1, newMonth, newYear)
         let result = await downloadAverageData(for: cityName,
-                                               from: startDate!,
-                                               to: endDate!,
-                                               timeUnit: .day,
-                                               sensorType: sensorType)
+                                                  from: startDate!,
+                                                  to: endDate!,
+                                                  timeUnit: .day,
+                                                  sensorType: sensorType)
         if let result = result {
             history.append(contentsOf: result)
         }
@@ -276,9 +276,9 @@ class NetworkService {
         let fromDate = DateFormatter.iso8601Full.string(from: from)
         let toDate = DateFormatter.iso8601Full.string(from: to)
         let sensorId = -1
-    
+        
         let path = "https://\(cityName).pulse.eco/rest/avgData/month?sensorId=\(sensorId)&type=\(measureType)&from=\(fromDate)&to=\(toDate)"
-    
+        
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
         let url = URL(string: formattedRequest)!
         let urlSession = URLSession.shared
