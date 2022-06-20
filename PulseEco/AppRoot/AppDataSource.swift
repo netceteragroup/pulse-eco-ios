@@ -82,7 +82,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             self.appState.loadingCityData = false
             
             self.monthlyAverage =
-            await networkService.wrapperForMonthlyAverage(cityName: cityName,
+            await networkService.fetchMonthAverages(cityName: cityName,
                                                           measureType: self.appState.selectedMeasureId,
                                                           selectedDate: self.appState.selectedDate)
         }
@@ -142,7 +142,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                   to: calendar.date(byAdding: .day, value: +1, to: Date.now)!)
             await updatePins(selectedDate: appState.selectedDate)
             self.monthlyAverage =
-            await networkService.wrapperForMonthlyAverage(cityName: cityName,
+            await networkService.fetchMonthAverages(cityName: cityName,
                                                           measureType: self.appState.selectedMeasureId,
                                                           selectedDate: self.appState.selectedDate)
         }
@@ -228,7 +228,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     func updateMonthlyColors (selectedYear: Int) async {
         let date = Date.from(1, 1, selectedYear)!
         self.monthlyAverage =
-        await networkService.wrapperForMonthlyAverage(cityName: appState.selectedCity.cityName,
+        await networkService.fetchMonthAverages(cityName: appState.selectedCity.cityName,
                                                       measureType: self.appState.selectedMeasureId,
                                                       selectedDate: date)
     }

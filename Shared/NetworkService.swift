@@ -292,7 +292,7 @@ class NetworkService {
         }
     }
     
-    func wrapperForMonthlyAverage(cityName: String,
+    func fetchMonthAverages(cityName: String,
                                   measureType: String,
                                   selectedDate: Date) async -> CityDataWrapper {
         let measures = await self.fetchMeasures()

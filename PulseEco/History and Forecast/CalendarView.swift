@@ -193,8 +193,8 @@ struct CalendarView: View {
                         pickerType = .day
                         viewModel.selectedYear = year
                         Task {
-                            viewModel.colorMonths()
                             await dataSource.updateMonthlyColors(selectedYear: year)
+                            viewModel.colorMonths()
                         }
                     } label: {
                         Text(String(year))

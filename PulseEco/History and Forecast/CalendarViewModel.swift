@@ -106,8 +106,9 @@ class CalendarViewModel: ViewModelProtocol {
         return date
     }
     
-    func previousMonth() async {
-        if selectedMonth < 1 {
+    func previousMonth() {
+        let yearChange = selectedMonth == 1
+        if yearChange {
             selectedMonth += 11
             selectedYear -= 1
         } else {
@@ -115,10 +116,19 @@ class CalendarViewModel: ViewModelProtocol {
         }
         currentMonthOffset -= 1
         currentMonthOffset = selectedMonth - calendar.component(.month, from: Date())
-        await appDataSource.fetchMonthlyData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+        if yearChange {
+            Task {
+                await appDataSource.updateMonthlyColors(selectedYear: selectedYear)
+                colorMonths()
+            }
+        }
+        Task {
+            await appDataSource.fetchMonthlyData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+        }
     }
     func nextMonth() async {
-        if selectedMonth > 10 {
+        let yearChange = selectedMonth >= 11
+        if yearChange {
             selectedMonth -= 11
             selectedYear += 1
         } else {
@@ -126,7 +136,15 @@ class CalendarViewModel: ViewModelProtocol {
         }
         currentMonthOffset += 1
         currentMonthOffset = selectedMonth - calendar.component(.month, from: Date())
-        await appDataSource.fetchMonthlyData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+        if yearChange {
+            Task {
+                await appDataSource.updateMonthlyColors(selectedYear: selectedYear)
+                colorMonths()
+            }
+        }
+        Task {
+            await appDataSource.fetchMonthlyData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+        }
     }
     func selectNewMonth(month: String) async {
         selectedMonth = calendar.shortMonthSymbols.firstIndex(of: month) ?? selectedMonth
@@ -148,7 +166,7 @@ class CalendarViewModel: ViewModelProtocol {
         
         let missingMonths = allMonths.difference(from: containing)
         for month in missingMonths {
-            monthValues.append(DayDataWrapper(date: Date.from(1, month, currentYear)!, value: "", color: "gray"))
+            monthValues.append(DayDataWrapper(date: Date.from(1, month, currentYear)!, value: "", color: "darkblue"))
         }
         monthValues = monthValues.sorted(by: { $0.month < $1.month})
         Task {
