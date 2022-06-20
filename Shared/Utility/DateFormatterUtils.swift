@@ -33,7 +33,7 @@ extension DateFormatter {
 
 extension Date {
     static func from(_ day: Int, _ month: Int, _ year: Int) -> Date? {
-        let calendar = Calendar(identifier: .gregorian)
+        let calendar = Calendar(identifier: .iso8601)
         var dateComponents = DateComponents()
         dateComponents.year = year
         dateComponents.month = month
@@ -41,7 +41,7 @@ extension Date {
         dateComponents.hour = 00
         dateComponents.minute = 00
         dateComponents.second = 00
-        dateComponents.timeZone = TimeZone(secondsFromGMT: 7200)
+//        dateComponents.timeZone = TimeZone(secondsFromGMT: 7200)
         return calendar.date(from: dateComponents) ?? nil
     }
     

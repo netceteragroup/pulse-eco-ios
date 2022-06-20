@@ -146,7 +146,7 @@ struct MainView: View {
             }) {
                 Image(systemName: "globe")
                     .resizable()
-                    .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .frame(width: 20, height: 20, alignment: .center)
                     .foregroundColor(Color(AppColors.darkblue))
                     .padding(.leading, 15)
             }

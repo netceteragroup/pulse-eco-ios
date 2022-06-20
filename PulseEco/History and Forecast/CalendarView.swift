@@ -127,6 +127,7 @@ struct CalendarView: View {
         HStack {
             Button {
                 pickerType = .month
+                viewModel.colorMonths()
             } label: {
                 HStack {
                     Text("\(viewModel.extraDate().capitalized)")
@@ -147,6 +148,7 @@ struct CalendarView: View {
                     .resizable()
                     .foregroundColor(Color(AppColors.chevronColor))
                     .frame(width: 7.41, height: 12)
+                    .padding(.leading)
             }
             .padding(.all)
             
@@ -159,6 +161,7 @@ struct CalendarView: View {
                     .resizable()
                     .foregroundColor(Color(AppColors.chevronColor))
                     .frame(width: 7.41, height: 12)
+                    .padding(.trailing)
             }
             .padding(.all)
         }
@@ -189,14 +192,18 @@ struct CalendarView: View {
                     Button {
                         pickerType = .day
                         viewModel.selectedYear = year
+                        Task {
+                            viewModel.colorMonths()
+                            await dataSource.updateMonthlyColors(selectedYear: year)
+                        }
                     } label: {
                         Text(String(year))
                             .font(.system(size: 14, weight: .regular))
                             .frame(alignment: .center)
-                            .foregroundColor(Color.gray)
+                            .foregroundColor(Color(AppColors.firstButtonColor))
                             .padding()
                             .overlay(Circle()
-                                .stroke(Color.gray, lineWidth: 1))
+                                .stroke(Color(AppColors.firstButtonColor), lineWidth: 1))
                     }
                 }
             }
@@ -239,20 +246,18 @@ struct CalendarView: View {
             let columns = Array(repeating: GridItem(.flexible()), count: 4)
             
             LazyVGrid(columns: columns, spacing: 10) {
-                ForEach(calendar.shortMonthSymbols, id: \.self) { month in
+                ForEach(viewModel.monthValues, id: \.self) { val in
                     Button {
                         Task {
-                            await viewModel.selectNewMonth(month: month)
+                            await viewModel.selectNewMonth(month: val.monthName)
+                            viewModel.colorMonths()
                         }
                         pickerType = .day
                     } label: {
-                        Text(String(month.capitalized))
-                            .font(.system(size: 14, weight: .regular))
-                            .frame(alignment: .center)
-                            .foregroundColor(Color.gray)
-                            .padding()
-                            .overlay(Circle()
-                                .stroke(Color.gray, lineWidth: 1))
+                        MonthButtonView(month: val.monthName,
+                                        date: val.date,
+                                        color: val.color,
+                                        highlighted: val.date.isSameDay(with: selectedDate))
                     }
                 }
             }

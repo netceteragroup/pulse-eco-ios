@@ -14,7 +14,7 @@ struct WidgetTimelineProvider: IntentTimelineProvider {
     func placeholder(in context: Context) -> Entry {
         emptyEntry
     }
-
+    
     func getSnapshot(for configuration: ConfigurationIntent,
                      in context: Context,
                      completion: @escaping (Entry) -> Void) {
@@ -27,10 +27,10 @@ struct WidgetTimelineProvider: IntentTimelineProvider {
         
         let city = configuration.cities?.identifier ?? "skopje"
         let measureId = configuration.measures?.identifier ?? "pm10"
-         
-        WidgetDataSource.sharedInstance.getValuesForCity(cityName: city, measureId: measureId) { result in
-            switch result {
-            case .success(let widgetData):
+        Task { @MainActor in
+        
+            if let widgetData = await WidgetDataSource.sharedInstance.getValuesForCity(cityName: city,
+                                                                                 measureId: measureId) {
                 let averageUtilModel = AverageUtilModel(measureId: measureId,
                                                         cityName: city,
                                                         measuresList: widgetData.measures,
@@ -42,8 +42,8 @@ struct WidgetTimelineProvider: IntentTimelineProvider {
                 let nextUpdateDate = calendar.date(byAdding: .minute, value: 10, to: Date())!
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
                 completion(timeline)
-            case .failure(let error):
-                print("Download overall values for \(city) with error: \(error)")
+            } else {
+                print("Download overall values for \(city) failed.")
                 // try again in 30 secs
                 let nextUpdateDate = calendar.date(byAdding: .second, value: 30, to: Date())!
                 let timeline = Timeline(entries: [emptyEntry], policy: .after(nextUpdateDate))

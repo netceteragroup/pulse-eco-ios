@@ -10,18 +10,14 @@ class WidgetDataSource {
     private let networkService = NetworkService()
 
     func getValuesForCity(cityName: String,
-                          measureId: String,
-                          completion: @escaping (Result<WidgetData, Error>) -> Void) {
+                          measureId: String) async -> WidgetData? {
         
-        Publishers.Zip(networkService.downloadMeasures(),
-                       networkService.downloadOverallValuesForCity(cityName: cityName))
-            .sink { downloadCompletion in
-                switch downloadCompletion {
-                case .failure(let error): completion(.failure(error))
-                case .finished: break
-                }
-            } receiveValue: { (measures, cityOverall) in
-                completion(.success((measures, cityOverall)))
-            }.store(in: &cancelables)
+        async let measures = networkService.fetchMeasures()
+        async let cityOverall = networkService.downloadCurrentData(for: cityName)
+        guard let measures = await measures, let cityOverall = await cityOverall else {
+            return nil
+        }
+        
+        return WidgetData(measures, cityOverall)
     }
 }

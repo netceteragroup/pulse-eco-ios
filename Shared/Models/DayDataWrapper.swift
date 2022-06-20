@@ -13,6 +13,12 @@ struct DayDataWrapper: Hashable {
     let color: String
     
     var dateId: Date {
-        date
+        calendar.startOfDay(for: date)
+    }
+    var month: Int {
+        calendar.dateComponents([.month], from: date).month!
+    }
+    var monthName: String {
+        calendar.shortMonthSymbols[month - 1]
     }
 }
