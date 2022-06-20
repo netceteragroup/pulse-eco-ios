@@ -13,8 +13,8 @@ class AppState: ObservableObject, ViewModelDependency {
                                                   sensorType: self.selectedMeasureId,
                                                   from: selectedDate,
                                                   to: calendar.date(byAdding: .day,
-                                                                            value: 1,
-                                                                            to: selectedDate)!).first?.value
+                                                                    value: 1,
+                                                                    to: selectedDate)!).first?.value
         }
     }
     @Published var citySelectorClicked: Bool = false

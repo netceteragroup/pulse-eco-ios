@@ -73,7 +73,6 @@ class CalendarViewModel: ViewModelProtocol {
         for _ in 1..<firstWeekDay {
             days.insert(DateValueModel(day: -1, date: Date(), color: "gray"), at: 0)
         }
-        
         return days
     }
     
@@ -91,8 +90,7 @@ class CalendarViewModel: ViewModelProtocol {
             Trema.text(for: "thursday-short"),
             Trema.text(for: "friday-short"),
             Trema.text(for: "saturday-short"),
-            Trema.text(for: "sunday-short")
-        ]
+            Trema.text(for: "sunday-short")]
     }()
     
     func extraDate() -> String {
