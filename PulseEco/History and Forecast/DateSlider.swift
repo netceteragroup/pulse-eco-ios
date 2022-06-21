@@ -26,9 +26,9 @@ struct DateSlider: View {
                         Task {
                             await dataSource
                                 .fetchMonthlyData(selectedMonth: calendar.dateComponents([.month],
-                                                                                                 from: Date.now).month!,
+                                                                                         from: Date.now).month!,
                                                   selectedYear: calendar.dateComponents([.year],
-                                                                                                from: Date.now).year!)
+                                                                                        from: Date.now).year!)
                         }
                         
                     } label: {

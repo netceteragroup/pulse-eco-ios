@@ -19,14 +19,17 @@ struct CalendarView: View {
     
     @Binding var showingCalendar: Bool
     @Binding var selectedDate: Date
+    @Binding var calendarSelection: Date
     
     init(showingCalendar: Binding<Bool>,
          selectedDate: Binding<Date>,
+         calendarSelection: Binding<Date>,
          viewModelClosure: @autoclosure @escaping () -> CalendarViewModel) {
         
         _viewModel = StateObject(wrappedValue: viewModelClosure())
         _showingCalendar = showingCalendar
         _selectedDate = selectedDate
+        _calendarSelection = calendarSelection
     }
     
     var body: some View {
@@ -60,9 +63,11 @@ struct CalendarView: View {
             if value.day != -1 {
                 Button {
                     self.selectedDate = calendar.startOfDay(for: value.date)
+                    self.calendarSelection = calendar.startOfDay(for: value.date)
                     Task {
                         do {
                             await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
+                            await viewModel.appDataSource.selectFromCalendar()
                         }
                     }
                     showingCalendar = false
@@ -140,9 +145,9 @@ struct CalendarView: View {
             }
             Spacer(minLength: 0)
             Button {
-                    Task {
-                        await viewModel.previousMonth()
-                    }
+                Task {
+                    viewModel.previousMonth()
+                }
             } label: {
                 Image(systemName: "chevron.left")
                     .resizable()
@@ -153,9 +158,9 @@ struct CalendarView: View {
             .padding(.all)
             
             Button {
-                    Task {
-                        await viewModel.nextMonth()
-                    }
+                Task {
+                    await viewModel.nextMonth()
+                }
             } label: {
                 Image(systemName: "chevron.right")
                     .resizable()

@@ -18,7 +18,7 @@ struct MainView: View {
     let mapViewModel: MapViewModel
     
     private let backgroundColor: Color = AppColors.white.color
-
+    
     private var sensorDetailsViewModel: SensorDetailsViewModel {
         let selectedMeasure = dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId)
         return SensorDetailsViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
@@ -110,13 +110,14 @@ struct MainView: View {
                     VStack {
                         CalendarView(showingCalendar: $appState.showingCalendar,
                                      selectedDate: $appState.selectedDate,
+                                     calendarSelection: $appState.calendarSelection,
                                      viewModelClosure: CalendarViewModel(appState: self.appState,
                                                                          appDataSource: self.dataSource))
-                            .cornerRadius(4)
-                            .shadow(color: Color(AppColors.shadowColor), radius: 20)
-                            .padding(.top, 180)
-                            .padding(.all)
-                            Spacer()
+                        .cornerRadius(4)
+                        .shadow(color: Color(AppColors.shadowColor), radius: 20)
+                        .padding(.top, 180)
+                        .padding(.all)
+                        Spacer()
                     }
                     .background(Color.gray.opacity(0.8).onTapGesture {
                         appState.showingCalendar = false

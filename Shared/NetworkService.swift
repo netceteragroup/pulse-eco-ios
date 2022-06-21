@@ -185,21 +185,24 @@ class NetworkService {
                                    sensorType: String,
                                    selectedMonth: Int,
                                    selectedYear: Int) async -> [SensorData] {
-        var newYear = selectedYear
-        var newMonth = selectedMonth + 1
+        var endYear = selectedYear
+        var endMonth = selectedMonth + 1
         var history: [SensorData] = []
         
-        let startDate = Date.from(1, selectedMonth, selectedYear)
         if selectedMonth == 12 {
-            newYear += 1
-            newMonth = 1
+            endYear += 1
+            endMonth = 1
         }
-        let endDate = Date.from(1, newMonth, newYear)
+        
+        var startDate = Date.from(1, selectedMonth, selectedYear)
+        startDate = Calendar.current.date(byAdding: .day, value: -3, to: startDate!)!
+        var endDate = Date.from(1, endMonth, endYear)
+        endDate = Calendar.current.date(byAdding: .day, value: +3, to: endDate!)!
         let result = await downloadAverageData(for: cityName,
-                                                  from: startDate!,
-                                                  to: endDate!,
-                                                  timeUnit: .day,
-                                                  sensorType: sensorType)
+                                               from: startDate!,
+                                               to: endDate!,
+                                               timeUnit: .day,
+                                               sensorType: sensorType)
         if let result = result {
             history.append(contentsOf: result)
         }
@@ -293,8 +296,8 @@ class NetworkService {
     }
     
     func fetchMonthAverages(cityName: String,
-                                  measureType: String,
-                                  selectedDate: Date) async -> CityDataWrapper {
+                            measureType: String,
+                            selectedDate: Date) async -> CityDataWrapper {
         let measures = await self.fetchMeasures()
         let sensorData = await self.fetchMonthlyAverage(cityName: cityName,
                                                         measureType: measureType,
