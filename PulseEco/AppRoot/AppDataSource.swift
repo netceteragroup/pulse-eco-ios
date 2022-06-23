@@ -175,7 +175,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                            sensorType: measureId,
                                                            selectedDate: appState.selectedDate)
             
-            await fetchMonthlyData(selectedMonth: currentMonth, selectedYear: currentYear)
+            await fetchMonthlyDayData(selectedMonth: currentMonth, selectedYear: currentYear)
         }
     }
     
@@ -225,16 +225,15 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             self.appState.sensorPins = result
         }
         self.appState.selectedDateAverageValue =
-        self.appState.cityDataWrapper.getDataFromRange(cityName: UserSettings.selectedCity.cityName,
-                                                       sensorType: self.appState.selectedMeasureId,
-                                                       from: appState.selectedDate,
-                                                       to: calendar.date(byAdding: .day,
-                                                                         value: 1,
-                                                                         to: appState.selectedDate)!).first?.value
-        
+        self.appState.weeklyDataWrapper.getDataFromRange(cityName: UserSettings.selectedCity.cityName,
+                                                         sensorType: self.appState.selectedMeasureId,
+                                                         from: appState.selectedDate,
+                                                         to: calendar.date(byAdding: .day,
+                                                                           value: +1,
+                                                                           to: appState.selectedDate)!).first?.value
     }
     
-    func fetchMonthlyData (selectedMonth: Int, selectedYear: Int) async {
+    func fetchMonthlyDayData (selectedMonth: Int, selectedYear: Int) async {
         
         Task { @MainActor in
             let newSensorData =
@@ -254,6 +253,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     func updateMonthlyColors (selectedYear: Int) async {
         let date = Date.from(1, 1, selectedYear)!
+        
         self.monthlyAverage =
         await networkService.fetchMonthAverages(cityName: appState.selectedCity.cityName,
                                                 measureType: self.appState.selectedMeasureId,

@@ -121,7 +121,7 @@ class CalendarViewModel: ViewModelProtocol {
             }
         }
         Task {
-            await appDataSource.fetchMonthlyData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+            await appDataSource.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
         }
     }
     func nextMonth() async {
@@ -141,7 +141,7 @@ class CalendarViewModel: ViewModelProtocol {
             }
         }
         Task {
-            await appDataSource.fetchMonthlyData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+            await appDataSource.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
         }
     }
     func selectNewMonth(month: String) async {
@@ -168,7 +168,7 @@ class CalendarViewModel: ViewModelProtocol {
         }
         monthValues = monthValues.sorted(by: { $0.month < $1.month})
         Task {
-            await appDataSource.fetchMonthlyData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+            await appDataSource.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
         }
     }
 }
