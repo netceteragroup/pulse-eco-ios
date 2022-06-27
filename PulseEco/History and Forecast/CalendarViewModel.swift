@@ -155,8 +155,10 @@ class CalendarViewModel: ViewModelProtocol {
         let from = Date.from(1, 1, currentYear)!
         let to = Date.from(31, 12, currentYear)!
         
-        monthValues = appDataSource.monthlyAverage.getDataFromRange(cityName: appState.selectedCity.cityName, sensorType: appState.selectedMeasureId, from: from, to: to)
-        let allMonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ,12]
+        monthValues = appDataSource.monthlyAverage.getDataFromRange(cityName: appState.selectedCity.cityName,
+                                                                    sensorType: appState.selectedMeasureId,
+                                                                    from: from, to: to)
+        let allMonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         var containing:[Int] = []
         for val in monthValues {
             containing.append(val.month)

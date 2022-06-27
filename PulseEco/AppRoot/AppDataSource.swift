@@ -259,7 +259,8 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                 measureType: self.appState.selectedMeasureId,
                                                 selectedDate: date)
     }
-    func selectFromCalendar () async -> Void {
+    
+    func selectFromCalendar () async {
         
         if appState.selectedDate.isSameDay(with: appState.calendarSelection) {
             await fetchWeeklyAverages(measureId: self.appState.selectedMeasureId,
