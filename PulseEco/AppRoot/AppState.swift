@@ -5,18 +5,7 @@ import Combine
 class AppState: ObservableObject, ViewModelDependency {
     var cancelables = Set<AnyCancellable>()
     
-    @Published var selectedMeasureId: String = "pm10" {
-        didSet {
-            selectedDateAverageValue = nil
-            self.selectedDateAverageValue =
-            self.cityDataWrapper.getDataFromRange(cityName: UserSettings.selectedCity.cityName,
-                                                  sensorType: self.selectedMeasureId,
-                                                  from: selectedDate,
-                                                  to: calendar.date(byAdding: .day,
-                                                                            value: 1,
-                                                                            to: selectedDate)!).first?.value
-        }
-    }
+    @Published var selectedMeasureId: String = "pm10"
     @Published var citySelectorClicked: Bool = false
     @Published var selectedCity: City = UserSettings.selectedCity {
         didSet {
@@ -37,19 +26,14 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var selectedDateAverageValue: String?
     @Published var currentMonth: Int = 0
     @Published var currentYear: Int = 0
-    @Published var selectedDate: Date = calendar.startOfDay(for: Date.now) {
-        didSet {
-            selectedDateAverageValue = nil
-            self.selectedDateAverageValue =
-            self.cityDataWrapper.getDataFromRange(cityName: UserSettings.selectedCity.cityName,
-                                                  sensorType: self.selectedMeasureId,
-                                                  from: selectedDate,
-                                                  to: calendar.date(byAdding: .day,
-                                                                            value: 1,
-                                                                            to: selectedDate)!).first?.value
-        }
-    }
-    @Published var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil, currentValue: nil, measures: nil)
+    @Published var selectedDate: Date = calendar.startOfDay(for: Date.now)
+    @Published var calendarSelection: Date = calendar.startOfDay(for: Date.now)
+    @Published var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil,
+                                                                      currentValue: nil,
+                                                                      measures: nil)
+    @Published var weeklyDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil,
+                                                                        currentValue: nil,
+                                                                        measures: nil)
     
     var cityIcon: Image {
         citySelectorClicked ? Image(systemName: "chevron.up") : Image(systemName: "chevron.down")

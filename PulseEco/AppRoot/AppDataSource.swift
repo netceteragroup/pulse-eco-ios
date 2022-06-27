@@ -3,7 +3,7 @@ import Combine
 import UIKit
 
 class AppDataSource: ObservableObject, ViewModelDependency {
-    private let appState: AppState
+    let appState: AppState
     @Published var measures: [Measure] = [Measure.empty("PM10"),
                                           Measure.empty("PM25"),
                                           Measure.empty("Noise"),
@@ -82,9 +82,9 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             self.appState.loadingCityData = false
             
             self.monthlyAverage =
-            await networkService.wrapperForMonthlyAverage(cityName: cityName,
-                                                          measureType: self.appState.selectedMeasureId,
-                                                          selectedDate: self.appState.selectedDate)
+            await networkService.fetchMonthAverages(cityName: cityName,
+                                                    measureType: self.appState.selectedMeasureId,
+                                                    selectedDate: self.appState.selectedDate)
         }
     }
     
@@ -127,24 +127,41 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     @MainActor func fetchWeeklyAverages(cityName: String = UserSettings.selectedCity.cityName,
-                                        measureId: String) {
+                                        measureId: String,
+                                        selectedDate: Date) async {
         Task {
-            appState.cityDataWrapper =
+            appState.weeklyDataWrapper =
             await self.networkService.fetchAndWrapCityData(cityName: cityName,
-                                                                     sensorType: measureId,
-                                                                     selectedDate: appState.selectedDate)
+                                                           sensorType: measureId,
+                                                           selectedDate: appState.calendarSelection)
             
-            self.weeklyData =
-            appState.cityDataWrapper
-                .getDataFromRange(cityName: cityName,
-                                  sensorType: measureId,
-                                  from: calendar.date(byAdding: .day, value: -7, to: Date.now)!,
-                                  to: calendar.date(byAdding: .day, value: +1, to: Date.now)!)
+            let threeDaysAgo = calendar.date(byAdding: .day, value: -3, to: selectedDate)!
+            let threeDaysLater = calendar.date(byAdding: .day, value: +4, to: selectedDate)!
+            if threeDaysLater < calendar.startOfDay(for: Date.now) {
+                self.weeklyData =
+                appState.weeklyDataWrapper
+                    .getDataFromRange(cityName: cityName,
+                                      sensorType: measureId,
+                                      from: threeDaysAgo,
+                                      to: threeDaysLater)
+                let today = appState.weeklyDataWrapper.getDataFromRange(cityName: cityName,
+                                                                        sensorType: measureId,
+                                                                        from: calendar.startOfDay(for: Date.now),
+                                                                        to: calendar.date(byAdding: .day,
+                                                                                          value: +1,
+                                                                                          to: Date.now)!)
+                self.weeklyData.append(contentsOf: today)
+                
+            } else {
+                self.weeklyData =
+                appState.weeklyDataWrapper
+                    .getDataFromRange(cityName: cityName,
+                                      sensorType: measureId,
+                                      from: calendar.date(byAdding: .day, value: -7, to: Date.now)!,
+                                      to: calendar.date(byAdding: .day, value: +1, to: Date.now)!)
+            }
+            
             await updatePins(selectedDate: appState.selectedDate)
-            self.monthlyAverage =
-            await networkService.wrapperForMonthlyAverage(cityName: cityName,
-                                                          measureType: self.appState.selectedMeasureId,
-                                                          selectedDate: self.appState.selectedDate)
         }
     }
     
@@ -158,13 +175,15 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                            sensorType: measureId,
                                                            selectedDate: appState.selectedDate)
             
-            await fetchMonthlyData(selectedMonth: currentMonth, selectedYear: currentYear)
+            await fetchMonthlyDayData(selectedMonth: currentMonth, selectedYear: currentYear)
         }
     }
     
     @MainActor func fetchHistory(for cityName: String, measureId: String) async {
-        fetchWeeklyAverages(cityName: cityName, measureId: measureId)
-    
+        await fetchWeeklyAverages(cityName: cityName,
+                                  measureId: measureId,
+                                  selectedDate: appState.calendarSelection)
+        
         await getMonthlyValues(cityName: cityName,
                                measureId: measureId,
                                currentMonth: appState.currentMonth,
@@ -174,16 +193,16 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     func updatePins(selectedDate: Date) async {
         let from: Date = selectedDate
         let to: Date = calendar.date(bySettingHour: 23,
-                                             minute: 59,
-                                             second: 59,
-                                             of: selectedDate)!
+                                     minute: 59,
+                                     second: 59,
+                                     of: selectedDate)!
         
         Task { @MainActor in
             guard let dailySensorData =
                     await networkService.fetchSensorData(cityName: UserSettings.selectedCity.cityName,
-                                                            measureId: self.appState.selectedMeasureId,
-                                                            from: from,
-                                                            to: to)
+                                                         measureId: self.appState.selectedMeasureId,
+                                                         from: from,
+                                                         to: to)
             else { return }
             
             let groupById = Dictionary(grouping: dailySensorData, by: \.sensorID)
@@ -205,19 +224,26 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                     getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
             self.appState.sensorPins = result
         }
+        self.appState.selectedDateAverageValue =
+        self.appState.weeklyDataWrapper.getDataFromRange(cityName: UserSettings.selectedCity.cityName,
+                                                         sensorType: self.appState.selectedMeasureId,
+                                                         from: appState.selectedDate,
+                                                         to: calendar.date(byAdding: .day,
+                                                                           value: +1,
+                                                                           to: appState.selectedDate)!).first?.value
     }
-
-    func fetchMonthlyData (selectedMonth: Int, selectedYear: Int) async {
-
+    
+    func fetchMonthlyDayData (selectedMonth: Int, selectedYear: Int) async {
+        
         Task { @MainActor in
             let newSensorData =
             await self.networkService.fetchDataForSelectedMonth(cityName: appState.selectedCity.cityName,
                                                                 sensorType: appState.selectedMeasureId,
                                                                 selectedMonth: selectedMonth,
                                                                 selectedYear: selectedYear)
-
+            
             self.appState.cityDataWrapper.updateSensorData(newSensorData)
-                        
+            
             self.monthlyData = appState.cityDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
                                                                          sensorType: appState.selectedMeasureId,
                                                                          from: Date.from(1, selectedMonth,
@@ -227,9 +253,17 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     func updateMonthlyColors (selectedYear: Int) async {
         let date = Date.from(1, 1, selectedYear)!
+        
         self.monthlyAverage =
-        await networkService.wrapperForMonthlyAverage(cityName: appState.selectedCity.cityName,
-                                                      measureType: self.appState.selectedMeasureId,
-                                                      selectedDate: date)
+        await networkService.fetchMonthAverages(cityName: appState.selectedCity.cityName,
+                                                measureType: self.appState.selectedMeasureId,
+                                                selectedDate: date)
+    }
+    func selectFromCalendar () async -> Void {
+        
+        if appState.selectedDate.isSameDay(with: appState.calendarSelection) {
+            await fetchWeeklyAverages(measureId: self.appState.selectedMeasureId,
+                                      selectedDate: self.appState.selectedDate)
+        }
     }
 }

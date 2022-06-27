@@ -25,10 +25,10 @@ struct DateSlider: View {
                         unimplementedPicker = true
                         Task {
                             await dataSource
-                                .fetchMonthlyData(selectedMonth: calendar.dateComponents([.month],
-                                                                                                 from: Date.now).month!,
+                                .fetchMonthlyDayData(selectedMonth: calendar.dateComponents([.month],
+                                                                                         from: Date.now).month!,
                                                   selectedYear: calendar.dateComponents([.year],
-                                                                                                from: Date.now).year!)
+                                                                                        from: Date.now).year!)
                         }
                         
                     } label: {
