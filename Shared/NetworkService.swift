@@ -280,7 +280,8 @@ class NetworkService {
         let toDate = DateFormatter.iso8601Full.string(from: to)
         let sensorId = -1
         
-        let path = "https://\(cityName).pulse.eco/rest/avgData/month?" + "sensorId=\(sensorId)&type=\(measureType)&from=\(fromDate)&to=\(toDate)"
+        let path = "https://\(cityName).pulse.eco/rest/avgData/month?" +
+        "sensorId=\(sensorId)&type=\(measureType)&from=\(fromDate)&to=\(toDate)"
         
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
         let url = URL(string: formattedRequest)!

@@ -159,7 +159,7 @@ class CalendarViewModel: ViewModelProtocol {
                                                                     sensorType: appState.selectedMeasureId,
                                                                     from: from, to: to)
         let allMonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-        var containing:[Int] = []
+        var containing = [Int]()
         for val in monthValues {
             containing.append(val.month)
         }
