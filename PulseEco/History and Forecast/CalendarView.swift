@@ -72,6 +72,7 @@ struct CalendarView: View {
                                        color: color,
                                        highlighted: value.date.isSameDay(with: selectedDate))
                 }
+                .disabled(value.date > calendar.startOfDay(for: Date.now) ? true : false)
             }
         }
         .padding(.vertical, 5)
