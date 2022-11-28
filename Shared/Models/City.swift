@@ -8,7 +8,7 @@
 import Foundation
 import MapKit
 
-// check
+// check stuff
 struct City: Codable, Identifiable, Hashable {
     var id: String { return cityName }
     let cityName, siteName, siteTitle: String
