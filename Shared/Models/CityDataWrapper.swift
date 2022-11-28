@@ -55,7 +55,7 @@ class CityDataWrapper: ObservableObject {
            let color = measure.bands.color(for: Int(today)) {
             history.append(DayDataWrapper(date: Date.now, value: today, color: color))
         } else {
-            if ((currentValue?.values[sensorType]?.isEmpty) == nil) {
+            if (currentValue?.values[sensorType] == nil) {
                 history.append(DayDataWrapper(date: Date.now, value: "N/A", color: "gray"))
             }
         }
