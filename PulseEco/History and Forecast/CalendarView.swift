@@ -199,7 +199,7 @@ struct CalendarView: View {
             LazyVGrid(columns: columns, spacing: 20) {
                 ForEach(years, id: \.self) { year in
                     Button {
-                        pickerType = .day
+                        pickerType = .month
                         viewModel.selectedYear = year
                         Task {
                             await dataSource.updateMonthlyColors(selectedYear: year)
