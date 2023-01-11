@@ -145,7 +145,7 @@ struct MainView: View {
                     self.appState.activeSheet = .languageView
                 }
             }) {
-                Image(systemName: "globe")
+                Image(uiImage: UIImage(named: "menu-icon") ?? UIImage())
                     .resizable()
                     .frame(width: 20, height: 20, alignment: .center)
                     .foregroundColor(Color(AppColors.darkblue))
