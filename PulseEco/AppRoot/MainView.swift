@@ -53,6 +53,7 @@ struct MainView: View {
                         self.appState.citySelectorClicked = false
                     }
                 })
+                /*TODO: Remove this view from here and add it as an clickable list item in the settings view */
             case .languageView: LanguageView()
             }
         }
@@ -91,9 +92,53 @@ struct MainView: View {
                         }
                     }
                     .navigationBarTitle("", displayMode: .inline)
-                    .navigationBarItems(
-                        leading: leadingNavigationItems,
-                        trailing: trailingNavigationItems)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            leadingNavigationItems
+                        }
+                        ToolbarItemGroup(placement: .primaryAction) {
+                            HStack {
+                                Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
+                                    .imageScale(.large)
+                                    .padding(.trailing, (UIWidth)/3.7)
+                                    .onTapGesture {
+                                        if self.appState.citySelectorClicked == false {
+                                            self.appState.selectedSensor = nil
+                                            self.refreshService.refreshData()
+                                        }
+                                    }
+                                /* TODO: Style the menu view to match figma design.
+                                 Hint: https://swiftwithmajid.com/2020/08/05/menus-in-swiftui/
+                                 Change background color on click and add checkmark on the available options.
+                                 Add a property which will have the value of the last selected user option
+                                 Hint: check AppState and used properties there
+                                 */
+                                Menu {
+                                    Section {
+                                        Button(action: { /*TODO: Open new Dashboard view */}) {
+                                            Text("Dashboard")
+                                        }
+                                        
+                                        Button(action: {/*TODO: Open new Settings view */}) {
+                                            Text("Settings")
+                                        }
+                                        
+                                        Button(action: {/*TODO: Open new Map view */}) {
+                                            Text("Map View")
+                                        }
+                                    }
+                                }
+                            label: {
+                                /*TODO: Apply image changes to be aligned as on figma */
+                                Image(systemName: "line.horizontal.3")
+                                    .resizable()
+                                    .frame(width: 20, height: 20, alignment: .center)
+                                    .foregroundColor(Color(AppColors.darkblue))
+                                    .padding(.leading, 15)
+                            }
+                        }
+                    }
+                    }
                 }
                 .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
                 .navigationBarColor(AppColors.white)
@@ -125,31 +170,6 @@ struct MainView: View {
                     .edgesIgnoringSafeArea(.all)
                     .zIndex(3)
                 }
-            }
-        }
-    }
-    
-    var trailingNavigationItems: some View {
-        HStack {
-            Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
-                .imageScale(.large)
-                .padding(.trailing, (UIWidth)/3.7)
-                .onTapGesture {
-                    if self.appState.citySelectorClicked == false {
-                        self.appState.selectedSensor = nil
-                        self.refreshService.refreshData()
-                    }
-                }
-            Button(action: {
-                withAnimation {
-                    self.appState.activeSheet = .languageView
-                }
-            }) {
-                Image(systemName: "globe")
-                    .resizable()
-                    .frame(width: 20, height: 20, alignment: .center)
-                    .foregroundColor(Color(AppColors.darkblue))
-                    .padding(.leading, 15)
             }
         }
     }
