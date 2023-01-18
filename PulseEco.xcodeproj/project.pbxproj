@@ -295,7 +295,7 @@
 		59FAD1D32490C82600AC36A5 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		59FAD1D52490D76200AC36A5 /* SensorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorData.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
-		73CD1F24296D6B69004E3347 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = PulseEco/SettingsView.swift; sourceTree = SOURCE_ROOT; };
+		73CD1F24296D6B69004E3347 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = PulseEco/SettingsView/SettingsView.swift; sourceTree = SOURCE_ROOT; };
 		744A9DEE28575C3000A91789 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		74699B4F282D366100326288 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
 		746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalModifier.swift; sourceTree = "<group>"; };
@@ -405,7 +405,6 @@
 			children = (
 				59103A9F24A4B64C00ED9617 /* DisclaimerView.swift */,
 				59504C0524B45B8900EA4AFF /* DisclaimerViewModel.swift */,
-				73CD1F24296D6B69004E3347 /* SettingsView.swift */,
 			);
 			path = Disclamer;
 			sourceTree = "<group>";
@@ -547,6 +546,7 @@
 				5997F73924A370100035BEEB /* CityList */,
 				5997F73624A36F780035BEEB /* CityMap */,
 				59504C0D24B46B7600EA4AFF /* CustomViews */,
+				73CD1F27296F0DB9004E3347 /* SettingsView */,
 				59103A9E24A4B62F00ED9617 /* Disclamer */,
 				BA12EB0C2611E198005BC654 /* LanguageChange */,
 				74E46614270326BE0010F80E /* Lottie */,
@@ -604,6 +604,14 @@
 				1E515D09282BC115009EFC4D /* DayDataWrapper.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		73CD1F27296F0DB9004E3347 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				73CD1F24296D6B69004E3347 /* SettingsView.swift */,
+			);
+			path = SettingsView;
 			sourceTree = "<group>";
 		};
 		74E46614270326BE0010F80E /* Lottie */ = {

@@ -53,7 +53,7 @@ struct MainView: View {
                         self.appState.citySelectorClicked = false
                     }
                 })
-            case .languageView: LanguageView()
+            case .settingsView: SettingsView(selection: 0, options: ["Dashboard View", "Map View", "Settings"])
             }
         }
     }
@@ -142,12 +142,12 @@ struct MainView: View {
                 }
             Button(action: {
                 withAnimation {
-                    self.appState.activeSheet = .languageView
+                    self.appState.activeSheet = .settingsView
                 }
             }) {
-                Image(uiImage: UIImage(named: "menu-icon") ?? UIImage())
+                Image(systemName: "line.horizontal.3")
                     .resizable()
-                    .frame(width: 20, height: 20, alignment: .center)
+                    .frame(width: 25, height: 15, alignment: .center)
                     .foregroundColor(Color(AppColors.darkblue))
                     .padding(.leading, 15)
             }
