@@ -12,6 +12,7 @@ struct MainView: View {
     @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
+    @State private var isShowingDetailView = false
     
     @State var showingPicker = false
     
@@ -76,7 +77,7 @@ struct MainView: View {
                                                                  citySelectorClicked: appState.citySelectorClicked)
                             MeasureListView(viewModel: viewModel)
                         }
-                        
+                        NavigationLink(destination: LanguageView(), isActive: $isShowingDetailView) { EmptyView() }
                         DateSlider(unimplementedAlert: $appState.showingCalendar,
                                    unimplementedPicker: $showingPicker,
                                    selectedDate: $appState.selectedDate)
@@ -123,7 +124,9 @@ struct MainView: View {
                                             Text("Settings")
                                         }
                                         
-                                        Button(action: {/*TODO: Open new Map view */}) {
+                                        Button(action: {
+                                            isShowingDetailView = true
+                                        }) {
                                             Text("Map View")
                                         }
                                     }
