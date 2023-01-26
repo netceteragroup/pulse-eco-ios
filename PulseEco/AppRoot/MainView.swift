@@ -19,6 +19,7 @@ struct MainView: View {
     @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
+    @State private var isShowingDetailView = false
     
     @State var showingPicker = false
     @State var didTap:Bool = false
@@ -84,7 +85,7 @@ struct MainView: View {
                                                                  citySelectorClicked: appState.citySelectorClicked)
                             MeasureListView(viewModel: viewModel)
                         }
-                        
+                        NavigationLink(destination: LanguageView(), isActive: $isShowingDetailView) { EmptyView() }
                         DateSlider(unimplementedAlert: $appState.showingCalendar,
                                    unimplementedPicker: $showingPicker,
                                    selectedDate: $appState.selectedDate)
