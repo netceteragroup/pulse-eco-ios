@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+struct BlueButtonStyle: MenuStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Menu(configuration)
+            .foregroundColor(.blue)
+    }
+}
+
 struct MainView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var refreshService: RefreshService
@@ -14,7 +21,8 @@ struct MainView: View {
     @EnvironmentObject var dataSource: AppDataSource
     
     @State var showingPicker = false
-    
+    @State var didTap:Bool = false
+
     let mapViewModel: MapViewModel
     
     private let backgroundColor: Color = AppColors.white.color
@@ -113,33 +121,40 @@ struct MainView: View {
                                  Add a property which will have the value of the last selected user option
                                  Hint: check AppState and used properties there
                                  */
+
                                 Menu {
+
                                     Section {
-                                        Button(action: { /*TODO: Open new Dashboard view */}) {
-                                            Text("Dashboard")
-                                        }
+                                        Button(action: {}) {
+                                            Text("Dashboard View")
+                                                                                    }
                                         
-                                        Button(action: {/*TODO: Open new Settings view */}) {
+                                        Button(action: {}) {
+                                            Text("Map View")
+                                               // .menuStyle(BlueButtonStyle())
+                                            
+                                        }
+                                        Button(action: {self.didTap = true}) {
                                             Text("Settings")
                                         }
-                                        
-                                        Button(action: {/*TODO: Open new Map view */}) {
-                                            Text("Map View")
-                                        }
+
+                                    
                                     }
+                                    //.menuStyle(BlueButtonStyle())
                                 }
+
                             label: {
-                                /*TODO: Apply image changes to be aligned as on figma */
                                 Image(systemName: "line.horizontal.3")
                                     .resizable()
-                                    .frame(width: 20, height: 20, alignment: .center)
+                                    .frame(width: 25, height: 15, alignment: .center)
                                     .foregroundColor(Color(AppColors.darkblue))
                                     .padding(.leading, 15)
+                                }
                             }
                         }
                     }
-                    }
                 }
+
                 .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
                 .navigationBarColor(AppColors.white)
                 .zIndex(1)
@@ -200,3 +215,4 @@ extension View {
         self.modifier(NavigationBarModifier(backgroundColor: backgroundColor))
     }
 }
+
