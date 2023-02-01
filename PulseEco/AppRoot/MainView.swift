@@ -20,9 +20,8 @@ struct MainView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @State private var isShowingDetailView = false
-    
     @State var showingPicker = false
-    @State var didTap:Bool = false
+    //@State var checked: Bool = true
 
     let mapViewModel: MapViewModel
     
@@ -85,7 +84,9 @@ struct MainView: View {
                                                                  citySelectorClicked: appState.citySelectorClicked)
                             MeasureListView(viewModel: viewModel)
                         }
-                        NavigationLink(destination: LanguageView(), isActive: $isShowingDetailView) { EmptyView() }
+                       
+                        NavigationLink(destination: SettingsView(),
+                                       isActive: $isShowingDetailView) { EmptyView () }
                         DateSlider(unimplementedAlert: $appState.showingCalendar,
                                    unimplementedPicker: $showingPicker,
                                    selectedDate: $appState.selectedDate)
@@ -122,24 +123,29 @@ struct MainView: View {
                                  Add a property which will have the value of the last selected user option
                                  Hint: check AppState and used properties there
                                  */
-
+                                
                                 Menu {
 
                                     Section {
                                         Button(action: {}) {
                                             Text("Dashboard View")
-                                                                                    }
+//                                            Spacer()
+//                                            if checked {
+//                                                Image(systemName: "checkmark")
+//                                            }
+                                            
+                                        }
                                         
                                         Button(action: {}) {
                                             Text("Map View")
                                                // .menuStyle(BlueButtonStyle())
                                             
                                         }
-                                        Button(action: {self.didTap = true}) {
+                                        Button(action: {
+                                            isShowingDetailView = true
+                                            }) {
                                             Text("Settings")
                                         }
-
-                                    
                                     }
                                     //.menuStyle(BlueButtonStyle())
                                 }

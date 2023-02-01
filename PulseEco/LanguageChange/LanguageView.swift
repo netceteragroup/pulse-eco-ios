@@ -18,7 +18,6 @@ struct LanguageView: View {
     @State var tappedCountry: Country?
 
     var body: some View {
-        NavigationView {
             VStack {
                 List {
                     ForEach(countries, id: \.self) { country in
@@ -41,14 +40,13 @@ struct LanguageView: View {
             }
             .navigationBarColor(AppColors.white)
             .navigationBarTitle(Trema.text(for: "change_app_language"), displayMode: .inline)
-            .navigationBarItems(trailing:
-                                    Button(action: {
-                                        presentationMode.wrappedValue.dismiss()
-                                    }, label: {
-                                        Text(Trema.text(for: "cancel"))
-                                    })
-            )
-        }
+//            .navigationBarItems(trailing:
+//                                    Button(action: {
+//                                        presentationMode.wrappedValue.dismiss()
+//                                    }, label: {
+//                                        Text(Trema.text(for: "cancel"))
+//                                    })
+//            )
         .if(.pad, transform: {
             $0.navigationViewStyle(StackNavigationViewStyle())
         })

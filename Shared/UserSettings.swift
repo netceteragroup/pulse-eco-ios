@@ -1,7 +1,13 @@
 import Foundation
 
+enum AppView {
+    case dashborad
+    case mapView
+    case settings
+}
 class UserSettings: ObservableObject {
 
+    
     private struct Keys {
         static let favouriteCities = "pulseco.favouriteCities"
         static let cityValues = "pulseeco.cityValues"
@@ -37,6 +43,10 @@ class UserSettings: ObservableObject {
             }
         }
     }
+    
+//    @Published var selectedView: AppView {
+//        
+//    }
 
     func removeFavouriteCity(_ city: City) {
         var favouriteCitiesCopy = favouriteCities
