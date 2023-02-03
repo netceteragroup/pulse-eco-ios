@@ -16,28 +16,48 @@ struct SettingsView : View {
     @EnvironmentObject var refreshService: RefreshService
     
     @State private var didTap = false
+    @State private var disclaimer = false
     
     var body: some View {
         NavigationLink(destination: LanguageView(), isActive: $didTap) { EmptyView() }
+        NavigationLink(destination: DisclaimerView(), isActive: $disclaimer) { EmptyView() }
         VStack(alignment: .leading, spacing: 0) {
             List {
-                Button(action: {}) {
-                    Text("My Account")
-                }
-                Divider()
                 Button(action: {didTap = true}){
-                    Text("Change Language")
+                    HStack {
+                        Text("Change Language")
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .padding()
+                    }
                 }
                 Divider()
                 Button(action: {}) {
-                    Text("Used Libraries")
+                    HStack {
+                        Text("Used Libraries")
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .padding()
+                    }
                 }
                 Divider()
                 Button(action: {}) {
-                    Text("Disclaimer")
+                    HStack {
+                        Text("About pulse.eco")
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .padding()
+                    }
                 }
-                
-                
+                Divider()
+                Button(action: {disclaimer = true}) {
+                    HStack {
+                        Text("Disclaimer")
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .padding()
+                    }
+                }
             }
             .listRowInsets(EdgeInsets())
             .listStyle(SidebarListStyle())
@@ -49,7 +69,7 @@ struct SettingsView : View {
         .navigationBarItems(leading: Button(action: {
             presentationMode.wrappedValue.dismiss()
         }, label: {
-            HStack(alignment: .center, spacing: 25) {
+            HStack(alignment: .center, spacing: 33) {
                 HStack {
                     Image(systemName: "chevron.left")
                         .foregroundColor(Color(AppColors.darkblue))

@@ -110,7 +110,7 @@ struct MainView: View {
                             HStack {
                                 Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
                                     .imageScale(.large)
-                                    .padding(.trailing, (UIWidth)/3.7)
+                                    .padding(.trailing, (UIWidth)/4)
                                     .onTapGesture {
                                         if self.appState.citySelectorClicked == false {
                                             self.appState.selectedSensor = nil
@@ -125,7 +125,6 @@ struct MainView: View {
                                  */
                                 
                                 Menu {
-
                                     Section {
                                         Button(action: {}) {
                                             Text("Dashboard View")
@@ -133,13 +132,10 @@ struct MainView: View {
 //                                            if checked {
 //                                                Image(systemName: "checkmark")
 //                                            }
-                                            
                                         }
-                                        
                                         Button(action: {}) {
                                             Text("Map View")
                                                // .menuStyle(BlueButtonStyle())
-                                            
                                         }
                                         Button(action: {
                                             isShowingDetailView = true
