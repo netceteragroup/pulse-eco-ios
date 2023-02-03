@@ -37,5 +37,6 @@ struct DisclaimerView: View {
             Spacer()
         }
         .background(AppColors.white.color)
+        .navigationBarBackButtonHidden(true)
     }
 }

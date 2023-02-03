@@ -17,10 +17,15 @@ struct SettingsView : View {
     
     @State private var didTap = false
     @State private var disclaimer = false
+    @State private var flag = false
+
     
     var body: some View {
+        
         NavigationLink(destination: LanguageView(), isActive: $didTap) { EmptyView() }
+        NavigationLink(destination: AboutView(), isActive: $flag) { EmptyView() }
         NavigationLink(destination: DisclaimerView(), isActive: $disclaimer) { EmptyView() }
+        
         VStack(alignment: .leading, spacing: 0) {
             List {
                 Button(action: {didTap = true}){
@@ -41,7 +46,7 @@ struct SettingsView : View {
                     }
                 }
                 Divider()
-                Button(action: {}) {
+                Button(action: {flag = true}) {
                     HStack {
                         Text("About pulse.eco")
                         Spacer()
@@ -78,12 +83,17 @@ struct SettingsView : View {
                         .foregroundColor(Color(AppColors.darkblue))
                         .font(.system(size: 14, weight: .semibold))
                 }
-                Spacer()
-                Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
-                    .imageScale(.large)
-                    //.padding(.trailing, (UIWidth)/4)
             }
-            //.padding(.trailing, 8)
         }))
+        .toolbar {
+            ToolbarItemGroup(placement: .primaryAction) {
+                HStack {
+                    Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
+                        .imageScale(.large)
+                        .padding(.trailing, (UIWidth)/2.7)
+                        
+                            }
+                        }
+        }
     }
 }

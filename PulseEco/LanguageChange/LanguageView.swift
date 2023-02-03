@@ -38,15 +38,18 @@ struct LanguageView: View {
                 }
                 .listStyle(PlainListStyle())
             }
+            .navigationBarBackButtonHidden(true)
             .navigationBarColor(AppColors.white)
             .navigationBarTitle(Trema.text(for: "change_app_language"), displayMode: .inline)
-//            .navigationBarItems(trailing:
-//                                    Button(action: {
-//                                        presentationMode.wrappedValue.dismiss()
-//                                    }, label: {
-//                                        Text(Trema.text(for: "cancel"))
-//                                    })
-//            )
+            .navigationBarItems(leading:
+                                    Button(action: {
+                                        presentationMode.wrappedValue.dismiss()
+                                    }, label: {
+                                        Image(systemName: "chevron.left")
+                                            .foregroundColor(Color(AppColors.darkblue))
+                                            .font(.system(size: 14, weight: .semibold))
+                                    })
+            )
         .if(.pad, transform: {
             $0.navigationViewStyle(StackNavigationViewStyle())
         })
