@@ -163,12 +163,10 @@ class CalendarViewModel: ViewModelProtocol {
         for val in monthValues {
             containing.append(val.month)
         }
-        
         let missingMonths = allMonths.difference(from: containing)
         for month in missingMonths {
             monthValues.append(DayDataWrapper(date: Date.from(1, month, currentYear)!, value: "", color: "darkblue"))
         }
-        monthValues = monthValues.filter { $0.color != "gray" }
         monthValues = monthValues.sorted(by: { $0.month < $1.month})
         Task {
             await appDataSource.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
