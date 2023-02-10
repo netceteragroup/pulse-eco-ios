@@ -23,6 +23,7 @@ struct AboutView : View {
         }
         .navigationTitle("About pulse.eco")
         .navigationBarBackButtonHidden(true)
+        .navigationBarColor(AppColors.white)
         .navigationBarItems(leading:
                                 Button(action: {
                                     presentationMode.wrappedValue.dismiss()

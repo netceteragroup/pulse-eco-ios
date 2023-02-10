@@ -21,7 +21,6 @@ struct MainView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @State private var isShowingDetailView = false
     @State var showingPicker = false
-    //@State var checked: Bool = true
 
     let mapViewModel: MapViewModel
     
@@ -87,12 +86,12 @@ struct MainView: View {
                        
                         NavigationLink(destination: SettingsView(),
                                        isActive: $isShowingDetailView) { EmptyView () }
+                        
                         DateSlider(unimplementedAlert: $appState.showingCalendar,
                                    unimplementedPicker: $showingPicker,
                                    selectedDate: $appState.selectedDate)
                         
                         ZStack(alignment: .top) {
-                            
                             CityMapView(userSettings: self.appState.userSettings,
                                         mapViewModel: mapViewModel,
                                         proxy: proxy)
@@ -121,29 +120,48 @@ struct MainView: View {
                                  Hint: https://swiftwithmajid.com/2020/08/05/menus-in-swiftui/
                                  Change background color on click and add checkmark on the available options.
                                  Add a property which will have the value of the last selected user option
-                                 Hint: check AppState and used properties there
                                  */
-                                
+                                // Try to organize menu section better, it might be in a separate menuView property
+                                // (as leadingItemView, languageView etc.)
                                 Menu {
                                     Section {
-                                        Button(action: {}) {
+                                        Button(action: {
+                                            self.appState.selectedAppView = .dashboard
+                                        }) {
                                             Text("Dashboard View")
-//                                            Spacer()
-//                                            if checked {
-//                                                Image(systemName: "checkmark")
-//                                            }
+                                            Spacer()
+                                            if self.appState.selectedAppView == .dashboard {
+                                                Image(systemName: "checkmark")
+                                                    .foregroundColor(Color(AppColors.darkblue))
+                                            }
                                         }
-                                        Button(action: {}) {
+                                        .background(self.appState.selectedAppView == .dashboard ? Color.blue : Color.clear)
+
+                                        Button(action: {
+                                            self.appState.selectedAppView = .mapView
+                                        }) {
                                             Text("Map View")
-                                               // .menuStyle(BlueButtonStyle())
+                                            Spacer()
+                                            if self.appState.selectedAppView == .mapView {
+                                                Image(systemName: "checkmark")
+                                                    .foregroundColor(Color(AppColors.darkblue))
+                                            }
                                         }
+                                        .background(self.appState.selectedAppView == .mapView ? Color.blue : Color.clear)
+
                                         Button(action: {
                                             isShowingDetailView = true
-                                            }) {
+                                            self.appState.selectedAppView = .settings
+                                        }) {
                                             Text("Settings")
+                                            Spacer()
+                                            if self.appState.selectedAppView == .settings {
+                                                Image(systemName: "checkmark")
+                                                    .foregroundColor(Color(AppColors.darkblue))
+                                            }
                                         }
+                                        .background(Color.blue.opacity(0.8))
                                     }
-                                    //.menuStyle(BlueButtonStyle())
                                 }
 
                             label: {
@@ -211,6 +229,10 @@ struct MainView: View {
         }
         .accentColor(AppColors.black.color)
     }
+    
+//    var menu : some View {
+//
+//    }
 }
 
 extension View {
