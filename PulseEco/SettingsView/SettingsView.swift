@@ -20,7 +20,7 @@ struct SettingsView : View {
     @State private var flag = false
 
     
-    var body: some View {
+    var body : some View {
         
         NavigationLink(destination: LanguageView(), isActive: $didTap) { EmptyView() }
         NavigationLink(destination: AboutView(), isActive: $flag) { EmptyView() }
