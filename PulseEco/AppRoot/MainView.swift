@@ -106,72 +106,7 @@ struct MainView: View {
                             leadingNavigationItems
                         }
                         ToolbarItemGroup(placement: .primaryAction) {
-                            HStack {
-                                Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
-                                    .imageScale(.large)
-                                    .padding(.trailing, (UIWidth)/4)
-                                    .onTapGesture {
-                                        if self.appState.citySelectorClicked == false {
-                                            self.appState.selectedSensor = nil
-                                            self.refreshService.refreshData()
-                                        }
-                                    }
-                                /* TODO: Style the menu view to match figma design.
-                                 Hint: https://swiftwithmajid.com/2020/08/05/menus-in-swiftui/
-                                 Change background color on click and add checkmark on the available options.
-                                 Add a property which will have the value of the last selected user option
-                                 */
-                                // Try to organize menu section better, it might be in a separate menuView property
-                                // (as leadingItemView, languageView etc.)
-                                Menu {
-                                    Section {
-                                        Button(action: {
-                                            self.appState.selectedAppView = .dashboard
-                                        }) {
-                                            Text("Dashboard View")
-                                            Spacer()
-                                            if self.appState.selectedAppView == .dashboard {
-                                                Image(systemName: "checkmark")
-                                                    .foregroundColor(Color(AppColors.darkblue))
-                                            }
-                                        }
-                                        .background(self.appState.selectedAppView == .dashboard ? Color.blue : Color.clear)
-
-                                        Button(action: {
-                                            self.appState.selectedAppView = .mapView
-                                        }) {
-                                            Text("Map View")
-                                            Spacer()
-                                            if self.appState.selectedAppView == .mapView {
-                                                Image(systemName: "checkmark")
-                                                    .foregroundColor(Color(AppColors.darkblue))
-                                            }
-                                        }
-                                        .background(self.appState.selectedAppView == .mapView ? Color.blue : Color.clear)
-
-                                        Button(action: {
-                                            isShowingDetailView = true
-                                            self.appState.selectedAppView = .settings
-                                        }) {
-                                            Text("Settings")
-                                            Spacer()
-                                            if self.appState.selectedAppView == .settings {
-                                                Image(systemName: "checkmark")
-                                                    .foregroundColor(Color(AppColors.darkblue))
-                                            }
-                                        }
-                                        .background(Color.blue.opacity(0.8))
-                                    }
-                                }
-
-                            label: {
-                                Image(systemName: "line.horizontal.3")
-                                    .resizable()
-                                    .frame(width: 25, height: 15, alignment: .center)
-                                    .foregroundColor(Color(AppColors.darkblue))
-                                    .padding(.leading, 15)
-                                }
-                            }
+                            trailingNavigationItem
                         }
                     }
                 }
@@ -210,6 +145,76 @@ struct MainView: View {
         }
     }
     
+    var trailingNavigationItem: some View {
+        HStack {
+            Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
+                .imageScale(.large)
+                .padding(.trailing, (UIWidth)/4)
+                .onTapGesture {
+                    if self.appState.citySelectorClicked == false {
+                        self.appState.selectedSensor = nil
+                        self.refreshService.refreshData()
+                    }
+                }
+          menuItem
+        }
+    }
+    
+    /* TODO: Style the menu view to match figma design.
+     Hint: https://swiftwithmajid.com/2020/08/05/menus-in-swiftui/
+     Change background color on click and add checkmark on the available options.
+     Add a property which will have the value of the last selected user option
+     */
+    // Try to organize menu section better, it might be in a separate menuView property
+    // (as leadingItemView, languageView etc.)
+    var menuItem: some View {
+        Menu {
+            Section {
+                Button(action: {
+                    self.appState.selectedAppView = .dashboard
+                }) {
+                    Text("Dashboard View")
+                    Spacer()
+                    if self.appState.selectedAppView == .dashboard {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(Color(AppColors.darkblue))
+                    }
+                }
+                
+                Button(action: {
+                    self.appState.selectedAppView = .mapView
+                }) {
+                    Text("Map View")
+                    Spacer()
+                    if self.appState.selectedAppView == .mapView {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(Color(AppColors.darkblue))
+                    }
+                }
+                
+                Button(action: {
+                    isShowingDetailView = true
+                    self.appState.selectedAppView = .settings
+                }) {
+                    Text("Settings")
+                    Spacer()
+                    if self.appState.selectedAppView == .settings {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(Color(AppColors.darkblue))
+                    }
+                }
+            }
+        }
+        
+    label: {
+        Image(systemName: "line.horizontal.3")
+            .resizable()
+            .frame(width: 25, height: 15, alignment: .center)
+            .foregroundColor(Color(AppColors.darkblue))
+            .padding(.leading, 15)
+        }
+    }
+    
     var leadingNavigationItems: some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) {
@@ -229,10 +234,6 @@ struct MainView: View {
         }
         .accentColor(AppColors.black.color)
     }
-    
-//    var menu : some View {
-//
-//    }
 }
 
 extension View {
