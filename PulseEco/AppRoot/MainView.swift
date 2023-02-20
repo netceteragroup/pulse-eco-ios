@@ -19,7 +19,7 @@ struct MainView: View {
     @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
-    @State private var isShowingDetailView = false
+    @State private var isShowingSettingsView = false
     @State var showingPicker = false
 
     let mapViewModel: MapViewModel
@@ -85,7 +85,7 @@ struct MainView: View {
                         }
                        
                         NavigationLink(destination: SettingsView(),
-                                       isActive: $isShowingDetailView) { EmptyView () }
+                                       isActive: $isShowingSettingsView) { EmptyView () }
                         
                         DateSlider(unimplementedAlert: $appState.showingCalendar,
                                    unimplementedPicker: $showingPicker,
@@ -160,20 +160,13 @@ struct MainView: View {
         }
     }
     
-    /* TODO: Style the menu view to match figma design.
-     Hint: https://swiftwithmajid.com/2020/08/05/menus-in-swiftui/
-     Change background color on click and add checkmark on the available options.
-     Add a property which will have the value of the last selected user option
-     */
-    // Try to organize menu section better, it might be in a separate menuView property
-    // (as leadingItemView, languageView etc.)
     var menuItem: some View {
         Menu {
             Section {
                 Button(action: {
                     self.appState.selectedAppView = .dashboard
                 }) {
-                    Text("Dashboard View")
+                    Text(Trema.text(for: "dashboard_view"))
                     Spacer()
                     if self.appState.selectedAppView == .dashboard {
                         Image(systemName: "checkmark")
@@ -184,7 +177,7 @@ struct MainView: View {
                 Button(action: {
                     self.appState.selectedAppView = .mapView
                 }) {
-                    Text("Map View")
+                    Text(Trema.text(for: "map_view"))
                     Spacer()
                     if self.appState.selectedAppView == .mapView {
                         Image(systemName: "checkmark")
@@ -193,10 +186,10 @@ struct MainView: View {
                 }
                 
                 Button(action: {
-                    isShowingDetailView = true
+                    isShowingSettingsView = true
                     self.appState.selectedAppView = .settings
                 }) {
-                    Text("Settings")
+                    Text(Trema.text(for: "settings_view"))
                     Spacer()
                     if self.appState.selectedAppView == .settings {
                         Image(systemName: "checkmark")

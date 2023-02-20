@@ -6,11 +6,6 @@ enum AppView: String, Codable {
     case settings
 }
 
-/* TODO: Do better code organization here
- Everything that is saved in a UserDefaults can also go in a UserDefault extension OR create new store
- where you will keep the values that needs to be stored.
- ***Hint***
-*/
 class UserSettings: ObservableObject {
     private struct Keys {
         static let favouriteCities = "pulseco.favouriteCities"
@@ -91,26 +86,3 @@ class UserSettings: ObservableObject {
     }
 }
 
-/*TODO: Add this property wrapper outside of UserSettings.
- ex. it can be in a UserDefaults extension - https://docs.swift.org/swift-book/LanguageGuide/Extensions.html
-*/
-@propertyWrapper
-struct UserDefaultsEnumWrapper<Value: RawRepresentable> {
-    let key: String
-    let defaultValue: Value
-    let container: UserDefaults = .standard
-    
-    var wrappedValue: Value {
-        get {
-            if let savedObject = container.object(forKey: key) as? Value.RawValue,
-               let result = Value(rawValue: savedObject) {
-                return result
-            } else {
-                return defaultValue
-            }
-        }
-        set {
-            container.set(newValue.rawValue, forKey: key)
-        }
-    }
-}

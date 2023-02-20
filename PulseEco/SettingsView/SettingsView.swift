@@ -13,7 +13,6 @@ struct SettingsView : View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
-    @EnvironmentObject var refreshService: RefreshService
     
     @State private var didTap = false
     @State private var disclaimer = false
@@ -30,7 +29,7 @@ struct SettingsView : View {
             List {
                 Button(action: {didTap = true}){
                     HStack {
-                        Text("Change Language")
+                        Text(Trema.text(for: "settings_option_sub_title_language"))
                         Spacer()
                         Image(systemName: "chevron.right")
                             .padding()
@@ -39,7 +38,7 @@ struct SettingsView : View {
                 Divider()
                 Button(action: {}) {
                     HStack {
-                        Text("Used Libraries")
+                        Text(Trema.text(for: "settings_option_title_libraries"))
                         Spacer()
                         Image(systemName: "chevron.right")
                             .padding()
@@ -48,7 +47,7 @@ struct SettingsView : View {
                 Divider()
                 Button(action: {flag = true}) {
                     HStack {
-                        Text("About pulse.eco")
+                        Text(Trema.text(for: "settings_option_title_about"))
                         Spacer()
                         Image(systemName: "chevron.right")
                             .padding()
@@ -57,7 +56,7 @@ struct SettingsView : View {
                 Divider()
                 Button(action: {disclaimer = true}) {
                     HStack {
-                        Text("Disclaimer")
+                        Text(Trema.text(for: "disclaimer"))
                         Spacer()
                         Image(systemName: "chevron.right")
                             .padding()
@@ -79,7 +78,7 @@ struct SettingsView : View {
                     Image(systemName: "chevron.left")
                         .foregroundColor(Color(AppColors.darkblue))
                         .font(.system(size: 14, weight: .semibold))
-                    Text("SETTINGS")
+                    Text(Trema.text(for: "settings_view"))
                         .foregroundColor(Color(AppColors.darkblue))
                         .font(.system(size: 14, weight: .semibold))
                 }
