@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-struct BlueButtonStyle: MenuStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        Menu(configuration)
-            .foregroundColor(.blue)
-    }
-}
-
 struct MainView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var refreshService: RefreshService
