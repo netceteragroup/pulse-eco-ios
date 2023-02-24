@@ -16,12 +16,12 @@ struct AboutView : View {
     
     var body: some View {
         VStack {
-            Text("Pulse.eco is a crowdsourcing platform, which gathers and presents environmental data. Our network of sensor installations and other third-party sources gathers the data and translates them into visual and easy to understand information. You can learn about the pollution, humidity, temperature or noise in your surroundings with just a few clicks. Even better, you can participate in expanding our network and setup your own devices, to enrich the data sourcing.")
+            Text(Trema.text(for: "settings_about_pulse_eco_paragraph"))
                 .padding()
                 .frame(width: 400)
                 .lineSpacing(10)
         }
-        .navigationTitle("About pulse.eco")
+        .navigationTitle(Text(Trema.text(for: "settings_about_pulse_eco_paragraph")))
         .navigationBarBackButtonHidden(true)
         .navigationBarColor(AppColors.white)
         .navigationBarItems(leading:

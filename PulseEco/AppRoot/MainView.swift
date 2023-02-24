@@ -53,8 +53,6 @@ struct MainView: View {
                         self.appState.citySelectorClicked = false
                     }
                 })
-                /*TODO: Remove this view from here and add it as an clickable list item in the settings view */
-            case .languageView: LanguageView()
             }
         }
     }
@@ -183,15 +181,17 @@ struct MainView: View {
                     self.appState.selectedAppView = .settings
                 }) {
                     Text(Trema.text(for: "settings_view"))
+                        .foregroundColor(self.appState.selectedAppView == .settings ? Color.white : Color.black) // Set the text color to white for the selected option -- but it doesn't work
                     Spacer()
                     if self.appState.selectedAppView == .settings {
                         Image(systemName: "checkmark")
                             .foregroundColor(Color(AppColors.darkblue))
                     }
                 }
+                .background(self.appState.selectedAppView == .settings ? Color.red : Color.white) // Set the background color to red for the selected option -- but it doesn't work
             }
         }
-        
+    
     label: {
         Image(systemName: "line.horizontal.3")
             .resizable()

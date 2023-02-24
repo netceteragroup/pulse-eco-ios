@@ -46,15 +46,6 @@ class UserSettings: ObservableObject {
             }
         }
     }
-    
-    static var appLanguage: String {
-        get {
-            UserDefaults.standard.string(forKey: "AppLanguage") ?? "en"
-        }
-        set (toLanguage) {
-            UserDefaults.standard.set(toLanguage, forKey: "AppLanguage")
-        }
-    }
 
     func removeFavouriteCity(_ city: City) {
         var favouriteCitiesCopy = favouriteCities

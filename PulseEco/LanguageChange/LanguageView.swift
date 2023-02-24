@@ -41,15 +41,11 @@ struct LanguageView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarColor(AppColors.white)
             .navigationBarTitle(Trema.text(for: "change_app_language"), displayMode: .inline)
-            .navigationBarItems(leading:
-                                    Button(action: {
-                                        presentationMode.wrappedValue.dismiss()
-                                    }, label: {
-                                        Image(systemName: "chevron.left")
-                                            .foregroundColor(Color(AppColors.darkblue))
-                                            .font(.system(size: 14, weight: .semibold))
-                                    })
-            )
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                        leadingNavigationItem
+                    }
+            }
         .if(.pad, transform: {
             $0.navigationViewStyle(StackNavigationViewStyle())
         })
@@ -66,6 +62,15 @@ struct LanguageView: View {
                                 self.selectCountry(country: item)
                             }))
         }
+    }
+    var leadingNavigationItem: some View {
+        Button(action: {
+            presentationMode.wrappedValue.dismiss()
+        }, label: {
+            Image(systemName: "chevron.left")
+                .foregroundColor(Color(AppColors.darkblue))
+                .font(.system(size: 14, weight: .semibold))
+        })
     }
 
     func selectCountry(country: Country) {
