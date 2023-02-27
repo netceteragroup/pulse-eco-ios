@@ -89,6 +89,7 @@
 		59FAD1D42490C82600AC36A5 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D32490C82600AC36A5 /* City.swift */; };
 		59FAD1D62490D76200AC36A5 /* SensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D52490D76200AC36A5 /* SensorData.swift */; };
 		59FAD1DA2490FD8400AC36A5 /* CityOverallValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */; };
+		5A9ECCE629ACDDCD003B9221 /* CityRowData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9ECCE529ACDDCD003B9221 /* CityRowData.swift */; };
 		730B4DE4299E5E3800B32089 /* UserDefaultsEnumWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730B4DE3299E5E3800B32089 /* UserDefaultsEnumWrapper.swift */; };
 		730B4DE529A368C800B32089 /* UserDefaultsEnumWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730B4DE3299E5E3800B32089 /* UserDefaultsEnumWrapper.swift */; };
 		730B4DE629A368C900B32089 /* UserDefaultsEnumWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730B4DE3299E5E3800B32089 /* UserDefaultsEnumWrapper.swift */; };
@@ -299,6 +300,7 @@
 		59FAD1D32490C82600AC36A5 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		59FAD1D52490D76200AC36A5 /* SensorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorData.swift; sourceTree = "<group>"; };
 		59FAD1D92490FD8400AC36A5 /* CityOverallValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityOverallValues.swift; sourceTree = "<group>"; };
+		5A9ECCE529ACDDCD003B9221 /* CityRowData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityRowData.swift; sourceTree = "<group>"; };
 		730B4DE3299E5E3800B32089 /* UserDefaultsEnumWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsEnumWrapper.swift; sourceTree = "<group>"; };
 		735C2887298D0C5E00F19A38 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AboutView.swift; path = PulseEco/SettingsView/AboutView.swift; sourceTree = SOURCE_ROOT; };
 		73CD1F28297AB580004E3347 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -497,6 +499,7 @@
 				593C263524BC8969005152BE /* CityRowView.swift */,
 				593C264424BCAD19005152BE /* SearchBar.swift */,
 				593C263B24BC8D6A005152BE /* FavouriteCities */,
+				5A9ECCE529ACDDCD003B9221 /* CityRowData.swift */,
 			);
 			path = CityList;
 			sourceTree = "<group>";
@@ -960,6 +963,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A9ECCE629ACDDCD003B9221 /* CityRowData.swift in Sources */,
 				593D8C9C249A171E006B88AC /* FavouriteCityRowView.swift in Sources */,
 				3288687524B51F5E009CC56D /* SelectedSensorView.swift in Sources */,
 				592201AD24AA656A00025F1F /* NoReadingsView.swift in Sources */,

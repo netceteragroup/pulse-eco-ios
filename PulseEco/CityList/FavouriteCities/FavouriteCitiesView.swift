@@ -42,27 +42,27 @@ struct FavouriteCitiesView: View {
                     }
                     .listStyle(InsetGroupedListStyle())
                     .overlay(ShadowOnBottomOfView())
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            self.appState.activeSheet = .cityListView
-                        }) {
-                            VStack(alignment: .center, spacing: 0) {
-                                Image(systemName: "plus.circle")
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(Color(AppColors.darkblue))
-                                Text(Trema.text(for: "add_city_button"))
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .foregroundColor(Color(AppColors.darkblue))
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                self.appState.activeSheet = .cityListView
+                            }) {
+                                VStack(alignment: .center, spacing: 0) {
+                                    Image(systemName: "plus.circle")
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
+                                        .foregroundColor(Color(AppColors.darkblue))
+                                        Text(Trema.text(for: "add_city_button"))
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .foregroundColor(Color(AppColors.darkblue))
+                                }
+                                .padding(.horizontal, 40)
+                                .padding(.top, 8)
+                                .padding(.bottom, max(proxy.safeAreaInsets.bottom, 8))
                             }
-                            .padding(.horizontal, 40)
-                            .padding(.top, 8)
-                            .padding(.bottom, max(proxy.safeAreaInsets.bottom, 8))
+                            Spacer()
                         }
-                        Spacer()
-                    }
-                    .background(AppColors.white.color)
+                        .background(AppColors.white.color)
                 }
             }
         }

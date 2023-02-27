@@ -14,7 +14,7 @@ struct MainView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @State private var isShowingSettingsView = false
     @State var showingPicker = false
-
+    var cityRowData = CityRowData()
     let mapViewModel: MapViewModel
     
     private let backgroundColor: Color = AppColors.white.color
@@ -61,51 +61,34 @@ struct MainView: View {
         LoadingDialog()
     }
     
-    var contentView: some View {
-        GeometryReader { proxy in
-            ZStack(alignment: .top) {
-                NavigationView {
-                    VStack(spacing: 0) {
-                        VStack(spacing: 0) {
-                            let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
-                                                                 cityName: appState.selectedCity.cityName,
-                                                                 measuresList: dataSource.measures,
-                                                                 cityValues: dataSource.cityOverall,
-                                                                 citySelectorClicked: appState.citySelectorClicked)
-                            MeasureListView(viewModel: viewModel)
-                        }
-                       
-                        NavigationLink(destination: SettingsView(),
-                                       isActive: $isShowingSettingsView) { EmptyView () }
-                        
-                        DateSlider(unimplementedAlert: $appState.showingCalendar,
-                                   unimplementedPicker: $showingPicker,
-                                   selectedDate: $appState.selectedDate)
-                        
-                        ZStack(alignment: .top) {
-                            CityMapView(userSettings: self.appState.userSettings,
-                                        mapViewModel: mapViewModel,
-                                        proxy: proxy)
-                            .id("CityMapView")
-                            .edgesIgnoringSafeArea([.horizontal, .bottom])
-                            
-                        }
-                    }
-                    .navigationBarTitle("", displayMode: .inline)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            leadingNavigationItems
-                        }
-                        ToolbarItemGroup(placement: .primaryAction) {
-                            trailingNavigationItem
-                        }
-                    }
-                }
+    @ViewBuilder
+    var mainView: some View {
+        switch appState.selectedAppView {
+        case .mapView:
+            mapView
+        case .dashboard:
+            dashboardView
+        case .settings:
+            //TODO: check which view should be shown when the user gets back from settings
+           mapView
+        }
+    }
 
-                .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
-                .navigationBarColor(AppColors.white)
-                .zIndex(1)
-                if self.appState.showSensorDetails {
+    var mapView: some View {
+        GeometryReader { proxy in
+            VStack(spacing: 0) {
+                DateSlider(unimplementedAlert: $appState.showingCalendar,
+                           unimplementedPicker: $showingPicker,
+                           selectedDate: $appState.selectedDate)
+                
+                ZStack(alignment: .top) {
+                    CityMapView(userSettings: self.appState.userSettings,
+                                mapViewModel: mapViewModel,
+                                proxy: proxy)
+                    .id("CityMapView")
+                    .edgesIgnoringSafeArea([.horizontal, .bottom])
+                }
+                if appState.showSensorDetails {
                     SlideOverCard {
                         SensorDetailsView(viewModel: sensorDetailsViewModel)
                             .frame(maxWidth: UIScreen.main.bounds.width)
@@ -134,6 +117,71 @@ struct MainView: View {
                 }
             }
         }
+    }
+    
+    var contentView: some View {
+            ZStack(alignment: .top) {
+                NavigationView {
+                    VStack(spacing: 0) {
+                        VStack(spacing: 0) {
+                            let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
+                                                                 cityName: appState.selectedCity.cityName,
+                                                                 measuresList: dataSource.measures,
+                                                                 cityValues: dataSource.cityOverall,
+                                                                 citySelectorClicked: appState.citySelectorClicked)
+                            MeasureListView(viewModel: viewModel)
+                        }
+                       
+                        NavigationLink(destination: SettingsView(),
+                                       isActive: $isShowingSettingsView) { EmptyView () }
+                       mainView
+                    }
+                    .navigationBarTitle("", displayMode: .inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            leadingNavigationItems
+                        }
+                        ToolbarItemGroup(placement: .primaryAction) {
+                            trailingNavigationItem
+                        }
+                    }
+                }
+
+                .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
+                .navigationBarColor(AppColors.white)
+                .zIndex(1)
+            }
+        }
+    
+    //TODO: Style the dashboard view properly (according to Figma)
+    var dashboardView: some View {
+        GeometryReader { proxy in
+            VStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 20) {
+                    FavouriteCityRowView(viewModel: cityRowData.updateCityRowValues(for: appState.selectedCity,
+                                                                                    cityValues: appState.userSettings.cityValues,
+                                                                                    selectedMeasure: appState.selectedMeasureId,
+                                                                                    measureList: dataSource.measures))
+                    .contentShape(RoundedRectangle(cornerRadius: 2.0))
+                    Text("Add the next view that it is a part of the dashboard view HERE")
+                }
+                .padding(.all, 16)
+                Spacer()
+                if self.appState.citySelectorClicked {
+                    FavouriteCitiesView(viewModel:
+                                            FavouriteCitiesViewModel(
+                                                selectedMeasure: appState.selectedMeasureId,
+                                                favouriteCities: appState.userSettings.favouriteCities,
+                                                cityValues: appState.userSettings.cityValues,
+                                                measureList: dataSource.measures),
+                                        userSettings: appState.userSettings,
+                                        proxy: proxy)
+                    .overlay(ShadowOnTopOfView())
+                    .animation(nil, value: self.appState.citySelectorClicked)
+                }
+            }
+        }
+        .overlay(ShadowOnTopOfView())
     }
     
     var trailingNavigationItem: some View {
