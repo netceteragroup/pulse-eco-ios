@@ -12,9 +12,9 @@ struct MainView: View {
     @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
-    
+    @State private var isShowingSettingsView = false
     @State var showingPicker = false
-    
+
     let mapViewModel: MapViewModel
     
     private let backgroundColor: Color = AppColors.white.color
@@ -53,7 +53,6 @@ struct MainView: View {
                         self.appState.citySelectorClicked = false
                     }
                 })
-            case .languageView: LanguageView()
             }
         }
     }
@@ -75,13 +74,15 @@ struct MainView: View {
                                                                  citySelectorClicked: appState.citySelectorClicked)
                             MeasureListView(viewModel: viewModel)
                         }
+                       
+                        NavigationLink(destination: SettingsView(),
+                                       isActive: $isShowingSettingsView) { EmptyView () }
                         
                         DateSlider(unimplementedAlert: $appState.showingCalendar,
                                    unimplementedPicker: $showingPicker,
                                    selectedDate: $appState.selectedDate)
                         
                         ZStack(alignment: .top) {
-                            
                             CityMapView(userSettings: self.appState.userSettings,
                                         mapViewModel: mapViewModel,
                                         proxy: proxy)
@@ -91,10 +92,16 @@ struct MainView: View {
                         }
                     }
                     .navigationBarTitle("", displayMode: .inline)
-                    .navigationBarItems(
-                        leading: leadingNavigationItems,
-                        trailing: trailingNavigationItems)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            leadingNavigationItems
+                        }
+                        ToolbarItemGroup(placement: .primaryAction) {
+                            trailingNavigationItem
+                        }
+                    }
                 }
+
                 .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
                 .navigationBarColor(AppColors.white)
                 .zIndex(1)
@@ -129,28 +136,66 @@ struct MainView: View {
         }
     }
     
-    var trailingNavigationItems: some View {
+    var trailingNavigationItem: some View {
         HStack {
             Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
                 .imageScale(.large)
-                .padding(.trailing, (UIWidth)/3.7)
+                .padding(.trailing, (UIWidth)/4)
                 .onTapGesture {
                     if self.appState.citySelectorClicked == false {
                         self.appState.selectedSensor = nil
                         self.refreshService.refreshData()
                     }
                 }
-            Button(action: {
-                withAnimation {
-                    self.appState.activeSheet = .languageView
+          menuItem
+        }
+    }
+    
+    var menuItem: some View {
+        Menu {
+            Section {
+                Button(action: {
+                    self.appState.selectedAppView = .dashboard
+                }) {
+                    Text(Trema.text(for: "dashboard_view"))
+                    Spacer()
+                    if self.appState.selectedAppView == .dashboard {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(Color(AppColors.darkblue))
+                    }
                 }
-            }) {
-                Image(systemName: "globe")
-                    .resizable()
-                    .frame(width: 20, height: 20, alignment: .center)
-                    .foregroundColor(Color(AppColors.darkblue))
-                    .padding(.leading, 15)
+                
+                Button(action: {
+                    self.appState.selectedAppView = .mapView
+                }) {
+                    Text(Trema.text(for: "map_view"))
+                    Spacer()
+                    if self.appState.selectedAppView == .mapView {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(Color(AppColors.darkblue))
+                    }
+                }
+                
+                Button(action: {
+                    isShowingSettingsView = true
+                    self.appState.selectedAppView = .settings
+                }) {
+                    Text(Trema.text(for: "settings_view"))
+                    Spacer()
+                    if self.appState.selectedAppView == .settings {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(Color(AppColors.darkblue))
+                    }
+                }
             }
+        }
+    
+    label: {
+        Image(systemName: "line.horizontal.3")
+            .resizable()
+            .frame(width: 25, height: 15, alignment: .center)
+            .foregroundColor(Color(AppColors.darkblue))
+            .padding(.leading, 15)
         }
     }
     
@@ -180,3 +225,4 @@ extension View {
         self.modifier(NavigationBarModifier(backgroundColor: backgroundColor))
     }
 }
+

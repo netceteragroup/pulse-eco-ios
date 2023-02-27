@@ -18,7 +18,6 @@ struct LanguageView: View {
     @State var tappedCountry: Country?
 
     var body: some View {
-        NavigationView {
             VStack {
                 List {
                     ForEach(countries, id: \.self) { country in
@@ -39,16 +38,14 @@ struct LanguageView: View {
                 }
                 .listStyle(PlainListStyle())
             }
+            .navigationBarBackButtonHidden(true)
             .navigationBarColor(AppColors.white)
             .navigationBarTitle(Trema.text(for: "change_app_language"), displayMode: .inline)
-            .navigationBarItems(trailing:
-                                    Button(action: {
-                                        presentationMode.wrappedValue.dismiss()
-                                    }, label: {
-                                        Text(Trema.text(for: "cancel"))
-                                    })
-            )
-        }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                        leadingNavigationItem
+                    }
+            }
         .if(.pad, transform: {
             $0.navigationViewStyle(StackNavigationViewStyle())
         })
@@ -65,6 +62,15 @@ struct LanguageView: View {
                                 self.selectCountry(country: item)
                             }))
         }
+    }
+    var leadingNavigationItem: some View {
+        Button(action: {
+            presentationMode.wrappedValue.dismiss()
+        }, label: {
+            Image(systemName: "chevron.left")
+                .foregroundColor(Color(AppColors.darkblue))
+                .font(.system(size: 14, weight: .semibold))
+        })
     }
 
     func selectCountry(country: Country) {

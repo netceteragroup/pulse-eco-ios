@@ -1,11 +1,17 @@
 import Foundation
 
-class UserSettings: ObservableObject {
+enum AppView: String, Codable {
+    case dashboard
+    case mapView
+    case settings
+}
 
+class UserSettings: ObservableObject {
     private struct Keys {
         static let favouriteCities = "pulseco.favouriteCities"
         static let cityValues = "pulseeco.cityValues"
         static let selectedCity = "puseleco.selectedCity"
+        static let selectedAppView = "puseleco.selectedAppView"
     }
 
     @Published var favouriteCities: [City] {
@@ -22,6 +28,9 @@ class UserSettings: ObservableObject {
             }
         }
     }
+    
+    @UserDefaultsEnumWrapper(key: Keys.selectedAppView, defaultValue: AppView.dashboard)
+    var selectedAppView: AppView
 
     static var selectedCity: City {
         get {
@@ -67,3 +76,4 @@ class UserSettings: ObservableObject {
         }
     }
 }
+

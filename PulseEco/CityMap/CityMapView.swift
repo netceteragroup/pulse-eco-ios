@@ -78,5 +78,4 @@ enum ActiveSheet: Int, Identifiable {
     
     case disclaimerView
     case cityListView
-    case languageView
 }

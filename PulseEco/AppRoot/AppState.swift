@@ -12,6 +12,8 @@ class AppState: ObservableObject, ViewModelDependency {
             UserSettings.selectedCity = selectedCity
         }
     }
+    
+    @Published var selectedAppView: AppView = UserSettings().selectedAppView
     @Published var showSensorDetails: Bool = false
     @Published var selectedSensor: SensorPinModel?
     @Published var blurBackground: Bool = false
