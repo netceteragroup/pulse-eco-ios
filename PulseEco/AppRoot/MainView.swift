@@ -120,6 +120,7 @@ struct MainView: View {
     }
     
     var contentView: some View {
+        GeometryReader { proxy in
             ZStack(alignment: .top) {
                 NavigationView {
                     VStack(spacing: 0) {
@@ -134,7 +135,24 @@ struct MainView: View {
                        
                         NavigationLink(destination: SettingsView(),
                                        isActive: $isShowingSettingsView) { EmptyView () }
-                       mainView
+                        
+                        if appState.selectedAppView == .mapView {
+                            DateSlider(unimplementedAlert: $appState.showingCalendar,
+                                       unimplementedPicker: $showingPicker,
+                                       selectedDate: $appState.selectedDate)
+                            
+                            ZStack(alignment: .top) {
+                                CityMapView(userSettings: self.appState.userSettings,
+                                            mapViewModel: mapViewModel,
+                                            proxy: proxy)
+                                .id("CityMapView")
+                                .edgesIgnoringSafeArea([.horizontal, .bottom])
+                                
+                            }
+                        }
+                        if appState.selectedAppView == .dashboard {
+                            dashboardView
+                        }
                     }
                     .navigationBarTitle("", displayMode: .inline)
                     .toolbar {
@@ -150,8 +168,36 @@ struct MainView: View {
                 .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
                 .navigationBarColor(AppColors.white)
                 .zIndex(1)
+                if self.appState.showSensorDetails && appState.selectedAppView == .mapView {
+                    SlideOverCard {
+                        SensorDetailsView(viewModel: sensorDetailsViewModel)
+                            .frame(maxWidth: UIScreen.main.bounds.width)
+                    }
+                    .transition(.move(edge: .bottom))
+                    .zIndex(2) // zIndexes are needed to maintain dismiss transition
+                }
+                if appState.showingCalendar {
+                    VStack {
+                        CalendarView(showingCalendar: $appState.showingCalendar,
+                                     selectedDate: $appState.selectedDate,
+                                     calendarSelection: $appState.calendarSelection,
+                                     viewModelClosure: CalendarViewModel(appState: self.appState,
+                                                                         appDataSource: self.dataSource))
+                        .cornerRadius(4)
+                        .shadow(color: Color(AppColors.shadowColor), radius: 20)
+                        .padding(.top, 180)
+                        .padding(.all)
+                        Spacer()
+                    }
+                    .background(Color.gray.opacity(0.8).onTapGesture {
+                        appState.showingCalendar = false
+                    })
+                    .edgesIgnoringSafeArea(.all)
+                    .zIndex(3)
+                }
             }
         }
+    }
     
     //TODO: Style the dashboard view properly (according to Figma)
     var dashboardView: some View {
