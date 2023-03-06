@@ -27,8 +27,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let dataSource = AppDataSource(appState: appState)
         
         let mapViewModel = MapViewModel(appState: appState, appDataSource: dataSource)
+        let sensorDetailsViewModel = SensorDetailsViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
+                                   selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId),
+                                   sensorData24h: dataSource.sensorsData24h,
+                                   dailyAverages: dataSource.sensorsDailyAverageData)
+        
         self.refreshService = RefreshService(appViewModel: appState, appDataSource: dataSource)
-        let rootView = MainView(mapViewModel: mapViewModel)
+        let rootView = MainView(mapViewModel: mapViewModel, sensorViewModel: sensorDetailsViewModel)
         UITableView.appearance().separatorColor = .clear
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

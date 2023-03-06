@@ -94,6 +94,8 @@
 		730B4DE529A368C800B32089 /* UserDefaultsEnumWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730B4DE3299E5E3800B32089 /* UserDefaultsEnumWrapper.swift */; };
 		730B4DE629A368C900B32089 /* UserDefaultsEnumWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730B4DE3299E5E3800B32089 /* UserDefaultsEnumWrapper.swift */; };
 		735C2888298D0C5E00F19A38 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735C2887298D0C5E00F19A38 /* AboutView.swift */; };
+		73B7A4B529B611A800AAF120 /* PastDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B7A4B429B611A800AAF120 /* PastDaysView.swift */; };
+		73B7A4B729B6120F00AAF120 /* PastDaysViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B7A4B629B6120F00AAF120 /* PastDaysViewModel.swift */; };
 		73CD1F29297AB580004E3347 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD1F28297AB580004E3347 /* SettingsView.swift */; };
 		744A9DEF28575C3000A91789 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744A9DEE28575C3000A91789 /* Calendar.swift */; };
 		744A9DF028575CA600A91789 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744A9DEE28575C3000A91789 /* Calendar.swift */; };
@@ -303,6 +305,8 @@
 		5A9ECCE529ACDDCD003B9221 /* CityRowData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityRowData.swift; sourceTree = "<group>"; };
 		730B4DE3299E5E3800B32089 /* UserDefaultsEnumWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsEnumWrapper.swift; sourceTree = "<group>"; };
 		735C2887298D0C5E00F19A38 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AboutView.swift; path = PulseEco/SettingsView/AboutView.swift; sourceTree = SOURCE_ROOT; };
+		73B7A4B429B611A800AAF120 /* PastDaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastDaysView.swift; sourceTree = "<group>"; };
+		73B7A4B629B6120F00AAF120 /* PastDaysViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastDaysViewModel.swift; sourceTree = "<group>"; };
 		73CD1F28297AB580004E3347 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		744A9DEE28575C3000A91789 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		74699B4F282D366100326288 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -475,6 +479,8 @@
 				592201AA24AA55D900025F1F /* ExpandableView.swift */,
 				592201AC24AA656A00025F1F /* NoReadingsView.swift */,
 				5964349E24B4853300943978 /* NoReadingsViewModel.swift */,
+				73B7A4B629B6120F00AAF120 /* PastDaysViewModel.swift */,
+				73B7A4B429B611A800AAF120 /* PastDaysView.swift */,
 			);
 			path = Average;
 			sourceTree = "<group>";
@@ -965,6 +971,7 @@
 			files = (
 				5A9ECCE629ACDDCD003B9221 /* CityRowData.swift in Sources */,
 				593D8C9C249A171E006B88AC /* FavouriteCityRowView.swift in Sources */,
+				73B7A4B529B611A800AAF120 /* PastDaysView.swift in Sources */,
 				3288687524B51F5E009CC56D /* SelectedSensorView.swift in Sources */,
 				592201AD24AA656A00025F1F /* NoReadingsView.swift in Sources */,
 				1E4E7A9C285B626700BE9A92 /* MonthButtonView.swift in Sources */,
@@ -1018,6 +1025,7 @@
 				3288687724B51F5E009CC56D /* MarkerView.swift in Sources */,
 				BA718F0D25BED6B100EC87E0 /* SensorDetailsView.swift in Sources */,
 				593D8C9E249A17C1006B88AC /* FavouriteCitiesViewModel.swift in Sources */,
+				73B7A4B729B6120F00AAF120 /* PastDaysViewModel.swift in Sources */,
 				591642A72499FE4C000A4F7C /* AverageView.swift in Sources */,
 				59F5EFDE249CD62E0095FE71 /* SensorDetailsViewModel.swift in Sources */,
 				59504C0824B45E7000EA4AFF /* MeasureButtonView.swift in Sources */,

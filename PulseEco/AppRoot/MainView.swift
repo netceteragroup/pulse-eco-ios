@@ -16,6 +16,7 @@ struct MainView: View {
     @State var showingPicker = false
     var cityRowData = CityRowData()
     let mapViewModel: MapViewModel
+    let sensorViewModel: SensorDetailsViewModel
     
     private let backgroundColor: Color = AppColors.white.color
     
@@ -25,6 +26,11 @@ struct MainView: View {
                                       selectedMeasure: selectedMeasure,
                                       sensorData24h: dataSource.sensorsData24h,
                                       dailyAverages: dataSource.sensorsDailyAverageData)
+    }
+    private var chartViewModel: ChartViewModel {
+                                ChartViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
+                                               sensorsData: dataSource.sensorsData24h,
+                                               selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId))
     }
     
     var body: some View {
@@ -119,6 +125,7 @@ struct MainView: View {
         }
     }
     
+    
     var contentView: some View {
         GeometryReader { proxy in
             ZStack(alignment: .top) {
@@ -204,12 +211,23 @@ struct MainView: View {
         GeometryReader { proxy in
             VStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 20) {
+                    //prviot element
                     FavouriteCityRowView(viewModel: cityRowData.updateCityRowValues(for: appState.selectedCity,
                                                                                     cityValues: appState.userSettings.cityValues,
                                                                                     selectedMeasure: appState.selectedMeasureId,
                                                                                     measureList: dataSource.measures))
                     .contentShape(RoundedRectangle(cornerRadius: 2.0))
-                    Text("Add the next view that it is a part of the dashboard view HERE")
+                    
+                    //vtoriot element
+                    Spacer()
+                    PastDaysView(viewModel: PastDaysViewModel(
+                                            appState: appState,
+                                            dataSource: dataSource,
+                                            averages: sensorViewModel.dailyAverages))
+                    
+                    //tretiot element -> grafikot
+                    LineChartSwiftUI(viewModel: chartViewModel)
+                    Spacer()
                 }
                 .padding(.all, 16)
                 Spacer()
