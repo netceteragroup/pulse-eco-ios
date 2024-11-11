@@ -76,5 +76,7 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app uses location services to show information more relevant to the user according to his location.</string>
 </dict>
 </plist>

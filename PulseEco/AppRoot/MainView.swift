@@ -14,7 +14,8 @@ struct MainView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @State private var isShowingSettingsView = false
     @State var showingPicker = false
-
+    @ObservedObject var locationManager: LocationManager = LocationManager.shared
+    
     let mapViewModel: MapViewModel
     
     private let backgroundColor: Color = AppColors.white.color
@@ -53,6 +54,11 @@ struct MainView: View {
                         self.appState.citySelectorClicked = false
                     }
                 })
+            }
+        }
+        .onAppear() {
+            if (locationManager.isAuthorizedOrNotDetermined()) {
+                locationManager.requestLocation()
             }
         }
     }
