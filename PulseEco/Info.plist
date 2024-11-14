@@ -77,6 +77,6 @@
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app uses location services to show information more relevant to the user according to his location.</string>
+	<string>This app uses location services to provide air quality, pollution levels, and other information based on your current location.</string>
 </dict>
 </plist>

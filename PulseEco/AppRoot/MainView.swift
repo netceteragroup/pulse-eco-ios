@@ -57,9 +57,7 @@ struct MainView: View {
             }
         }
         .onAppear() {
-            if (locationManager.isAuthorizedOrNotDetermined()) {
-                locationManager.requestLocation()
-            }
+            locationManager.requestLocation()
         }
     }
     
