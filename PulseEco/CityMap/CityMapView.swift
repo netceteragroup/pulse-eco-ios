@@ -56,19 +56,6 @@ struct CityMapView: View {
                                                     measuresList: self.dataSource.measures,
                                                     cityValues: self.dataSource.cityOverall,
                                                     currentValue: self.appState.selectedDateAverageValue))
-            
-            if self.appState.citySelectorClicked {
-                FavouriteCitiesView(viewModel:
-                                        FavouriteCitiesViewModel(
-                                            selectedMeasure: self.appState.selectedMeasureId,
-                                            favouriteCities: self.userSettings.favouriteCities,
-                                            cityValues: self.userSettings.cityValues,
-                                            measureList: self.dataSource.measures),
-                                    userSettings: self.userSettings,
-                                    proxy: proxy)
-                    .overlay(ShadowOnTopOfView())
-                    .animation(nil, value: self.appState.citySelectorClicked)
-            }
         }
     }
 }
