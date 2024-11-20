@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13725E122CE352C400073369 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13725E102CE352C400073369 /* LocationManager.swift */; };
 		1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */; };
 		1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */; };
 		1E4E7A9C285B626700BE9A92 /* MonthButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */; };
@@ -219,6 +220,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		13725E102CE352C400073369 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSlider.swift; sourceTree = "<group>"; };
 		1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarButtonView.swift; sourceTree = "<group>"; };
 		1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthButtonView.swift; sourceTree = "<group>"; };
@@ -371,6 +373,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13725E112CE352C400073369 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				13725E102CE352C400073369 /* LocationManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		1E3A38AD280EBC4B002C4A54 /* History and Forecast */ = {
 			isa = PBXGroup;
 			children = (
@@ -549,6 +559,7 @@
 		59A4F68D247FD2150089D523 /* PulseEco */ = {
 			isa = PBXGroup;
 			children = (
+				13725E112CE352C400073369 /* Managers */,
 				59A35ACC2498EDFC00C07786 /* AppRoot */,
 				5997F73924A370100035BEEB /* CityList */,
 				5997F73624A36F780035BEEB /* CityMap */,
@@ -995,6 +1006,7 @@
 				C547A3CA26FC6E09002BE2A5 /* CityListView.swift in Sources */,
 				3288687924B5C053009CC56D /* UIViewExtension.swift in Sources */,
 				59504C0624B45B8900EA4AFF /* DisclaimerViewModel.swift in Sources */,
+				13725E122CE352C400073369 /* LocationManager.swift in Sources */,
 				591642A52499FD70000A4F7C /* CityMapView.swift in Sources */,
 				D03EC8F92735E0F500E6E16F /* PulseEcoWidget.intentdefinition in Sources */,
 				59504C1324B46C2D00EA4AFF /* LoadingView.swift in Sources */,
