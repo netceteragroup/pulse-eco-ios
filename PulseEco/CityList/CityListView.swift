@@ -15,6 +15,7 @@ struct CityListView: View {
     @ObservedObject var viewModel: CityListViewModel
     @ObservedObject var userSettings: UserSettings
     @State var searchText = ""
+    @ObservedObject var locationManager: LocationManager = LocationManager.shared
 
     var body: some View {
         NavigationView {
@@ -43,15 +44,22 @@ struct CityListView: View {
                                         .frame(height: 30)
                                         .background(Color(red: 240 / 255, green: 240 / 255, blue: 240 / 255))
                                         .listRowInsets(.zero)) {
-                                let favouriteCitiesNames = self.userSettings.favouriteCities.map { $0.cityName }
-                                let citiesFromCountry = self.viewModel.getCities().filter {
-                                    elem == $0.countryName
-                                }
+                                            let currentCity = locationManager.currentCity
+                                            let favouriteCitiesNames = self.userSettings.favouriteCities.map { $0.cityName }
+                                            let citiesFromCountry = self.viewModel.getCities().filter {
+                                                elem == $0.countryName
+                                            }
                                 ForEach(citiesFromCountry, id: \.id) { city in
                                     Button(action: {
                                         if let city = viewModel.cityModel
                                             .first(where: { $0.cityName == city.cityName }) {
-                                            self.userSettings.addFavoriteCity(city)
+                                            if LocationManager.shared.currentCity?.cityName != city.cityName {
+                                                appState.currentLocationIsSelected = false
+                                                self.userSettings.addFavoriteCity(city)
+                                            }
+                                            else {
+                                                appState.currentLocationIsSelected = true
+                                            }
                                             if self.appState.selectedCity != city {
                                                 self.appState.selectedCity = city
                                                 self.appState.newCitySelected = true
@@ -63,7 +71,7 @@ struct CityListView: View {
                                         }
                                     }, label: {
                                         CityRowView(viewModel: city,
-                                                    addCheckMark: favouriteCitiesNames.contains(city.cityName),
+                                                    addCheckMark: favouriteCitiesNames.contains(city.cityName) || city.cityName == currentCity?.cityName,
                                                     showCountryName: false)
                                     })
                                     if city != citiesFromCountry.last {

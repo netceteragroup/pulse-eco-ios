@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
 enum LocationAthorizationStatus {
     case notDetermined
@@ -39,8 +40,20 @@ class LocationManager: NSObject, ObservableObject {
     static let shared = LocationManager()
     private let metersNeededToTravelToUpdateLocation: Double = 2000.0
     
+    var didSetCurrentCity: ((City?) -> Void)?
+    let networkService: NetworkService = NetworkService()
+    
     @Published var currentLocation: CLLocationCoordinate2D?
-    @Published var currentCity: String?
+    @Published var currentCity: City? {
+        didSet {
+            guard currentCity != oldValue
+            else {
+                return
+            }
+            didSetCurrentCity?(currentCity)
+        }
+    }
+    @Published var region: MKCoordinateRegion?
     
     override init() {
         super.init()
@@ -57,20 +70,55 @@ class LocationManager: NSObject, ObservableObject {
         return LocationAthorizationStatus(from: manager.authorizationStatus)
     }
     
-    func reverseGeocode() {
-        if let currentLocation {
-            let geocoder = CLGeocoder()
-            geocoder.reverseGeocodeLocation(CLLocation(latitude: currentLocation.latitude, longitude: currentLocation.longitude)) { [weak self] (placemarks, error) in
+    func isAuthorizationGrantedAndWaitingToFetchRegion() -> Bool {
+        return (getAuthorizationStatus() == .authorizedAlways || getAuthorizationStatus() == .authorizedWhenInUse) && region == nil
+    }
+    
+    func reverseGeocode(location: CLLocationCoordinate2D) async -> City?  {
+        let geocoder = CLGeocoder()
+        do {
+            let geocoderResult = try await geocoder.reverseGeocodeLocation(CLLocation(latitude: location.latitude,
+                                                                                       longitude: location.longitude))
+            guard let placemark = geocoderResult.first,
+                  let locality = placemark.locality,
+                  let country = placemark.country,
+                  let countryCode = placemark.isoCountryCode
+            else {
+                return nil
+            }
             
-                guard let self = self else { return }
-                if error != nil {
-                    return
-                }
-                
-                if let placemark = placemarks?.first {
-                    self.currentCity = placemark.locality
-                }
-                
+            guard let city = await networkService.fetchCity(cityName: locality.lowercased()) else {
+                return  City(cityName: locality.lowercased(),
+                             siteName: locality,
+                             siteTitle: locality + " @ CityPulse",
+                             siteURL: "https://" + locality.lowercased() + ".pulse.eco",
+                             countryCode: countryCode,
+                             countryName: country,
+                             cityLocation: CityCoordinates(latitude: String(location.latitude), longitute: String(location.longitude))
+                             )
+            }
+            return city
+        }
+        catch let error {
+            return nil
+        }
+    }
+    
+    func fetchCityRegion(cityName: String?) {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = cityName
+        
+        let search = MKLocalSearch(request: request)
+        search.start { response, error in
+            guard let mapItem = response?.mapItems.first, error == nil else {
+                return
+            }
+            
+            if let region = response?.boundingRegion {
+                self.region = region
+            }
+            else {
+                return
             }
         }
     }
@@ -78,8 +126,23 @@ class LocationManager: NSObject, ObservableObject {
 
 extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        currentLocation = locations.first?.coordinate
-        reverseGeocode()
+        guard let newCoordinate = locations.first?.coordinate
+        else {
+            return
+        }
+        
+        Task {
+            let currentCityReverseGeocoded = await reverseGeocode(location: newCoordinate)
+            DispatchQueue.main.async { [weak self] in
+                guard let self
+                else {
+                    return
+                }
+                self.currentLocation = newCoordinate
+                self.currentCity = currentCityReverseGeocoded
+                fetchCityRegion(cityName: currentCity?.cityName)
+            }
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

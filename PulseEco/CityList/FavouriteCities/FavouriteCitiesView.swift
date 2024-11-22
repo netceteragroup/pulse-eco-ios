@@ -16,7 +16,14 @@ struct FavouriteCitiesView: View {
     @ObservedObject var userSettings: UserSettings
     let proxy: GeometryProxy
 
-    var cities: [FavouriteCityRowViewModel] { viewModel.getCities() }
+    var allCities: [FavouriteCityRowViewModel] {
+        var tmpAllCities: [FavouriteCityRowViewModel] = []
+        if let currentCity = LocationManager.shared.currentCity {
+            tmpAllCities.append(FavouriteCityRowViewModel(city: currentCity, isCurrentCity: true))
+        }
+        tmpAllCities.append(contentsOf: viewModel.getCities())
+        return tmpAllCities
+    }
     
     var body: some View {
         Group {
@@ -29,12 +36,12 @@ struct FavouriteCitiesView: View {
             } else {
                 VStack(spacing: 0) {
                     List {
-                        ForEach([cities.first!], id: \.id) {
-                            cityRow(city: $0, from: [cities.first!])
+                        ForEach([allCities.first!], id: \.id) {
+                            cityRow(favouriteCity: $0, from: [allCities.first!])
                         }
                         Section(header: EmptyView()) {
-                            ForEach(Array(cities.dropFirst()), id: \.id) { city in
-                                cityRow(city: city, from: Array(cities.dropFirst()))
+                            ForEach(Array(allCities.dropFirst()), id: \.id) { city in
+                                cityRow(favouriteCity: city, from: Array(allCities.dropFirst()))
                             }
                             .onDelete(perform: self.delete)
                         }
@@ -69,22 +76,27 @@ struct FavouriteCitiesView: View {
     }
 
     @ViewBuilder
-    private func cityRow(city: FavouriteCityRowViewModel,
+    private func cityRow(favouriteCity: FavouriteCityRowViewModel,
                          from array: [FavouriteCityRowViewModel]) -> some View {
         VStack(spacing: 0) {
             Button(action: {
                 self.appState.citySelectorClicked = false
-                if self.appState.selectedCity != city.city {
-                    self.userSettings.addFavoriteCity(city.city)
-                    self.appState.selectedCity = city.city
+                if self.appState.selectedCity != favouriteCity.city {
+                    if LocationManager.shared.currentCity?.cityName == favouriteCity.city.cityName {
+                        appState.currentLocationIsSelected = true
+                    }
+                    else {
+                        appState.currentLocationIsSelected = false
+                    }
+                    self.appState.selectedCity = favouriteCity.city
                     self.refreshService.updateRefreshDate()
-                    self.dataSource.getValuesForCity(cityName: city.cityName)
+                    self.dataSource.getValuesForCity(cityName: favouriteCity.cityName)
                 }
             }, label: {
-                FavouriteCityRowView(viewModel: city)
+                FavouriteCityRowView(viewModel: favouriteCity)
                     .contentShape(Rectangle())
             }).padding()
-            if city != array.last {
+            if favouriteCity != array.last {
                 Divider()
             }
         }
@@ -93,7 +105,7 @@ struct FavouriteCitiesView: View {
 
     private func delete(at offsets: IndexSet) {
         offsets.forEach {
-            let delRow = self.viewModel.getCities()[$0 + 1]
+            let delRow = allCities[$0 + 1]
             if let city = self.userSettings.favouriteCities.first(where: { $0.cityName == delRow.cityName }) {
                 self.userSettings.removeFavouriteCity(city)
             }

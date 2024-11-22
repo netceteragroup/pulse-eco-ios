@@ -13,6 +13,7 @@ struct MapView: UIViewRepresentable {
     @ObservedObject var viewModel: MapViewModel
     let appState: AppState
     @State var boundryAndZoomEnabled = true
+    @ObservedObject var locationManager = LocationManager.shared
     
     func makeCoordinator() -> MapViewCoordinator {
         MapViewCoordinator(self, $boundryAndZoomEnabled)
@@ -25,11 +26,28 @@ struct MapView: UIViewRepresentable {
         mapView.isRotateEnabled = false
         mapView.mapType = .standard
         addAnotations(to: mapView)
-        let zoomLevel = viewModel.selectedCity.intialZoomLevel
-        let region = MKCoordinateRegion(center: viewModel.selectedCity.center, span: viewModel.span)
+        
+        let city: City = viewModel.selectedCity
+        
+        let zoomLevel = city.intialZoomLevel
+        
+        var region: MKCoordinateRegion = MKCoordinateRegion()
+        
+        if city.cityBorderPoints.count == 0 {
+            locationManager.fetchCityRegion(cityName: city.cityName)
+            if let currentRegion = locationManager.region {
+                region = currentRegion
+            }
+            else {
+                region = MKCoordinateRegion(center: City.defaultCity().center, latitudinalMeters: 10000.0, longitudinalMeters: 10000.0)
+            }
+        }
+        else {
+            region = MKCoordinateRegion(center: city.center, span: viewModel.span)
+        }
+        
         let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: Double((23-zoomLevel)*8000))
         mapView.setCameraZoomRange(zoomRange, animated: true)
-       
         mapView.setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: region),
                                  animated: true)
         mapView.setRegion(region, animated: true)
@@ -45,7 +63,7 @@ struct MapView: UIViewRepresentable {
     
     private func addAnotations(to mapView: MKMapView) {
         guard let currentAnnotations = mapView.annotations as? [SensorPinModel] else { return }
-        mapView.removeAnnotations(currentAnnotations)
+        mapView.removeAnnotations(currentAnnotations) //modifications to the layout engine must be performed from the background thread after it been accessed from the main thread
         for pin in self.viewModel.sensors {
             mapView.addAnnotation(pin)
         }
