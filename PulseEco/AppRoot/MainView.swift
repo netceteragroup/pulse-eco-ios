@@ -70,29 +70,42 @@ struct MainView: View {
             ZStack(alignment: .top) {
                 NavigationView {
                     VStack(spacing: 0) {
-                        VStack(spacing: 0) {
-                            let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
-                                                                 cityName: appState.selectedCity.cityName,
-                                                                 measuresList: dataSource.measures,
-                                                                 cityValues: dataSource.cityOverall,
-                                                                 citySelectorClicked: appState.citySelectorClicked)
-                            MeasureListView(viewModel: viewModel)
-                        }
-                       
-                        NavigationLink(destination: SettingsView(),
-                                       isActive: $isShowingSettingsView) { EmptyView () }
-                        
-                        DateSlider(unimplementedAlert: $appState.showingCalendar,
-                                   unimplementedPicker: $showingPicker,
-                                   selectedDate: $appState.selectedDate)
-                        
-                        ZStack(alignment: .top) {
-                            CityMapView(userSettings: self.appState.userSettings,
-                                        mapViewModel: mapViewModel,
-                                        proxy: proxy)
-                            .id("CityMapView")
-                            .edgesIgnoringSafeArea([.horizontal, .bottom])
+                        if self.appState.citySelectorClicked {
+                            FavouriteCitiesView(viewModel:
+                                                    FavouriteCitiesViewModel(
+                                                        selectedMeasure: self.appState.selectedMeasureId,
+                                                        favouriteCities: self.appState.userSettings.favouriteCities,
+                                                        cityValues: self.appState.userSettings.cityValues,
+                                                        measureList: self.dataSource.measures),
+                                                userSettings: self.appState.userSettings,
+                                                proxy: proxy)
+                            .overlay(ShadowOnTopOfView())
+                            .animation(nil, value: self.appState.citySelectorClicked)
+                        } else {
+                            VStack(spacing: 0) {
+                                let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
+                                                                     cityName: appState.selectedCity.cityName,
+                                                                     measuresList: dataSource.measures,
+                                                                     cityValues: dataSource.cityOverall,
+                                                                     citySelectorClicked: appState.citySelectorClicked)
+                                MeasureListView(viewModel: viewModel)
+                            }
                             
+                            NavigationLink(destination: SettingsView(),
+                                           isActive: $isShowingSettingsView) { EmptyView () }
+                            
+                            DateSlider(unimplementedAlert: $appState.showingCalendar,
+                                       unimplementedPicker: $showingPicker,
+                                       selectedDate: $appState.selectedDate)
+                            
+                            ZStack(alignment: .top) {
+                                CityMapView(userSettings: self.appState.userSettings,
+                                            mapViewModel: mapViewModel,
+                                            proxy: proxy)
+                                .id("CityMapView")
+                                .edgesIgnoringSafeArea([.horizontal, .bottom])
+                                
+                            }
                         }
                     }
                     .navigationBarTitle("", displayMode: .inline)
@@ -105,7 +118,6 @@ struct MainView: View {
                         }
                     }
                 }
-
                 .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
                 .navigationBarColor(AppColors.white)
                 .zIndex(1)
@@ -151,7 +163,7 @@ struct MainView: View {
                         self.refreshService.refreshData()
                     }
                 }
-          menuItem
+            menuItem
         }
     }
     
@@ -193,13 +205,13 @@ struct MainView: View {
                 }
             }
         }
-    
-    label: {
-        Image(systemName: "line.horizontal.3")
-            .resizable()
-            .frame(width: 25, height: 15, alignment: .center)
-            .foregroundColor(Color(AppColors.darkblue))
-            .padding(.leading, 15)
+        
+        label: {
+            Image(systemName: "line.horizontal.3")
+                .resizable()
+                .frame(width: 25, height: 15, alignment: .center)
+                .foregroundColor(Color(AppColors.darkblue))
+                .padding(.leading, 15)
         }
     }
     
