@@ -53,7 +53,7 @@ struct CityListView: View {
                                     Button(action: {
                                         if let city = viewModel.cityModel
                                             .first(where: { $0.cityName == city.cityName }) {
-                                            if LocationManager.shared.currentCity?.cityName != city.cityName {
+                                            if locationManager.currentCity?.cityName != city.cityName {
                                                 appState.currentLocationIsSelected = false
                                                 self.userSettings.addFavoriteCity(city)
                                             }

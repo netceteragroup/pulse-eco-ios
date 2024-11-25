@@ -14,11 +14,12 @@ struct FavouriteCitiesView: View {
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var viewModel: FavouriteCitiesViewModel
     @ObservedObject var userSettings: UserSettings
+    @ObservedObject var locationManager: LocationManager = LocationManager.shared
     let proxy: GeometryProxy
 
     var allCities: [FavouriteCityRowViewModel] {
         var tmpAllCities: [FavouriteCityRowViewModel] = []
-        if let currentCity = LocationManager.shared.currentCity {
+        if let currentCity = locationManager.currentCity {
             tmpAllCities.append(FavouriteCityRowViewModel(city: currentCity, isCurrentCity: true))
         }
         tmpAllCities.append(contentsOf: viewModel.getCities())
@@ -82,10 +83,11 @@ struct FavouriteCitiesView: View {
             Button(action: {
                 self.appState.citySelectorClicked = false
                 if self.appState.selectedCity != favouriteCity.city {
-                    if LocationManager.shared.currentCity?.cityName == favouriteCity.city.cityName {
+                    if locationManager.currentCity?.cityName == favouriteCity.city.cityName {
                         appState.currentLocationIsSelected = true
                     }
                     else {
+                        self.userSettings.addFavoriteCity(favouriteCity.city)
                         appState.currentLocationIsSelected = false
                     }
                     self.appState.selectedCity = favouriteCity.city

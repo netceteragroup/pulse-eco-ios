@@ -63,7 +63,7 @@ struct MapView: UIViewRepresentable {
     
     private func addAnotations(to mapView: MKMapView) {
         guard let currentAnnotations = mapView.annotations as? [SensorPinModel] else { return }
-        mapView.removeAnnotations(currentAnnotations) //modifications to the layout engine must be performed from the background thread after it been accessed from the main thread
+        mapView.removeAnnotations(currentAnnotations)
         for pin in self.viewModel.sensors {
             mapView.addAnnotation(pin)
         }
