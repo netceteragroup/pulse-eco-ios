@@ -70,7 +70,6 @@ struct MainView: View {
             ZStack(alignment: .top) {
                 NavigationView {
                     VStack(spacing: 0) {
-                        
                         if self.appState.citySelectorClicked {
                             FavouriteCitiesView(viewModel:
                                                     FavouriteCitiesViewModel(
@@ -80,11 +79,9 @@ struct MainView: View {
                                                         measureList: self.dataSource.measures),
                                                 userSettings: self.appState.userSettings,
                                                 proxy: proxy)
-                                .overlay(ShadowOnTopOfView())
-                                .animation(nil, value: self.appState.citySelectorClicked)
-                        }
-                        
-                        else {
+                            .overlay(ShadowOnTopOfView())
+                            .animation(nil, value: self.appState.citySelectorClicked)
+                        } else {
                             VStack(spacing: 0) {
                                 let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
                                                                      cityName: appState.selectedCity.cityName,
@@ -93,7 +90,7 @@ struct MainView: View {
                                                                      citySelectorClicked: appState.citySelectorClicked)
                                 MeasureListView(viewModel: viewModel)
                             }
-                           
+                            
                             NavigationLink(destination: SettingsView(),
                                            isActive: $isShowingSettingsView) { EmptyView () }
                             
@@ -121,7 +118,6 @@ struct MainView: View {
                         }
                     }
                 }
-
                 .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
                 .navigationBarColor(AppColors.white)
                 .zIndex(1)
@@ -167,7 +163,7 @@ struct MainView: View {
                         self.refreshService.refreshData()
                     }
                 }
-          menuItem
+            menuItem
         }
     }
     
@@ -209,13 +205,13 @@ struct MainView: View {
                 }
             }
         }
-    
-    label: {
-        Image(systemName: "line.horizontal.3")
-            .resizable()
-            .frame(width: 25, height: 15, alignment: .center)
-            .foregroundColor(Color(AppColors.darkblue))
-            .padding(.leading, 15)
+        
+        label: {
+            Image(systemName: "line.horizontal.3")
+                .resizable()
+                .frame(width: 25, height: 15, alignment: .center)
+                .foregroundColor(Color(AppColors.darkblue))
+                .padding(.leading, 15)
         }
     }
     

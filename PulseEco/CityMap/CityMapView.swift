@@ -66,3 +66,18 @@ enum ActiveSheet: Int, Identifiable {
     case disclaimerView
     case cityListView
 }
+
+#Preview {
+    GeometryReader { proxy in
+        CityMapView(
+            userSettings: AppState().userSettings,
+            mapViewModel: MapViewModel(
+                appState: AppState(),
+                appDataSource: AppDataSource(appState: AppState())
+            ),
+            proxy: proxy
+        )
+        .environmentObject(AppState())
+        .environmentObject(AppDataSource(appState: AppState()))
+    }
+}
