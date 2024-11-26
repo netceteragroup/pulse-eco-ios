@@ -2,6 +2,7 @@ import Foundation
 import Combine
 import UIKit
 
+@MainActor
 class AppDataSource: ObservableObject, ViewModelDependency {
     let appState: AppState
     @Published var measures: [Measure] = [Measure.empty("PM10"),
@@ -43,7 +44,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     
     func getMeasures() {
         self.appState.loadingMeasures = true
-        Task { @MainActor in
+        Task {
             self.measures = await networkService.fetchMeasures() ?? []
             if let firstMeasureId = measures.first?.id {
                 self.appState.selectedMeasureId = firstMeasureId
@@ -61,7 +62,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
         self.appState.loadingCityData = true
-        Task { @MainActor in
+        Task {
             async let cityOverall = self.networkService.downloadCurrentData(for: cityName)
             async let citySensors = self.networkService.downloadSensorsAsync(cityName: cityName) ?? []
             async let sensorsData =
@@ -93,7 +94,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     func getCities() {
-        Task {@MainActor in
+        Task {
             let cities = await networkService.fetchCities() ?? []
             self.cities = cities
             try await withThrowingTaskGroup(of: CityOverallValues.self) { group in
@@ -110,6 +111,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             }
         }
     }
+    
     func getCurrentMeasure(selectedMeasure: String) -> Measure {
         measures.filter { $0.id.lowercased() == selectedMeasure.lowercased()}.first ?? Measure.empty()
     }
@@ -126,7 +128,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         }
     }
     
-    @MainActor func fetchWeeklyAverages(cityName: String = UserSettings.selectedCity.cityName,
+    func fetchWeeklyAverages(cityName: String = UserSettings.selectedCity.cityName,
                                         measureId: String,
                                         selectedDate: Date) async {
         Task {
@@ -169,7 +171,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                           measureId: String,
                           currentMonth: Int,
                           currentYear: Int) async {
-        Task { @MainActor in
+        Task {
             appState.cityDataWrapper =
             await self.networkService.fetchAndWrapCityData(cityName: cityName,
                                                            sensorType: measureId,
@@ -179,7 +181,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         }
     }
     
-    @MainActor func fetchHistory(for cityName: String, measureId: String) async {
+    func fetchHistory(for cityName: String, measureId: String) async {
         await fetchWeeklyAverages(cityName: cityName,
                                   measureId: measureId,
                                   selectedDate: appState.calendarSelection)
@@ -197,7 +199,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                      second: 59,
                                      of: selectedDate)!
         
-        Task { @MainActor in
+        Task {
             guard let dailySensorData =
                     await networkService.fetchSensorData(cityName: UserSettings.selectedCity.cityName,
                                                          measureId: self.appState.selectedMeasureId,
@@ -227,15 +229,14 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         self.appState.selectedDateAverageValue =
         self.appState.weeklyDataWrapper.getDataFromRange(cityName: UserSettings.selectedCity.cityName,
                                                          sensorType: self.appState.selectedMeasureId,
-                                                         from: appState.selectedDate,
+                                                         from: self.appState.selectedDate,
                                                          to: calendar.date(byAdding: .day,
                                                                            value: +1,
-                                                                           to: appState.selectedDate)!).first?.value
+                                                                           to: self.appState.selectedDate)!).first?.value
     }
     
     func fetchMonthlyDayData (selectedMonth: Int, selectedYear: Int) async {
-        
-        Task { @MainActor in
+        Task {
             let newSensorData =
             await self.networkService.fetchDataForSelectedMonth(cityName: appState.selectedCity.cityName,
                                                                 sensorType: appState.selectedMeasureId,
