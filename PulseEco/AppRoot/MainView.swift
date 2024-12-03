@@ -30,7 +30,7 @@ struct MainView: View {
     
     var body: some View {
         Group {
-            if appState.loadingCityData || appState.loadingMeasures || locationManager.isAuthorizationGrantedAndWaitingToFetchRegion() {
+            if appState.loadingCityData || appState.loadingMeasures || (locationManager.isAuthorizationGranted() && locationManager.isWaitingToFetchRegion()) {
                 loadingView
             } else {
                 contentView

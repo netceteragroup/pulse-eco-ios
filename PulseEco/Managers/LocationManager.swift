@@ -42,6 +42,7 @@ class LocationManager: NSObject, ObservableObject {
     
     var didSetCurrentCity: ((City?) -> Void)?
     let networkService: NetworkService = NetworkService()
+    let logger: SystemLoggerAdapter = SystemLoggerAdapter(category: "locationManager")
     
     @Published var currentLocation: CLLocationCoordinate2D?
     @Published var currentCity: City? {
@@ -70,8 +71,12 @@ class LocationManager: NSObject, ObservableObject {
         return LocationAthorizationStatus(from: manager.authorizationStatus)
     }
     
-    func isAuthorizationGrantedAndWaitingToFetchRegion() -> Bool {
-        return (getAuthorizationStatus() == .authorizedAlways || getAuthorizationStatus() == .authorizedWhenInUse) && region == nil
+    func isAuthorizationGranted() -> Bool {
+        return (getAuthorizationStatus() == .authorizedAlways || getAuthorizationStatus() == .authorizedWhenInUse)
+    }
+    
+    func isWaitingToFetchRegion() -> Bool {
+        return region == nil
     }
     
     func reverseGeocode(location: CLLocationCoordinate2D) async -> City?  {
@@ -84,6 +89,7 @@ class LocationManager: NSObject, ObservableObject {
                   let country = placemark.country,
                   let countryCode = placemark.isoCountryCode
             else {
+                logger.logError("could not get one of the following: placemark, locality, country or countryCode")
                 return nil
             }
             
@@ -111,13 +117,17 @@ class LocationManager: NSObject, ObservableObject {
         let search = MKLocalSearch(request: request)
         search.start { response, error in
             guard let mapItem = response?.mapItems.first, error == nil else {
+                self.logger.logError("MKLocalSearch returned an error: \(String(describing: error))")
                 return
             }
             
             if let region = response?.boundingRegion {
-                self.region = region
+                DispatchQueue.main.async {
+                    self.region = region
+                }
             }
             else {
+                self.logger.logError("region could not be calculated")
                 return
             }
         }

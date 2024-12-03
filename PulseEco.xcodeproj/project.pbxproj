@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		133B20C22CFF19120034AEF6 /* LoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */; };
+		133B20C32CFF19120034AEF6 /* LoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */; };
+		133B20C42CFF19120034AEF6 /* LoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */; };
+		133B20C62CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
+		133B20C72CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
+		133B20C82CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
 		13725E122CE352C400073369 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13725E102CE352C400073369 /* LocationManager.swift */; };
 		1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */; };
 		1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */; };
@@ -220,6 +226,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerProtocol.swift; sourceTree = "<group>"; };
+		133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLoggerAdapter.swift; sourceTree = "<group>"; };
 		13725E102CE352C400073369 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSlider.swift; sourceTree = "<group>"; };
 		1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarButtonView.swift; sourceTree = "<group>"; };
@@ -373,6 +381,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		133B20C02CFF18F80034AEF6 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */,
+				133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
 		13725E112CE352C400073369 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -708,6 +725,7 @@
 				BA483A2225B06E1300D4E178 /* Assets */,
 				59FAD1D02490BDBF00AC36A5 /* Models */,
 				C52F371B26F240CC007813B0 /* Utility */,
+				133B20C02CFF18F80034AEF6 /* Logger */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -992,8 +1010,10 @@
 				59A35ADA2499057C00C07786 /* Constants.swift in Sources */,
 				735C2888298D0C5E00F19A38 /* AboutView.swift in Sources */,
 				5924C5DA249A4792007E0D78 /* MeasureListViewModel.swift in Sources */,
+				133B20C82CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */,
 				1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */,
 				73CD1F29297AB580004E3347 /* SettingsView.swift in Sources */,
+				133B20C22CFF19120034AEF6 /* LoggerProtocol.swift in Sources */,
 				59F01AD724AC7B1300AD2802 /* AppDataSource.swift in Sources */,
 				5908ADE224AF2DA500C79BC9 /* DateFormatterUtils.swift in Sources */,
 				59103AA024A4B64C00ED9617 /* DisclaimerView.swift in Sources */,
@@ -1072,8 +1092,10 @@
 				1E515D0B282BC115009EFC4D /* DayDataWrapper.swift in Sources */,
 				730B4DE529A368C800B32089 /* UserDefaultsEnumWrapper.swift in Sources */,
 				D03EC8F82735E0F500E6E16F /* PulseEcoWidget.intentdefinition in Sources */,
+				133B20C62CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */,
 				D03524CA273603800089E11C /* SensorData.swift in Sources */,
 				D03524E927372EBC0089E11C /* WidgetDataSource.swift in Sources */,
+				133B20C42CFF19120034AEF6 /* LoggerProtocol.swift in Sources */,
 				D03524CD273604D60089E11C /* UserSettings.swift in Sources */,
 				D03524D0273605410089E11C /* DateFormatterUtils.swift in Sources */,
 				D03524C8273603800089E11C /* SensorTypes.swift in Sources */,
@@ -1112,9 +1134,11 @@
 				D0A3F8C92775FC0700491666 /* IntentHandler.swift in Sources */,
 				1EBC79CB282A55D700D18968 /* CityDataWrapper.swift in Sources */,
 				D0CBADFA2776108E00526050 /* AverageUtilModel.swift in Sources */,
+				133B20C32CFF19120034AEF6 /* LoggerProtocol.swift in Sources */,
 				D0CBADF72776108E00526050 /* CityOverallValues.swift in Sources */,
 				D0CBADF92776108E00526050 /* SensorData.swift in Sources */,
 				D0CBADFB27761A9600526050 /* UserSettings.swift in Sources */,
+				133B20C72CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */,
 				D0CBADFC27761A9600526050 /* Trema.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
