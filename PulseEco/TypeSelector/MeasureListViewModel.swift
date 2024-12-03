@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import SwiftUI
 
+@MainActor
 class MeasureListViewModel: ObservableObject {
     @Published var measures: [MeasureButtonViewModel] = []
     @Published var selectedMeasure: String

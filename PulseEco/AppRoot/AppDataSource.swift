@@ -132,10 +132,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                         measureId: String,
                                         selectedDate: Date) async {
         Task {
-            appState.weeklyDataWrapper =
-            await self.networkService.fetchAndWrapCityData(cityName: cityName,
-                                                           sensorType: measureId,
-                                                           selectedDate: appState.calendarSelection)
+            await updateWeeklyDataWrapper(cityName: cityName, measureId: measureId, selectedDate: appState.calendarSelection)
             
             let threeDaysAgo = calendar.date(byAdding: .day, value: -3, to: selectedDate)!
             let threeDaysLater = calendar.date(byAdding: .day, value: +4, to: selectedDate)!
@@ -226,13 +223,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                     getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
             self.appState.sensorPins = result
         }
-        self.appState.selectedDateAverageValue =
-        self.appState.weeklyDataWrapper.getDataFromRange(cityName: UserSettings.selectedCity.cityName,
-                                                         sensorType: self.appState.selectedMeasureId,
-                                                         from: self.appState.selectedDate,
-                                                         to: calendar.date(byAdding: .day,
-                                                                           value: +1,
-                                                                           to: self.appState.selectedDate)!).first?.value
+        setAverageValueforSelectedDate(cityName: appState.selectedCity.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
     }
     
     func fetchMonthlyDayData (selectedMonth: Int, selectedYear: Int) async {
@@ -252,6 +243,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                                          to: Date.now)
         }
     }
+    
     func updateMonthlyColors (selectedYear: Int) async {
         let date = Date.from(1, 1, selectedYear)!
         
@@ -267,5 +259,22 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             await fetchWeeklyAverages(measureId: self.appState.selectedMeasureId,
                                       selectedDate: self.appState.selectedDate)
         }
+    }
+    
+    func updateWeeklyDataWrapper(cityName: String, measureId: String, selectedDate: Date) async {
+        appState.weeklyDataWrapper =
+        await self.networkService.fetchAndWrapCityData(cityName: cityName,
+                                                       sensorType: measureId,
+                                                       selectedDate: appState.calendarSelection)
+    }
+    
+    func setAverageValueforSelectedDate(cityName: String, sensorType: String, selectedDate: Date) {
+        self.appState.selectedDateAverageValue =
+        self.appState.weeklyDataWrapper.getDataFromRange(cityName: cityName,
+                                                         sensorType: sensorType,
+                                                         from: selectedDate,
+                                                         to: calendar.date(byAdding: .day,
+                                                                           value: +1,
+                                                                           to: selectedDate)!).first?.value
     }
 }
