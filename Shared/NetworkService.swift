@@ -241,6 +241,12 @@ class NetworkService {
         }
     }
     
+    func fetchCity(cityName: String) async -> City? {
+        let cities = await fetchCities()
+        let city = cities?.filter { $0.cityName == cityName }.first ?? nil
+        return city
+    }
+    
     func downloadDailyAverageDataForSensor(cityName: String,
                                            measureType: String,
                                            sensorId: String) async -> [SensorData]? {

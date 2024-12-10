@@ -30,7 +30,7 @@ struct MainView: View {
     
     var body: some View {
         Group {
-            if appState.loadingCityData || appState.loadingMeasures {
+            if appState.loadingCityData || appState.loadingMeasures || (locationManager.isAuthorizationGranted() && locationManager.isWaitingToFetchRegion()) {
                 loadingView
             } else {
                 contentView
@@ -58,6 +58,21 @@ struct MainView: View {
         }
         .onAppear() {
             locationManager.requestLocation()
+            
+            locationManager.didSetCurrentCity = { newCity in
+                if let newCity {
+                    var favoriteCities = appState.userSettings.favouriteCities
+                    favoriteCities.removeAll { $0.cityName == newCity.cityName }
+                    appState.userSettings.favouriteCities = favoriteCities
+                    if appState.selectedCity == locationManager.currentCity {
+                        appState.currentLocationIsSelected = true
+                    }
+                    if appState.currentLocationIsSelected {
+                        appState.selectedCity = newCity
+                        dataSource.getValuesForCity(cityName: newCity.cityName)
+                    }
+                }
+            }
         }
     }
     

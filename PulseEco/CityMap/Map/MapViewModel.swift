@@ -101,12 +101,14 @@ class MapViewModel: ObservableObject {
     }
     
     private func setCity(_ city: City) {
-        guard city != self.selectedCity else {
+        guard city != self.selectedCity
+        else {
             self.shouldUpdateSensors = true
             return
         }
         defer {
-            self.selectedCity = city }
+            self.selectedCity = city
+        }
         self.span = span(for: city)
         self.shouldUpdateSensors = true
     }

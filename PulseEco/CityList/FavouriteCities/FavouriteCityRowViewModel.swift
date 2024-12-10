@@ -3,12 +3,7 @@ import SwiftUI
 
 class FavouriteCityRowViewModel: ObservableObject, Identifiable, Equatable {
     static func == (lhs: FavouriteCityRowViewModel, rhs: FavouriteCityRowViewModel) -> Bool {
-        lhs.id == rhs.id &&
-        lhs.value == rhs.value &&
-        lhs.color == rhs.color &&
-        lhs.unit == rhs.unit &&
-        lhs.noReadings == rhs.noReadings &&
-        lhs.message == rhs.message
+        lhs.id == rhs.id
     }
     
     var id: String { return city.cityName }
@@ -18,6 +13,7 @@ class FavouriteCityRowViewModel: ObservableObject, Identifiable, Equatable {
     var color: Color
     var unit: String
     var noReadings: Bool
+    var isCurrentCity: Bool
     var noReadingsImage: UIImage = UIImage(named: "exclamation") ?? UIImage()
     
     var cityName: String { city.cityName }
@@ -29,7 +25,8 @@ class FavouriteCityRowViewModel: ObservableObject, Identifiable, Equatable {
          message: String = Trema.text(for: "no_data_available"),
          value: String? = "3",
          unit: String = "µq/m3",
-         color: Color = AppColors.gray.color) {
+         color: Color = AppColors.gray.color,
+         isCurrentCity: Bool = false) {
         self.city = city
         self.message = message
         if let val = value {
@@ -48,5 +45,6 @@ class FavouriteCityRowViewModel: ObservableObject, Identifiable, Equatable {
             self.color = Color(AppColors.gray)
         }
         self.unit = unit
+        self.isCurrentCity = isCurrentCity
     }
 }
