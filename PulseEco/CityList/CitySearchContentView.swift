@@ -1,5 +1,5 @@
 //
-//  TmpListView.swift
+//  CitySearchContentView.swift
 //  PulseEco
 //
 //  Created by Nikola Jankovikj on 5.12.24.
@@ -8,13 +8,13 @@
 import Foundation
 import SwiftUI
 
-struct TmpListView: View {
+struct CitySearchContentView: View {
     @Environment(\.isSearching) private var isSearching
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var userSettings: UserSettings
-    @ObservedObject var viewModel: FavouriteCitiesViewModel
+    @ObservedObject var viewModel: CitySearchContentViewModel
     
     var searchText: String
     

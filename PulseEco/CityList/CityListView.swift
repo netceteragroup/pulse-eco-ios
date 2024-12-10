@@ -35,50 +35,60 @@ struct CityListView: View {
             }
         
         return ScrollView {
-            ForEach(foundCities, id: \.id) { city in
-                Button(action: {
-                    if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                        self.userSettings.addFavoriteCity(city)
-                        if self.appState.selectedCity != city {
-                            self.appState.selectedCity = city
-                            self.appState.newCitySelected = true
-                            self.presentationMode.wrappedValue.dismiss()
-                        } else {
-                            self.presentationMode.wrappedValue.dismiss()
-                            self.appState.citySelectorClicked = false
+            VStack {
+                ForEach(foundCities, id: \.id) { city in
+                    Button(action: {
+                        if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
+                            self.userSettings.addFavoriteCity(city)
+                            if self.appState.selectedCity != city {
+                                self.appState.selectedCity = city
+                                self.appState.newCitySelected = true
+                                self.presentationMode.wrappedValue.dismiss()
+                            } else {
+                                self.presentationMode.wrappedValue.dismiss()
+                                self.appState.citySelectorClicked = false
+                            }
+                            dismissSearch()
                         }
-                        dismissSearch()
+                    }, label: {
+                        CityRowView(viewModel: city,
+                                    addCheckMark: favouriteCitiesNames.contains(city.cityName),
+                                    showCountryName: true)
+                    })
+                    
+                    if city != foundCities.last {
+                        Divider()
+                            .background(AppColors.gray.color)
                     }
-                }, label: {
-                    CityRowView(viewModel: city,
-                                addCheckMark: favouriteCitiesNames.contains(city.cityName),
-                                showCountryName: true)
-                })
-                if city != foundCities.last {
+                }
+                
+                if foundCities.count > 0 {
                     Divider()
                         .background(AppColors.gray.color)
                 }
-            }
-            if foundCities.count > 0 {
-                Divider()
-                    .background(AppColors.gray.color)
-            }
-            VStack {
-                Text(Trema.text(for: "city_missing_add_new"))
-                    .font(.system(size: 14)).foregroundColor(Color(AppColors.gray))
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-                Button(action: {
-                    guard let url = URL(string: "https://pulse.eco/addcity") else { return }
-                    UIApplication.shared.open(url)
-                }) {
-                    Text("https://pulse.eco/addcity")
+                
+                VStack {
+                    Text(Trema.text(for: "city_missing_add_new"))
                         .font(.system(size: 14))
+                        .foregroundColor(Color(AppColors.gray))
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        
+                    Button(action: {
+                        guard let url = URL(string: "https://pulse.eco/addcity") else { return }
+                        UIApplication.shared.open(url)
+                    }) {
+                        Text("https://pulse.eco/addcity")
+                            .font(.system(size: 14))
+                    }
                 }
+                .padding(.all)
+                .resignKeyboardOnDragGesture()
+                .frame(maxWidth: .infinity)
+                .background(Color.white)
             }
-            .padding(.all)
-            .resignKeyboardOnDragGesture()
         }
+
     }
     
     var listAllCities: some View {
@@ -106,10 +116,8 @@ struct CityListView: View {
                                     if self.appState.selectedCity != city {
                                         self.appState.selectedCity = city
                                         self.appState.newCitySelected = true
-//                                        self.presentationMode.wrappedValue.dismiss()
                                         self.appState.citySelectorClicked = false
                                     } else {
-//                                        self.presentationMode.wrappedValue.dismiss()
                                         self.appState.citySelectorClicked = false
                                     }
                                     dismissSearch()

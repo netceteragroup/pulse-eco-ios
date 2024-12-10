@@ -12,18 +12,20 @@ struct FavouriteCitiesView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
-    @ObservedObject var viewModel: FavouriteCitiesViewModel
     @ObservedObject var userSettings: UserSettings
     @State var searchText = ""
     @State var isSearching = false
     let proxy: GeometryProxy
-
-    var cities: [FavouriteCityRowViewModel] { viewModel.getCities() }
     
     var body: some View {
         VStack(spacing: 0) {
-            TmpListView(userSettings: userSettings, viewModel: FavouriteCitiesViewModel(selectedMeasure: appState.selectedMeasureId, favouriteCities: userSettings.favouriteCities, cityValues: self.appState.userSettings.cityValues, measureList: self.dataSource.measures), searchText: searchText)
-                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search City")
+            CitySearchContentView(userSettings: userSettings,
+                                  viewModel: CitySearchContentViewModel(selectedMeasure: appState.selectedMeasureId,
+                                                                        favouriteCities: userSettings.favouriteCities,
+                                                                        cityValues: self.appState.userSettings.cityValues,
+                                                                        measureList: self.dataSource.measures),
+                                  searchText: searchText)
+                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Trema.text(for: "search_city_or_country"))
                 .listStyle(InsetGroupedListStyle())
                 .overlay(ShadowOnBottomOfView())
         }
