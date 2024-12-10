@@ -40,20 +40,20 @@ struct MainView: View {
         .sheet(item: $appState.activeSheet) { sheet in
             switch sheet {
             case .disclaimerView: DisclaimerView()
-            case .cityListView:
-                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
-                             userSettings: self.appState.userSettings)
-                .onDisappear(perform: {
-                    if self.appState.userSettings.favouriteCities.count == 0 {
-                        self.appState.citySelectorClicked = false
-                    }
-                    if self.$appState.newCitySelected.wrappedValue == true {
-                        self.refreshService.updateRefreshDate()
-                        self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
-                        self.appState.newCitySelected = false
-                        self.appState.citySelectorClicked = false
-                    }
-                })
+//            case .cityListView:
+//                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
+//                             userSettings: self.appState.userSettings, searchText: "")
+//                .onDisappear(perform: {
+//                    if self.appState.userSettings.favouriteCities.count == 0 {
+//                        self.appState.citySelectorClicked = false
+//                    }
+//                    if self.$appState.newCitySelected.wrappedValue == true {
+//                        self.refreshService.updateRefreshDate()
+//                        self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
+//                        self.appState.newCitySelected = false
+//                        self.appState.citySelectorClicked = false
+//                    }
+//                })
             }
         }
         .onAppear() {

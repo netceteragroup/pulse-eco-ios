@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		13725E122CE352C400073369 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13725E102CE352C400073369 /* LocationManager.swift */; };
+		1389993F2D01D20E00791EF5 /* TmpListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389993E2D01D20E00791EF5 /* TmpListView.swift */; };
 		1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */; };
 		1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */; };
 		1E4E7A9C285B626700BE9A92 /* MonthButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */; };
@@ -221,6 +222,7 @@
 
 /* Begin PBXFileReference section */
 		13725E102CE352C400073369 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		1389993E2D01D20E00791EF5 /* TmpListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TmpListView.swift; sourceTree = "<group>"; };
 		1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSlider.swift; sourceTree = "<group>"; };
 		1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarButtonView.swift; sourceTree = "<group>"; };
 		1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthButtonView.swift; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 				593C263524BC8969005152BE /* CityRowView.swift */,
 				593C264424BCAD19005152BE /* SearchBar.swift */,
 				593C263B24BC8D6A005152BE /* FavouriteCities */,
+				1389993E2D01D20E00791EF5 /* TmpListView.swift */,
 			);
 			path = CityList;
 			sourceTree = "<group>";
@@ -1031,6 +1034,7 @@
 				59504C0824B45E7000EA4AFF /* MeasureButtonView.swift in Sources */,
 				59504C1924B46CC700EA4AFF /* ChildSizeReader.swift in Sources */,
 				74E4661A2703272F0010F80E /* LottieView.swift in Sources */,
+				1389993F2D01D20E00791EF5 /* TmpListView.swift in Sources */,
 				59504C0F24B46B9F00EA4AFF /* RoundedCorners.swift in Sources */,
 				591EA1D224C99D5500CA61AE /* ShadowOnTopOfView.swift in Sources */,
 				744A9DEF28575C3000A91789 /* Calendar.swift in Sources */,
