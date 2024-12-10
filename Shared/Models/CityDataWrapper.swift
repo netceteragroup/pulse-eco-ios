@@ -9,9 +9,9 @@ import Foundation
 
 class CityDataWrapper: ObservableObject {
     
-    private (set) var sensorData: [SensorData]?
-    private (set) var currentValue: CityOverallValues?
-    private (set) var measures: [Measure]?
+    private(set) var sensorData: [SensorData]?
+    private(set) var currentValue: CityOverallValues?
+    private(set) var measures: [Measure]?
     
     init (sensorData: [SensorData]?,
           currentValue: CityOverallValues?,

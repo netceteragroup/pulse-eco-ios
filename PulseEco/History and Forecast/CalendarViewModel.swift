@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 
+@MainActor
 class CalendarViewModel: ViewModelProtocol {
     
     @Published var monthlyData: [DayDataWrapper] = []
