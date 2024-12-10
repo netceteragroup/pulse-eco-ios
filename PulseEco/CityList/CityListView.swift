@@ -40,13 +40,13 @@ struct CityListView: View {
                     Button(action: {
                         if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
                             self.userSettings.addFavoriteCity(city)
+                            self.appState.citySelectorClicked = false
                             if self.appState.selectedCity != city {
                                 self.appState.selectedCity = city
                                 self.appState.newCitySelected = true
                                 self.presentationMode.wrappedValue.dismiss()
                             } else {
                                 self.presentationMode.wrappedValue.dismiss()
-                                self.appState.citySelectorClicked = false
                             }
                             dismissSearch()
                         }
@@ -113,12 +113,10 @@ struct CityListView: View {
                                 if let city = viewModel.cityModel
                                     .first(where: { $0.cityName == city.cityName }) {
                                     self.userSettings.addFavoriteCity(city)
+                                    self.appState.citySelectorClicked = false
                                     if self.appState.selectedCity != city {
                                         self.appState.selectedCity = city
                                         self.appState.newCitySelected = true
-                                        self.appState.citySelectorClicked = false
-                                    } else {
-                                        self.appState.citySelectorClicked = false
                                     }
                                     dismissSearch()
                                 }
