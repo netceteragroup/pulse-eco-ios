@@ -20,16 +20,16 @@ struct CitySearchContentView: View {
     var searchText: String
     
     var allFavoritesAndLocation: [FavouriteCityRowViewModel] {
-            var tmpAllCities: [FavouriteCityRowViewModel] = []
-            if let currentCity = locationManager.currentCity {
-                tmpAllCities.append(FavouriteCityRowViewModel(city: currentCity, isCurrentCity: true))
-            }
-            tmpAllCities.append(contentsOf: viewModel.getCities())
-            return tmpAllCities
+        var tmpAllCities: [FavouriteCityRowViewModel] = []
+        if let currentCity = locationManager.currentCity {
+            tmpAllCities.append(FavouriteCityRowViewModel(city: currentCity, isCurrentCity: true))
         }
+        tmpAllCities.append(contentsOf: viewModel.getCities())
+        return tmpAllCities
+    }
     
     var body: some View {
-        if isSearching || viewModel.cities.isEmpty{
+        if isSearching || (viewModel.cities.isEmpty && !locationManager.isAuthorizationGranted()) {
             CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities), userSettings: userSettings, searchText: searchText)
                 .padding(.vertical, 1)
         }
@@ -40,7 +40,6 @@ struct CitySearchContentView: View {
     }
     
     var favoriteCities: some View {
-        
         return List {
             ForEach([allFavoritesAndLocation.first!], id: \.id) {
                 cityRow(favouriteCity: $0, from: [allFavoritesAndLocation.first!])
@@ -54,7 +53,7 @@ struct CitySearchContentView: View {
             .listRowInsets(EdgeInsets())
         }
     }
-
+    
     @ViewBuilder
     private func cityRow(favouriteCity: FavouriteCityRowViewModel,
                          from array: [FavouriteCityRowViewModel]) -> some View {
@@ -83,7 +82,7 @@ struct CitySearchContentView: View {
         }
         .listRowInsets(EdgeInsets())
     }
-
+    
     private func delete(at offsets: IndexSet) {
         offsets.forEach {
             let delRow = allFavoritesAndLocation[$0 + 1]

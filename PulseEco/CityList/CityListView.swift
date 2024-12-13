@@ -31,25 +31,14 @@ struct CityListView: View {
         
         let favouriteCitiesNames = getFavouriteCitiesNames()
         let foundCities = viewModel.getCities().filter { $0.cityName.lowercased().contains(self.searchText.lowercased()) ||
-                                                                $0.countryName.lowercased().contains(self.searchText.lowercased())
+            $0.countryName.lowercased().contains(self.searchText.lowercased())
         }
         
         return ScrollView {
             VStack {
                 ForEach(foundCities, id: \.id) { city in
                     Button(action: {
-                        if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                            self.userSettings.addFavoriteCity(city)
-                            self.appState.citySelectorClicked = false
-                            if self.appState.selectedCity != city {
-                                self.appState.selectedCity = city
-                                self.appState.newCitySelected = true
-                                self.presentationMode.wrappedValue.dismiss()
-                            } else {
-                                self.presentationMode.wrappedValue.dismiss()
-                            }
-                            dismissSearch()
-                        }
+                        addToFavourites(city: city)
                     }, label: {
                         CityRowView(viewModel: city,
                                     addCheckMark: favouriteCitiesNames.contains(city.cityName),
@@ -67,28 +56,11 @@ struct CityListView: View {
                         .background(AppColors.gray.color)
                 }
                 
-                VStack {
-                    Text(Trema.text(for: "city_missing_add_new"))
-                        .font(.system(size: 14))
-                        .foregroundColor(Color(AppColors.gray))
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-                        
-                    Button(action: {
-                        guard let url = URL(string: "https://pulse.eco/addcity") else { return }
-                        UIApplication.shared.open(url)
-                    }) {
-                        Text("https://pulse.eco/addcity")
-                            .font(.system(size: 14))
-                    }
-                }
-                .padding(.all)
-                .resignKeyboardOnDragGesture()
-                .frame(maxWidth: .infinity)
-                .background(Color.white)
+                missingCityText
             }
+            .resignKeyboardOnDragGesture()
         }
-
+        
     }
     
     var listAllCities: some View {
@@ -112,16 +84,7 @@ struct CityListView: View {
                         }
                         ForEach(citiesFromCountry, id: \.id) { city in
                             Button(action: {
-                                if let city = viewModel.cityModel
-                                    .first(where: { $0.cityName == city.cityName }) {
-                                    self.userSettings.addFavoriteCity(city)
-                                    self.appState.citySelectorClicked = false
-                                    if self.appState.selectedCity != city {
-                                        self.appState.selectedCity = city
-                                        self.appState.newCitySelected = true
-                                    }
-                                    dismissSearch()
-                                }
+                                addToFavourites(city: city)
                             }, label: {
                                 CityRowView(viewModel: city,
                                             addCheckMark: favouriteCitiesNames.contains(city.cityName),
@@ -135,21 +98,47 @@ struct CityListView: View {
                     }
             }
             Divider().background(AppColors.gray.color)
-            VStack {
-                Text(Trema.text(for: "city_missing_add_new"))
-                    .font(.system(size: 14)).foregroundColor(Color(AppColors.gray))
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-                Button(action: {
-                    guard let url = URL(string: "https://pulse.eco/addcity") else { return }
-                    UIApplication.shared.open(url)
-                }) {
-                    Text("https://pulse.eco/addcity")
-                        .font(.system(size: 14))
-                }
+            
+            missingCityText
+        }
+        .resignKeyboardOnDragGesture()
+    }
+    
+    var missingCityText: some View {
+        VStack {
+            Text(Trema.text(for: "city_missing_add_new"))
+                .font(.system(size: 14))
+                .foregroundColor(Color(AppColors.gray))
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+            
+            Button(action: {
+                guard let url = URL(string: "https://pulse.eco/addcity") else { return }
+                UIApplication.shared.open(url)
+            }) {
+                Text("https://pulse.eco/addcity")
+                    .font(.system(size: 14))
             }
-            .padding(.all)
-            .resignKeyboardOnDragGesture()
+        }
+        .padding(.all)
+        .frame(maxWidth: .infinity)
+        .background(Color.white)
+    }
+    
+    private func addToFavourites(city: CityRowViewModel) {
+        if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
+            if locationManager.currentCity?.cityName != city.cityName {
+                self.userSettings.addFavoriteCity(city)
+            }
+            self.appState.citySelectorClicked = false
+            if self.appState.selectedCity != city {
+                self.appState.selectedCity = city
+                self.appState.newCitySelected = true
+                self.presentationMode.wrappedValue.dismiss()
+            } else {
+                self.presentationMode.wrappedValue.dismiss()
+            }
+            dismissSearch()
         }
     }
     
