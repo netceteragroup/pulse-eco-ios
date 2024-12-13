@@ -16,23 +16,23 @@ struct CityListView: View {
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var viewModel: CityListViewModel
     @ObservedObject var userSettings: UserSettings
+    @ObservedObject var locationManager: LocationManager = LocationManager.shared
     var searchText: String
     
     var body: some View {
         if self.searchText.isEmpty {
-            self.listAllCities
+            listAllCities
         } else {
-            self.filteredCitiesList
+            filteredCitiesList
         }
     }
     
     var filteredCitiesList: some View {
-        let favouriteCitiesNames = userSettings.favouriteCities.map { $0.cityName }
-        let foundCities = viewModel.getCities()
-            .filter { $0.siteName.lowercased()
-                    .contains(self.searchText.lowercased()) || $0.countryName.lowercased()
-                    .contains(self.searchText.lowercased())
-            }
+        
+        let favouriteCitiesNames = getFavouriteCitiesNames()
+        let foundCities = viewModel.getCities().filter { $0.cityName.lowercased().contains(self.searchText.lowercased()) ||
+                                                                $0.countryName.lowercased().contains(self.searchText.lowercased())
+        }
         
         return ScrollView {
             VStack {
@@ -92,7 +92,10 @@ struct CityListView: View {
     }
     
     var listAllCities: some View {
-        ScrollView {
+        
+        let favouriteCitiesNames = getFavouriteCitiesNames()
+        
+        return ScrollView {
             ForEach(self.viewModel.getCountries(), id: \.self) { elem in
                 Section(header:
                             HStack {
@@ -104,7 +107,6 @@ struct CityListView: View {
                     .frame(height: 30)
                     .background(Color(red: 240 / 255, green: 240 / 255, blue: 240 / 255))
                     .listRowInsets(.zero)) {
-                        let favouriteCitiesNames = self.userSettings.favouriteCities.map { $0.cityName }
                         let citiesFromCountry = self.viewModel.getCities().filter {
                             elem == $0.countryName
                         }
@@ -149,6 +151,14 @@ struct CityListView: View {
             .padding(.all)
             .resignKeyboardOnDragGesture()
         }
+    }
+    
+    private func getFavouriteCitiesNames() -> [String] {
+        var favouriteCitiesNames = self.userSettings.favouriteCities.map { $0.cityName }
+        if let currentCity = self.locationManager.currentCity {
+            favouriteCitiesNames.append(currentCity.cityName)
+        }
+        return favouriteCitiesNames
     }
 }
 

@@ -36,6 +36,7 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var weeklyDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil,
                                                                         currentValue: nil,
                                                                         measures: nil)
+    @Published var currentLocationIsSelected: Bool = false
     
     var cityIcon: Image {
         citySelectorClicked ? Image(systemName: "chevron.up") : Image(systemName: "chevron.down")

@@ -15,9 +15,19 @@ struct FavouriteCityRowView: View {
         VStack {
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(self.viewModel.siteName)
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(AppColors.black.color)
+                    HStack {
+                        Text(self.viewModel.siteName)
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundColor(AppColors.black.color)
+                        
+                        if viewModel.isCurrentCity {
+                            Image(systemName: "location.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 12, height: 12)
+                                .foregroundStyle(.blue)
+                        }
+                    }
                     Text(self.viewModel.countryName)
                         .font(.system(size: 11, weight: .semibold))
                         .foregroundColor(AppColors.gray.color)

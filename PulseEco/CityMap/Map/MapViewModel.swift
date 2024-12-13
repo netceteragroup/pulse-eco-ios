@@ -15,12 +15,12 @@ class MapViewModel: ObservableObject {
     let appState: AppState
     @ObservedObject var appDataSource: AppDataSource
     
-    @Published private (set) var selectedCity: City = UserSettings.selectedCity
-    @Published private (set) var measure: Measure?
-    @Published private (set) var sensors: [SensorPinModel] = []
+    @Published private(set) var selectedCity: City = UserSettings.selectedCity
+    @Published private(set) var measure: Measure?
+    @Published private(set) var sensors: [SensorPinModel] = []
     var shouldUpdateSensors = false
     
-    private (set) var span: MKCoordinateSpan!
+    private(set) var span: MKCoordinateSpan!
     
     init(appState: AppState, appDataSource: AppDataSource) {
         self.appState = appState
@@ -101,12 +101,14 @@ class MapViewModel: ObservableObject {
     }
     
     private func setCity(_ city: City) {
-        guard city != self.selectedCity else {
+        guard city != self.selectedCity
+        else {
             self.shouldUpdateSensors = true
             return
         }
         defer {
-            self.selectedCity = city }
+            self.selectedCity = city
+        }
         self.span = span(for: city)
         self.shouldUpdateSensors = true
     }

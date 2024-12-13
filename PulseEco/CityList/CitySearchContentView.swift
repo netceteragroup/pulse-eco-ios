@@ -15,8 +15,18 @@ struct CitySearchContentView: View {
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var userSettings: UserSettings
     @ObservedObject var viewModel: CitySearchContentViewModel
+    @ObservedObject var locationManager: LocationManager = LocationManager.shared
     
     var searchText: String
+    
+    var allFavoritesAndLocation: [FavouriteCityRowViewModel] {
+            var tmpAllCities: [FavouriteCityRowViewModel] = []
+            if let currentCity = locationManager.currentCity {
+                tmpAllCities.append(FavouriteCityRowViewModel(city: currentCity, isCurrentCity: true))
+            }
+            tmpAllCities.append(contentsOf: viewModel.getCities())
+            return tmpAllCities
+        }
     
     var body: some View {
         if isSearching || viewModel.cities.isEmpty{
@@ -30,13 +40,14 @@ struct CitySearchContentView: View {
     }
     
     var favoriteCities: some View {
-        List {
-            ForEach([viewModel.cities.first!], id: \.id) {
-                cityRow(city: $0, from: [viewModel.cities.first!])
+        
+        return List {
+            ForEach([allFavoritesAndLocation.first!], id: \.id) {
+                cityRow(favouriteCity: $0, from: [allFavoritesAndLocation.first!])
             }
             Section(header: EmptyView()) {
-                ForEach(Array(viewModel.cities.dropFirst()), id: \.id) { city in
-                    cityRow(city: city, from: Array(viewModel.cities.dropFirst()))
+                ForEach(Array(allFavoritesAndLocation.dropFirst()), id: \.id) { city in
+                    cityRow(favouriteCity: city, from: Array(allFavoritesAndLocation.dropFirst()))
                 }
                 .onDelete(perform: self.delete)
             }
@@ -45,22 +56,28 @@ struct CitySearchContentView: View {
     }
 
     @ViewBuilder
-    private func cityRow(city: FavouriteCityRowViewModel,
+    private func cityRow(favouriteCity: FavouriteCityRowViewModel,
                          from array: [FavouriteCityRowViewModel]) -> some View {
         VStack(spacing: 0) {
             Button(action: {
                 self.appState.citySelectorClicked = false
-                if self.appState.selectedCity != city.city {
-                    self.userSettings.addFavoriteCity(city.city)
-                    self.appState.selectedCity = city.city
+                if self.appState.selectedCity != favouriteCity.city {
+                    if locationManager.currentCity?.cityName == favouriteCity.city.cityName {
+                        appState.currentLocationIsSelected = true
+                    }
+                    else {
+                        self.userSettings.addFavoriteCity(favouriteCity.city)
+                        appState.currentLocationIsSelected = false
+                    }
+                    self.appState.selectedCity = favouriteCity.city
                     self.refreshService.updateRefreshDate()
-                    self.dataSource.getValuesForCity(cityName: city.cityName)
+                    self.dataSource.getValuesForCity(cityName: favouriteCity.cityName)
                 }
             }, label: {
-                FavouriteCityRowView(viewModel: city)
+                FavouriteCityRowView(viewModel: favouriteCity)
                     .contentShape(Rectangle())
             }).padding()
-            if city != array.last {
+            if favouriteCity != array.last {
                 Divider()
             }
         }
@@ -69,7 +86,7 @@ struct CitySearchContentView: View {
 
     private func delete(at offsets: IndexSet) {
         offsets.forEach {
-            let delRow = self.viewModel.getCities()[$0 + 1]
+            let delRow = allFavoritesAndLocation[$0 + 1]
             if let city = self.userSettings.favouriteCities.first(where: { $0.cityName == delRow.cityName }) {
                 self.userSettings.removeFavouriteCity(city)
             }

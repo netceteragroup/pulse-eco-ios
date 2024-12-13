@@ -21,6 +21,7 @@ class UserSettings: ObservableObject {
             }
         }
     }
+    
     @Published var cityValues: [CityOverallValues] {
         didSet {
             if let encoded = try? JSONEncoder().encode(cityValues) {

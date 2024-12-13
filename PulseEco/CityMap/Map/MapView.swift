@@ -13,6 +13,7 @@ struct MapView: UIViewRepresentable {
     @ObservedObject var viewModel: MapViewModel
     let appState: AppState
     @State var boundryAndZoomEnabled = true
+    @ObservedObject var locationManager = LocationManager.shared
     
     func makeCoordinator() -> MapViewCoordinator {
         MapViewCoordinator(self, $boundryAndZoomEnabled)
@@ -25,11 +26,28 @@ struct MapView: UIViewRepresentable {
         mapView.isRotateEnabled = false
         mapView.mapType = .standard
         addAnotations(to: mapView)
-        let zoomLevel = viewModel.selectedCity.intialZoomLevel
-        let region = MKCoordinateRegion(center: viewModel.selectedCity.center, span: viewModel.span)
+        
+        let city: City = viewModel.selectedCity
+        
+        let zoomLevel = city.intialZoomLevel
+        
+        var region: MKCoordinateRegion = MKCoordinateRegion()
+        
+        if city.cityBorderPoints.count == 0 {
+            locationManager.fetchCityRegion(cityName: city.cityName)
+            if let currentRegion = locationManager.region {
+                region = currentRegion
+            }
+            else {
+                region = MKCoordinateRegion(center: City.defaultCity().center, latitudinalMeters: 10000.0, longitudinalMeters: 10000.0)
+            }
+        }
+        else {
+            region = MKCoordinateRegion(center: city.center, span: viewModel.span)
+        }
+        
         let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: Double((23-zoomLevel)*8000))
         mapView.setCameraZoomRange(zoomRange, animated: true)
-       
         mapView.setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: region),
                                  animated: true)
         mapView.setRegion(region, animated: true)
@@ -98,7 +116,9 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
             return
         }
         annotationView.showCallout()
-        map.appState.showSensorDetails = true
+        DispatchQueue.main.async {
+            self.map.appState.showSensorDetails = true
+        }
         map.appState.selectedSensor = annotationView.pin ?? SensorPinModel()
         map.viewModel.getDailyAverageDataForSensor(annotationView.pin?.sensorID ?? "")
         let region = MKCoordinateRegion(center: view.annotation!.coordinate, span: mapView.region.span)
@@ -113,8 +133,10 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         guard let annotationView = view as? LocationAnnotationView else {
             return
         }
+        DispatchQueue.main.async {
+            self.map.appState.showSensorDetails = false
+        }
         annotationView.hideCallout()
-        map.appState.showSensorDetails = false
     }
 }
 
