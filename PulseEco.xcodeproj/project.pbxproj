@@ -14,6 +14,8 @@
 		133B20C72CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
 		133B20C82CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
 		13725E122CE352C400073369 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13725E102CE352C400073369 /* LocationManager.swift */; };
+		1384B6852D14613D00A22BD0 /* TimelineSliderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384B6842D14613D00A22BD0 /* TimelineSliderViewModel.swift */; };
+		138999412D08796400791EF5 /* TimelineSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138999402D08796400791EF5 /* TimelineSliderView.swift */; };
 		1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */; };
 		1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */; };
 		1E4E7A9C285B626700BE9A92 /* MonthButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */; };
@@ -229,6 +231,8 @@
 		133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerProtocol.swift; sourceTree = "<group>"; };
 		133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLoggerAdapter.swift; sourceTree = "<group>"; };
 		13725E102CE352C400073369 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		1384B6842D14613D00A22BD0 /* TimelineSliderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSliderViewModel.swift; sourceTree = "<group>"; };
+		138999402D08796400791EF5 /* TimelineSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSliderView.swift; sourceTree = "<group>"; };
 		1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSlider.swift; sourceTree = "<group>"; };
 		1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarButtonView.swift; sourceTree = "<group>"; };
 		1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthButtonView.swift; sourceTree = "<group>"; };
@@ -408,6 +412,8 @@
 				1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */,
 				74A0D84C2833A9010043222E /* CalendarViewModel.swift */,
 				1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */,
+				1384B6842D14613D00A22BD0 /* TimelineSliderViewModel.swift */,
+				138999402D08796400791EF5 /* TimelineSliderView.swift */,
 			);
 			path = "History and Forecast";
 			sourceTree = "<group>";
@@ -1007,6 +1013,7 @@
 				1E515D0A282BC115009EFC4D /* DayDataWrapper.swift in Sources */,
 				1EAF05F82817E89B001C1EEA /* CalendarView.swift in Sources */,
 				BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */,
+				138999412D08796400791EF5 /* TimelineSliderView.swift in Sources */,
 				59A35ADA2499057C00C07786 /* Constants.swift in Sources */,
 				735C2888298D0C5E00F19A38 /* AboutView.swift in Sources */,
 				5924C5DA249A4792007E0D78 /* MeasureListViewModel.swift in Sources */,
@@ -1053,6 +1060,7 @@
 				74E4661A2703272F0010F80E /* LottieView.swift in Sources */,
 				59504C0F24B46B9F00EA4AFF /* RoundedCorners.swift in Sources */,
 				591EA1D224C99D5500CA61AE /* ShadowOnTopOfView.swift in Sources */,
+				1384B6852D14613D00A22BD0 /* TimelineSliderViewModel.swift in Sources */,
 				744A9DEF28575C3000A91789 /* Calendar.swift in Sources */,
 				59A3954E24A206F400D39D64 /* AppState.swift in Sources */,
 				1EBC79C9282A55D700D18968 /* CityDataWrapper.swift in Sources */,

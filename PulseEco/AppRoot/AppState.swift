@@ -37,8 +37,30 @@ class AppState: ObservableObject, ViewModelDependency {
                                                                         currentValue: nil,
                                                                         measures: nil)
     @Published var currentLocationIsSelected: Bool = false
+    @Published var hourlySensors: [Int: [SensorPinModel]] = [:]
+    @Published var cachedHourlySensorsByDay: [CacheDictionaryKey: [Int: [SensorPinModel]]] = [:]
+    @Published var isTimelineSliderActive: Bool = true
+    
+    struct CacheDictionaryKey: Hashable {
+        var date: Date
+        var type: String
+    }
     
     var cityIcon: Image {
         citySelectorClicked ? Image(systemName: "chevron.up") : Image(systemName: "chevron.down")
+    }
+    
+    init() {
+        addSubscribers()
+    }
+    
+    func addSubscribers() {
+        $selectedCity
+            .sink { [weak self] _ in
+                guard let self else { return }
+                cachedHourlySensorsByDay.removeAll()
+                hourlySensors.removeAll()
+            }
+            .store(in: &cancelables)
     }
 }

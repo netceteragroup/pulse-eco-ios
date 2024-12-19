@@ -137,13 +137,14 @@ class NetworkService {
     func fetchSensorData(cityName: String,
                          measureId: String,
                          from: Date,
-                         to: Date) async -> [SensorData]? {
+                         to: Date,
+                         isTimelineSliderActive: Bool) async -> [SensorData]? {
         
         let fromDate = calendar.startOfDay(for: from)
         let from = DateFormatter.iso8601Full.string(from: fromDate)
         let to = DateFormatter.iso8601Full.string(from: to)
         
-        if Date().isSameDay(with: fromDate) {
+        if !isTimelineSliderActive {
             let response = await currentDataSensor(cityName: cityName, measureId: measureId)
             return response
         } else {

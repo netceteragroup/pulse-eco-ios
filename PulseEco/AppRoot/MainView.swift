@@ -119,7 +119,6 @@ struct MainView: View {
                                             proxy: proxy)
                                 .id("CityMapView")
                                 .edgesIgnoringSafeArea([.horizontal, .bottom])
-                                
                             }
                         }
                     }
