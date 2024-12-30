@@ -13,7 +13,6 @@ struct MainView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @State private var isShowingSettingsView = false
-    @State var showingPicker = false
     @ObservedObject var locationManager: LocationManager = LocationManager.shared
     
     let mapViewModel: MapViewModel
@@ -109,15 +108,19 @@ struct MainView: View {
                             NavigationLink(destination: SettingsView(),
                                            isActive: $isShowingSettingsView) { EmptyView () }
                             
-                            DateSlider(unimplementedAlert: $appState.showingCalendar,
-                                       unimplementedPicker: $showingPicker,
-                                       selectedDate: $appState.selectedDate)
+//                            DateSlider(unimplementedAlert: $appState.showingCalendar,
+//                                       selectedDate: $appState.selectedDate)
                             
                             ZStack(alignment: .top) {
+                                DatePicker()
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 8)
+                                    .zIndex(4)
                                 CityMapView(userSettings: self.appState.userSettings,
                                             mapViewModel: mapViewModel,
                                             proxy: proxy)
                                 .id("CityMapView")
+                                .padding(.top, 60)
                                 .edgesIgnoringSafeArea([.horizontal, .bottom])
                                 
                             }
@@ -144,25 +147,25 @@ struct MainView: View {
                     .transition(.move(edge: .bottom))
                     .zIndex(2) // zIndexes are needed to maintain dismiss transition
                 }
-                if appState.showingCalendar {
-                    VStack {
-                        CalendarView(showingCalendar: $appState.showingCalendar,
-                                     selectedDate: $appState.selectedDate,
-                                     calendarSelection: $appState.calendarSelection,
-                                     viewModelClosure: CalendarViewModel(appState: self.appState,
-                                                                         appDataSource: self.dataSource))
-                        .cornerRadius(4)
-                        .shadow(color: Color(AppColors.shadowColor), radius: 20)
-                        .padding(.top, 180)
-                        .padding(.all)
-                        Spacer()
-                    }
-                    .background(Color.gray.opacity(0.8).onTapGesture {
-                        appState.showingCalendar = false
-                    })
-                    .edgesIgnoringSafeArea(.all)
-                    .zIndex(3)
-                }
+//                if appState.showingCalendar {
+//                    VStack {
+//                        CalendarView(showingCalendar: $appState.showingCalendar,
+//                                     selectedDate: $appState.selectedDate,
+//                                     calendarSelection: $appState.calendarSelection,
+//                                     viewModelClosure: CalendarViewModel(appState: self.appState,
+//                                                                         appDataSource: self.dataSource))
+//                        .cornerRadius(4)
+//                        .shadow(color: Color(AppColors.shadowColor), radius: 20)
+//                        .padding(.top, 180)
+//                        .padding(.all)
+//                        Spacer()
+//                    }
+//                    .background(Color.gray.opacity(0.8).onTapGesture {
+//                        appState.showingCalendar = false
+//                    })
+//                    .edgesIgnoringSafeArea(.all)
+//                    .zIndex(3)
+//                }
             }
         }
     }

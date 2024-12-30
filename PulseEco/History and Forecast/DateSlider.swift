@@ -13,7 +13,6 @@ struct DateSlider: View {
     @EnvironmentObject var dataSource: AppDataSource
     
     @Binding var unimplementedAlert: Bool
-    @Binding var unimplementedPicker: Bool
     @Binding var selectedDate: Date
     
     var body: some View {
@@ -22,7 +21,6 @@ struct DateSlider: View {
                 HStack {
                     Button {
                         unimplementedAlert.toggle()
-                        unimplementedPicker = true
                         Task {
                             await dataSource
                                 .fetchMonthlyDayData(selectedMonth: calendar.dateComponents([.month],

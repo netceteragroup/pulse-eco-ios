@@ -28,8 +28,9 @@ class CalendarViewModel: ViewModelProtocol {
         self.appDataSource = appDataSource
         
         self.appDataSource.$monthlyData.sink {
-            self.monthlyData = $0
-            self.dateValues = self.extractDate()
+//            self.monthlyData = $0
+//            self.dateValues = self.extractDate()
+            self.monthlyData = self.getMonthlyValuesForPresentation(monthlyData: $0)
         }
         .store(in: &cancelables)
     }
@@ -77,6 +78,41 @@ class CalendarViewModel: ViewModelProtocol {
         return days
     }
     
+    func getMonthlyValuesForPresentation(monthlyData: [DayDataWrapper]) -> [DayDataWrapper] {
+        let daysOfMonthCount = getCurrentMonth().getDaysOfMonth().count
+        
+        let firstWeekDay: Int = {
+            let first = calendar.component(.weekday, from: monthlyData.first?.date ?? Date()) - 1
+            return first > 0 ? first : 7
+        }()
+        
+        var presentableValues = monthlyData
+        
+        if daysOfMonthCount > monthlyData.count {
+            let today = appState.weeklyDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
+                                                                    sensorType: appState.selectedMeasureId,
+                                                                    from: calendar.startOfDay(for: Date.now),
+                                                                    to: calendar.date(byAdding: .day,
+                                                                                      value: +1,
+                                                                                      to: Date.now)!)
+            
+            
+            if let todayDate = today.first {
+                presentableValues.append(DayDataWrapper(date: today.first!.date, value: today.first!.value, color: today.first!.color))
+            }
+            
+            for i in 1..<daysOfMonthCount - monthlyData.count {
+                presentableValues.append(DayDataWrapper(date: calendar.date(byAdding: .day, value: i, to: .now)!, value: "", color: "gray"))
+            }
+        }
+        
+        for _ in 1..<firstWeekDay {
+            presentableValues.insert(DayDataWrapper(date: .distantPast, value: "-1", color: "gray"), at: 0)
+        }
+        
+        return presentableValues
+    }
+    
     func isSameDay(date1: Date, date2: Date) -> Bool {
         let diff = calendar.dateComponents([.day], from: date1, to: date2)
         return diff.day == 0
@@ -97,12 +133,19 @@ class CalendarViewModel: ViewModelProtocol {
     func extraDate() -> String {
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM YYYY"
+        formatter.dateFormat = "MMMM yyy"
         formatter.locale = Locale(identifier: Trema.appLanguageLocale)
         
         let date = formatter.string(from: currentDate)
         
-        return date
+        return shortDate(from: date)
+    }
+    
+    func shortDate(from date: String) -> String {
+        let prefix = date.prefix(3)
+        let suffix = date.suffix(4)
+        
+        return prefix + " " + suffix
     }
     
     func previousMonth() {
@@ -172,6 +215,10 @@ class CalendarViewModel: ViewModelProtocol {
         Task {
             await appDataSource.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
         }
+    }
+    
+    func isCurrentMonthSelected() -> Bool {
+        return calendar.component(.month, from: currentDate) == calendar.component(.month, from: .now)
     }
 }
 extension Array where Element: Hashable {
