@@ -70,7 +70,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                   measureId: self.appState.selectedMeasureId) ?? []
             async let sensorsData24h = self.networkService.fetch24hDataForSensors(cityName: cityName) ?? []
             
-            await self.fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
+//            await self.fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
             
             let wrapper = await CityValueWrapper(cityOverall: cityOverall,
                                                  citySensors: citySensors,

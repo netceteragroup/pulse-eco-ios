@@ -12,10 +12,10 @@ import Foundation
 class CalendarViewModel: ViewModelProtocol {
     
     @Published var monthlyData: [DayDataWrapper] = []
-    @Published var currentDate: Date = Date()
+    @Published var currentDate: Date
     @Published var currentMonthOffset = 0
-    @Published var selectedYear: Int = calendar.component(.year, from: Date())
-    @Published var selectedMonth: Int = calendar.component(.month, from: Date())
+    @Published var selectedYear: Int
+    @Published var selectedMonth: Int
     @Published var dateValues: [DateValueModel] = []
     @Published var monthValues: [DayDataWrapper] = []
     
@@ -26,6 +26,9 @@ class CalendarViewModel: ViewModelProtocol {
     init(appState: AppState, appDataSource: AppDataSource) {
         self.appState = appState
         self.appDataSource = appDataSource
+        currentDate = appState.selectedDate
+        selectedYear = calendar.component(.year, from: appState.selectedDate)
+        selectedMonth = calendar.component(.month, from: appState.selectedDate)
         
         self.appDataSource.$monthlyData.sink {
 //            self.monthlyData = $0
@@ -86,23 +89,35 @@ class CalendarViewModel: ViewModelProtocol {
             return first > 0 ? first : 7
         }()
         
-        var presentableValues = monthlyData
-        
-        if daysOfMonthCount > monthlyData.count {
-            let today = appState.weeklyDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
-                                                                    sensorType: appState.selectedMeasureId,
-                                                                    from: calendar.startOfDay(for: Date.now),
-                                                                    to: calendar.date(byAdding: .day,
-                                                                                      value: +1,
-                                                                                      to: Date.now)!)
-            
-            
-            if let todayDate = today.first {
-                presentableValues.append(DayDataWrapper(date: today.first!.date, value: today.first!.value, color: today.first!.color))
+        var presentableValues: [DayDataWrapper] = []
+        var monthlyDataCopy = monthlyData
+        let dayNow = calendar.component(.day, from: .now)
+        for i in 1..<daysOfMonthCount+1 {
+            guard let data = monthlyDataCopy.first,
+                  let date = monthlyDataCopy.first?.date else {
+                if i == dayNow {
+                    let today = appState.weeklyDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
+                                                                            sensorType: appState.selectedMeasureId,
+                                                                            from: calendar.startOfDay(for: Date.now),
+                                                                            to: calendar.date(byAdding: .day,
+                                                                                              value: +1,
+                                                                                              to: Date.now)!)
+                    if let todayData = today.first {
+                        presentableValues.append(DayDataWrapper(date: todayData.date, value: todayData.value, color: todayData.color))
+                    } else {
+                        presentableValues.append(DayDataWrapper(date: calendar.date(bySetting: .day, value: i, of: currentDate)!, value: "", color: "gray"))
+                    }
+                } else {
+                    presentableValues.append(DayDataWrapper(date: calendar.date(bySetting: .day, value: i, of: currentDate)!, value: "", color: "gray"))
+                }
+                continue
             }
-            
-            for i in 1..<daysOfMonthCount - monthlyData.count {
-                presentableValues.append(DayDataWrapper(date: calendar.date(byAdding: .day, value: i, to: .now)!, value: "", color: "gray"))
+            let day = calendar.component(.day, from: date)
+            if i == day {
+                presentableValues.append(DayDataWrapper(date: date, value: data.value, color: data.color))
+                monthlyDataCopy.removeFirst()
+            } else {
+                presentableValues.append(DayDataWrapper(date: calendar.date(bySetting: .day, value: i, of: currentDate)!, value: "", color: "gray"))
             }
         }
         

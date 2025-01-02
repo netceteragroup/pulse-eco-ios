@@ -98,11 +98,10 @@ struct CalendarView: View {
             }
             
             Button(action: {
-                print("Month pressed") // add trema
                 pickerType = .month
                 pickerOptionType = .month
             }) {
-                Text("Month")
+                Text("Month") // add trema
                     .padding(8)
                     .background(pickerOptionType == .month ? Color(AppColors.firstButtonColor) : Color.white)
                     .cornerRadius(8)
