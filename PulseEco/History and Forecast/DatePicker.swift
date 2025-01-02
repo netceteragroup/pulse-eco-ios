@@ -11,6 +11,14 @@ import SwiftUI
 @MainActor
 class DatePickerViewModel: ObservableObject {
     @Published var isDatePickerPressed: Bool = false
+    var selectedDate: Date = Date()
+    
+    func shortDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM yyyy"
+        let formattedDate = formatter.string(from: date)
+        return formattedDate
+    }
 }
 
 struct DatePicker: View {
@@ -25,9 +33,8 @@ struct DatePicker: View {
                     viewModel.isDatePickerPressed.toggle()
                 }) {
                     HStack {
-                        Text("Today") // add trema
+                        Text(calendar.isDateInToday(appState.selectedDate) ? Trema.text(for: "today") : viewModel.shortDate(date: appState.selectedDate))
                             .padding(.leading, 8)
-//                            .frame(height: 32)
                         
                         Spacer()
                         
@@ -45,7 +52,13 @@ struct DatePicker: View {
                 
                 
                 Button(action: {
-                    print("pressed right button")
+                    Task {
+                        do {
+                            await appDataSource.updatePins(selectedDate: viewModel.selectedDate)
+                            await appDataSource.selectFromCalendar()
+                        }
+                    }
+                    viewModel.isDatePickerPressed.toggle()
                 }) {
                     Text("SEARCH") //add trema
                         .padding(.vertical, 15)
@@ -64,8 +77,8 @@ struct DatePicker: View {
                         CalendarView(showingCalendar: $viewModel.isDatePickerPressed,
                                      selectedDate: $appState.selectedDate,
                                      calendarSelection: $appState.calendarSelection,
-                                     onDaySelected: {
-                            viewModel.isDatePickerPressed.toggle()
+                                     onDaySelected: { newDate in
+                            viewModel.selectedDate = newDate
                         },
                                      viewModelClosure: CalendarViewModel(appState: self.appState,
                                                                          appDataSource: self.appDataSource))

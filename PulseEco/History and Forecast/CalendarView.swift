@@ -27,12 +27,12 @@ struct CalendarView: View {
     @Binding var selectedDate: Date
     @Binding var calendarSelection: Date
     
-    var onDaySelected: (() -> Void)?
+    var onDaySelected: ((Date) -> Void)?
     
     init(showingCalendar: Binding<Bool>,
          selectedDate: Binding<Date>,
          calendarSelection: Binding<Date>,
-         onDaySelected: (() -> Void)?,
+         onDaySelected: ((Date) -> Void)?,
          viewModelClosure: @autoclosure @escaping () -> CalendarViewModel) {
         
         _viewModel = StateObject(wrappedValue: viewModelClosure())
@@ -162,9 +162,6 @@ struct CalendarView: View {
                     let columns = Array(repeating: GridItem(.flexible()), count: 7)
                     
                     LazyVGrid(columns: columns, spacing: 20) {
-//                        ForEach(viewModel.dateValues, id: \.id) { value in
-//                            calendarDaysView(value: value, color: value.color)
-//                        }
                         ForEach(viewModel.monthlyData, id: \.self) { data in
                             WeekDayButton(date: data.date,
                                           value: data.value,
@@ -172,13 +169,7 @@ struct CalendarView: View {
                                           highlighted: selectedDate.isSameDay(with: data.date)) {
                                 self.selectedDate = calendar.startOfDay(for: data.date)
                                 self.calendarSelection = calendar.startOfDay(for: data.date)
-                                Task {
-                                    do {
-                                        await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
-                                        await viewModel.appDataSource.selectFromCalendar()
-                                    }
-                                }
-                                onDaySelected?()
+                                onDaySelected?(selectedDate)
                             }
                         }
                     }
@@ -200,7 +191,6 @@ struct CalendarView: View {
             }
             .padding(.top)
         }
-//        .padding(.all)
     }
     
     @ViewBuilder
@@ -348,18 +338,6 @@ struct CalendarView: View {
             }
             .padding(.top)
             
-//            HStack {
-//                Spacer()
-//                Button {
-//                    pickerType = .day
-//                } label: {
-//                    Text(Trema.text(for: "cancel"))
-//                        .font(.system(size: 14, weight: .semibold))
-//                        .foregroundColor(Color(AppColors.greyColor))
-//                }
-//                .padding(.top)
-//            }
-//            .padding(.all)
             okAndCancelStack
         }
         .padding(.top)

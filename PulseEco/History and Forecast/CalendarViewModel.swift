@@ -31,8 +31,6 @@ class CalendarViewModel: ViewModelProtocol {
         selectedMonth = calendar.component(.month, from: appState.selectedDate)
         
         self.appDataSource.$monthlyData.sink {
-//            self.monthlyData = $0
-//            self.dateValues = self.extractDate()
             self.monthlyData = self.getMonthlyValuesForPresentation(monthlyData: $0)
         }
         .store(in: &cancelables)
