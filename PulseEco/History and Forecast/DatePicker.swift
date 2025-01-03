@@ -7,11 +7,13 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 @MainActor
 class DatePickerViewModel: ObservableObject {
     @Published var isDatePickerPressed: Bool = false
     var selectedDate: Date = Date()
+    var searchButtonTask: Task<(), Never>?
     
     func shortDate(date: Date) -> String {
         let formatter = DateFormatter()
@@ -52,13 +54,11 @@ struct DatePicker: View {
                 
                 
                 Button(action: {
-                    Task {
-                        do {
-                            await appDataSource.updatePins(selectedDate: viewModel.selectedDate)
-                            await appDataSource.selectFromCalendar()
-                        }
+                    viewModel.searchButtonTask?.cancel()
+                    viewModel.searchButtonTask = Task {
+                        await appDataSource.selectFromCalendar()
                     }
-                    viewModel.isDatePickerPressed.toggle()
+                    viewModel.isDatePickerPressed = false
                 }) {
                     Text("SEARCH") //add trema
                         .padding(.vertical, 15)
@@ -77,11 +77,15 @@ struct DatePicker: View {
                         CalendarView(showingCalendar: $viewModel.isDatePickerPressed,
                                      selectedDate: $appState.selectedDate,
                                      calendarSelection: $appState.calendarSelection,
-                                     onDaySelected: { newDate in
-                            viewModel.selectedDate = newDate
-                        },
+                                     onDaySelected: { newDate in viewModel.selectedDate = newDate },
                                      viewModelClosure: CalendarViewModel(appState: self.appState,
                                                                          appDataSource: self.appDataSource))
+                        .onChange(of: appState.selectedMeasureId) { newValue in
+                            viewModel.isDatePickerPressed = false
+                            Task {
+                                await appDataSource.fetchMonthlyDayData(selectedMonth: calendar.component(.month, from: viewModel.selectedDate), selectedYear: calendar.component(.year, from: viewModel.selectedDate))
+                            }
+                        }
                         
                         Spacer()
                     }

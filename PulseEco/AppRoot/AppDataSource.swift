@@ -70,8 +70,6 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                   measureId: self.appState.selectedMeasureId) ?? []
             async let sensorsData24h = self.networkService.fetch24hDataForSensors(cityName: cityName) ?? []
             
-//            await self.fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
-            
             let wrapper = await CityValueWrapper(cityOverall: cityOverall,
                                                  citySensors: citySensors,
                                                  sensorsData: sensorsData,
@@ -185,8 +183,8 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         
         await getMonthlyValues(cityName: cityName,
                                measureId: measureId,
-                               currentMonth: appState.currentMonth,
-                               currentYear: appState.currentYear)
+                               currentMonth: calendar.component(.month, from: appState.selectedDate),
+                               currentYear: calendar.component(.year, from: appState.selectedDate))
     }
     
     func updatePins(selectedDate: Date) async {

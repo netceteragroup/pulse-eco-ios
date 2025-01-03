@@ -115,34 +115,35 @@ struct CalendarView: View {
         }
     }
     
-    @ViewBuilder
-    private func calendarDaysView(value: DateValueModel, color: String) -> some View {
-        
-        VStack {
-            
-            if value.day != -1 {
-                Button {
-                    self.selectedDate = calendar.startOfDay(for: value.date)
-                    self.calendarSelection = calendar.startOfDay(for: value.date)
-                    Task {
-                        do {
-                            await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
-                            await viewModel.appDataSource.selectFromCalendar()
-                        }
-                    }
-                    showingCalendar = false
-                } label: {
-                    CalendarButtonView(day: value.day,
-                                       date: value.date,
-                                       color: color,
-                                       highlighted: value.date.isSameDay(with: selectedDate))
-                }
-                .disabled(value.date > calendar.startOfDay(for: Date.now) ? true : false)
-            }
-        }
-        .padding(.vertical, 5)
-        .frame(height: 20, alignment: .top)
-    }
+//    @ViewBuilder
+//    private func calendarDaysView(value: DateValueModel, color: String) -> some View {
+//        
+//        VStack {
+//            
+//            if value.day != -1 {
+//                Button {
+//                    self.selectedDate = calendar.startOfDay(for: value.date)
+//                    self.calendarSelection = calendar.startOfDay(for: value.date)
+//                    Task {
+//                        do {
+//                            await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
+//                            await viewModel.appDataSource.selectFromCalendar()
+//                        }
+//                        await viewModel.appDataSource.selectFromCalendar()
+//                    }
+//                    showingCalendar = false
+//                } label: {
+//                    CalendarButtonView(day: value.day,
+//                                       date: value.date,
+//                                       color: color,
+//                                       highlighted: value.date.isSameDay(with: selectedDate))
+//                }
+//                .disabled(value.date > calendar.startOfDay(for: Date.now) ? true : false)
+//            }
+//        }
+//        .padding(.vertical, 5)
+//        .frame(height: 20, alignment: .top)
+//    }
     
     @ViewBuilder
     var dayPicker: some View {
@@ -328,12 +329,14 @@ struct CalendarView: View {
                             viewModel.colorMonths()
                         }
                         pickerType = .day
+                        pickerOptionType = .day
                     } label: {
                         MonthButtonView(month: val.monthName,
                                         date: val.date,
                                         color: val.color,
                                         highlighted: val.date.isSameDay(with: selectedDate))
                     }
+                    .disabled(val.date > .now)
                 }
             }
             .padding(.top)
