@@ -72,25 +72,11 @@ struct CalendarView: View {
                 pickerType = .day
                 pickerOptionType = .day
             }) {
-                Text("Day") //add trema
+                Text("Day") //add trema (day_for_weekly_average_data)?
                     .padding(8)
                     .background(pickerOptionType == .day ? Color(AppColors.firstButtonColor) : Color.white)
                     .cornerRadius(8)
                     .foregroundStyle(pickerOptionType == .day ? Color.white : Color(AppColors.firstButtonColor))
-                    .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color(AppColors.firstButtonColor), lineWidth: 2)
-                    )
-            }
-            
-            Button(action: {
-                print("Range pressed")
-            }) {
-                Text("Range") //add trema
-                    .padding(8)
-                    .background(pickerOptionType == .range ? Color(AppColors.firstButtonColor) : Color.white)
-                    .cornerRadius(8)
-                    .foregroundStyle(pickerOptionType == .range ? Color.white : Color(AppColors.firstButtonColor))
                     .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color(AppColors.firstButtonColor), lineWidth: 2)
@@ -115,36 +101,6 @@ struct CalendarView: View {
         }
     }
     
-//    @ViewBuilder
-//    private func calendarDaysView(value: DateValueModel, color: String) -> some View {
-//        
-//        VStack {
-//            
-//            if value.day != -1 {
-//                Button {
-//                    self.selectedDate = calendar.startOfDay(for: value.date)
-//                    self.calendarSelection = calendar.startOfDay(for: value.date)
-//                    Task {
-//                        do {
-//                            await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
-//                            await viewModel.appDataSource.selectFromCalendar()
-//                        }
-//                        await viewModel.appDataSource.selectFromCalendar()
-//                    }
-//                    showingCalendar = false
-//                } label: {
-//                    CalendarButtonView(day: value.day,
-//                                       date: value.date,
-//                                       color: color,
-//                                       highlighted: value.date.isSameDay(with: selectedDate))
-//                }
-//                .disabled(value.date > calendar.startOfDay(for: Date.now) ? true : false)
-//            }
-//        }
-//        .padding(.vertical, 5)
-//        .frame(height: 20, alignment: .top)
-//    }
-    
     @ViewBuilder
     var dayPicker: some View {
         VStack {
@@ -162,9 +118,9 @@ struct CalendarView: View {
                     
                     let columns = Array(repeating: GridItem(.flexible()), count: 7)
                     
-                    LazyVGrid(columns: columns, spacing: 20) {
+                    LazyVGrid(columns: columns, spacing: 0) {
                         ForEach(viewModel.monthlyData, id: \.self) { data in
-                            WeekDayButton(date: data.date,
+                            CalendarDayButton(date: data.date,
                                           value: data.value,
                                           color: data.color,
                                           highlighted: selectedDate.isSameDay(with: data.date)) {

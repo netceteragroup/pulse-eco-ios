@@ -21,7 +21,7 @@
 		1E515D0A282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
 		1E515D0B282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
 		1E515D0C282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
-		1E96776F280FFEB60085C37A /* WeekDayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E96776E280FFEB60085C37A /* WeekDayButton.swift */; };
+		1E96776F280FFEB60085C37A /* CalendarDayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E96776E280FFEB60085C37A /* CalendarDayButton.swift */; };
 		1EAF05F82817E89B001C1EEA /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAF05F72817E89B001C1EEA /* CalendarView.swift */; };
 		1EAF05FA2817F653001C1EEA /* DateValueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAF05F92817F653001C1EEA /* DateValueModel.swift */; };
 		1EBC79C9282A55D700D18968 /* CityDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBC79C8282A55D700D18968 /* CityDataWrapper.swift */; };
@@ -235,7 +235,7 @@
 		1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarButtonView.swift; sourceTree = "<group>"; };
 		1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthButtonView.swift; sourceTree = "<group>"; };
 		1E515D09282BC115009EFC4D /* DayDataWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataWrapper.swift; sourceTree = "<group>"; };
-		1E96776E280FFEB60085C37A /* WeekDayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayButton.swift; sourceTree = "<group>"; };
+		1E96776E280FFEB60085C37A /* CalendarDayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayButton.swift; sourceTree = "<group>"; };
 		1EAF05F72817E89B001C1EEA /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		1EAF05F92817F653001C1EEA /* DateValueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValueModel.swift; sourceTree = "<group>"; };
 		1EBC79C8282A55D700D18968 /* CityDataWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDataWrapper.swift; sourceTree = "<group>"; };
@@ -404,7 +404,7 @@
 			isa = PBXGroup;
 			children = (
 				1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */,
-				1E96776E280FFEB60085C37A /* WeekDayButton.swift */,
+				1E96776E280FFEB60085C37A /* CalendarDayButton.swift */,
 				1EAF05F72817E89B001C1EEA /* CalendarView.swift */,
 				1EAF05F92817F653001C1EEA /* DateValueModel.swift */,
 				1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */,
@@ -1045,7 +1045,7 @@
 				59A35AC22498EBB600C07786 /* MainView.swift in Sources */,
 				591642A92499FE9F000A4F7C /* AverageUtilModel.swift in Sources */,
 				593C263A24BC8B59005152BE /* CityListViewModel.swift in Sources */,
-				1E96776F280FFEB60085C37A /* WeekDayButton.swift in Sources */,
+				1E96776F280FFEB60085C37A /* CalendarDayButton.swift in Sources */,
 				3288687724B51F5E009CC56D /* MarkerView.swift in Sources */,
 				BA718F0D25BED6B100EC87E0 /* SensorDetailsView.swift in Sources */,
 				593D8C9E249A17C1006B88AC /* FavouriteCitiesViewModel.swift in Sources */,

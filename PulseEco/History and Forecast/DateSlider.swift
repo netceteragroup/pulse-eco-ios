@@ -47,7 +47,7 @@ struct DateSlider: View {
                     }
                     LazyHStack {
                         ForEach(dataSource.weeklyData, id: \.dateId) { item in
-                            WeekDayButton(date: item.date,
+                            CalendarDayButton(date: item.date,
                                           value: item.value,
                                           color: item.color,
                                           highlighted: selectedDate.isSameDay(with: item.date)) {

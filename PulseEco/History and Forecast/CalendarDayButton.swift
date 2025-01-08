@@ -8,13 +8,13 @@
 import SwiftUI
 import Charts
 
-struct WeekDayButton: View {
+struct CalendarDayButton: View {
     
     var date: Date
     var value: String
     var color: String
     var opacity: Double {
-        if date > Date.now {
+        if value == "" {
             return 0.5
         } else {
             return 1.0
@@ -41,7 +41,6 @@ struct WeekDayButton: View {
     }
     
     var body: some View {
-        
         VStack {
             if date != Date.distantPast {
                 HStack {

@@ -141,13 +141,11 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                       sensorType: measureId,
                                       from: threeDaysAgo,
                                       to: threeDaysLater)
-                let today = appState.weeklyDataWrapper.getDataFromRange(cityName: cityName,
-                                                                        sensorType: measureId,
-                                                                        from: calendar.startOfDay(for: Date.now),
-                                                                        to: calendar.date(byAdding: .day,
-                                                                                          value: +1,
-                                                                                          to: Date.now)!)
-                self.weeklyData.append(contentsOf: today)
+                
+                guard let today = fetchTodayValue(cityName: cityName, sensorType: measureId) else {
+                    return
+                }
+                self.weeklyData.append(today)
                 
             } else {
                 self.weeklyData =
@@ -160,6 +158,15 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             
             await updatePins(selectedDate: appState.selectedDate)
         }
+    }
+    
+    func fetchTodayValue(cityName: String, sensorType: String) -> DayDataWrapper? {
+        return appState.weeklyDataWrapper.getDataFromRange(cityName: cityName,
+                                                           sensorType: sensorType,
+                                                           from: calendar.startOfDay(for: Date.now),
+                                                           to: calendar.date(byAdding: .day,
+                                                                             value: +1,
+                                                                             to: Date.now)!).first
     }
     
     func getMonthlyValues(cityName: String = UserSettings.selectedCity.cityName,

@@ -94,20 +94,19 @@ class CalendarViewModel: ViewModelProtocol {
             guard let data = monthlyDataCopy.first,
                   let date = monthlyDataCopy.first?.date else {
                 if i == dayNow {
-                    let today = appState.weeklyDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
-                                                                            sensorType: appState.selectedMeasureId,
-                                                                            from: calendar.startOfDay(for: Date.now),
-                                                                            to: calendar.date(byAdding: .day,
-                                                                                              value: +1,
-                                                                                              to: Date.now)!)
-                    if let todayData = today.first {
+                    let today = appDataSource.fetchTodayValue(cityName: appState.selectedCity.cityName,
+                                                              sensorType: appState.selectedMeasureId)
+                    
+                    if let todayData = today {
                         presentableValues.append(DayDataWrapper(date: todayData.date, value: todayData.value, color: todayData.color))
+                        continue
                     } else {
                         presentableValues.append(DayDataWrapper(date: calendar.date(bySetting: .day, value: i, of: currentDate)!, value: "", color: "gray"))
+                        continue
                     }
-                } else {
-                    presentableValues.append(DayDataWrapper(date: calendar.date(bySetting: .day, value: i, of: currentDate)!, value: "", color: "gray"))
                 }
+                
+                presentableValues.append(DayDataWrapper(date: calendar.date(bySetting: .day, value: i, of: currentDate)!, value: "", color: "gray"))
                 continue
             }
             let day = calendar.component(.day, from: date)

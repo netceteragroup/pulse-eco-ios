@@ -14,6 +14,7 @@ class DatePickerViewModel: ObservableObject {
     @Published var isDatePickerPressed: Bool = false
     var selectedDate: Date = Date()
     var searchButtonTask: Task<(), Never>?
+    var onSelectedMeasureChange: Task<(), Never>?
     
     func shortDate(date: Date) -> String {
         let formatter = DateFormatter()
@@ -82,16 +83,14 @@ struct DatePicker: View {
                                                                          appDataSource: self.appDataSource))
                         .onChange(of: appState.selectedMeasureId) { newValue in
                             viewModel.isDatePickerPressed = false
-                            Task {
+                            viewModel.onSelectedMeasureChange?.cancel()
+                            viewModel.onSelectedMeasureChange = Task {
                                 await appDataSource.fetchMonthlyDayData(selectedMonth: calendar.component(.month, from: viewModel.selectedDate), selectedYear: calendar.component(.year, from: viewModel.selectedDate))
                             }
                         }
                         
                         Spacer()
                     }
-                }
-                .task {
-                    await appDataSource.fetchMonthlyDayData(selectedMonth: calendar.component(.month, from: appState.selectedDate), selectedYear: calendar.component(.year, from: appState.selectedDate))
                 }
             }
         }
