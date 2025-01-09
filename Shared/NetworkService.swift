@@ -194,10 +194,8 @@ class NetworkService {
             endMonth = 1
         }
         
-        let startDate = Date.from(1, selectedMonth, selectedYear)
-//        startDate = Calendar.current.date(byAdding: .day, value: -7, to: startDate!)! 
+        let startDate = Date.from(1, selectedMonth, selectedYear) 
         let endDate = Date.from(1, endMonth, endYear)
-//        endDate = Calendar.current.date(byAdding: .day, value: +1, to: endDate!)!
         let result = await downloadAverageData(for: cityName,
                                                from: startDate!,
                                                to: endDate!,
