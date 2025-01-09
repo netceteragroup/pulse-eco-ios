@@ -11,17 +11,12 @@ private enum PickerType {
     case day, month, year
 }
 
-private enum PickerOptionType {
-    case day, range, month
-}
-
 struct CalendarView: View {
     
     @EnvironmentObject var dataSource: AppDataSource
     
     @StateObject private var viewModel: CalendarViewModel
     @State private var pickerType: PickerType = .day
-    @State private var pickerOptionType: PickerOptionType = .day
     
     @Binding var showingCalendar: Bool
     @Binding var selectedDate: Date
@@ -70,13 +65,12 @@ struct CalendarView: View {
         HStack {
             Button(action: {
                 pickerType = .day
-                pickerOptionType = .day
             }) {
                 Text("Day") //add trema (day_for_weekly_average_data)?
                     .padding(8)
-                    .background(pickerOptionType == .day ? Color(AppColors.firstButtonColor) : Color.white)
+                    .background(pickerType == .day ? Color(AppColors.firstButtonColor) : Color.white)
                     .cornerRadius(8)
-                    .foregroundStyle(pickerOptionType == .day ? Color.white : Color(AppColors.firstButtonColor))
+                    .foregroundStyle(pickerType == .day ? Color.white : Color(AppColors.firstButtonColor))
                     .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color(AppColors.firstButtonColor), lineWidth: 2)
@@ -85,13 +79,12 @@ struct CalendarView: View {
             
             Button(action: {
                 pickerType = .month
-                pickerOptionType = .month
             }) {
                 Text("Month") // add trema
                     .padding(8)
-                    .background(pickerOptionType == .month ? Color(AppColors.firstButtonColor) : Color.white)
+                    .background(pickerType == .month ? Color(AppColors.firstButtonColor) : Color.white)
                     .cornerRadius(8)
-                    .foregroundStyle(pickerOptionType == .month ? Color.white : Color(AppColors.firstButtonColor))
+                    .foregroundStyle(pickerType == .month ? Color.white : Color(AppColors.firstButtonColor))
                     .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color(AppColors.firstButtonColor), lineWidth: 2)
@@ -285,7 +278,6 @@ struct CalendarView: View {
                             viewModel.colorMonths()
                         }
                         pickerType = .day
-                        pickerOptionType = .day
                     } label: {
                         MonthButtonView(month: val.monthName,
                                         date: val.date,
