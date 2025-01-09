@@ -15,7 +15,6 @@
 		133B20C82CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
 		13725E122CE352C400073369 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13725E102CE352C400073369 /* LocationManager.swift */; };
 		1384B6872D1C48EF00A22BD0 /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384B6862D1C48EF00A22BD0 /* DatePicker.swift */; };
-		1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */; };
 		1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */; };
 		1E4E7A9C285B626700BE9A92 /* MonthButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */; };
 		1E515D0A282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
@@ -231,7 +230,6 @@
 		133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLoggerAdapter.swift; sourceTree = "<group>"; };
 		13725E102CE352C400073369 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1384B6862D1C48EF00A22BD0 /* DatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePicker.swift; sourceTree = "<group>"; };
-		1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSlider.swift; sourceTree = "<group>"; };
 		1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarButtonView.swift; sourceTree = "<group>"; };
 		1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthButtonView.swift; sourceTree = "<group>"; };
 		1E515D09282BC115009EFC4D /* DayDataWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataWrapper.swift; sourceTree = "<group>"; };
@@ -403,7 +401,6 @@
 		1E3A38AD280EBC4B002C4A54 /* History and Forecast */ = {
 			isa = PBXGroup;
 			children = (
-				1E3A38AE280EBD9D002C4A54 /* DateSlider.swift */,
 				1E96776E280FFEB60085C37A /* CalendarDayButton.swift */,
 				1EAF05F72817E89B001C1EEA /* CalendarView.swift */,
 				1EAF05F92817F653001C1EEA /* DateValueModel.swift */,
@@ -1006,7 +1003,6 @@
 				59A35AC72498ECFF00C07786 /* MeasureListView.swift in Sources */,
 				59504C1124B46BF100EA4AFF /* NavigationBarModifier.swift in Sources */,
 				593C263624BC8969005152BE /* CityRowView.swift in Sources */,
-				1E3A38AF280EBD9D002C4A54 /* DateSlider.swift in Sources */,
 				1E515D0A282BC115009EFC4D /* DayDataWrapper.swift in Sources */,
 				1EAF05F82817E89B001C1EEA /* CalendarView.swift in Sources */,
 				BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */,
