@@ -34,24 +34,27 @@ struct CitySearchContentView: View {
                 .padding(.vertical, 1)
         }
         else {
-            favoriteCities
-                .padding(.vertical, 1)
+            favoriteCitiesList()
         }
     }
     
-    var favoriteCities: some View {
-        return List {
-            ForEach([allFavoritesAndLocation.first!], id: \.id) {
-                cityRow(favouriteCity: $0, from: [allFavoritesAndLocation.first!])
-            }
-            Section(header: EmptyView()) {
-                ForEach(Array(allFavoritesAndLocation.dropFirst()), id: \.id) { city in
-                    cityRow(favouriteCity: city, from: Array(allFavoritesAndLocation.dropFirst()))
+    @ViewBuilder
+    private func favoriteCitiesList() -> some View {
+        List {
+            if let first = allFavoritesAndLocation.first {
+                ForEach([first], id: \.id) {
+                    cityRow(favouriteCity: $0, from: [first])
                 }
-                .onDelete(perform: self.delete)
+                Section(header: EmptyView()) {
+                    ForEach(Array(allFavoritesAndLocation.dropFirst()), id: \.id) { city in
+                        cityRow(favouriteCity: city, from: Array(allFavoritesAndLocation.dropFirst()))
+                    }
+                    .onDelete(perform: self.delete)
+                }
+                .listRowInsets(EdgeInsets())
             }
-            .listRowInsets(EdgeInsets())
         }
+        .padding(.vertical, 1)
     }
     
     @ViewBuilder

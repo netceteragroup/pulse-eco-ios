@@ -21,20 +21,21 @@ struct CityListView: View {
     
     var body: some View {
         if self.searchText.isEmpty {
-            listAllCities
+            listAllCities()
         } else {
-            filteredCitiesList
+            filteredCitiesList()
         }
     }
     
-    var filteredCitiesList: some View {
+    @ViewBuilder
+    private func filteredCitiesList() -> some View {
         
         let favouriteCitiesNames = getFavouriteCitiesNames()
-        let foundCities = viewModel.getCities().filter { $0.cityName.lowercased().contains(self.searchText.lowercased()) ||
-            $0.countryName.lowercased().contains(self.searchText.lowercased())
+        let foundCities = viewModel.getCities().filter {
+            $0.cityName.lowercased().contains(self.searchText.lowercased()) || $0.countryName.lowercased().contains(self.searchText.lowercased())
         }
         
-        return ScrollView {
+        ScrollView {
             VStack {
                 ForEach(foundCities, id: \.id) { city in
                     Button(action: {
@@ -56,18 +57,16 @@ struct CityListView: View {
                         .background(AppColors.gray.color)
                 }
                 
-                missingCityText
+                missingCityText()
             }
             .resignKeyboardOnDragGesture()
         }
         
     }
     
-    var listAllCities: some View {
-        
-        let favouriteCitiesNames = getFavouriteCitiesNames()
-        
-        return ScrollView {
+    @ViewBuilder
+    private func listAllCities() -> some View {
+        ScrollView {
             ForEach(self.viewModel.getCountries(), id: \.self) { elem in
                 Section(header:
                             HStack {
@@ -87,7 +86,7 @@ struct CityListView: View {
                                 addToFavourites(city: city)
                             }, label: {
                                 CityRowView(viewModel: city,
-                                            addCheckMark: favouriteCitiesNames.contains(city.cityName),
+                                            addCheckMark: getFavouriteCitiesNames().contains(city.cityName),
                                             showCountryName: false)
                             })
                             if city != citiesFromCountry.last {
@@ -99,12 +98,13 @@ struct CityListView: View {
             }
             Divider().background(AppColors.gray.color)
             
-            missingCityText
+            missingCityText()
         }
         .resignKeyboardOnDragGesture()
     }
     
-    var missingCityText: some View {
+    @ViewBuilder
+    private func missingCityText() -> some View {
         VStack {
             Text(Trema.text(for: "city_missing_add_new"))
                 .font(.system(size: 14))
@@ -134,18 +134,17 @@ struct CityListView: View {
             if self.appState.selectedCity != city {
                 self.appState.selectedCity = city
                 self.appState.newCitySelected = true
-                self.presentationMode.wrappedValue.dismiss()
-            } else {
-                self.presentationMode.wrappedValue.dismiss()
             }
+            self.presentationMode.wrappedValue.dismiss()
             dismissSearch()
         }
     }
+
     
-    private func getFavouriteCitiesNames() -> [String] {
-        var favouriteCitiesNames = self.userSettings.favouriteCities.map { $0.cityName }
+    private func getFavouriteCitiesNames() -> Set<String> {
+        var favouriteCitiesNames = Set(self.userSettings.favouriteCities.map { $0.cityName })
         if let currentCity = self.locationManager.currentCity {
-            favouriteCitiesNames.append(currentCity.cityName)
+            favouriteCitiesNames.insert(currentCity.cityName)
         }
         return favouriteCitiesNames
     }
