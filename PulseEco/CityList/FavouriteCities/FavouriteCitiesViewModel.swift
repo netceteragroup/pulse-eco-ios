@@ -8,9 +8,10 @@
 import Foundation
 import SwiftUI
 
-class FavouriteCitiesViewModel: ObservableObject {
+class CitySearchContentViewModel: ObservableObject {
     @Published var cityList: [FavouriteCityRowViewModel] = []
     var selectedMeasure: String
+    var cities: [FavouriteCityRowViewModel] { getCities() }
 
     init(selectedMeasure: String,
          favouriteCities: [City],

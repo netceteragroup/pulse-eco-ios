@@ -15,15 +15,18 @@ struct DateSlider: View {
     @Binding var unimplementedAlert: Bool
     @Binding var unimplementedPicker: Bool
     @Binding var selectedDate: Date
+    @State private var fetchMonthlyDataTask: Task<(), Never>? = nil
+    @State private var updatePinsTask: Task<(), Never>? = nil
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { proxy in
                 HStack {
                     Button {
+                        fetchMonthlyDataTask?.cancel()
                         unimplementedAlert.toggle()
                         unimplementedPicker = true
-                        Task {
+                        fetchMonthlyDataTask = Task {
                             await dataSource
                                 .fetchMonthlyDayData(selectedMonth: calendar.dateComponents([.month],
                                                                                          from: Date.now).month!,
@@ -53,8 +56,9 @@ struct DateSlider: View {
                                           value: item.value,
                                           color: item.color,
                                           highlighted: selectedDate.isSameDay(with: item.date)) {
+                                updatePinsTask?.cancel()
                                 selectedDate = calendar.startOfDay(for: item.date)
-                                Task {
+                                updatePinsTask = Task {
                                     do {
                                         await dataSource.updatePins(selectedDate: selectedDate)
                                     }
