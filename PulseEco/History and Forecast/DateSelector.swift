@@ -1,5 +1,5 @@
 //
-//  DatePicker.swift
+//  DateSelector.swift
 //  PulseEco
 //
 //  Created by Nikola Jankovikj on 25.12.24.
@@ -9,23 +9,8 @@ import Foundation
 import SwiftUI
 import Combine
 
-@MainActor
-class DatePickerViewModel: ObservableObject {
-    @Published var isDatePickerPressed: Bool = false
-    var selectedDate: Date = Date()
-    var searchButtonTask: Task<(), Never>?
-    var onSelectedMeasureChange: Task<(), Never>?
-    
-    func shortDate(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d MMM yyyy"
-        let formattedDate = formatter.string(from: date)
-        return formattedDate
-    }
-}
-
-struct DatePicker: View {
-    @StateObject private var viewModel = DatePickerViewModel()
+struct DateSelector: View {
+    @StateObject private var viewModel = DateSelectorViewModel()
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var appDataSource: AppDataSource
     
@@ -49,8 +34,14 @@ struct DatePicker: View {
                     .padding(.vertical, 15)
                     .font(.caption)
                     .foregroundStyle(Color(AppColors.firstButtonColor))
-                    .border(Color(AppColors.firstButtonColor))
                     .frame(maxWidth: .infinity)
+                    .background(Color.white)
+                    .cornerRadius(5)
+                    .foregroundStyle(Color(AppColors.firstButtonColor))
+                    .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color(AppColors.firstButtonColor), lineWidth: 1)
+                    )
                 }
                 
                 
@@ -62,15 +53,16 @@ struct DatePicker: View {
                     viewModel.isDatePickerPressed = false
                 }) {
                     Text("SEARCH") //add trema
-                        .padding(.vertical, 15)
+                        .padding(.vertical, 16)
                         .padding(.horizontal, 45)
                         .background(Color(AppColors.firstButtonColor))
                         .foregroundStyle(Color.white)
                         .font(.caption)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
             }
             .frame(maxWidth: .infinity)
+            .frame(height: 45)
             
             if viewModel.isDatePickerPressed {
                 VStack {
@@ -99,7 +91,7 @@ struct DatePicker: View {
 
 #Preview {
     VStack {
-        DatePicker()
+        DateSelector()
             .padding(.horizontal)
             .padding(.vertical, 8)
         

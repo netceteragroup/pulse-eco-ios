@@ -109,7 +109,7 @@ struct MainView: View {
                                            isActive: $isShowingSettingsView) { EmptyView () }
                             
                             ZStack(alignment: .top) {
-                                DatePicker()
+                                DateSelector()
                                     .padding(.horizontal)
                                     .padding(.vertical, 8)
                                     .zIndex(4)
