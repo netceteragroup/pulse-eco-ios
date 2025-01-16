@@ -8,6 +8,7 @@
 import Foundation
 import CoreLocation
 import MapKit
+import Combine
 
 enum LocationAthorizationStatus {
     case notDetermined
@@ -55,12 +56,28 @@ class LocationManager: NSObject, ObservableObject {
         }
     }
     @Published var region: MKCoordinateRegion?
+    @Published var isWaitingToFetchRegion: Bool = true
+    
+    var cancellables = Set<AnyCancellable>()
     
     override init() {
         super.init()
         manager.delegate = self
         manager.distanceFilter = metersNeededToTravelToUpdateLocation
         manager.startUpdatingLocation()
+        
+        regionSubscriber()
+    }
+    
+    func regionSubscriber() {
+        $region
+            .dropFirst()
+            .sink { [weak self] _ in
+            guard let self else { return }
+            self.isWaitingToFetchRegion = false
+            print("finished region")
+        }
+        .store(in: &cancellables)
     }
     
     func requestLocation() {
@@ -73,10 +90,6 @@ class LocationManager: NSObject, ObservableObject {
     
     func isAuthorizationGranted() -> Bool {
         return (getAuthorizationStatus() == .authorizedAlways || getAuthorizationStatus() == .authorizedWhenInUse)
-    }
-    
-    func isWaitingToFetchRegion() -> Bool {
-        return region == nil
     }
     
     func reverseGeocode(location: CLLocationCoordinate2D) async -> City?  {

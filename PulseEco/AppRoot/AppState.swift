@@ -37,14 +37,6 @@ class AppState: ObservableObject, ViewModelDependency {
                                                                         currentValue: nil,
                                                                         measures: nil)
     @Published var currentLocationIsSelected: Bool = false
-    var isWaitingToFetchFavouriteCitiesOveralls: Bool {
-        for city in userSettings.favouriteCities {
-            if !userSettings.cityValues.contains(where: { city.cityName == $0.cityName }) {
-                return true
-            }
-        }
-        return false
-    }
     
     var cityIcon: Image {
         citySelectorClicked ? Image(systemName: "chevron.up") : Image(systemName: "chevron.down")

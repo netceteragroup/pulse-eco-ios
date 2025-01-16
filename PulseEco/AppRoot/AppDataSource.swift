@@ -50,6 +50,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                 self.appState.selectedMeasureId = firstMeasureId
             }
             self.appState.loadingMeasures = false
+            print("loading measures done")
         }
     }
     
@@ -81,6 +82,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             self.sensorsData = wrapper.sensorsData
             self.sensorsData24h = wrapper.sensorsData24h
             self.appState.loadingCityData = false
+            print("loading city data done")
             
             self.monthlyAverage =
             await networkService.fetchMonthAverages(cityName: cityName,
