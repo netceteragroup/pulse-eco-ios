@@ -39,20 +39,6 @@ struct MainView: View {
         .sheet(item: $appState.activeSheet) { sheet in
             switch sheet {
             case .disclaimerView: DisclaimerView()
-            case .cityListView:
-                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
-                             userSettings: self.appState.userSettings)
-                .onDisappear(perform: {
-                    if self.appState.userSettings.favouriteCities.count == 0 {
-                        self.appState.citySelectorClicked = false
-                    }
-                    if self.$appState.newCitySelected.wrappedValue == true {
-                        self.refreshService.updateRefreshDate()
-                        self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
-                        self.appState.newCitySelected = false
-                        self.appState.citySelectorClicked = false
-                    }
-                })
             }
         }
         .onAppear() {
@@ -85,14 +71,7 @@ struct MainView: View {
                 NavigationView {
                     VStack(spacing: 0) {
                         if self.appState.citySelectorClicked {
-                            FavouriteCitiesView(viewModel:
-                                                    FavouriteCitiesViewModel(
-                                                        selectedMeasure: self.appState.selectedMeasureId,
-                                                        favouriteCities: self.appState.userSettings.favouriteCities,
-                                                        cityValues: self.appState.userSettings.cityValues,
-                                                        measureList: self.dataSource.measures),
-                                                userSettings: self.appState.userSettings,
-                                                proxy: proxy)
+                            FavouriteCitiesView(userSettings: self.appState.userSettings, proxy: proxy)
                             .overlay(ShadowOnTopOfView())
                             .animation(nil, value: self.appState.citySelectorClicked)
                         } else {

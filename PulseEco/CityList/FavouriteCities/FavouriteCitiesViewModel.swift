@@ -8,9 +8,10 @@
 import Foundation
 import SwiftUI
 
-class FavouriteCitiesViewModel: ObservableObject {
+class CitySearchContentViewModel: ObservableObject {
     @Published var cityList: [FavouriteCityRowViewModel] = []
     var selectedMeasure: String
+    var cities: [FavouriteCityRowViewModel] { getCities() }
 
     init(selectedMeasure: String,
          favouriteCities: [City],
@@ -20,8 +21,7 @@ class FavouriteCitiesViewModel: ObservableObject {
         var value: String?
         for city in favouriteCities {
             value = nil
-            if let cityValue = cityValues.last(where: { $0.cityName == city.cityName
-            }) {
+            if let cityValue = cityValues.last(where: { $0.cityName == city.cityName }) {
                 if let averageValue = cityValue.values[selectedMeasure.lowercased()] {
                     if let floatValue = Float(averageValue) {
                         value = String(floatValue)

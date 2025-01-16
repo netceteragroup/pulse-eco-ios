@@ -228,7 +228,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                     getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
             self.appState.sensorPins = result
         }
-        setAverageValueforSelectedDate(cityName: appState.selectedCity.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
+        await setAverageValueforSelectedDate(cityName: appState.selectedCity.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
     }
     
     func fetchMonthlyDayData (selectedMonth: Int, selectedYear: Int) async {
@@ -273,7 +273,14 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                        selectedDate: appState.calendarSelection)
     }
     
-    func setAverageValueforSelectedDate(cityName: String, sensorType: String, selectedDate: Date) {
+    func setAverageValueforSelectedDate(cityName: String, sensorType: String, selectedDate: Date) async {
+        if Date().isSameDay(with: selectedDate) {
+            let averageValues = await self.networkService.downloadCurrentData(for: cityName)
+            if let averageValueForSensorType = averageValues?.values[sensorType] {
+                self.appState.selectedDateAverageValue = averageValueForSensorType
+                return
+            }
+        }
         self.appState.selectedDateAverageValue =
         self.appState.weeklyDataWrapper.getDataFromRange(cityName: cityName,
                                                          sensorType: sensorType,
