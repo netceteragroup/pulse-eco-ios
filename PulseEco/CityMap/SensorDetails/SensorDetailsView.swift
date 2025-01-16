@@ -20,13 +20,23 @@ struct SensorDetailsView: View {
     }
     
     var body: some View {
+        if chartViewModel.sensor.title == "" {
+            noSelectionView
+        }
+        else {
+            showSensorDetailsView
+        }
+        
+    }
+    
+    var showSensorDetailsView: some View {
         VStack {
-            // Handler
+            
             RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.0)
                 .frame(width: 40, height: 3.0)
                 .foregroundColor(AppColors.gray2.color)
                 .padding([.top, .bottom], 10)
-            // Collapsed View
+            
             VStack {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 1) {
@@ -48,7 +58,7 @@ struct SensorDetailsView: View {
                 }
                 .padding([.horizontal], 20)
             }
-            // Expanded View
+            
             VStack {
                 LineChartSwiftUI(viewModel: chartViewModel)
                 .frame(width: min(350, UIScreen.main.bounds.width - 10),
@@ -60,6 +70,8 @@ struct SensorDetailsView: View {
                                                                     averages: self.viewModel.dailyAverages))
                     .padding(.bottom, 20)
                 
+                selectSensorsButtonView
+                
                 Text(self.viewModel.disclaimerMessage)
                     .font(.system(size: 11, weight: .light))
                     .foregroundColor(self.viewModel.color)
@@ -67,9 +79,86 @@ struct SensorDetailsView: View {
                     .multilineTextAlignment(.center)
                     .padding([.horizontal, .bottom], 15)
                     .fixedSize(horizontal: false, vertical: true)
+                
+                privacyPolicyView
 
             }.scaledToFit()
             Spacer()
+        }
+    }
+    
+    var noSelectionView: some View {
+        VStack {
+            
+            RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.0)
+                .frame(width: 40, height: 3.0)
+                .foregroundColor(AppColors.gray2.color)
+                .padding([.top, .bottom], 10)
+            
+            VStack {
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text(Trema.text(for: "default_no_sensors_selected"))
+                            .foregroundStyle(.black)
+                    }
+                }
+                .padding([.horizontal], 20)
+            }
+            
+            VStack {
+                LineChartSwiftUI(viewModel: chartViewModel)
+                .frame(width: min(350, UIScreen.main.bounds.width - 10),
+                       height: 200)
+                .padding(.bottom)
+                
+                Text(Trema.text(for: "no_sensors_selected"))
+                    .font(.caption)
+                    .foregroundStyle(Color(AppColors.darkblue))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                selectSensorsButtonView
+                    .padding(.top)
+                
+                Text(self.viewModel.disclaimerMessage)
+                    .font(.system(size: 11, weight: .light))
+                    .foregroundColor(self.viewModel.color)
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.center)
+                    .padding([.horizontal, .bottom], 15)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding()
+                
+                privacyPolicyView
+
+            }.scaledToFit()
+            Spacer()
+        }
+    }
+    
+    var selectSensorsButtonView: some View {
+        Button(action: {
+            print("pressed")
+        }) {
+            Text("SELECT SENSORS") //add trema
+                .font(.caption)
+                .padding(12)
+                .foregroundStyle(Color(AppColors.darkblue))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color(AppColors.darkblue), lineWidth: 1)
+                }
+        }
+    }
+    
+    var privacyPolicyView: some View {
+        Button(action: {
+            print("privacy pressed")
+        }) {
+            Text(Trema.text(for: "privacy_policy"))
+                .foregroundStyle(Color(AppColors.darkblue))
+                .font(.footnote)
         }
     }
 }

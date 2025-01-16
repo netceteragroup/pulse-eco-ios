@@ -28,6 +28,13 @@ struct MainView: View {
                                       dailyAverages: dataSource.sensorsDailyAverageData)
     }
     
+    private var slideOverCardViewPosition: CGFloat {
+        guard let _ = appState.selectedSensor else {
+            return 65
+        }
+        return 120
+    }
+    
     var body: some View {
         Group {
             if appState.loadingCityData || appState.loadingMeasures || (locationManager.isAuthorizationGranted() && locationManager.isWaitingToFetchRegion()) {
@@ -82,9 +89,12 @@ struct MainView: View {
     
     var contentView: some View {
         GeometryReader { proxy in
-            ZStack(alignment: .top) {
+            ZStack {
                 NavigationView {
                     VStack(spacing: 0) {
+                        NavigationLink(destination: SettingsView(),
+                                       isActive: $isShowingSettingsView) { EmptyView () }
+                        
                         if self.appState.citySelectorClicked {
                             FavouriteCitiesView(viewModel:
                                                     FavouriteCitiesViewModel(
@@ -106,21 +116,30 @@ struct MainView: View {
                                 MeasureListView(viewModel: viewModel)
                             }
                             
-                            NavigationLink(destination: SettingsView(),
-                                           isActive: $isShowingSettingsView) { EmptyView () }
-                            
                             DateSlider(unimplementedAlert: $appState.showingCalendar,
                                        unimplementedPicker: $showingPicker,
                                        selectedDate: $appState.selectedDate)
                             
-                            ZStack(alignment: .top) {
-                                CityMapView(userSettings: self.appState.userSettings,
-                                            mapViewModel: mapViewModel,
-                                            proxy: proxy)
-                                .id("CityMapView")
-                                .edgesIgnoringSafeArea([.horizontal, .bottom])
-                                
+                            GeometryReader { zstack_proxy in
+                                ZStack(alignment: .bottom) {
+                                    CityMapView(userSettings: self.appState.userSettings,
+                                                mapViewModel: mapViewModel)
+                                    .id("CityMapView")
+                                    .edgesIgnoringSafeArea([.horizontal, .bottom])
+                                    .zIndex(1)
+                                    
+                                    if zstack_proxy.size.height != .zero && zstack_proxy.size.width != .zero {
+                                        SlideOverCard(height: slideOverCardViewPosition, proxy: zstack_proxy) {
+                                            SensorDetailsView(viewModel: sensorDetailsViewModel)
+    //                                            .frame(maxWidth: proxy.size.width)
+                                                .frame(maxWidth: .infinity)
+                                        }
+                                        .transition(.move(edge: .bottom))
+                                        .zIndex(2) // zIndexes are needed to maintain dismiss transition
+                                    }
+                                }
                             }
+                            .ignoresSafeArea()
                         }
                     }
                     .navigationBarTitle("", displayMode: .inline)
@@ -136,14 +155,16 @@ struct MainView: View {
                 .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
                 .navigationBarColor(AppColors.white)
                 .zIndex(1)
-                if self.appState.showSensorDetails {
-                    SlideOverCard {
-                        SensorDetailsView(viewModel: sensorDetailsViewModel)
-                            .frame(maxWidth: UIScreen.main.bounds.width)
-                    }
-                    .transition(.move(edge: .bottom))
-                    .zIndex(2) // zIndexes are needed to maintain dismiss transition
-                }
+                
+//                if true {
+//                    SlideOverCard(height: slideOverCardViewPosition) {
+//                        SensorDetailsView(viewModel: sensorDetailsViewModel)
+//                            .frame(maxWidth: UIScreen.main.bounds.width)
+//                    }
+//                    .transition(.move(edge: .bottom))
+//                    .zIndex(2) // zIndexes are needed to maintain dismiss transition
+//                }
+                
                 if appState.showingCalendar {
                     VStack {
                         CalendarView(showingCalendar: $appState.showingCalendar,

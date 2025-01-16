@@ -21,8 +21,6 @@ struct CityMapView: View {
     
     let mapViewModel: MapViewModel
     
-    let proxy: GeometryProxy
-    
     var body: some View {
         
         ZStack {
@@ -69,13 +67,11 @@ enum ActiveSheet: Int, Identifiable {
 
 #Preview {
     GeometryReader { proxy in
-        CityMapView(
-            userSettings: AppState().userSettings,
-            mapViewModel: MapViewModel(
-                appState: AppState(),
-                appDataSource: AppDataSource(appState: AppState())
-            ),
-            proxy: proxy
+        CityMapView(userSettings: AppState().userSettings,
+                    mapViewModel: MapViewModel(
+                        appState: AppState(),
+                        appDataSource: AppDataSource(appState: AppState())
+            )
         )
         .environmentObject(AppState())
         .environmentObject(AppDataSource(appState: AppState()))

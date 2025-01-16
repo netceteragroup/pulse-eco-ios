@@ -2,9 +2,21 @@ import SwiftUI
 
 struct SlideOverCard<Content: View>: View {
     @GestureState private var dragState = DragState.inactive
-    @State var position: CGFloat = CardPosition.middle
-
+    @State var position: CGFloat
+    var cardPosition: CardPosition
+    
+    var height: CGFloat
     var content: () -> Content
+    
+    init(height: CGFloat, proxy: GeometryProxy, content: @escaping () -> Content) {
+        self.height = height
+        self.content = content
+
+        self.cardPosition = CardPosition(proxy: proxy, fullCardHeight: 550, middleCardHeight: height)
+        self.position = abs(height - proxy.size.height)
+        print("position: \(self.position)")
+    }
+    
     var body: some View {
         let drag = DragGesture()
             .updating($dragState) { drag, state, _ in
@@ -16,11 +28,11 @@ struct SlideOverCard<Content: View>: View {
             self.content()
             Spacer()
         }
-        .frame(height: UIScreen.main.bounds.height)
+//        .frame(height: UIScreen.main.bounds.height)
         .background(AppColors.white.color)
         .cornerRadius(30.0)
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
-        .offset(y: max(self.position + self.dragState.translation.height, CardPosition.top - 120, 0))
+        .offset(y: max(self.position + self.dragState.translation.height, cardPosition.top - 120, 0))
         .animation(self.dragState.isDragging ? nil : .interpolatingSpring(stiffness: 250,
                                                                           damping: 30.0,
                                                                           initialVelocity: 10),
@@ -35,12 +47,12 @@ struct SlideOverCard<Content: View>: View {
         let positionBelow: CGFloat
         let closestPosition: CGFloat
 
-        if cardTopEdgeLocation <= CardPosition.middle {
-            positionAbove = CardPosition.top
-            positionBelow = CardPosition.middle
+        if cardTopEdgeLocation <= cardPosition.middle {
+            positionAbove = cardPosition.top
+            positionBelow = cardPosition.middle
         } else {
-            positionAbove = CardPosition.middle
-            positionBelow = CardPosition.middle
+            positionAbove = cardPosition.middle
+            positionBelow = cardPosition.middle
         }
 
         if (cardTopEdgeLocation - positionAbove) < (positionBelow - cardTopEdgeLocation) {
@@ -60,11 +72,17 @@ struct SlideOverCard<Content: View>: View {
 }
 
 struct CardPosition {
-    private static let fullCardHeight: CGFloat = min(550, UIScreen.main.bounds.height)
-    private static let middleCardHeight: CGFloat = 125
-    static let top: CGFloat = UIScreen.main.bounds.height - fullCardHeight // - 550
-    static let middle: CGFloat = UIScreen.main.bounds.height - middleCardHeight // - 350
-    static let bottom: CGFloat = UIScreen.main.bounds.height + 100 // - 150
+    var top: CGFloat
+    var middle: CGFloat
+    var bottom: CGFloat
+    
+    init(proxy: GeometryProxy, fullCardHeight: CGFloat, middleCardHeight: CGFloat) {
+//        top = proxy.size.height - min(fullCardHeight, proxy.size.height - 10)
+        top = 65
+        middle = abs(middleCardHeight - proxy.size.height)
+        bottom = proxy.size.height + 100
+        print("proxy height: \(proxy.size.height) - top: \(top) - middle: \(middle) - bottom: \(bottom)")
+    }
 }
 
 enum DragState {
