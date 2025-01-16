@@ -29,7 +29,7 @@ struct MainView: View {
     }
     
     private func isLoading() -> Bool {
-        return (appState.loadingCityData || appState.loadingMeasures || (locationManager.isAuthorizationGranted() && locationManager.isWaitingToFetchRegion) || appState.userSettings.isWaitingToFetchFavouriteCitiesOveralls)
+        return (appState.loadingCityData || appState.loadingMeasures || (locationManager.isAuthorizationGranted() && locationManager.isWaitingToFetchRegion) || appState.isWaitingToFetchFavouriteCitiesOveralls)
     }
     
     var body: some View {

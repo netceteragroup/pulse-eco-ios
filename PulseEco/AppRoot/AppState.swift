@@ -37,6 +37,29 @@ class AppState: ObservableObject, ViewModelDependency {
                                                                         currentValue: nil,
                                                                         measures: nil)
     @Published var currentLocationIsSelected: Bool = false
+    @Published var isWaitingToFetchFavouriteCitiesOveralls: Bool = true
+    var cancellables = Set<AnyCancellable>()
+    
+    init() {
+        cityValuesSubscriber()
+    }
+    
+    private func cityValuesSubscriber() {
+        userSettings.$cityValues
+            .dropFirst()
+            .sink { [weak self] values in
+                guard let self else { return }
+                for city in self.userSettings.favouriteCities {
+                    if !values.contains(where: { city.cityName == $0.cityName }) {
+                        self.isWaitingToFetchFavouriteCitiesOveralls = true
+                        return
+                    }
+                }
+                self.isWaitingToFetchFavouriteCitiesOveralls = false
+                cancellables.removeAll()
+            }
+            .store(in: &cancellables)
+    }
     
     var cityIcon: Image {
         citySelectorClicked ? Image(systemName: "chevron.up") : Image(systemName: "chevron.down")

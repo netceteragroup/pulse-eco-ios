@@ -75,7 +75,6 @@ class LocationManager: NSObject, ObservableObject {
             .sink { [weak self] _ in
             guard let self else { return }
             self.isWaitingToFetchRegion = false
-            print("finished region")
         }
         .store(in: &cancellables)
     }

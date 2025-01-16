@@ -1,5 +1,4 @@
 import Foundation
-import Combine
 
 enum AppView: String, Codable {
     case dashboard
@@ -48,9 +47,6 @@ class UserSettings: ObservableObject {
             }
         }
     }
-    
-    @Published var isWaitingToFetchFavouriteCitiesOveralls: Bool = true
-    var cancellables = Set<AnyCancellable>()
 
     func removeFavouriteCity(_ city: City) {
         var favouriteCitiesCopy = favouriteCities
@@ -79,27 +75,6 @@ class UserSettings: ObservableObject {
         } else {
             self.cityValues = []
         }
-        
-        cityValuesSubscriber()
-    }
-    
-    func cityValuesSubscriber() {
-        $cityValues
-            .dropFirst(2)
-            .sink { [weak self] values in
-                guard let self else { return }
-                for city in self.favouriteCities {
-                    if !values.contains(where: { city.cityName == $0.cityName }) {
-                        self.isWaitingToFetchFavouriteCitiesOveralls = true
-                        print("\(city.cityName)")
-                        return
-                    }
-                }
-                self.isWaitingToFetchFavouriteCitiesOveralls = false
-                print("finished cityValues")
-                cancellables.removeAll()
-            }
-            .store(in: &cancellables)
     }
 }
 
