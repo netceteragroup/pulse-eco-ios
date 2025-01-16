@@ -136,6 +136,7 @@ struct CityListView: View {
                 self.appState.newCitySelected = true
             }
             self.presentationMode.wrappedValue.dismiss()
+            self.dataSource.getValuesForCity(cityName: city.cityName)
             dismissSearch()
         }
     }

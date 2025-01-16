@@ -22,7 +22,9 @@ struct CitySearchContentView: View {
     var allFavoritesAndLocation: [FavouriteCityRowViewModel] {
         var tmpAllCities: [FavouriteCityRowViewModel] = []
         if let currentCity = locationManager.currentCity {
-            tmpAllCities.append(FavouriteCityRowViewModel(city: currentCity, isCurrentCity: true))
+            let favouriteCityRowViewModel = viewModel.createFavouriteCityRowViewModelFromCityAndCityValues(city: currentCity, cityValues: appState.userSettings.cityValues, selectedMeasure: appState.selectedMeasureId, measureList: dataSource.measures, isCurrentCity: true)
+            tmpAllCities.append(favouriteCityRowViewModel)
+
         }
         tmpAllCities.append(contentsOf: viewModel.getCities())
         return tmpAllCities

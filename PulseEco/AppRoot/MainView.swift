@@ -27,9 +27,13 @@ struct MainView: View {
                                       dailyAverages: dataSource.sensorsDailyAverageData)
     }
     
+    private func isLoading() -> Bool {
+        return (appState.loadingCityData || appState.loadingMeasures || (locationManager.isAuthorizationGranted() && locationManager.isWaitingToFetchRegion) || appState.isWaitingToFetchFavouriteCitiesOveralls)
+    }
+    
     var body: some View {
         Group {
-            if appState.loadingCityData || appState.loadingMeasures || (locationManager.isAuthorizationGranted() && locationManager.isWaitingToFetchRegion()) {
+            if isLoading() {
                 loadingView
             } else {
                 contentView
