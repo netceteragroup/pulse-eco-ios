@@ -26,8 +26,6 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var userSettings: UserSettings = UserSettings()
     @Published var showingCalendar = false
     @Published var selectedDateAverageValue: String?
-    @Published var currentMonth: Int = 0
-    @Published var currentYear: Int = 0
     @Published var selectedDate: Date = calendar.startOfDay(for: Date.now)
     @Published var calendarSelection: Date = calendar.startOfDay(for: Date.now)
     @Published var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil,
