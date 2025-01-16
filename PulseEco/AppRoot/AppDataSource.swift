@@ -70,8 +70,6 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                   measureId: self.appState.selectedMeasureId) ?? []
             async let sensorsData24h = self.networkService.fetch24hDataForSensors(cityName: cityName) ?? []
             
-            await self.fetchHistory(for: cityName, measureId: self.appState.selectedMeasureId)
-            
             let wrapper = await CityValueWrapper(cityOverall: cityOverall,
                                                  citySensors: citySensors,
                                                  sensorsData: sensorsData,
@@ -143,13 +141,11 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                       sensorType: measureId,
                                       from: threeDaysAgo,
                                       to: threeDaysLater)
-                let today = appState.weeklyDataWrapper.getDataFromRange(cityName: cityName,
-                                                                        sensorType: measureId,
-                                                                        from: calendar.startOfDay(for: Date.now),
-                                                                        to: calendar.date(byAdding: .day,
-                                                                                          value: +1,
-                                                                                          to: Date.now)!)
-                self.weeklyData.append(contentsOf: today)
+                
+                guard let today = fetchTodayValue(cityName: cityName, sensorType: measureId) else {
+                    return
+                }
+                self.weeklyData.append(today)
                 
             } else {
                 self.weeklyData =
@@ -162,6 +158,15 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             
             await updatePins(selectedDate: appState.selectedDate)
         }
+    }
+    
+    func fetchTodayValue(cityName: String, sensorType: String) -> DayDataWrapper? {
+        return appState.weeklyDataWrapper.getDataFromRange(cityName: cityName,
+                                                           sensorType: sensorType,
+                                                           from: calendar.startOfDay(for: Date.now),
+                                                           to: calendar.date(byAdding: .day,
+                                                                             value: +1,
+                                                                             to: Date.now)!).first
     }
     
     func getMonthlyValues(cityName: String = UserSettings.selectedCity.cityName,
@@ -185,8 +190,8 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         
         await getMonthlyValues(cityName: cityName,
                                measureId: measureId,
-                               currentMonth: appState.currentMonth,
-                               currentYear: appState.currentYear)
+                               currentMonth: calendar.component(.month, from: appState.selectedDate),
+                               currentYear: calendar.component(.year, from: appState.selectedDate))
     }
     
     func updatePins(selectedDate: Date) async {

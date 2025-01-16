@@ -10,6 +10,7 @@ import SwiftUI
 private enum PickerType {
     case day, month, year
 }
+
 struct CalendarView: View {
     
     @EnvironmentObject var dataSource: AppDataSource
@@ -21,20 +22,25 @@ struct CalendarView: View {
     @Binding var selectedDate: Date
     @Binding var calendarSelection: Date
     
+    var onDaySelected: ((Date) -> Void)?
+    
     init(showingCalendar: Binding<Bool>,
          selectedDate: Binding<Date>,
          calendarSelection: Binding<Date>,
+         onDaySelected: ((Date) -> Void)?,
          viewModelClosure: @autoclosure @escaping () -> CalendarViewModel) {
         
         _viewModel = StateObject(wrappedValue: viewModelClosure())
         _showingCalendar = showingCalendar
         _selectedDate = selectedDate
         _calendarSelection = calendarSelection
+        self.onDaySelected = onDaySelected
     }
     
     var body: some View {
-        
-        VStack(spacing: 10) {
+        VStack {
+            pickerOptionButtonsView
+            
             switch pickerType {
             case .day:
                 dayPicker
@@ -55,38 +61,41 @@ struct CalendarView: View {
         }
     }
     
-    @ViewBuilder
-    private func calendarDaysView(value: DateValueModel, color: String) -> some View {
-        
-        VStack {
-            
-            if value.day != -1 {
-                Button {
-                    self.selectedDate = calendar.startOfDay(for: value.date)
-                    self.calendarSelection = calendar.startOfDay(for: value.date)
-                    Task {
-                        do {
-                            await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
-                            await viewModel.appDataSource.selectFromCalendar()
-                        }
-                    }
-                    showingCalendar = false
-                } label: {
-                    CalendarButtonView(day: value.day,
-                                       date: value.date,
-                                       color: color,
-                                       highlighted: value.date.isSameDay(with: selectedDate))
-                }
-                .disabled(value.date > calendar.startOfDay(for: Date.now) ? true : false)
+    private var pickerOptionButtonsView: some View {
+        HStack {
+            Button(action: {
+                pickerType = .day
+            }) {
+                Text("Day") //add trema (day_for_weekly_average_data)?
+                    .padding(8)
+                    .background(pickerType == .day ? Color(AppColors.firstButtonColor) : Color.white)
+                    .cornerRadius(8)
+                    .foregroundStyle(pickerType == .day ? Color.white : Color(AppColors.firstButtonColor))
+                    .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color(AppColors.firstButtonColor), lineWidth: 2)
+                    )
             }
+            
+            Button(action: {
+                pickerType = .month
+            }) {
+                Text("Month") // add trema
+                    .padding(8)
+                    .background(pickerType == .month ? Color(AppColors.firstButtonColor) : Color.white)
+                    .cornerRadius(8)
+                    .foregroundStyle(pickerType == .month ? Color.white : Color(AppColors.firstButtonColor))
+                    .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color(AppColors.firstButtonColor), lineWidth: 2)
+                    )
+            }
+            Spacer()
         }
-        .padding(.vertical, 5)
-        .frame(height: 20, alignment: .top)
     }
     
     @ViewBuilder
     var dayPicker: some View {
-        
         VStack {
             monthSelectionStack
             VStack {
@@ -102,9 +111,16 @@ struct CalendarView: View {
                     
                     let columns = Array(repeating: GridItem(.flexible()), count: 7)
                     
-                    LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(viewModel.dateValues, id: \.id) { value in
-                            calendarDaysView(value: value, color: value.color)
+                    LazyVGrid(columns: columns, spacing: 0) {
+                        ForEach(viewModel.monthlyData, id: \.self) { data in
+                            CalendarDayButton(date: data.date,
+                                          value: data.value,
+                                          color: data.color,
+                                          highlighted: selectedDate.isSameDay(with: data.date)) {
+                                self.selectedDate = calendar.startOfDay(for: data.date)
+                                self.calendarSelection = calendar.startOfDay(for: data.date)
+                                onDaySelected?(selectedDate)
+                            }
                         }
                     }
                 }
@@ -125,7 +141,6 @@ struct CalendarView: View {
             }
             .padding(.top)
         }
-        .padding(.all)
     }
     
     @ViewBuilder
@@ -172,6 +187,7 @@ struct CalendarView: View {
                     .frame(width: 7.41, height: 12)
                     .padding(.trailing)
             }
+            .disabled(viewModel.isCurrentMonthSelected())
             .padding(.all)
         }
     }
@@ -268,23 +284,17 @@ struct CalendarView: View {
                                         color: val.color,
                                         highlighted: val.date.isSameDay(with: selectedDate))
                     }
+                    .disabled(val.date > .now)
                 }
             }
             .padding(.top)
             
-            HStack {
-                Spacer()
-                Button {
-                    pickerType = .day
-                } label: {
-                    Text(Trema.text(for: "cancel"))
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(Color(AppColors.greyColor))
-                }
-                .padding(.top)
-            }
-            .padding(.all)
+            okAndCancelStack
         }
         .padding(.top)
+        .task {
+            await dataSource.updateMonthlyColors(selectedYear: viewModel.selectedYear)
+            viewModel.colorMonths()
+        }
     }
 }
