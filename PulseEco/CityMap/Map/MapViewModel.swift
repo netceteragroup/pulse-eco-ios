@@ -89,15 +89,6 @@ class MapViewModel: ObservableObject {
         Task {
             await appDataSource.fetchHistory(for: UserSettings.selectedCity.cityName, measureId: measure.id)
         }
-        
-        let sensors = combine(sensors: appDataSource.citySensors,
-                              sensorsData: appDataSource.sensorsData,
-                              selectedMeasure: measure)
-        
-        guard !areIdentical(self.sensors, sensors) else { return }
-        
-        self.shouldUpdateSensors = true
-        self.sensors = sensors
     }
     
     private func setCity(_ city: City) {

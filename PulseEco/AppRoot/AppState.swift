@@ -26,8 +26,6 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var userSettings: UserSettings = UserSettings()
     @Published var showingCalendar = false
     @Published var selectedDateAverageValue: String?
-    @Published var currentMonth: Int = 0
-    @Published var currentYear: Int = 0
     @Published var selectedDate: Date = calendar.startOfDay(for: Date.now)
     @Published var calendarSelection: Date = calendar.startOfDay(for: Date.now)
     @Published var cityDataWrapper: CityDataWrapper = CityDataWrapper(sensorData: nil,
@@ -40,11 +38,14 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var hourlySensors: [Int: [SensorPinModel]] = [:]
     @Published var cachedHourlySensorsByDay: [CacheDictionaryKey: [Int: [SensorPinModel]]] = [:]
     @Published var isTimelineSliderActive: Bool = true
+    @Published var isWaitingToFetchFavouriteCitiesOveralls: Bool = true
     
     struct CacheDictionaryKey: Hashable {
         var date: Date
         var type: String
     }
+    
+    var cancellables = Set<AnyCancellable>()
     
     var cityIcon: Image {
         citySelectorClicked ? Image(systemName: "chevron.up") : Image(systemName: "chevron.down")
@@ -55,6 +56,11 @@ class AppState: ObservableObject, ViewModelDependency {
     }
     
     func addSubscribers() {
+        selectedCitySubscriber()
+        cityValuesSubscriber()
+    }
+    
+    private func selectedCitySubscriber() {
         $selectedCity
             .sink { [weak self] _ in
                 guard let self else { return }
@@ -62,5 +68,22 @@ class AppState: ObservableObject, ViewModelDependency {
                 hourlySensors.removeAll()
             }
             .store(in: &cancelables)
+    }
+    
+    private func cityValuesSubscriber() {
+        userSettings.$cityValues
+            .dropFirst()
+            .sink { [weak self] values in
+                guard let self else { return }
+                for city in self.userSettings.favouriteCities {
+                    if !values.contains(where: { city.cityName == $0.cityName }) {
+                        self.isWaitingToFetchFavouriteCitiesOveralls = true
+                        return
+                    }
+                }
+                self.isWaitingToFetchFavouriteCitiesOveralls = false
+                cancellables.removeAll()
+            }
+            .store(in: &cancellables)
     }
 }

@@ -9,144 +9,145 @@ import SwiftUI
 
 struct CityListView: View {
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.isSearching) private var isSearching
+    @Environment(\.dismissSearch) private var dismissSearch
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var viewModel: CityListViewModel
     @ObservedObject var userSettings: UserSettings
-    @State var searchText = ""
     @ObservedObject var locationManager: LocationManager = LocationManager.shared
-
+    var searchText: String
+    
     var body: some View {
-        NavigationView {
-            VStack {
-                HStack {
-                    SearchBar(text: $searchText,
-                              placeholder: Trema.text(for: "search_city_or_country"))
-                        .padding(.leading, 10)
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text(Trema.text(for: "cancel"))
-                    })
-                    .padding(.trailing, 15)
-                }
-                ScrollView {
-                    if self.searchText.isEmpty {
-                        ForEach(self.viewModel.getCountries(), id: \.self) { elem in
-                            Section(header:
-                                        HStack {
-                                            Text("\(elem)")
-                                                .padding()
-                                                .font(.system(size: 16, weight: .bold))
-                                            Spacer()
-                                        }
-                                        .frame(height: 30)
-                                        .background(Color(red: 240 / 255, green: 240 / 255, blue: 240 / 255))
-                                        .listRowInsets(.zero)) {
-                                            let currentCity = locationManager.currentCity
-                                            let favouriteCitiesNames = self.userSettings.favouriteCities.map { $0.cityName }
-                                            let citiesFromCountry = self.viewModel.getCities().filter {
-                                                elem == $0.countryName
-                                            }
-                                ForEach(citiesFromCountry, id: \.id) { city in
-                                    Button(action: {
-                                        if let city = viewModel.cityModel
-                                            .first(where: { $0.cityName == city.cityName }) {
-                                            if locationManager.currentCity?.cityName != city.cityName {
-                                                appState.currentLocationIsSelected = false
-                                                self.userSettings.addFavoriteCity(city)
-                                            }
-                                            else {
-                                                appState.currentLocationIsSelected = true
-                                            }
-                                            if self.appState.selectedCity != city {
-                                                self.appState.selectedCity = city
-                                                self.appState.newCitySelected = true
-                                                self.presentationMode.wrappedValue.dismiss()
-                                            } else {
-                                                self.presentationMode.wrappedValue.dismiss()
-                                                self.appState.citySelectorClicked = false
-                                            }
-                                        }
-                                    }, label: {
-                                        CityRowView(viewModel: city,
-                                                    addCheckMark: favouriteCitiesNames.contains(city.cityName) || city.cityName == currentCity?.cityName,
-                                                    showCountryName: false)
-                                    })
-                                    if city != citiesFromCountry.last {
-                                        Divider()
-                                            .background(AppColors.gray.color)
-                                    }
-                                }
-                            }
-                        }
-                        Divider().background(AppColors.gray.color)
-                    } else {
-                        self.listCities
-                    }
-                    VStack {
-                        Text(Trema.text(for: "city_missing_add_new"))
-                            .font(.system(size: 14)).foregroundColor(Color(AppColors.gray))
-                            .multilineTextAlignment(.center)
-                            .fixedSize(horizontal: false, vertical: true)
-                        Button(action: {
-                            guard let url = URL(string: "https://pulse.eco/addcity") else { return }
-                            UIApplication.shared.open(url)
-                        }) {
-                            Text("https://pulse.eco/addcity")
-                                .font(.system(size: 14))
-                        }
-                    }
-                    .padding(.all)
-                }
-                .resignKeyboardOnDragGesture()
-            }
-            .navigationBarColor(AppColors.white)
-            .navigationBarTitle(Trema.text(for: "select_city"), displayMode: .inline)
+        if self.searchText.isEmpty {
+            listAllCities()
+        } else {
+            filteredCitiesList()
         }
-        .if(.pad, transform: {
-            $0.navigationViewStyle(StackNavigationViewStyle())
-        })
     }
-
-    var listCities: some View {
-        let favouriteCitiesNames = userSettings.favouriteCities.map { $0.cityName }
-        let foundCities = viewModel.getCities()
-            .filter { $0.siteName.lowercased()
-                .contains(self.searchText.lowercased()) || $0.countryName.lowercased()
-                .contains(self.searchText.lowercased())
-            }
-
-        return VStack {
-            ForEach(foundCities, id: \.id) { city in
-                Button(action: {
-                    if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-                        self.userSettings.addFavoriteCity(city)
-                        if self.appState.selectedCity != city {
-                            self.appState.selectedCity = city
-                            self.appState.newCitySelected = true
-                            self.presentationMode.wrappedValue.dismiss()
-                        } else {
-                            self.presentationMode.wrappedValue.dismiss()
-                            self.appState.citySelectorClicked = false
-                        }
+    
+    @ViewBuilder
+    private func filteredCitiesList() -> some View {
+        
+        let favouriteCitiesNames = getFavouriteCitiesNames()
+        let foundCities = viewModel.getCities().filter {
+            $0.cityName.lowercased().contains(self.searchText.lowercased()) || $0.countryName.lowercased().contains(self.searchText.lowercased())
+        }
+        
+        ScrollView {
+            VStack {
+                ForEach(foundCities, id: \.id) { city in
+                    Button(action: {
+                        addToFavourites(city: city)
+                    }, label: {
+                        CityRowView(viewModel: city,
+                                    addCheckMark: favouriteCitiesNames.contains(city.cityName),
+                                    showCountryName: true)
+                    })
+                    
+                    if city != foundCities.last {
+                        Divider()
+                            .background(AppColors.gray.color)
                     }
-                }, label: {
-                    CityRowView(viewModel: city,
-                                addCheckMark: favouriteCitiesNames.contains(city.cityName),
-                                showCountryName: true)
-                })
-                if city != foundCities.last {
+                }
+                
+                if foundCities.count > 0 {
                     Divider()
                         .background(AppColors.gray.color)
                 }
+                
+                missingCityText()
             }
-            if foundCities.count > 0 {
-                Divider()
-                    .background(AppColors.gray.color)
+            .resignKeyboardOnDragGesture()
+        }
+        
+    }
+    
+    @ViewBuilder
+    private func listAllCities() -> some View {
+        ScrollView {
+            ForEach(self.viewModel.getCountries(), id: \.self) { elem in
+                Section(header:
+                            HStack {
+                    Text("\(elem)")
+                        .padding()
+                        .font(.system(size: 16, weight: .bold))
+                    Spacer()
+                }
+                    .frame(height: 30)
+                    .background(Color(red: 240 / 255, green: 240 / 255, blue: 240 / 255))
+                    .listRowInsets(.zero)) {
+                        let citiesFromCountry = self.viewModel.getCities().filter {
+                            elem == $0.countryName
+                        }
+                        ForEach(citiesFromCountry, id: \.id) { city in
+                            Button(action: {
+                                addToFavourites(city: city)
+                            }, label: {
+                                CityRowView(viewModel: city,
+                                            addCheckMark: getFavouriteCitiesNames().contains(city.cityName),
+                                            showCountryName: false)
+                            })
+                            if city != citiesFromCountry.last {
+                                Divider()
+                                    .background(AppColors.gray.color)
+                            }
+                        }
+                    }
+            }
+            Divider().background(AppColors.gray.color)
+            
+            missingCityText()
+        }
+        .resignKeyboardOnDragGesture()
+    }
+    
+    @ViewBuilder
+    private func missingCityText() -> some View {
+        VStack {
+            Text(Trema.text(for: "city_missing_add_new"))
+                .font(.system(size: 14))
+                .foregroundColor(Color(AppColors.gray))
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+            
+            Button(action: {
+                guard let url = URL(string: "https://pulse.eco/addcity") else { return }
+                UIApplication.shared.open(url)
+            }) {
+                Text("https://pulse.eco/addcity")
+                    .font(.system(size: 14))
             }
         }
+        .padding(.all)
+        .frame(maxWidth: .infinity)
+        .background(Color.white)
+    }
+    
+    private func addToFavourites(city: CityRowViewModel) {
+        if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
+            if locationManager.currentCity?.cityName != city.cityName {
+                self.userSettings.addFavoriteCity(city)
+            }
+            self.appState.citySelectorClicked = false
+            if self.appState.selectedCity != city {
+                self.appState.selectedCity = city
+                self.appState.newCitySelected = true
+            }
+            self.presentationMode.wrappedValue.dismiss()
+            self.dataSource.getValuesForCity(cityName: city.cityName)
+            dismissSearch()
+        }
+    }
+
+    
+    private func getFavouriteCitiesNames() -> Set<String> {
+        var favouriteCitiesNames = Set(self.userSettings.favouriteCities.map { $0.cityName })
+        if let currentCity = self.locationManager.currentCity {
+            favouriteCitiesNames.insert(currentCity.cityName)
+        }
+        return favouriteCitiesNames
     }
 }
 
