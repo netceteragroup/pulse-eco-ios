@@ -48,12 +48,12 @@ struct CityMapView: View {
                     
                     self.appState.sensorPins = sensorPinsForSelectedHour
                 }))
-                    .padding(.vertical, appState.showSensorDetails ? 60 : 0)
-                    .padding(.horizontal)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .environmentObject(appState)
+                .padding(.vertical, appState.showSensorDetails ? 60 : 0)
+                .padding(.horizontal)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .environmentObject(appState)
                 
                 HStack {
                     Spacer()

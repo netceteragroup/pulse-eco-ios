@@ -48,4 +48,19 @@ class TimelineSliderViewModel: ObservableObject {
     func isTryingToSelectFutureTime(selectedDate: Date, newValue: Double) -> Bool {
         selectedDate >= calendar.startOfDay(for: currentDate) && newValue > Double(hour)
     }
+    
+    func formatTime(for time: Double) -> String {
+        let hour = Int(time)
+        
+        if hour == 12 {
+            return "\(hour) PM"
+        }
+        else if hour == 0 || hour == 24 {
+            return "12 AM"
+        }
+        
+        let displayTime = hour % 12
+        
+        return hour > 12 ? "\(displayTime) PM" : "\(displayTime) AM"
+    }
 }

@@ -211,8 +211,8 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             var processedSensorData: [SensorData] = []
             
             for (key, value) in groupById {
-                let average = String(value.averageValue()) // TODO: Check if this makes sense
-                if let sensor = value.first { // TODO: Should it only check for the first item!?
+                let average = String(value.averageValue())
+                if let sensor = value.first {
                     processedSensorData.append(SensorData(sensorID: key,
                                                           stamp: sensor.stamp,
                                                           type: sensor.type,
@@ -225,7 +225,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                    selectedMeasure: getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
             self.appState.sensorPins = result
         }
-        setAverageValueforSelectedDate(cityName: appState.selectedCity.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate) // TODO: Is this called at the right time?
+        setAverageValueforSelectedDate(cityName: appState.selectedCity.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
     }
     
     private func groupByHour(sensorData: [SensorData],

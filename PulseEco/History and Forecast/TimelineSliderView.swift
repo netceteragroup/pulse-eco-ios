@@ -14,7 +14,7 @@ struct TimelineSliderView: View {
 
     var body: some View {
         VStack {
-            Text("\(formatTime(for: viewModel.sliderValue))")
+            Text("\(viewModel.formatTime(for: viewModel.sliderValue))")
                 .font(.headline)
                 .padding(6)
                 .background(Capsule().fill(Color.blue))
@@ -46,7 +46,7 @@ struct TimelineSliderView: View {
             HStack {
                 ForEach(timeRange.lowerBound...timeRange.upperBound, id: \.self) { hour in
                     if hour % 6 == 0 {
-                        Text("\(formatTime(for: Double(hour)))")
+                        Text("\(viewModel.formatTime(for: Double(hour)))")
                             .font(.caption2)
                             .frame(maxWidth: .infinity, alignment: .center)
                     } else {
@@ -86,25 +86,5 @@ struct TimelineSliderView: View {
                     .setThumbImage(UIImage(systemName: "circle.fill",
                                            withConfiguration: progressCircleConfig), for: .normal)
             }
-    }
-
-    private func formattedTime(for value: Double) -> String {
-        let hour = Int(value)
-        return String(format: "%02d:00", hour)
-    }
-    
-    private func formatTime(for time: Double) -> String {
-        let hour = Int(time)
-        
-        if hour == 12 {
-            return "\(hour) PM"
-        }
-        else if hour == 0 || hour == 24 {
-            return "12 AM"
-        }
-        
-        let displayTime = hour % 12
-        
-        return hour > 12 ? "\(displayTime) PM" : "\(displayTime) AM"
     }
 }
