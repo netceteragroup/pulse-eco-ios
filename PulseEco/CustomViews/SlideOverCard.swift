@@ -82,7 +82,6 @@ struct CardPosition {
     var bottom: CGFloat
     
     init(proxy: GeometryProxy, fullCardHeight: CGFloat, middleCardHeight: CGFloat) {
-//        top = proxy.size.height - min(fullCardHeight, proxy.size.height - 10)
         top = 65
         middle = abs(middleCardHeight - proxy.size.height)
         bottom = proxy.size.height + 100

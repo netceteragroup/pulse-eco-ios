@@ -13,7 +13,7 @@ struct MainView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @State private var isShowingSettingsView = false
-    @State var showingPicker = false
+    @State var slideOverCardViewPosition: CGFloat = 70
     @ObservedObject var locationManager: LocationManager = LocationManager.shared
     
     let mapViewModel: MapViewModel
@@ -28,11 +28,13 @@ struct MainView: View {
                                       dailyAverages: dataSource.sensorsDailyAverageData)
     }
     
-    @State var slideOverCardViewPosition: CGFloat = 70
+    private func isLoading() -> Bool {
+        return (appState.loadingCityData || appState.loadingMeasures || (locationManager.isAuthorizationGranted() && locationManager.isWaitingToFetchRegion) || appState.isWaitingToFetchFavouriteCitiesOveralls)
+    }
     
     var body: some View {
         Group {
-            if appState.loadingCityData || appState.loadingMeasures || (locationManager.isAuthorizationGranted() && locationManager.isWaitingToFetchRegion()) {
+            if isLoading() {
                 loadingView
             } else {
                 contentView
@@ -42,20 +44,6 @@ struct MainView: View {
         .sheet(item: $appState.activeSheet) { sheet in
             switch sheet {
             case .disclaimerView: DisclaimerView()
-            case .cityListView:
-                CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities),
-                             userSettings: self.appState.userSettings)
-                .onDisappear(perform: {
-                    if self.appState.userSettings.favouriteCities.count == 0 {
-                        self.appState.citySelectorClicked = false
-                    }
-                    if self.$appState.newCitySelected.wrappedValue == true {
-                        self.refreshService.updateRefreshDate()
-                        self.dataSource.getValuesForCity(cityName: self.appState.selectedCity.cityName)
-                        self.appState.newCitySelected = false
-                        self.appState.citySelectorClicked = false
-                    }
-                })
             }
         }
         .onAppear() {
@@ -94,14 +82,7 @@ struct MainView: View {
                                        isActive: $isShowingSettingsView) { EmptyView () }
                         
                         if self.appState.citySelectorClicked {
-                            FavouriteCitiesView(viewModel:
-                                                    FavouriteCitiesViewModel(
-                                                        selectedMeasure: self.appState.selectedMeasureId,
-                                                        favouriteCities: self.appState.userSettings.favouriteCities,
-                                                        cityValues: self.appState.userSettings.cityValues,
-                                                        measureList: self.dataSource.measures),
-                                                userSettings: self.appState.userSettings,
-                                                proxy: proxy)
+                            FavouriteCitiesView(userSettings: self.appState.userSettings, proxy: proxy)
                             .overlay(ShadowOnTopOfView())
                             .animation(nil, value: self.appState.citySelectorClicked)
                         } else {
@@ -114,16 +95,18 @@ struct MainView: View {
                                 MeasureListView(viewModel: viewModel)
                             }
                             
-                            DateSlider(unimplementedAlert: $appState.showingCalendar,
-                                       unimplementedPicker: $showingPicker,
-                                       selectedDate: $appState.selectedDate)
-                            
                             GeometryReader { zstack_proxy in
-                                ZStack(alignment: .bottom) {
+                                ZStack(alignment: .top) {
+                                    DateSelector()
+                                        .padding(.horizontal)
+                                        .padding(.vertical, 8)
+                                        .zIndex(2)
+                                    
                                     CityMapView(userSettings: self.appState.userSettings,
                                                 mapViewModel: mapViewModel)
                                     .id("CityMapView")
                                     .edgesIgnoringSafeArea([.horizontal, .bottom])
+                                    .padding(.top, 60)
                                     .zIndex(1)
                                     
                                     if zstack_proxy.size.height != .zero && zstack_proxy.size.width != .zero {
@@ -155,26 +138,6 @@ struct MainView: View {
                 .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
                 .navigationBarColor(AppColors.white)
                 .zIndex(1)
-                
-                if appState.showingCalendar {
-                    VStack {
-                        CalendarView(showingCalendar: $appState.showingCalendar,
-                                     selectedDate: $appState.selectedDate,
-                                     calendarSelection: $appState.calendarSelection,
-                                     viewModelClosure: CalendarViewModel(appState: self.appState,
-                                                                         appDataSource: self.dataSource))
-                        .cornerRadius(4)
-                        .shadow(color: Color(AppColors.shadowColor), radius: 20)
-                        .padding(.top, 180)
-                        .padding(.all)
-                        Spacer()
-                    }
-                    .background(Color.gray.opacity(0.8).onTapGesture {
-                        appState.showingCalendar = false
-                    })
-                    .edgesIgnoringSafeArea(.all)
-                    .zIndex(3)
-                }
             }
         }
     }
