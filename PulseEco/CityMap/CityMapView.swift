@@ -66,7 +66,7 @@ enum ActiveSheet: Int, Identifiable {
 }
 
 #Preview {
-    GeometryReader { proxy in
+    VStack {
         CityMapView(userSettings: AppState().userSettings,
                     mapViewModel: MapViewModel(
                         appState: AppState(),

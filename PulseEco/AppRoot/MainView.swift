@@ -132,7 +132,6 @@ struct MainView: View {
                                             proxy: zstack_proxy
                                         ) {
                                             SensorDetailsView(viewModel: sensorDetailsViewModel)
-                                            //                                            .frame(maxWidth: proxy.size.width)
                                                 .frame(maxWidth: .infinity)
                                         }
                                         .transition(.move(edge: .bottom))
@@ -156,15 +155,6 @@ struct MainView: View {
                 .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
                 .navigationBarColor(AppColors.white)
                 .zIndex(1)
-                
-//                if true {
-//                    SlideOverCard(height: slideOverCardViewPosition) {
-//                        SensorDetailsView(viewModel: sensorDetailsViewModel)
-//                            .frame(maxWidth: UIScreen.main.bounds.width)
-//                    }
-//                    .transition(.move(edge: .bottom))
-//                    .zIndex(2) // zIndexes are needed to maintain dismiss transition
-//                }
                 
                 if appState.showingCalendar {
                     VStack {

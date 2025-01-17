@@ -26,7 +26,6 @@ struct SensorDetailsView: View {
         else {
             showSensorDetailsView
         }
-        
     }
     
     var showSensorDetailsView: some View {
@@ -70,19 +69,19 @@ struct SensorDetailsView: View {
                                                                     averages: self.viewModel.dailyAverages))
                     .padding(.bottom, 20)
                 
-                selectSensorsButtonView
+                selectSensorsButtonView()
                 
                 Text(self.viewModel.disclaimerMessage)
                     .font(.system(size: 11, weight: .light))
                     .foregroundColor(self.viewModel.color)
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
-                    .padding([.horizontal, .bottom], 15)
+                    .padding(15)
                     .fixedSize(horizontal: false, vertical: true)
                 
-                privacyPolicyView
+                privacyPolicyView()
 
-            }.scaledToFit()
+            }
             Spacer()
         }
     }
@@ -118,7 +117,7 @@ struct SensorDetailsView: View {
                     .padding(.horizontal)
                     .fixedSize(horizontal: false, vertical: true)
                 
-                selectSensorsButtonView
+                selectSensorsButtonView()
                     .padding(.top)
                 
                 Text(self.viewModel.disclaimerMessage)
@@ -130,14 +129,15 @@ struct SensorDetailsView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .padding()
                 
-                privacyPolicyView
+                privacyPolicyView()
 
             }.scaledToFit()
             Spacer()
         }
     }
     
-    var selectSensorsButtonView: some View {
+    @ViewBuilder
+    func selectSensorsButtonView() -> some View {
         Button(action: {
             print("pressed")
         }) {
@@ -152,7 +152,8 @@ struct SensorDetailsView: View {
         }
     }
     
-    var privacyPolicyView: some View {
+    @ViewBuilder
+    func privacyPolicyView() -> some View {
         Button(action: {
             print("privacy pressed")
         }) {

@@ -134,6 +134,7 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
             return
         }
         DispatchQueue.main.async {
+            self.map.appState.selectedSensor = nil
             self.map.appState.showSensorDetails = false
         }
         annotationView.hideCallout()
