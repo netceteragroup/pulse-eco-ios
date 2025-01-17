@@ -28,12 +28,7 @@ struct MainView: View {
                                       dailyAverages: dataSource.sensorsDailyAverageData)
     }
     
-    private var slideOverCardViewPosition: CGFloat {
-        guard let _ = appState.selectedSensor else {
-            return 65
-        }
-        return 120
-    }
+    @State var slideOverCardViewPosition: CGFloat = 70
     
     var body: some View {
         Group {
@@ -80,6 +75,9 @@ struct MainView: View {
                     }
                 }
             }
+        }
+        .onChange(of: appState.selectedSensor) { new in
+            slideOverCardViewPosition = new != nil ? 120 : 70
         }
     }
     
@@ -129,9 +127,12 @@ struct MainView: View {
                                     .zIndex(1)
                                     
                                     if zstack_proxy.size.height != .zero && zstack_proxy.size.width != .zero {
-                                        SlideOverCard(height: slideOverCardViewPosition, proxy: zstack_proxy) {
+                                        SlideOverCard(
+                                            height: $slideOverCardViewPosition,
+                                            proxy: zstack_proxy
+                                        ) {
                                             SensorDetailsView(viewModel: sensorDetailsViewModel)
-    //                                            .frame(maxWidth: proxy.size.width)
+                                            //                                            .frame(maxWidth: proxy.size.width)
                                                 .frame(maxWidth: .infinity)
                                         }
                                         .transition(.move(edge: .bottom))

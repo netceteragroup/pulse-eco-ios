@@ -2,21 +2,16 @@ import SwiftUI
 
 struct SlideOverCard<Content: View>: View {
     @GestureState private var dragState = DragState.inactive
-    @State var position: CGFloat
-    var cardPosition: CardPosition
+    @State var position: CGFloat = 0
+    @Binding var height: CGFloat
+    let proxy: GeometryProxy
     
-    var height: CGFloat
-    var content: () -> Content
-    
-    init(height: CGFloat, proxy: GeometryProxy, content: @escaping () -> Content) {
-        self.height = height
-        self.content = content
-
-        self.cardPosition = CardPosition(proxy: proxy, fullCardHeight: 550, middleCardHeight: height)
-        self.position = abs(height - proxy.size.height)
-        print("position: \(self.position)")
+    var cardPosition: CardPosition {
+        CardPosition(proxy: proxy, fullCardHeight: 550, middleCardHeight: height)
     }
     
+    var content: () -> Content
+
     var body: some View {
         let drag = DragGesture()
             .updating($dragState) { drag, state, _ in
@@ -28,7 +23,6 @@ struct SlideOverCard<Content: View>: View {
             self.content()
             Spacer()
         }
-//        .frame(height: UIScreen.main.bounds.height)
         .background(AppColors.white.color)
         .cornerRadius(30.0)
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
@@ -38,8 +32,19 @@ struct SlideOverCard<Content: View>: View {
                                                                           initialVelocity: 10),
                    value: dragState.isDragging)
         .gesture(drag)
+        .onAppear {
+            updatePosition()
+        }
+        .onChange(of: height) { _ in
+            updatePosition()
+        }
     }
 
+    private func updatePosition() {
+        position = abs(height - proxy.size.height)
+        print("Updated position: \(position)")
+    }
+    
     private func onDragEnded(drag: DragGesture.Value) {
         let verticalDirection = drag.predictedEndLocation.y - drag.location.y
         let cardTopEdgeLocation = self.position + drag.translation.height
