@@ -4,10 +4,11 @@ struct SlideOverCard<Content: View>: View {
     @GestureState private var dragState = DragState.inactive
     @State var position: CGFloat = 0
     @Binding var height: CGFloat
+    @Binding var topLimit: CGFloat
     let proxy: GeometryProxy
     
     var cardPosition: CardPosition {
-        CardPosition(proxy: proxy, fullCardHeight: 550, middleCardHeight: height)
+        CardPosition(proxy: proxy, topLimit: topLimit, middleCardHeight: height)
     }
     
     var content: () -> Content
@@ -21,6 +22,17 @@ struct SlideOverCard<Content: View>: View {
 
         return VStack {
             self.content()
+                .background(GeometryReader { geometry in
+                    Color.clear
+                        .onAppear() {
+                            self.topLimit = geometry.size.height
+                        }
+                        .onChange(of: geometry.size) { newValue in
+                            self.topLimit = newValue.height
+                        }
+                })
+                .frame(maxWidth: .infinity)
+                .clipped()
             Spacer()
         }
         .background(AppColors.white.color)
@@ -35,7 +47,7 @@ struct SlideOverCard<Content: View>: View {
         .onAppear {
             updatePosition()
         }
-        .onChange(of: height) { _ in
+        .onChange(of: [height, proxy.size.height]) { _ in
             updatePosition()
         }
     }
@@ -80,8 +92,8 @@ struct CardPosition {
     var middle: CGFloat
     var bottom: CGFloat
     
-    init(proxy: GeometryProxy, fullCardHeight: CGFloat, middleCardHeight: CGFloat) {
-        top = 65
+    init(proxy: GeometryProxy, topLimit: CGFloat, middleCardHeight: CGFloat) {
+        top = abs(topLimit - proxy.size.height) - 30
         middle = abs(middleCardHeight - proxy.size.height)
         bottom = proxy.size.height + 100
     }

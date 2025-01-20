@@ -15,7 +15,6 @@ struct FavouriteCitiesView: View {
     @ObservedObject var userSettings: UserSettings
     @State var searchText = ""
     @State var isSearching = false
-    let proxy: GeometryProxy
     
     var body: some View {
         VStack(spacing: 0) {

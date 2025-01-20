@@ -30,7 +30,6 @@ struct SensorDetailsView: View {
     
     var showSensorDetailsView: some View {
         VStack {
-            
             RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.0)
                 .frame(width: 40, height: 3.0)
                 .foregroundColor(AppColors.gray2.color)
@@ -82,13 +81,11 @@ struct SensorDetailsView: View {
                 privacyPolicyView()
 
             }
-            Spacer()
         }
     }
     
     var noSelectionView: some View {
         VStack {
-            
             RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.0)
                 .frame(width: 40, height: 3.0)
                 .foregroundColor(AppColors.gray2.color)
@@ -101,7 +98,6 @@ struct SensorDetailsView: View {
                             .foregroundStyle(.black)
                     }
                 }
-                .padding([.horizontal], 20)
             }
             
             VStack {
@@ -114,7 +110,6 @@ struct SensorDetailsView: View {
                     .font(.caption)
                     .foregroundStyle(Color(AppColors.darkblue))
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal)
                     .fixedSize(horizontal: false, vertical: true)
                 
                 selectSensorsButtonView()
@@ -125,14 +120,13 @@ struct SensorDetailsView: View {
                     .foregroundColor(self.viewModel.color)
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
-                    .padding([.horizontal, .bottom], 15)
+                    .padding(.bottom, 15)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding()
+                    .padding(.vertical)
                 
                 privacyPolicyView()
 
             }.scaledToFit()
-            Spacer()
         }
     }
     
