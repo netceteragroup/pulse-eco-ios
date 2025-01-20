@@ -209,10 +209,7 @@ struct MainView: View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) {
                 self.appState.citySelectorClicked.toggle()
-                if self.appState.showSensorDetails {
-                    self.appState.showSensorDetails = false
-                    self.appState.selectedSensor = nil
-                }
+                self.appState.selectedSensor = nil
             }
         }) {
             HStack {

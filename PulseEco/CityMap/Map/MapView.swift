@@ -117,9 +117,8 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         }
         annotationView.showCallout()
         DispatchQueue.main.async {
-            self.map.appState.showSensorDetails = true
+            self.map.appState.selectedSensor = annotationView.pin
         }
-        map.appState.selectedSensor = annotationView.pin ?? SensorPinModel()
         map.viewModel.getDailyAverageDataForSensor(annotationView.pin?.sensorID ?? "")
         let region = MKCoordinateRegion(center: view.annotation!.coordinate, span: mapView.region.span)
         mapView.animatedSetRegion(region, duration: 0.2)
@@ -135,7 +134,6 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         }
         DispatchQueue.main.async {
             self.map.appState.selectedSensor = nil
-            self.map.appState.showSensorDetails = false
         }
         annotationView.hideCallout()
     }
