@@ -139,7 +139,7 @@ struct SensorDetailsView: View {
     @ViewBuilder
     func selectSensorsButtonView() -> some View {
         Button(action: {
-            print("pressed")
+            
         }) {
             Text("SELECT SENSORS") //add trema
                 .font(.caption)
@@ -155,7 +155,7 @@ struct SensorDetailsView: View {
     @ViewBuilder
     func privacyPolicyView() -> some View {
         Button(action: {
-            print("privacy pressed")
+            
         }) {
             Text(Trema.text(for: "privacy_policy"))
                 .foregroundStyle(Color(AppColors.darkblue))

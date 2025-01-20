@@ -42,7 +42,6 @@ struct SlideOverCard<Content: View>: View {
 
     private func updatePosition() {
         position = abs(height - proxy.size.height)
-        print("Updated position: \(position)")
     }
     
     private func onDragEnded(drag: DragGesture.Value) {
@@ -85,7 +84,6 @@ struct CardPosition {
         top = 65
         middle = abs(middleCardHeight - proxy.size.height)
         bottom = proxy.size.height + 100
-        print("proxy height: \(proxy.size.height) - top: \(top) - middle: \(middle) - bottom: \(bottom)")
     }
 }
 
