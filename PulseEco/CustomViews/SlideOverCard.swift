@@ -36,7 +36,7 @@ struct SlideOverCard<Content: View>: View {
             Spacer()
         }
         .background(AppColors.white.color)
-        .cornerRadius(30.0)
+        .cornerRadius(30, corners: [.topLeft, .topRight])
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
         .offset(y: max(self.position + self.dragState.translation.height, cardPosition.top - 120, 0))
         .animation(self.dragState.isDragging ? nil : .interpolatingSpring(stiffness: 250,

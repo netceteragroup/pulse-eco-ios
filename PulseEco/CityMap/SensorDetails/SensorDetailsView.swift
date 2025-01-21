@@ -13,6 +13,7 @@ struct SensorDetailsView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @ObservedObject var viewModel: SensorDetailsViewModel
     @State var isExpanded: Bool = false
+    @State var contentSize: CGFloat = .infinity
     private var chartViewModel: ChartViewModel {
         ChartViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
                        sensorsData: dataSource.sensorsData24h,
@@ -57,30 +58,38 @@ struct SensorDetailsView: View {
                 .padding([.horizontal], 20)
             }
             
-            VStack {
-                LineChartSwiftUI(viewModel: chartViewModel)
-                .frame(width: min(350, UIScreen.main.bounds.width - 10),
-                       height: 200)
-                .padding(.bottom)
-                
-                WeeklyAverageView(viewModel: WeeklyAverageViewModel(appState: appState,
-                                                                    dataSource: dataSource,
-                                                                    averages: self.viewModel.dailyAverages))
-                    .padding(.bottom, 20)
-                
-                selectSensorsButtonView()
-                
-                Text(self.viewModel.disclaimerMessage)
-                    .font(.system(size: 11, weight: .light))
-                    .foregroundColor(self.viewModel.color)
-                    .lineLimit(nil)
-                    .multilineTextAlignment(.center)
-                    .padding(15)
-                    .fixedSize(horizontal: false, vertical: true)
-                
-                privacyPolicyView()
+            ScrollView {
+                VStack {
+                    LineChartSwiftUI(viewModel: chartViewModel)
+                    .frame(width: min(350, UIScreen.main.bounds.width - 10),
+                           height: 200)
+                    .padding(.bottom)
+                    
+                    WeeklyAverageView(viewModel: WeeklyAverageViewModel(appState: appState,
+                                                                        dataSource: dataSource,
+                                                                        averages: self.viewModel.dailyAverages))
+                        .padding(.bottom, 20)
+                    
+                    selectSensorsButtonView()
+                    
+                    Text(self.viewModel.disclaimerMessage)
+                        .font(.system(size: 11, weight: .light))
+                        .foregroundColor(self.viewModel.color)
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.center)
+                        .padding(15)
+                        .fixedSize(horizontal: false, vertical: true)
+                    
+                    privacyPolicyView()
 
-            }
+                }.overlay(
+                    GeometryReader { proxy in
+                        Color.clear.onAppear() {
+                            contentSize = proxy.size.height
+                        }
+                    }
+                )
+            }.frame(maxHeight: contentSize)
         }
     }
     
