@@ -13,12 +13,15 @@
 		133B20C62CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
 		133B20C72CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
 		133B20C82CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
+		136FEAC22D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */; };
+		136FEAC32D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */; };
+		136FEAC42D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */; };
 		13725E122CE352C400073369 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13725E102CE352C400073369 /* LocationManager.swift */; };
 		1384B6852D14613D00A22BD0 /* TimelineSliderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384B6842D14613D00A22BD0 /* TimelineSliderViewModel.swift */; };
 		138999412D08796400791EF5 /* TimelineSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138999402D08796400791EF5 /* TimelineSliderView.swift */; };
 		1384B6872D1C48EF00A22BD0 /* DateSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384B6862D1C48EF00A22BD0 /* DateSelector.swift */; };
-		13A95BA62D37E95F004F502A /* DateSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A95BA52D37E95F004F502A /* DateSelectorViewModel.swift */; };
 		1389993F2D01D20E00791EF5 /* CitySearchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389993E2D01D20E00791EF5 /* CitySearchContentView.swift */; };
+		13A95BA62D37E95F004F502A /* DateSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A95BA52D37E95F004F502A /* DateSelectorViewModel.swift */; };
 		1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */; };
 		1E4E7A9C285B626700BE9A92 /* MonthButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */; };
 		1E515D0A282BC115009EFC4D /* DayDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E515D09282BC115009EFC4D /* DayDataWrapper.swift */; };
@@ -232,12 +235,13 @@
 /* Begin PBXFileReference section */
 		133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerProtocol.swift; sourceTree = "<group>"; };
 		133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLoggerAdapter.swift; sourceTree = "<group>"; };
+		136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusStyle.swift; sourceTree = "<group>"; };
 		13725E102CE352C400073369 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1384B6842D14613D00A22BD0 /* TimelineSliderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSliderViewModel.swift; sourceTree = "<group>"; };
 		138999402D08796400791EF5 /* TimelineSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSliderView.swift; sourceTree = "<group>"; };
 		1384B6862D1C48EF00A22BD0 /* DateSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelector.swift; sourceTree = "<group>"; };
-		13A95BA52D37E95F004F502A /* DateSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectorViewModel.swift; sourceTree = "<group>"; };
 		1389993E2D01D20E00791EF5 /* CitySearchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchContentView.swift; sourceTree = "<group>"; };
+		13A95BA52D37E95F004F502A /* DateSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectorViewModel.swift; sourceTree = "<group>"; };
 		1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarButtonView.swift; sourceTree = "<group>"; };
 		1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthButtonView.swift; sourceTree = "<group>"; };
 		1E515D09282BC115009EFC4D /* DayDataWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataWrapper.swift; sourceTree = "<group>"; };
@@ -712,6 +716,7 @@
 		C52F371B26F240CC007813B0 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */,
 				5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */,
 				746C4EC126FDFDB500183A91 /* ConditionalModifier.swift */,
 			);
@@ -1005,6 +1010,7 @@
 				3288687524B51F5E009CC56D /* SelectedSensorView.swift in Sources */,
 				592201AD24AA656A00025F1F /* NoReadingsView.swift in Sources */,
 				1E4E7A9C285B626700BE9A92 /* MonthButtonView.swift in Sources */,
+				136FEAC32D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */,
 				59A35AD82498F6E300C07786 /* MapViewModel.swift in Sources */,
 				59FAD1D62490D76200AC36A5 /* SensorData.swift in Sources */,
 				59A4F68F247FD2150089D523 /* AppDelegate.swift in Sources */,
@@ -1105,6 +1111,7 @@
 				D03524C7273603800089E11C /* Measure.swift in Sources */,
 				D0AA0A7D273766C20097D0B0 /* WidgetSmallView.swift in Sources */,
 				D03524CF273605410089E11C /* ConditionalModifier.swift in Sources */,
+				136FEAC22D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */,
 				1E515D0B282BC115009EFC4D /* DayDataWrapper.swift in Sources */,
 				730B4DE529A368C800B32089 /* UserDefaultsEnumWrapper.swift in Sources */,
 				D03EC8F82735E0F500E6E16F /* PulseEcoWidget.intentdefinition in Sources */,
@@ -1147,6 +1154,7 @@
 				D0CBADF82776108E00526050 /* SensorTypes.swift in Sources */,
 				D0CBADF32776108900526050 /* NetworkService.swift in Sources */,
 				D0CBADF42776108E00526050 /* Measure.swift in Sources */,
+				136FEAC42D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */,
 				D0A3F8C92775FC0700491666 /* IntentHandler.swift in Sources */,
 				1EBC79CB282A55D700D18968 /* CityDataWrapper.swift in Sources */,
 				D0CBADFA2776108E00526050 /* AverageUtilModel.swift in Sources */,
