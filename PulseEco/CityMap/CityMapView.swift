@@ -20,7 +20,7 @@ struct CityMapView: View {
     @ObservedObject var userSettings: UserSettings
     
     let mapViewModel: MapViewModel
-    
+        
     var body: some View {
         
         ZStack {
@@ -33,6 +33,26 @@ struct CityMapView: View {
             
             VStack(alignment: .trailing) {
                 Spacer()
+                
+                TimelineSliderView(viewModel: TimelineSliderViewModel(onSliderValueChanged: { sliderValue in
+                    guard let sensorPinsForSelectedHour = self.appState.hourlySensors[Int(sliderValue)] else {
+                        self.appState.sensorPins = [SensorPinModel()]
+                        return
+                    }
+                    
+                    if sensorPinsForSelectedHour.isEmpty {
+                        return
+                    }
+                    
+                    self.appState.sensorPins = sensorPinsForSelectedHour
+                }))
+                .padding(.vertical, appState.showSensorDetails ? 60 : 0)
+                .padding(.horizontal)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .environmentObject(appState)
+                
                 HStack {
                     Spacer()
                     RoundedRectangle(cornerRadius: 5.0, style: .continuous)

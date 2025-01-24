@@ -14,6 +14,7 @@ class AppState: ObservableObject, ViewModelDependency {
     }
     
     @Published var selectedAppView: AppView = UserSettings().selectedAppView
+    @Published var showSensorDetails: Bool = false
     @Published var selectedSensor: SensorPinModel?
     @Published var blurBackground: Bool = false
     @Published var activeSheet: ActiveSheet?
@@ -34,11 +35,39 @@ class AppState: ObservableObject, ViewModelDependency {
                                                                         currentValue: nil,
                                                                         measures: nil)
     @Published var currentLocationIsSelected: Bool = false
+    @Published var hourlySensors: [Int: [SensorPinModel]] = [:]
+    @Published var cachedHourlySensorsByDay: [CacheDictionaryKey: [Int: [SensorPinModel]]] = [:]
+    @Published var isTimelineSliderActive: Bool = true
     @Published var isWaitingToFetchFavouriteCitiesOveralls: Bool = true
+    
+    struct CacheDictionaryKey: Hashable {
+        var date: Date
+        var type: String
+    }
+    
     var cancellables = Set<AnyCancellable>()
     
+    var cityIcon: Image {
+        citySelectorClicked ? Image(systemName: "chevron.up") : Image(systemName: "chevron.down")
+    }
+    
     init() {
+        addSubscribers()
+    }
+    
+    func addSubscribers() {
+        selectedCitySubscriber()
         cityValuesSubscriber()
+    }
+    
+    private func selectedCitySubscriber() {
+        $selectedCity
+            .sink { [weak self] _ in
+                guard let self else { return }
+                cachedHourlySensorsByDay.removeAll()
+                hourlySensors.removeAll()
+            }
+            .store(in: &cancelables)
     }
     
     private func cityValuesSubscriber() {
@@ -56,9 +85,5 @@ class AppState: ObservableObject, ViewModelDependency {
                 cancellables.removeAll()
             }
             .store(in: &cancellables)
-    }
-    
-    var cityIcon: Image {
-        citySelectorClicked ? Image(systemName: "chevron.up") : Image(systemName: "chevron.down")
     }
 }

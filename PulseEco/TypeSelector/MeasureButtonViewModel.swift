@@ -23,10 +23,13 @@ class MeasureButtonViewModel: ObservableObject {
     func measurePressed(appState: AppState, appDataSource: AppDataSource) async {
         await appDataSource.updateWeeklyDataWrapper(cityName: appState.selectedCity.cityName, measureId: id, selectedDate: appState.calendarSelection)
         setAsSelectedMeasure(appState: appState)
+//        appDataSource.setAverageValueforSelectedDate(cityName: appState.selectedCity.cityName, sensorType: id, selectedDate: appState.selectedDate)
+//        await appDataSource.updatePins(selectedDate: appState.selectedDate)
         await appDataSource.setAverageValueforSelectedDate(cityName: appState.selectedCity.cityName, sensorType: id, selectedDate: appState.selectedDate)
     }
     
     private func setAsSelectedMeasure(appState: AppState) {
         appState.selectedMeasureId = id
+        appState.showSensorDetails = false
     }
 }
