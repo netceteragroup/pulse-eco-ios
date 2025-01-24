@@ -23,7 +23,7 @@ struct LineChartSwiftUI: UIViewRepresentable {
     }
     
     func setUpChart() {
-        lineChart.noDataText = Trema.text(for: "no_data_availabe")
+        lineChart.noDataText = Trema.text(for: "no_data_available")
         let sensorName = self.viewModel.sensor.title ?? Trema.text(for: "unknown")
         
         let colors = [AppColors.purple, AppColors.blue, AppColors.darkred, AppColors.darkgreen, AppColors.red]

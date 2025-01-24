@@ -13,6 +13,8 @@ struct MainView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @State private var isShowingSettingsView = false
+    @State var slideOverCardViewPosition: CGFloat = 70
+    @State var slideOverCardTopLimit: CGFloat = 65
     @ObservedObject var locationManager: LocationManager = LocationManager.shared
     
     let mapViewModel: MapViewModel
@@ -63,6 +65,9 @@ struct MainView: View {
                 }
             }
         }
+        .onChange(of: appState.selectedSensor) { new in
+            slideOverCardViewPosition = new != nil ? 120 : 70
+        }
     }
     
     var loadingView: some View {
@@ -70,64 +75,70 @@ struct MainView: View {
     }
     
     var contentView: some View {
-        GeometryReader { proxy in
-            ZStack(alignment: .top) {
-                NavigationView {
-                    VStack(spacing: 0) {
-                        if self.appState.citySelectorClicked {
-                            FavouriteCitiesView(userSettings: self.appState.userSettings, proxy: proxy)
-                            .overlay(ShadowOnTopOfView())
-                            .animation(nil, value: self.appState.citySelectorClicked)
-                        } else {
-                            VStack(spacing: 0) {
-                                let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
-                                                                     cityName: appState.selectedCity.cityName,
-                                                                     measuresList: dataSource.measures,
-                                                                     cityValues: dataSource.cityOverall,
-                                                                     citySelectorClicked: appState.citySelectorClicked)
-                                MeasureListView(viewModel: viewModel)
-                            }
-                            
-                            NavigationLink(destination: SettingsView(),
-                                           isActive: $isShowingSettingsView) { EmptyView () }
-                            
+        ZStack {
+            NavigationView {
+                VStack(spacing: 0) {
+                    NavigationLink(destination: SettingsView(),
+                                   isActive: $isShowingSettingsView) { EmptyView () }
+                    
+                    if self.appState.citySelectorClicked {
+                        FavouriteCitiesView(userSettings: self.appState.userSettings)
+                        .overlay(ShadowOnTopOfView())
+                        .animation(nil, value: self.appState.citySelectorClicked)
+                    } else {
+                        VStack(spacing: 0) {
+                            let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
+                                                                 cityName: appState.selectedCity.cityName,
+                                                                 measuresList: dataSource.measures,
+                                                                 cityValues: dataSource.cityOverall,
+                                                                 citySelectorClicked: appState.citySelectorClicked)
+                            MeasureListView(viewModel: viewModel)
+                        }
+                        
+                        GeometryReader { proxy in
                             ZStack(alignment: .top) {
                                 DateSelector()
                                     .padding(.horizontal)
                                     .padding(.vertical, 8)
-                                    .zIndex(4)
-                                CityMapView(userSettings: self.appState.userSettings,
-                                            mapViewModel: mapViewModel,
-                                            proxy: proxy)
-                                .id("CityMapView")
-                                .padding(.top, 60)
-                                .edgesIgnoringSafeArea([.horizontal, .bottom])
+                                    .zIndex(2)
                                 
+                                CityMapView(userSettings: self.appState.userSettings,
+                                            mapViewModel: mapViewModel)
+                                .id("CityMapView")
+                                .edgesIgnoringSafeArea([.horizontal, .bottom])
+                                .padding(.top, 60)
+                                .zIndex(1)
+                                
+                                if proxy.size.height != .zero && proxy.size.width != .zero {
+                                    SlideOverCard(
+                                        height: $slideOverCardViewPosition,
+                                        topLimit: $slideOverCardTopLimit,
+                                        proxy: proxy
+                                    ) {
+                                        SensorDetailsView(viewModel: sensorDetailsViewModel)
+                                            .frame(maxWidth: .infinity)
+                                    }
+                                    .transition(.move(edge: .bottom))
+                                    .zIndex(2) // zIndexes are needed to maintain dismiss transition
+                                }
                             }
                         }
-                    }
-                    .navigationBarTitle("", displayMode: .inline)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            leadingNavigationItems
-                        }
-                        ToolbarItemGroup(placement: .primaryAction) {
-                            trailingNavigationItem
-                        }
+                        .ignoresSafeArea()
                     }
                 }
-                .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
-                .navigationBarColor(AppColors.white)
-                .zIndex(1)
-                if self.appState.showSensorDetails {
-                    SlideOverCard {
-                        SensorDetailsView(viewModel: sensorDetailsViewModel)
-                            .frame(maxWidth: UIScreen.main.bounds.width)
+                .navigationBarTitle("", displayMode: .inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        leadingNavigationItems
                     }
-                    .transition(.move(edge: .bottom))
-                    .zIndex(2) // zIndexes are needed to maintain dismiss transition
+                    ToolbarItemGroup(placement: .primaryAction) {
+                        trailingNavigationItem
+                    }
                 }
             }
+            .if(.pad) { $0.navigationViewStyle(StackNavigationViewStyle()) }
+            .navigationBarColor(AppColors.white)
+            .zIndex(1)
         }
     }
     
@@ -198,10 +209,7 @@ struct MainView: View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) {
                 self.appState.citySelectorClicked.toggle()
-                if self.appState.showSensorDetails {
-                    self.appState.showSensorDetails = false
-                    self.appState.selectedSensor = nil
-                }
+                self.appState.selectedSensor = nil
             }
         }) {
             HStack {

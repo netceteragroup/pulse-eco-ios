@@ -2,9 +2,17 @@ import SwiftUI
 
 struct SlideOverCard<Content: View>: View {
     @GestureState private var dragState = DragState.inactive
-    @State var position: CGFloat = CardPosition.middle
-
+    @State var position: CGFloat = 0
+    @Binding var height: CGFloat
+    @Binding var topLimit: CGFloat
+    let proxy: GeometryProxy
+    
+    var cardPosition: CardPosition {
+        CardPosition(proxy: proxy, topLimit: topLimit, middleCardHeight: height)
+    }
+    
     var content: () -> Content
+
     var body: some View {
         let drag = DragGesture()
             .updating($dragState) { drag, state, _ in
@@ -14,20 +22,40 @@ struct SlideOverCard<Content: View>: View {
 
         return VStack {
             self.content()
+                .background(GeometryReader { geometry in
+                    Color.clear
+                        .onAppear() {
+                            self.topLimit = geometry.size.height
+                        }
+                        .onChange(of: geometry.size) { newValue in
+                            self.topLimit = newValue.height
+                        }
+                })
+                .frame(maxWidth: .infinity)
+                .clipped()
             Spacer()
         }
-        .frame(height: UIScreen.main.bounds.height)
         .background(AppColors.white.color)
-        .cornerRadius(30.0)
+        .cornerRadius(30, corners: [.topLeft, .topRight])
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
-        .offset(y: max(self.position + self.dragState.translation.height, CardPosition.top - 120, 0))
+        .offset(y: max(self.position + self.dragState.translation.height, cardPosition.top - 120, 0))
         .animation(self.dragState.isDragging ? nil : .interpolatingSpring(stiffness: 250,
                                                                           damping: 30.0,
                                                                           initialVelocity: 10),
                    value: dragState.isDragging)
         .gesture(drag)
+        .onAppear {
+            updatePosition()
+        }
+        .onChange(of: [height, proxy.size.height]) { _ in
+            updatePosition()
+        }
     }
 
+    private func updatePosition() {
+        position = abs(height - proxy.size.height)
+    }
+    
     private func onDragEnded(drag: DragGesture.Value) {
         let verticalDirection = drag.predictedEndLocation.y - drag.location.y
         let cardTopEdgeLocation = self.position + drag.translation.height
@@ -35,12 +63,12 @@ struct SlideOverCard<Content: View>: View {
         let positionBelow: CGFloat
         let closestPosition: CGFloat
 
-        if cardTopEdgeLocation <= CardPosition.middle {
-            positionAbove = CardPosition.top
-            positionBelow = CardPosition.middle
+        if cardTopEdgeLocation <= cardPosition.middle {
+            positionAbove = cardPosition.top
+            positionBelow = cardPosition.middle
         } else {
-            positionAbove = CardPosition.middle
-            positionBelow = CardPosition.middle
+            positionAbove = cardPosition.middle
+            positionBelow = cardPosition.middle
         }
 
         if (cardTopEdgeLocation - positionAbove) < (positionBelow - cardTopEdgeLocation) {
@@ -60,11 +88,15 @@ struct SlideOverCard<Content: View>: View {
 }
 
 struct CardPosition {
-    private static let fullCardHeight: CGFloat = min(550, UIScreen.main.bounds.height)
-    private static let middleCardHeight: CGFloat = 125
-    static let top: CGFloat = UIScreen.main.bounds.height - fullCardHeight // - 550
-    static let middle: CGFloat = UIScreen.main.bounds.height - middleCardHeight // - 350
-    static let bottom: CGFloat = UIScreen.main.bounds.height + 100 // - 150
+    var top: CGFloat
+    var middle: CGFloat
+    var bottom: CGFloat
+    
+    init(proxy: GeometryProxy, topLimit: CGFloat, middleCardHeight: CGFloat) {
+        top = abs(topLimit - proxy.size.height) - 30
+        middle = abs(middleCardHeight - proxy.size.height)
+        bottom = proxy.size.height + 100
+    }
 }
 
 enum DragState {
