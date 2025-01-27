@@ -15,6 +15,7 @@ struct MainView: View {
     @State private var isShowingSettingsView = false
     @State var slideOverCardViewPosition: CGFloat = 70
     @State var slideOverCardTopLimit: CGFloat = 65
+    @State var sensorSelectionAlertDialogIsActive: Bool = false
     @ObservedObject var locationManager: LocationManager = LocationManager.shared
     
     let mapViewModel: MapViewModel
@@ -115,7 +116,8 @@ struct MainView: View {
                                         topLimit: $slideOverCardTopLimit,
                                         proxy: proxy
                                     ) {
-                                        SensorDetailsView(viewModel: sensorDetailsViewModel)
+                                        SensorDetailsView(viewModel: sensorDetailsViewModel,
+                                                          sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive)
                                             .frame(maxWidth: .infinity)
                                     }
                                     .transition(.move(edge: .bottom))
@@ -140,6 +142,14 @@ struct MainView: View {
             .navigationBarColor(AppColors.white)
             .zIndex(1)
         }
+        .overlay(
+            SensorSelectionView(viewModel: SensorSelectionViewModel(appState: self.appState,
+                                                                    sensors: combine(sensors: dataSource.citySensors,
+                                                                                     sensorsData: dataSource.sensorsData,
+                                                                                     selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId))),
+                                sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        )
     }
     
     var trailingNavigationItem: some View {

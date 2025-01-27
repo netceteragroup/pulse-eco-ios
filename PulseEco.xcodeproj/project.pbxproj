@@ -13,14 +13,16 @@
 		133B20C62CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
 		133B20C72CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
 		133B20C82CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
+		1347279E2D4787C600647C80 /* SensorSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1347279D2D4787C600647C80 /* SensorSelectionViewModel.swift */; };
 		136FEAC22D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */; };
 		136FEAC32D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */; };
 		136FEAC42D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */; };
+		136FEAC82D3FBD5B00B13BA3 /* SensorSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FEAC72D3FBD5B00B13BA3 /* SensorSelectionView.swift */; };
 		13725E122CE352C400073369 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13725E102CE352C400073369 /* LocationManager.swift */; };
 		1384B6852D14613D00A22BD0 /* TimelineSliderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384B6842D14613D00A22BD0 /* TimelineSliderViewModel.swift */; };
-		138999412D08796400791EF5 /* TimelineSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138999402D08796400791EF5 /* TimelineSliderView.swift */; };
 		1384B6872D1C48EF00A22BD0 /* DateSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384B6862D1C48EF00A22BD0 /* DateSelector.swift */; };
 		1389993F2D01D20E00791EF5 /* CitySearchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389993E2D01D20E00791EF5 /* CitySearchContentView.swift */; };
+		138999412D08796400791EF5 /* TimelineSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138999402D08796400791EF5 /* TimelineSliderView.swift */; };
 		13A95BA62D37E95F004F502A /* DateSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A95BA52D37E95F004F502A /* DateSelectorViewModel.swift */; };
 		1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */; };
 		1E4E7A9C285B626700BE9A92 /* MonthButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */; };
@@ -235,12 +237,14 @@
 /* Begin PBXFileReference section */
 		133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerProtocol.swift; sourceTree = "<group>"; };
 		133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLoggerAdapter.swift; sourceTree = "<group>"; };
+		1347279D2D4787C600647C80 /* SensorSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSelectionViewModel.swift; sourceTree = "<group>"; };
 		136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusStyle.swift; sourceTree = "<group>"; };
+		136FEAC72D3FBD5B00B13BA3 /* SensorSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSelectionView.swift; sourceTree = "<group>"; };
 		13725E102CE352C400073369 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1384B6842D14613D00A22BD0 /* TimelineSliderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSliderViewModel.swift; sourceTree = "<group>"; };
-		138999402D08796400791EF5 /* TimelineSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSliderView.swift; sourceTree = "<group>"; };
 		1384B6862D1C48EF00A22BD0 /* DateSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelector.swift; sourceTree = "<group>"; };
 		1389993E2D01D20E00791EF5 /* CitySearchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchContentView.swift; sourceTree = "<group>"; };
+		138999402D08796400791EF5 /* TimelineSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSliderView.swift; sourceTree = "<group>"; };
 		13A95BA52D37E95F004F502A /* DateSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectorViewModel.swift; sourceTree = "<group>"; };
 		1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarButtonView.swift; sourceTree = "<group>"; };
 		1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthButtonView.swift; sourceTree = "<group>"; };
@@ -526,6 +530,8 @@
 				BA718F0C25BED6B100EC87E0 /* SensorDetailsView.swift */,
 				59B0018D24C9BC6A006EA796 /* ChartViewModel.swift */,
 				BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */,
+				136FEAC72D3FBD5B00B13BA3 /* SensorSelectionView.swift */,
+				1347279D2D4787C600647C80 /* SensorSelectionViewModel.swift */,
 			);
 			path = SensorDetails;
 			sourceTree = "<group>";
@@ -1075,11 +1081,13 @@
 				1384B6852D14613D00A22BD0 /* TimelineSliderViewModel.swift in Sources */,
 				744A9DEF28575C3000A91789 /* Calendar.swift in Sources */,
 				59A3954E24A206F400D39D64 /* AppState.swift in Sources */,
+				1347279E2D4787C600647C80 /* SensorSelectionViewModel.swift in Sources */,
 				1EBC79C9282A55D700D18968 /* CityDataWrapper.swift in Sources */,
 				74699B50282D366100326288 /* ViewModelProtocol.swift in Sources */,
 				BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */,
 				59A4F691247FD2150089D523 /* SceneDelegate.swift in Sources */,
 				BA5C405025D3D1E80010291F /* DailyAverageView.swift in Sources */,
+				136FEAC82D3FBD5B00B13BA3 /* SensorSelectionView.swift in Sources */,
 				592201AB24AA55D900025F1F /* ExpandableView.swift in Sources */,
 				1EAF05FA2817F653001C1EEA /* DateValueModel.swift in Sources */,
 				13A95BA62D37E95F004F502A /* DateSelectorViewModel.swift in Sources */,
