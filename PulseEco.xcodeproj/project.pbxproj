@@ -13,14 +13,15 @@
 		133B20C62CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
 		133B20C72CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
 		133B20C82CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
+		134727A42D47B4A200647C80 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134727A32D47B4A200647C80 /* FloatingButton.swift */; };
 		136FEAC22D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */; };
 		136FEAC32D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */; };
 		136FEAC42D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */; };
 		13725E122CE352C400073369 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13725E102CE352C400073369 /* LocationManager.swift */; };
 		1384B6852D14613D00A22BD0 /* TimelineSliderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384B6842D14613D00A22BD0 /* TimelineSliderViewModel.swift */; };
-		138999412D08796400791EF5 /* TimelineSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138999402D08796400791EF5 /* TimelineSliderView.swift */; };
 		1384B6872D1C48EF00A22BD0 /* DateSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384B6862D1C48EF00A22BD0 /* DateSelector.swift */; };
 		1389993F2D01D20E00791EF5 /* CitySearchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389993E2D01D20E00791EF5 /* CitySearchContentView.swift */; };
+		138999412D08796400791EF5 /* TimelineSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138999402D08796400791EF5 /* TimelineSliderView.swift */; };
 		13A95BA62D37E95F004F502A /* DateSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A95BA52D37E95F004F502A /* DateSelectorViewModel.swift */; };
 		1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */; };
 		1E4E7A9C285B626700BE9A92 /* MonthButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */; };
@@ -235,12 +236,13 @@
 /* Begin PBXFileReference section */
 		133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerProtocol.swift; sourceTree = "<group>"; };
 		133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLoggerAdapter.swift; sourceTree = "<group>"; };
+		134727A32D47B4A200647C80 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusStyle.swift; sourceTree = "<group>"; };
 		13725E102CE352C400073369 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1384B6842D14613D00A22BD0 /* TimelineSliderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSliderViewModel.swift; sourceTree = "<group>"; };
-		138999402D08796400791EF5 /* TimelineSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSliderView.swift; sourceTree = "<group>"; };
 		1384B6862D1C48EF00A22BD0 /* DateSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelector.swift; sourceTree = "<group>"; };
 		1389993E2D01D20E00791EF5 /* CitySearchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchContentView.swift; sourceTree = "<group>"; };
+		138999402D08796400791EF5 /* TimelineSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSliderView.swift; sourceTree = "<group>"; };
 		13A95BA52D37E95F004F502A /* DateSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectorViewModel.swift; sourceTree = "<group>"; };
 		1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarButtonView.swift; sourceTree = "<group>"; };
 		1E4E7A9B285B626700BE9A92 /* MonthButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthButtonView.swift; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 				591EA1D124C99D5500CA61AE /* ShadowOnTopOfView.swift */,
 				59B0018F24C9C269006EA796 /* ChartsDateValueFormatter.swift */,
 				32479107261A6F7200E97C56 /* SlideOverCard.swift */,
+				134727A32D47B4A200647C80 /* FloatingButton.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -1048,6 +1051,7 @@
 				591642A52499FD70000A4F7C /* CityMapView.swift in Sources */,
 				D03EC8F92735E0F500E6E16F /* PulseEcoWidget.intentdefinition in Sources */,
 				59504C1324B46C2D00EA4AFF /* LoadingView.swift in Sources */,
+				134727A42D47B4A200647C80 /* FloatingButton.swift in Sources */,
 				BA12EB122611E520005BC654 /* Countries.swift in Sources */,
 				59F5EFDC249CC5A40095FE71 /* SensorPinModel.swift in Sources */,
 				5999C7FE24ADFAC40038EED7 /* SensorTypes.swift in Sources */,

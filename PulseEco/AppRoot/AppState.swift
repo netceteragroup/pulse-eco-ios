@@ -37,7 +37,7 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var currentLocationIsSelected: Bool = false
     @Published var hourlySensors: [Int: [SensorPinModel]] = [:]
     @Published var cachedHourlySensorsByDay: [CacheDictionaryKey: [Int: [SensorPinModel]]] = [:]
-    @Published var isTimelineSliderActive: Bool = true
+    @Published var isTimelineSliderActive: Bool = false
     @Published var isWaitingToFetchFavouriteCitiesOveralls: Bool = true
     
     struct CacheDictionaryKey: Hashable {
