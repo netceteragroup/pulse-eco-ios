@@ -17,7 +17,7 @@ struct FloatingButton: View {
     }
     
     var body: some View {
-        Image(systemName: image)
+        Image(uiImage: UIImage(named: image) ?? UIImage())
             .padding()
             .background(Color(AppColors.white))
             .onTapGesture {

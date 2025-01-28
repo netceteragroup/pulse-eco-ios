@@ -89,7 +89,7 @@ private func createTimelineSliderView(appState: AppState) -> some View {
 
 @ViewBuilder
 private func createFloatingButtonView(appState: AppState) -> some View {
-    FloatingButton(image: "clock") {
+    FloatingButton(image: "access-time") {
         appState.isTimelineSliderActive = true
     }
     .cornerRadius(15)
