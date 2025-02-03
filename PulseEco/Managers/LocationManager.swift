@@ -118,6 +118,7 @@ class LocationManager: NSObject, ObservableObject {
             return city
         }
         catch let error {
+            self.logger.logError("reverseGeocode returned an error: \(String(describing: error))")
             return nil
         }
     }
@@ -128,7 +129,7 @@ class LocationManager: NSObject, ObservableObject {
         
         let search = MKLocalSearch(request: request)
         search.start { response, error in
-            guard let mapItem = response?.mapItems.first, error == nil else {
+            guard let _ = response?.mapItems.first, error == nil else {
                 self.logger.logError("MKLocalSearch returned an error: \(String(describing: error))")
                 return
             }

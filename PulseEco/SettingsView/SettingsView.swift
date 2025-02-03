@@ -8,63 +8,42 @@
 import Foundation
 import SwiftUI
 
+enum SettingsSubView {
+    case language
+    case libraries
+    case about
+    case disclaimer
+}
+
 struct SettingsView : View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     
-    @State private var didTap = false
-    @State private var disclaimer = false
-    @State private var flag = false
-
-    
     var body : some View {
-        
-        NavigationLink(destination: LanguageView(), isActive: $didTap) { EmptyView() }
-        NavigationLink(destination: AboutView(), isActive: $flag) { EmptyView() }
-        NavigationLink(destination: DisclaimerView(), isActive: $disclaimer) { EmptyView() }
         
         VStack(alignment: .leading, spacing: 0) {
             List {
-                Button(action: {didTap = true}){
-                    HStack {
-                        Text(Trema.text(for: "settings_option_sub_title_language"))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .padding()
-                    }
-                }
-                Divider()
-                Button(action: {}) {
-                    HStack {
-                        Text(Trema.text(for: "settings_option_title_libraries"))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .padding()
-                    }
-                }
-                Divider()
-                Button(action: {flag = true}) {
-                    HStack {
-                        Text(Trema.text(for: "settings_option_title_about"))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .padding()
-                    }
-                }
-                Divider()
-                Button(action: {disclaimer = true}) {
-                    HStack {
-                        Text(Trema.text(for: "disclaimer"))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .padding()
-                    }
-                }
+                NavigationLink(Trema.text(for: "settings_option_sub_title_language"), value: SettingsSubView.language)
+                NavigationLink(Trema.text(for: "settings_option_title_libraries"), value: SettingsSubView.libraries)
+                NavigationLink(Trema.text(for: "settings_option_title_about"), value: SettingsSubView.about)
+                NavigationLink(Trema.text(for: "disclaimer"), value: SettingsSubView.disclaimer)
             }
             .listRowInsets(EdgeInsets())
             .listStyle(SidebarListStyle())
+            .navigationDestination(for: SettingsSubView.self) { subView in
+                switch subView {
+                case .about:
+                    AboutView()
+                case .disclaimer:
+                    DisclaimerView()
+                case .language:
+                    LanguageView()
+                case .libraries:
+                    Text("Libraries")
+                }
+            }
         }
         .navigationTitle("")
         .navigationBarBackButtonHidden(true)

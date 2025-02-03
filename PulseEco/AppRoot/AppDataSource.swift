@@ -341,13 +341,6 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                        selectedDate: appState.calendarSelection)
     }
     
-//    func setAverageValueforSelectedDate(cityName: String, sensorType: String, selectedDate: Date) {
-//        self.appState.selectedDateAverageValue = self.appState.weeklyDataWrapper.getDataFromRange(cityName: cityName,
-//                                                                                                  sensorType: sensorType,
-//                                                                                                  from: selectedDate,
-//                                                                                                  to: calendar.date(byAdding: .day,
-//                                                                                                                    value: +1,
-//                                                                                                                    to: selectedDate)!).first?.value
     func setAverageValueforSelectedDate(cityName: String, sensorType: String, selectedDate: Date) async {
         if Date().isSameDay(with: selectedDate) {
             let averageValues = await self.networkService.downloadCurrentData(for: cityName)
