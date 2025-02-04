@@ -20,6 +20,19 @@ struct TimelineSliderView: View {
                 .background(Capsule().fill(Color.blue))
                 .foregroundColor(.white)
                 .offset(y: 5)
+                .frame(maxWidth: .infinity)
+                .overlay(alignment: .trailing) {
+                    Image(systemName: "xmark")
+                        .padding(6)
+                        .offset(y: 5)
+                        .onTapGesture {
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                appState.isTimelineSliderActive = false
+                            }
+                        }
+                }
+            
+                
 
             ZStack {
                 sliderWithClamping()

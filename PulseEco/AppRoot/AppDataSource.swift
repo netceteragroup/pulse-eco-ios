@@ -204,8 +204,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             guard let dailySensorData = await networkService.fetchSensorData(cityName: UserSettings.selectedCity.cityName,
                                                                              measureId: self.appState.selectedMeasureId,
                                                                              from: from,
-                                                                             to: to,
-                                                                             isTimelineSliderActive: appState.isTimelineSliderActive)
+                                                                             to: to)
             else { return }
             
             let groupById = Dictionary(grouping: dailySensorData, by: \.sensorID)
@@ -213,22 +212,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                 appState.cachedHourlySensorsByDay[AppState.CacheDictionaryKey(date: appState.selectedDate, type: appState.selectedMeasureId)] = groupByHour(sensorData: dailySensorData, groupById: groupById)
             }
             appState.hourlySensors = appState.cachedHourlySensorsByDay[AppState.CacheDictionaryKey(date: appState.selectedDate, type: appState.selectedMeasureId)]!
-            var processedSensorData: [SensorData] = []
-            
-            for (key, value) in groupById {
-                let average = String(value.averageValue())
-                if let sensor = value.first {
-                    processedSensorData.append(SensorData(sensorID: key,
-                                                          stamp: sensor.stamp,
-                                                          type: sensor.type,
-                                                          position: sensor.position,
-                                                          value: average))
-                }
-            }
-            let result: [SensorPinModel] = combine(sensors: citySensors,
-                                                   sensorsData: processedSensorData,
-                                                   selectedMeasure: getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
-            self.appState.sensorPins = result
+            self.appState.sensorPins = appState.hourlySensors[calendar.component(.hour, from: .now)] ?? []
         }
         await setAverageValueforSelectedDate(cityName: appState.selectedCity.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
     }
@@ -341,13 +325,6 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                        selectedDate: appState.calendarSelection)
     }
     
-//    func setAverageValueforSelectedDate(cityName: String, sensorType: String, selectedDate: Date) {
-//        self.appState.selectedDateAverageValue = self.appState.weeklyDataWrapper.getDataFromRange(cityName: cityName,
-//                                                                                                  sensorType: sensorType,
-//                                                                                                  from: selectedDate,
-//                                                                                                  to: calendar.date(byAdding: .day,
-//                                                                                                                    value: +1,
-//                                                                                                                    to: selectedDate)!).first?.value
     func setAverageValueforSelectedDate(cityName: String, sensorType: String, selectedDate: Date) async {
         if Date().isSameDay(with: selectedDate) {
             let averageValues = await self.networkService.downloadCurrentData(for: cityName)

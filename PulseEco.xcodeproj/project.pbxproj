@@ -13,6 +13,7 @@
 		133B20C62CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
 		133B20C72CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
 		133B20C82CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */; };
+		134727A42D47B4A200647C80 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134727A32D47B4A200647C80 /* FloatingButton.swift */; };
 		1347279E2D4787C600647C80 /* SensorSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1347279D2D4787C600647C80 /* SensorSelectionViewModel.swift */; };
 		136FEAC22D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */; };
 		136FEAC32D3FB16200B13BA3 /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */; };
@@ -237,6 +238,7 @@
 /* Begin PBXFileReference section */
 		133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerProtocol.swift; sourceTree = "<group>"; };
 		133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLoggerAdapter.swift; sourceTree = "<group>"; };
+		134727A32D47B4A200647C80 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		1347279D2D4787C600647C80 /* SensorSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSelectionViewModel.swift; sourceTree = "<group>"; };
 		136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusStyle.swift; sourceTree = "<group>"; };
 		136FEAC72D3FBD5B00B13BA3 /* SensorSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSelectionView.swift; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 				591EA1D124C99D5500CA61AE /* ShadowOnTopOfView.swift */,
 				59B0018F24C9C269006EA796 /* ChartsDateValueFormatter.swift */,
 				32479107261A6F7200E97C56 /* SlideOverCard.swift */,
+				134727A32D47B4A200647C80 /* FloatingButton.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -1054,6 +1057,7 @@
 				591642A52499FD70000A4F7C /* CityMapView.swift in Sources */,
 				D03EC8F92735E0F500E6E16F /* PulseEcoWidget.intentdefinition in Sources */,
 				59504C1324B46C2D00EA4AFF /* LoadingView.swift in Sources */,
+				134727A42D47B4A200647C80 /* FloatingButton.swift in Sources */,
 				BA12EB122611E520005BC654 /* Countries.swift in Sources */,
 				59F5EFDC249CC5A40095FE71 /* SensorPinModel.swift in Sources */,
 				5999C7FE24ADFAC40038EED7 /* SensorTypes.swift in Sources */,

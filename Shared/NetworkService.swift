@@ -137,28 +137,21 @@ class NetworkService {
     func fetchSensorData(cityName: String,
                          measureId: String,
                          from: Date,
-                         to: Date,
-                         isTimelineSliderActive: Bool) async -> [SensorData]? {
+                         to: Date) async -> [SensorData]? {
         
         let fromDate = calendar.startOfDay(for: from)
         let from = DateFormatter.iso8601Full.string(from: fromDate)
         let to = DateFormatter.iso8601Full.string(from: to)
-        
-        if !isTimelineSliderActive {
-            let response = await currentDataSensor(cityName: cityName, measureId: measureId)
+        let path = "https://\(cityName).pulse.eco/rest/dataRaw?type=\(measureId)&from=\(from)&to=\(to)"
+        let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
+        let url = URL(string: formattedRequest)!
+        let urlSession = URLSession.shared
+        do {
+            let (data, _) = try await urlSession.data(from: url)
+            let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
             return response
-        } else {
-            let path = "https://\(cityName).pulse.eco/rest/dataRaw?type=\(measureId)&from=\(from)&to=\(to)"
-            let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
-            let url = URL(string: formattedRequest)!
-            let urlSession = URLSession.shared
-            do {
-                let (data, _) = try await urlSession.data(from: url)
-                let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
-                return response
-            } catch {
-                return nil
-            }
+        } catch {
+            return nil
         }
     }
     
