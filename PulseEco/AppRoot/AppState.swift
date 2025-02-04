@@ -16,6 +16,7 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var selectedAppView: AppView = UserSettings().selectedAppView
     @Published var showSensorDetails: Bool = false
     @Published var selectedSensor: SensorPinModel?
+    @Published var selectedSensorsForGraph: [SensorPinModel] = []
     @Published var blurBackground: Bool = false
     @Published var activeSheet: ActiveSheet?
     @Published var selectedLanguage: String = Trema.appLanguage
