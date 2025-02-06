@@ -12,6 +12,7 @@ struct SensorDetailsView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @ObservedObject var viewModel: SensorDetailsViewModel
+    @Binding var sensorSelectionAlertDialogIsActive: Bool
     @State var isExpanded: Bool = false
     @State var contentSize: CGFloat = .infinity
     private var chartViewModel: ChartViewModel {
@@ -142,7 +143,7 @@ struct SensorDetailsView: View {
     @ViewBuilder
     func selectSensorsButtonView() -> some View {
         Button(action: {
-            
+            sensorSelectionAlertDialogIsActive = true
         }) {
             Text("SELECT SENSORS") //add trema
                 .font(.caption)
