@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		132925242D51FAAB0079F1B3 /* SensorsChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132925232D51FAAB0079F1B3 /* SensorsChart.swift */; };
 		133B20C22CFF19120034AEF6 /* LoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */; };
 		133B20C32CFF19120034AEF6 /* LoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */; };
 		133B20C42CFF19120034AEF6 /* LoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */; };
@@ -130,7 +131,6 @@
 		C52F371D26F240FC007813B0 /* KeyboardDismissModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52F371C26F240FC007813B0 /* KeyboardDismissModifier.swift */; };
 		C547A3CA26FC6E09002BE2A5 /* CityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A3C926FC6E09002BE2A5 /* CityListView.swift */; };
 		C547DABF26F9D48F006A6F76 /* LanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547DABE26F9D48F006A6F76 /* LanguageView.swift */; };
-		C575B48226EA38A7008611D1 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C575B48126EA38A7008611D1 /* Charts */; };
 		C575B48526EA38DC008611D1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C575B48426EA38DC008611D1 /* Lottie */; };
 		C5E8E7B926EB5CA2002B532C /* RefreshService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E8E7B826EB5CA2002B532C /* RefreshService.swift */; };
 		D01FA8C42737FAEF0062531E /* SliderCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59504C1424B46C7A00EA4AFF /* SliderCircle.swift */; };
@@ -233,6 +233,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		132925232D51FAAB0079F1B3 /* SensorsChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorsChart.swift; sourceTree = "<group>"; };
 		133B20C12CFF19120034AEF6 /* LoggerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerProtocol.swift; sourceTree = "<group>"; };
 		133B20C52CFF19730034AEF6 /* SystemLoggerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLoggerAdapter.swift; sourceTree = "<group>"; };
 		136FEAC12D3FB16200B13BA3 /* CornerRadiusStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusStyle.swift; sourceTree = "<group>"; };
@@ -368,7 +369,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C575B48226EA38A7008611D1 /* Charts in Frameworks */,
 				C575B48526EA38DC008611D1 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -526,6 +526,7 @@
 				BA718F0C25BED6B100EC87E0 /* SensorDetailsView.swift */,
 				59B0018D24C9BC6A006EA796 /* ChartViewModel.swift */,
 				BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */,
+				132925232D51FAAB0079F1B3 /* SensorsChart.swift */,
 			);
 			path = SensorDetails;
 			sourceTree = "<group>";
@@ -822,7 +823,6 @@
 			);
 			name = PulseEco;
 			packageProductDependencies = (
-				C575B48126EA38A7008611D1 /* Charts */,
 				C575B48426EA38DC008611D1 /* Lottie */,
 			);
 			productName = PulseEcoSwiftUI;
@@ -894,7 +894,6 @@
 			);
 			mainGroup = 59A4F682247FD2150089D523;
 			packageReferences = (
-				C575B48026EA38A7008611D1 /* XCRemoteSwiftPackageReference "Charts" */,
 				C575B48326EA38DC008611D1 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 59A4F68C247FD2150089D523 /* Products */;
@@ -1017,6 +1016,7 @@
 				59504C1B24B46CE500EA4AFF /* SizePreferenceKey.swift in Sources */,
 				59504C1524B46C7A00EA4AFF /* SliderCircle.swift in Sources */,
 				59504C0A24B45ECF00EA4AFF /* MeasureButtonViewModel.swift in Sources */,
+				132925242D51FAAB0079F1B3 /* SensorsChart.swift in Sources */,
 				BA00D30F25D2B59600FA2C26 /* WeeklyAverageViewModel.swift in Sources */,
 				59A35AC72498ECFF00C07786 /* MeasureListView.swift in Sources */,
 				59504C1124B46BF100EA4AFF /* NavigationBarModifier.swift in Sources */,
@@ -1516,14 +1516,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C575B48026EA38A7008611D1 /* XCRemoteSwiftPackageReference "Charts" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/danielgindi/Charts.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.1;
-			};
-		};
 		C575B48326EA38DC008611D1 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -1535,11 +1527,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C575B48126EA38A7008611D1 /* Charts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C575B48026EA38A7008611D1 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = Charts;
-		};
 		C575B48426EA38DC008611D1 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C575B48326EA38DC008611D1 /* XCRemoteSwiftPackageReference "lottie-ios" */;

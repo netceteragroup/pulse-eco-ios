@@ -60,10 +60,10 @@ struct SensorDetailsView: View {
             
             ScrollView {
                 VStack {
-                    LineChartSwiftUI(viewModel: chartViewModel)
-                    .frame(width: min(350, UIScreen.main.bounds.width - 10),
-                           height: 200)
-                    .padding(.bottom)
+                    SensorsChart(viewModel: chartViewModel)
+                        .clipped()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 200)
                     
                     WeeklyAverageView(viewModel: WeeklyAverageViewModel(appState: appState,
                                                                         dataSource: dataSource,
@@ -110,10 +110,10 @@ struct SensorDetailsView: View {
             }
             
             VStack {
-                LineChartSwiftUI(viewModel: chartViewModel)
-                .frame(width: min(350, UIScreen.main.bounds.width - 10),
-                       height: 200)
-                .padding(.bottom)
+                SensorsChart(viewModel: chartViewModel)
+                    .clipped()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 200)
                 
                 Text(Trema.text(for: "no_sensors_selected"))
                     .font(.caption)

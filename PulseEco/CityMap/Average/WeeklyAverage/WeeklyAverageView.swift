@@ -25,7 +25,9 @@ struct WeeklyAverageView: View {
                 }
             }
         }
-        .frame(minWidth: 310, idealWidth: 327, maxWidth: .infinity)
+//        .frame(minWidth: 310, idealWidth: 327, maxWidth: .infinity)
+//        .frame(width: UIScreen.main.bounds.width - 10)
+        .frame(maxWidth: .infinity)
         .padding(.horizontal, 20)
     }
 }

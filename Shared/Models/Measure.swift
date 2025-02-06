@@ -111,7 +111,7 @@ struct Measure: Codable, Identifiable {
     }
 }
 
-struct Band: Codable {
+struct Band: Codable, Hashable {
     let from: Int
     let to: Int
     let legendPoint: Int
