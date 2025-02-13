@@ -52,8 +52,7 @@ struct SensorSelectionView: View {
                             viewModel.addToSelectedSensors(sensorSelectionAlertDialogIsActive: &sensorSelectionAlertDialogIsActive)
                         }
                         .font(.headline)
-                        .foregroundStyle(viewModel.tmpSelectedSensors.isEmpty ? Color(AppColors.gray) : Color(AppColors.firstButtonColor))
-                        .disabled(viewModel.tmpSelectedSensors.isEmpty)
+                        .foregroundStyle(Color(AppColors.firstButtonColor))
                     }
                     .padding()
                 }
@@ -86,5 +85,6 @@ struct SensorSelectionView: View {
             }
             .padding(.horizontal)
         }
+        .disabled(viewModel.isDisabled(sensor: sensor))
     }
 }

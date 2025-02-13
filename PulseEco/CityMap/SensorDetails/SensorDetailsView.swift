@@ -17,6 +17,7 @@ struct SensorDetailsView: View {
     @State var contentSize: CGFloat = .infinity
     private var chartViewModel: ChartViewModel {
         ChartViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
+                       sensors: appState.selectedSensorsForGraph,
                        sensorsData: dataSource.sensorsData24h,
                        selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId))
     }
@@ -65,13 +66,13 @@ struct SensorDetailsView: View {
                         .clipped()
                         .frame(maxWidth: .infinity)
                         .frame(height: 200)
+                        .padding(.vertical, 20)
+                        .padding(.horizontal, 10)
                     
                     WeeklyAverageView(viewModel: WeeklyAverageViewModel(appState: appState,
                                                                         dataSource: dataSource,
                                                                         averages: self.viewModel.dailyAverages))
                         .padding(.bottom, 20)
-                    
-                    selectSensorsButtonView()
                     
                     Text(self.viewModel.disclaimerMessage)
                         .font(.system(size: 11, weight: .light))
@@ -104,39 +105,54 @@ struct SensorDetailsView: View {
             VStack {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 1) {
-                        Text(Trema.text(for: "default_no_sensors_selected"))
-                            .foregroundStyle(.black)
+                        if appState.selectedSensorsForGraph.isEmpty {
+                            Text(Trema.text(for: "default_no_sensors_selected"))
+                                .foregroundStyle(.black)
+                        } else {
+                            Text("Graph data for selected sensors") // add trema
+                                .foregroundStyle(.black)
+                        }
                     }
                 }
             }
             
-            VStack {
-                SensorsChart(viewModel: chartViewModel)
-                    .clipped()
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 200)
-                
-                Text(Trema.text(for: "no_sensors_selected"))
-                    .font(.caption)
-                    .foregroundStyle(Color(AppColors.darkblue))
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-                
-                selectSensorsButtonView()
-                    .padding(.top)
-                
-                Text(self.viewModel.disclaimerMessage)
-                    .font(.system(size: 11, weight: .light))
-                    .foregroundColor(self.viewModel.color)
-                    .lineLimit(nil)
-                    .multilineTextAlignment(.center)
-                    .padding(.bottom, 15)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.vertical)
-                
-                privacyPolicyView()
-
-            }.scaledToFit()
+            ScrollView {
+                VStack {
+                    SensorsChart(viewModel: chartViewModel)
+                        .clipped()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 250)
+                        .padding(.vertical, 20)
+                        .padding(.horizontal, 10)
+                    
+                    Text("You can select up to 5 sensors.")
+                        .font(.caption)
+                        .foregroundStyle(Color(AppColors.darkblue))
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                    
+                    selectSensorsButtonView()
+                        .padding(.top)
+                    
+                    Text(self.viewModel.disclaimerMessage)
+                        .font(.system(size: 11, weight: .light))
+                        .foregroundColor(self.viewModel.color)
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.center)
+                        .padding(15)
+                        .fixedSize(horizontal: false, vertical: true)
+                    
+                    privacyPolicyView()
+                }
+                .overlay(
+                    GeometryReader { proxy in
+                        Color.clear.onAppear() {
+                            contentSize = proxy.size.height
+                        }
+                    }
+                )
+            }
+            .frame(maxHeight: contentSize)
         }
     }
     

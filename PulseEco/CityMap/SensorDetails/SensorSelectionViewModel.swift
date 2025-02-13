@@ -37,4 +37,8 @@ class SensorSelectionViewModel: ObservableObject {
         sensorSelectionAlertDialogIsActive = false
         appState.selectedSensorsForGraph = selectedSensors
     }
+    
+    func isDisabled(sensor: SensorPinModel) -> Bool {
+        self.tmpSelectedSensors.count == 5 && !self.tmpSelectedSensors.contains(where: {$0.sensorID == sensor.sensorID})
+    }
 }

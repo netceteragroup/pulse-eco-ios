@@ -88,7 +88,6 @@ class MapViewModel: ObservableObject {
         guard let measure = selectedMeasure else { return }
         Task {
             await appDataSource.fetchHistory(for: UserSettings.selectedCity.cityName, measureId: measure.id)
-            await appDataSource.updatePins(selectedDate: appState.calendarSelection)
         }
     }
     

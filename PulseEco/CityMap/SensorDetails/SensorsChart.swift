@@ -8,40 +8,54 @@
 import SwiftUI
 import Charts
 
-
 struct SensorsChart: View {
     @ObservedObject var viewModel: ChartViewModel
     
     var body: some View {
         Chart {
             ForEach(viewModel.selectedMeasure.bands, id: \.self) { band in
+                BarMark(x: .value("Time", viewModel.getMinDate()),
+                        yStart: .value("Value", band.from),
+                        yEnd: .value("Value", band.to),
+                        width: 8)
+                    .foregroundStyle(Color(band.legendColor))
+                
                 RuleMark(y: .value(band.grade, max(0, band.from - 1)))
                     .foregroundStyle(Color(band.legendColor))
                     .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
-                
-                BarMark(x: .value("Time", viewModel.sensorReadings.first?.stamp ?? Date()),
-                        y: .value(band.grade, band.to - band.from))
-                    .foregroundStyle(Color(band.legendColor))
-                
             }
             
-            ForEach(viewModel.sensorReadings) { reading in
-                LineMark(x: .value("Time",
-                                   reading.stamp),
-                         y: .value("Value",
-                                   reading.value))
+            if !viewModel.selectedSensorReadings.isEmpty {
+                ForEach(viewModel.selectedSensorReadings, id: \.self) { reading in
+                    LineMark(x: .value("Time",
+                                       reading.stamp),
+                             y: .value("Value",
+                                       reading.value))
+                }
             }
+            
+            else {
+                ForEach(Array(viewModel.chartSensorReadings.enumerated()), id:\.offset) { index, sensor in
+                    ForEach(sensor) { reading in
+                        LineMark(x: .value("Time",
+                                           reading.stamp),
+                                 y: .value("Value",
+                                           reading.value))
+                        .foregroundStyle(by: .value("Sensor", reading.title))
+                    }
+                }
+            }
+            
         }
         .chartYScale(domain: viewModel.minValue()...viewModel.maxValue())
-        .padding(20)
         .chartYAxis {
             AxisMarks(position: .leading) {
                 AxisValueLabel()
-                    .offset(CGSize(width: -10, height: 0))
+                    .offset(CGSize(width: -5, height: 0))
             }
         }
         .chartXAxis {
-            AxisMarks(values: .stride(by: .hour, count: 4)) { value in
+            AxisMarks(values: viewModel.getLast24H()) { value in
                 if let date = value.as(Date.self) {
                     let hour = Calendar.current.component(.hour, from: date)
                     AxisValueLabel {
@@ -63,5 +77,8 @@ struct SensorsChart: View {
                 }
             }
         }
+        .chartLegend(alignment: .center, spacing: 20)
+        .padding(.horizontal, 10)
+        .padding(.top, 10)
     }
 }

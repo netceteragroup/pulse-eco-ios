@@ -1,53 +1,165 @@
 import Foundation
+import SwiftUI
 import Charts
 
 class ChartViewModel: ObservableObject {
     @Published var sensor: SensorPinModel
+    @Published var sensors: [SensorPinModel]
     @Published var sensorsData24h: [SensorData]
     @Published var selectedMeasure: Measure
-    //    @Published var sensorReadings: [SensorData]
-    @Published var sensorReadings: [ChartSensorReading]
+    @Published var chartSensorReadings: [[ChartSensorReading]]
+    @Published var selectedSensorReadings: [ChartSensorReading]
     
-    init(sensor: SensorPinModel, sensorsData: [SensorData], selectedMeasure: Measure) {
+    init(sensor: SensorPinModel, sensors: [SensorPinModel], sensorsData: [SensorData], selectedMeasure: Measure) {
         self.sensor = sensor
+        self.sensors = sensors
         self.sensorsData24h = sensorsData
         self.selectedMeasure = selectedMeasure
+        chartSensorReadings = []
         
-        self.sensorReadings = sensorsData.filter {
+        selectedSensorReadings = sensorsData.filter {
             $0.sensorID == sensor.sensorID && $0.type == selectedMeasure.id
-        }.sorted {
+        }
+        .sorted {
             let date = DateFormatter.iso8601Full.date(from: $0.stamp) ?? Date()
             let date1 = DateFormatter.iso8601Full.date(from: $1.stamp) ?? Date()
             return date < date1
-        }.map {
-            ChartSensorReading(sensorData: $0)
+        }
+        .map {
+            ChartSensorReading(sensorData: $0, title: sensor.title)
+        }
+        
+        for sensor in sensors {
+            let tmp = sensorsData.filter {
+                $0.sensorID == sensor.sensorID && $0.type == selectedMeasure.id
+            }.sorted {
+                let date = DateFormatter.iso8601Full.date(from: $0.stamp) ?? Date()
+                let date1 = DateFormatter.iso8601Full.date(from: $1.stamp) ?? Date()
+                return date < date1
+            }
+            .map {
+                ChartSensorReading(sensorData: $0, title: sensor.title)
+            }
+            .reduce(into: [ChartSensorReading]()) { partialResult, nextData in
+                if let lastDate = partialResult.last?.stamp {
+                    let diff = nextData.stamp.timeIntervalSince(lastDate)
+                    if diff >= 15 * 60 {
+                        partialResult.append(nextData)
+                    }
+                } else {
+                    partialResult.append(nextData)
+                }
+            }
+            chartSensorReadings.append(tmp)
         }
     }
     
     func maxValue() -> Int {
-        let maxValue = sensorReadings.map {
-            $0.value
-        }.max()
+        let selectedSensorReadingMaxValue = selectedSensorReadings.map({ sensor in
+            sensor.value
+        }).max()
         
-        guard let maxValue else { return selectedMeasure.legendMax }
-        return maxValue
+        if let selectedSensorReadingMaxValue {
+            return selectedSensorReadingMaxValue
+        }
+        
+        else {
+            var chartSensorReadingsMaxValue = chartSensorReadings.joined().compactMap{
+                $0.value
+            }.max()
+            
+            if let chartSensorReadingsMaxValue {
+                return chartSensorReadingsMaxValue
+            }
+            
+            return selectedMeasure.legendMax
+        }
     }
     
     func minValue() -> Int {
-        let minValue = sensorReadings.map {
-            $0.value
-        }.min()
         
-        guard let minValue else { return selectedMeasure.legendMin }
-        return minValue < 0 ? minValue : 0
+        let selectedSensorReadingMinValue = selectedSensorReadings.map({ sensor in
+            sensor.value
+        }).min()
+        
+        if let selectedSensorReadingMinValue {
+            return selectedSensorReadingMinValue
+        }
+        
+        else {
+            let chartSensorReadingsMinValue = chartSensorReadings.joined().compactMap{
+                $0.value
+            }.min()
+            
+            if let chartSensorReadingsMinValue {
+                return chartSensorReadingsMinValue
+            }
+            
+            return selectedMeasure.legendMin
+        }
     }
     
-    func getASetOfHours() -> [Date] {
-        Array(Set(sensorReadings.compactMap {
+    func getMinDate() -> Date {
+        let selectedSensorReadingMinDate = selectedSensorReadings.map({ sensor in
+            sensor.stamp
+        }).min()
+        
+        if let selectedSensorReadingMinDate {
+            return selectedSensorReadingMinDate
+        }
+        
+        let chartSensorReadingsMinDate = chartSensorReadings.joined().compactMap {
+            $0.stamp
+        }.min()
+        
+        if let chartSensorReadingsMinDate {
+            return chartSensorReadingsMinDate
+        }
+        
+        return getLast24H().first ?? Date()
+    }
+    
+    func getMaxDate() -> Date {
+        
+        let selectedSensorReadingMaxDate = selectedSensorReadings.map({ sensor in
+            sensor.stamp
+        }).max()
+        
+        if let selectedSensorReadingMaxDate {
+            return selectedSensorReadingMaxDate
+        }
+        
+        var chartSensorReadingsMaxDate = chartSensorReadings.joined().compactMap {
+            $0.stamp
+        }.max()
+        
+        if let chartSensorReadingsMaxDate {
+            return chartSensorReadingsMaxDate
+        }
+        
+        return Date()
+    }
+    
+    func getASetOfDates() -> [Date] {
+        Array(Set(chartSensorReadings.joined().compactMap {
             calendar.date(bySetting: .minute, value: 0, of: $0.stamp)
         }.compactMap {
             calendar.date(bySetting: .second, value: 0, of: $0)
-        }))
+        }.sorted()))
+    }
+    
+    func getLast24H() -> [Date] {
+        let now = Date()
+        let calendar = Calendar.current
+        var dates: [Date] = []
+        
+        for i in stride(from: 0, through: 24, by: 4) {
+            if let date = calendar.date(byAdding: .hour, value: -i, to: now) {
+                dates.append(date)
+            }
+        }
+        
+        return dates.reversed()
     }
     
     func formatTime(for time: Int) -> String {
@@ -66,13 +178,15 @@ class ChartViewModel: ObservableObject {
     }
 }
 
-struct ChartSensorReading: Identifiable {
+struct ChartSensorReading: Identifiable, Hashable {
     let id = UUID()
     let stamp: Date
     let value: Int
+    let title: String
     
-    init(sensorData: SensorData) {
+    init(sensorData: SensorData, title: String?) {
         stamp = DateFormatter.iso8601Full.date(from: sensorData.stamp) ?? Date()
         value = Int(sensorData.value) ?? 0
+        self.title = title ?? ""
     }
 }
