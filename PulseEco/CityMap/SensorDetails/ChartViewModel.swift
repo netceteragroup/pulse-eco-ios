@@ -24,6 +24,17 @@ class ChartViewModel: ObservableObject {
             let date = DateFormatter.iso8601Full.date(from: $0.stamp) ?? Date()
             let date1 = DateFormatter.iso8601Full.date(from: $1.stamp) ?? Date()
             return date < date1
+        }.reduce(into: [SensorData]()) { partialResult, nextData in
+            if let lastDate = DateFormatter.iso8601Full.date(from: partialResult.last?.stamp ?? ""),
+               let date = DateFormatter.iso8601Full.date(from: nextData.stamp) {
+                let diff = date.timeIntervalSince(lastDate)
+                if diff >= 30 * 60 {
+                    partialResult.append(nextData)
+                }
+            }
+            else {
+                partialResult.append(nextData)
+            }
         }
         .map {
             ChartSensorReading(sensorData: $0, title: sensor.title)
@@ -36,19 +47,20 @@ class ChartViewModel: ObservableObject {
                 let date = DateFormatter.iso8601Full.date(from: $0.stamp) ?? Date()
                 let date1 = DateFormatter.iso8601Full.date(from: $1.stamp) ?? Date()
                 return date < date1
+            }.reduce(into: [SensorData]()) { partialResult, nextData in
+                if let lastDate = DateFormatter.iso8601Full.date(from: partialResult.last?.stamp ?? ""),
+                   let date = DateFormatter.iso8601Full.date(from: nextData.stamp) {
+                    let diff = date.timeIntervalSince(lastDate)
+                    if diff >= 30 * 60 {
+                        partialResult.append(nextData)
+                    }
+                }
+                else {
+                    partialResult.append(nextData)
+                }
             }
             .map {
                 ChartSensorReading(sensorData: $0, title: sensor.title)
-            }
-            .reduce(into: [ChartSensorReading]()) { partialResult, nextData in
-                if let lastDate = partialResult.last?.stamp {
-                    let diff = nextData.stamp.timeIntervalSince(lastDate)
-                    if diff >= 15 * 60 {
-                        partialResult.append(nextData)
-                    }
-                } else {
-                    partialResult.append(nextData)
-                }
             }
             chartSensorReadings.append(tmp)
         }
@@ -64,7 +76,7 @@ class ChartViewModel: ObservableObject {
         }
         
         else {
-            var chartSensorReadingsMaxValue = chartSensorReadings.joined().compactMap{
+            let chartSensorReadingsMaxValue = chartSensorReadings.joined().compactMap{
                 $0.value
             }.max()
             
@@ -129,7 +141,7 @@ class ChartViewModel: ObservableObject {
             return selectedSensorReadingMaxDate
         }
         
-        var chartSensorReadingsMaxDate = chartSensorReadings.joined().compactMap {
+        let chartSensorReadingsMaxDate = chartSensorReadings.joined().compactMap {
             $0.stamp
         }.max()
         

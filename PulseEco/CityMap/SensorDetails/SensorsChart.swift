@@ -33,7 +33,6 @@ struct SensorsChart: View {
                                        reading.value))
                 }
             }
-            
             else {
                 ForEach(Array(viewModel.chartSensorReadings.enumerated()), id:\.offset) { index, sensor in
                     ForEach(sensor) { reading in
@@ -47,7 +46,7 @@ struct SensorsChart: View {
             }
             
         }
-        .chartYScale(domain: viewModel.minValue()...viewModel.maxValue())
+        .chartYScale(domain: 0...viewModel.maxValue())
         .chartYAxis {
             AxisMarks(position: .leading) {
                 AxisValueLabel()
@@ -77,8 +76,8 @@ struct SensorsChart: View {
                 }
             }
         }
-        .chartLegend(alignment: .center, spacing: 20)
         .padding(.horizontal, 10)
         .padding(.top, 10)
+        .chartLegend(alignment: .center)
     }
 }
