@@ -95,7 +95,7 @@ private func createFloatingButtonView(appState: AppState) -> some View {
     .cornerRadius(15)
     .shadow(radius: 5)
     .padding(.leading, 15)
-    .padding(.bottom, appState.selectedSensor != nil ? 60 : 10)
+    .padding(.bottom, appState.selectedSensor != nil ? 60 : 15)
 }
 
 enum ActiveSheet: Int, Identifiable {

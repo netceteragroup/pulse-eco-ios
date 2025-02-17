@@ -29,6 +29,5 @@ class MeasureButtonViewModel: ObservableObject {
     
     private func setAsSelectedMeasure(appState: AppState) {
         appState.selectedMeasureId = id
-        appState.showSensorDetails = false
     }
 }

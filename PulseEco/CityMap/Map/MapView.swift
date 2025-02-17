@@ -118,6 +118,7 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         annotationView.showCallout()
         DispatchQueue.main.async {
             self.map.appState.selectedSensor = annotationView.pin
+            self.map.appState.selectedSensorsForGraph = []
         }
         map.viewModel.getDailyAverageDataForSensor(annotationView.pin?.sensorID ?? "")
         let region = MKCoordinateRegion(center: view.annotation!.coordinate, span: mapView.region.span)

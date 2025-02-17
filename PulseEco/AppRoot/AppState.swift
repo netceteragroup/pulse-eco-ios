@@ -14,7 +14,7 @@ class AppState: ObservableObject, ViewModelDependency {
     }
     
     @Published var selectedAppView: AppView = UserSettings().selectedAppView
-    @Published var showSensorDetails: Bool = false
+    @Published var showSensorDetails: Bool = true
     @Published var selectedSensor: SensorPinModel?
     @Published var selectedSensorsForGraph: [SensorPinModel] = []
     @Published var blurBackground: Bool = false
@@ -40,6 +40,8 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var cachedHourlySensorsByDay: [CacheDictionaryKey: [Int: [SensorPinModel]]] = [:]
     @Published var isTimelineSliderActive: Bool = false
     @Published var isWaitingToFetchFavouriteCitiesOveralls: Bool = true
+    @Published var bottomSheetContentSize: CGFloat = .infinity
+    @Published var bottomSheetHeaderSize: CGFloat = .infinity
     
     struct CacheDictionaryKey: Hashable {
         var date: Date

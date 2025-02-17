@@ -43,6 +43,7 @@ struct SensorSelectionView: View {
                         
                         Button(Trema.text(for: "cancel")) {
                             viewModel.cancel(sensorSelectionAlertDialogIsActive: &sensorSelectionAlertDialogIsActive)
+                            appState.showSensorDetails = true
                         }
                         .font(.headline)
                         .foregroundStyle(Color(AppColors.gray))
@@ -50,6 +51,7 @@ struct SensorSelectionView: View {
                         
                         Button(Trema.text(for: "ok")) {
                             viewModel.addToSelectedSensors(sensorSelectionAlertDialogIsActive: &sensorSelectionAlertDialogIsActive)
+                            appState.showSensorDetails = true
                         }
                         .font(.headline)
                         .foregroundStyle(Color(AppColors.firstButtonColor))
@@ -62,6 +64,9 @@ struct SensorSelectionView: View {
                 .shadow(radius: 10)
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal)
+            }
+            .onAppear() {
+                appState.showSensorDetails = false
             }
         }
     }

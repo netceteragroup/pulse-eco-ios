@@ -13,8 +13,6 @@ struct MainView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @State private var isShowingSettingsView = false
-    @State var slideOverCardViewPosition: CGFloat = 70
-    @State var slideOverCardTopLimit: CGFloat = 65
     @State var sensorSelectionAlertDialogIsActive: Bool = false
     @ObservedObject var locationManager: LocationManager = LocationManager.shared
     
@@ -50,7 +48,6 @@ struct MainView: View {
         }
         .onAppear() {
             locationManager.requestLocation()
-            
             locationManager.didSetCurrentCity = { newCity in
                 if let newCity {
                     var favoriteCities = appState.userSettings.favouriteCities
@@ -66,9 +63,6 @@ struct MainView: View {
                 }
             }
         }
-        .onChange(of: appState.selectedSensor) { new in
-            slideOverCardViewPosition = new != nil ? 120 : 70
-        }
     }
     
     var loadingView: some View {
@@ -81,8 +75,8 @@ struct MainView: View {
                 VStack(spacing: 0) {
                     if self.appState.citySelectorClicked {
                         FavouriteCitiesView(userSettings: self.appState.userSettings)
-                        .overlay(ShadowOnTopOfView())
-                        .animation(nil, value: self.appState.citySelectorClicked)
+                            .overlay(ShadowOnTopOfView())
+                            .animation(nil, value: self.appState.citySelectorClicked)
                     } else {
                         VStack(spacing: 0) {
                             let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
@@ -106,19 +100,19 @@ struct MainView: View {
                                 .edgesIgnoringSafeArea([.horizontal, .bottom])
                                 .padding(.top, 60)
                                 .zIndex(1)
-                                
-                                if proxy.size.height != .zero && proxy.size.width != .zero {
-                                    SlideOverCard(
-                                        height: $slideOverCardViewPosition,
-                                        topLimit: $slideOverCardTopLimit,
-                                        proxy: proxy
-                                    ) {
-                                        SensorDetailsView(viewModel: sensorDetailsViewModel,
-                                                          sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive)
-                                            .frame(maxWidth: .infinity)
-                                    }
-                                    .transition(.move(edge: .bottom))
-                                    .zIndex(2) // zIndexes are needed to maintain dismiss transition
+                                .sheet(isPresented: $appState.showSensorDetails) {
+                                    Spacer()
+                                    
+                                    SensorDetailsView(viewModel: sensorDetailsViewModel,
+                                                      sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive,
+                                                      contentSize: $appState.bottomSheetContentSize,
+                                                      headerSize: $appState.bottomSheetHeaderSize)
+                                    .frame(maxWidth: .infinity)
+                                    .presentationDetents([.height(appState.bottomSheetHeaderSize), .height(appState.bottomSheetContentSize + appState.bottomSheetHeaderSize)])
+                                    .presentationCompactAdaptation(.none)
+                                    .presentationBackgroundInteraction(.enabled)
+                                    .interactiveDismissDisabled()
+                                    .edgesIgnoringSafeArea(.all)
                                 }
                             }
                         }
@@ -145,7 +139,7 @@ struct MainView: View {
                                                                                      sensorsData: dataSource.sensorsData,
                                                                                      selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId))),
                                 sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         )
     }
     

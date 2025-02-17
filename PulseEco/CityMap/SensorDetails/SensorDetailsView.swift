@@ -13,8 +13,9 @@ struct SensorDetailsView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @ObservedObject var viewModel: SensorDetailsViewModel
     @Binding var sensorSelectionAlertDialogIsActive: Bool
+    @Binding var contentSize: CGFloat
+    @Binding var headerSize: CGFloat
     @State var isExpanded: Bool = false
-    @State var contentSize: CGFloat = .infinity
     private var chartViewModel: ChartViewModel {
         ChartViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
                        sensors: appState.selectedSensorsForGraph,
@@ -33,32 +34,39 @@ struct SensorDetailsView: View {
     
     var showSensorDetailsView: some View {
         VStack {
-            RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.0)
-                .frame(width: 40, height: 3.0)
-                .foregroundColor(AppColors.gray2.color)
-                .padding([.top, .bottom], 10)
-            
             VStack {
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 1) {
-                        HStack {
-                            Image(uiImage: self.viewModel.image)
-                            Text("\(self.viewModel.title)").foregroundColor(AppColors.gray.color)
-                                .font(.system(size: 13))
-                        }
-                        HStack {
-                            Text(self.viewModel.value).font(.system(size: 40))
-                            Text(self.viewModel.unit).padding(.top, 10)
-                            Spacer()
-                            VStack(alignment: .trailing) {
-                                Text("\(self.viewModel.time)")
-                                Text("\(self.viewModel.date)").foregroundColor(AppColors.gray.color)
+                VStack {
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading, spacing: 1) {
+                            HStack {
+                                Image(uiImage: self.viewModel.image)
+                                Text("\(self.viewModel.title)").foregroundColor(AppColors.gray.color)
+                                    .font(.system(size: 13))
+                            }
+                            HStack {
+                                Text(self.viewModel.value).font(.system(size: 40))
+                                Text(self.viewModel.unit).padding(.top, 10)
+                                Spacer()
+                                VStack(alignment: .trailing) {
+                                    Text("\(self.viewModel.time)")
+                                    Text("\(self.viewModel.date)").foregroundColor(AppColors.gray.color)
+                                }
                             }
                         }
                     }
+                    .padding([.horizontal], 20)
                 }
-                .padding([.horizontal], 20)
+                .padding(.top, 24)
             }
+            .overlay(
+                GeometryReader { proxy in
+                    Color.clear.onAppear() {
+                        print("headerSize size before: \(headerSize)")
+                        headerSize = proxy.size.height
+                        print("headerSize size after: \(headerSize)")
+                    }
+                }
+            )
             
             ScrollView {
                 VStack {
@@ -83,38 +91,49 @@ struct SensorDetailsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                     
                     privacyPolicyView()
+                    
+                    Spacer().frame(height: 24)
 
                 }.overlay(
                     GeometryReader { proxy in
                         Color.clear.onAppear() {
+                            print("content size before: \(contentSize)")
                             contentSize = proxy.size.height
+                            print("content size after: \(contentSize)")
                         }
                     }
                 )
-            }.frame(maxHeight: contentSize)
+            }
         }
     }
     
     var noSelectionView: some View {
         VStack {
-            RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.0)
-                .frame(width: 40, height: 3.0)
-                .foregroundColor(AppColors.gray2.color)
-                .padding([.top, .bottom], 10)
-            
             VStack {
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 1) {
-                        if appState.selectedSensorsForGraph.isEmpty {
-                            Text(Trema.text(for: "default_no_sensors_selected"))
-                                .foregroundStyle(.black)
-                        } else {
-                            Text("Graph data for selected sensors") // add trema
-                                .foregroundStyle(.black)
+                VStack {
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading) {
+                            if appState.selectedSensorsForGraph.isEmpty {
+                                Text(Trema.text(for: "default_no_sensors_selected"))
+                                    .foregroundStyle(.black)
+                            } else {
+                                Text("Graph data for selected sensors") // add trema
+                                    .foregroundStyle(.black)
+                            }
                         }
                     }
                 }
+                .padding(.top, 24)
             }
+            .overlay(
+                GeometryReader { proxy in
+                    Color.clear.onAppear() {
+                        print("headerSize size before: \(headerSize)")
+                        headerSize = proxy.size.height
+                        print("headerSize size after: \(headerSize)")
+                    }
+                }
+            )
             
             ScrollView {
                 VStack {
@@ -143,16 +162,19 @@ struct SensorDetailsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                     
                     privacyPolicyView()
+                    
+                    Spacer().frame(height: 24)
                 }
                 .overlay(
                     GeometryReader { proxy in
                         Color.clear.onAppear() {
+                            print("content size before: \(contentSize)")
                             contentSize = proxy.size.height
+                            print("content size after: \(contentSize)")
                         }
                     }
                 )
             }
-            .frame(maxHeight: contentSize)
         }
     }
     
