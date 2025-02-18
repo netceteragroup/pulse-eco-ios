@@ -110,11 +110,8 @@ struct MainView: View {
                                 .presentationDetents([.height(appState.bottomSheetHeaderSize), .height(appState.bottomSheetContentSize + appState.bottomSheetHeaderSize)])
                                 .presentationBackgroundInteraction(.enabled)
                                 .interactiveDismissDisabled()
-                                .edgesIgnoringSafeArea(.all)
                             }
-                            .ignoresSafeArea()
                         }
-                        .ignoresSafeArea()
                     }
                 }
                 .navigationBarTitle("", displayMode: .inline)
