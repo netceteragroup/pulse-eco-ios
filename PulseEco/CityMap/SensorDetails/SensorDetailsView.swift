@@ -61,9 +61,7 @@ struct SensorDetailsView: View {
             .overlay(
                 GeometryReader { proxy in
                     Color.clear.onAppear() {
-                        print("headerSize size before: \(headerSize)")
                         headerSize = proxy.size.height
-                        print("headerSize size after: \(headerSize)")
                     }
                 }
             )
@@ -97,13 +95,12 @@ struct SensorDetailsView: View {
                 }.overlay(
                     GeometryReader { proxy in
                         Color.clear.onAppear() {
-                            print("content size before: \(contentSize)")
                             contentSize = proxy.size.height
-                            print("content size after: \(contentSize)")
                         }
                     }
                 )
             }
+            .padding(.top, 8)
         }
     }
     
@@ -128,9 +125,7 @@ struct SensorDetailsView: View {
             .overlay(
                 GeometryReader { proxy in
                     Color.clear.onAppear() {
-                        print("headerSize size before: \(headerSize)")
                         headerSize = proxy.size.height
-                        print("headerSize size after: \(headerSize)")
                     }
                 }
             )
@@ -168,13 +163,12 @@ struct SensorDetailsView: View {
                 .overlay(
                     GeometryReader { proxy in
                         Color.clear.onAppear() {
-                            print("content size before: \(contentSize)")
                             contentSize = proxy.size.height
-                            print("content size after: \(contentSize)")
                         }
                     }
                 )
             }
+            .padding(.top, 8)
         }
     }
     

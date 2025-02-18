@@ -40,8 +40,8 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var cachedHourlySensorsByDay: [CacheDictionaryKey: [Int: [SensorPinModel]]] = [:]
     @Published var isTimelineSliderActive: Bool = false
     @Published var isWaitingToFetchFavouriteCitiesOveralls: Bool = true
-    @Published var bottomSheetContentSize: CGFloat = .infinity
-    @Published var bottomSheetHeaderSize: CGFloat = .infinity
+    @Published var bottomSheetContentSize: CGFloat = .zero
+    @Published var bottomSheetHeaderSize: CGFloat = .zero
     
     struct CacheDictionaryKey: Hashable {
         var date: Date

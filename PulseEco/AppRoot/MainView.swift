@@ -87,34 +87,32 @@ struct MainView: View {
                             MeasureListView(viewModel: viewModel)
                         }
                         
-                        GeometryReader { proxy in
-                            ZStack(alignment: .top) {
-                                DateSelector()
-                                    .padding(.horizontal)
-                                    .padding(.vertical, 8)
-                                    .zIndex(2)
+                        ZStack(alignment: .top) {
+                            DateSelector()
+                                .padding(.horizontal)
+                                .padding(.vertical, 8)
+                                .zIndex(2)
+                            
+                            CityMapView(userSettings: self.appState.userSettings,
+                                        mapViewModel: mapViewModel)
+                            .id("CityMapView")
+                            .edgesIgnoringSafeArea([.horizontal, .bottom])
+                            .padding(.top, 60)
+                            .zIndex(1)
+                            .sheet(isPresented: $appState.showSensorDetails) {
+                                Spacer()
                                 
-                                CityMapView(userSettings: self.appState.userSettings,
-                                            mapViewModel: mapViewModel)
-                                .id("CityMapView")
-                                .edgesIgnoringSafeArea([.horizontal, .bottom])
-                                .padding(.top, 60)
-                                .zIndex(1)
-                                .sheet(isPresented: $appState.showSensorDetails) {
-                                    Spacer()
-                                    
-                                    SensorDetailsView(viewModel: sensorDetailsViewModel,
-                                                      sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive,
-                                                      contentSize: $appState.bottomSheetContentSize,
-                                                      headerSize: $appState.bottomSheetHeaderSize)
-                                    .frame(maxWidth: .infinity)
-                                    .presentationDetents([.height(appState.bottomSheetHeaderSize), .height(appState.bottomSheetContentSize + appState.bottomSheetHeaderSize)])
-                                    .presentationCompactAdaptation(.none)
-                                    .presentationBackgroundInteraction(.enabled)
-                                    .interactiveDismissDisabled()
-                                    .edgesIgnoringSafeArea(.all)
-                                }
+                                SensorDetailsView(viewModel: sensorDetailsViewModel,
+                                                  sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive,
+                                                  contentSize: $appState.bottomSheetContentSize,
+                                                  headerSize: $appState.bottomSheetHeaderSize)
+                                .frame(maxWidth: .infinity)
+                                .presentationDetents([.height(appState.bottomSheetHeaderSize), .height(appState.bottomSheetContentSize + appState.bottomSheetHeaderSize)])
+                                .presentationBackgroundInteraction(.enabled)
+                                .interactiveDismissDisabled()
+                                .edgesIgnoringSafeArea(.all)
                             }
+                            .ignoresSafeArea()
                         }
                         .ignoresSafeArea()
                     }

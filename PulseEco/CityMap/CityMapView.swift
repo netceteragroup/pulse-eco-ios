@@ -34,26 +34,16 @@ struct CityMapView: View {
             VStack(alignment: .leading) {
                 Spacer()
                 
-                if appState.isTimelineSliderActive {
-                    createTimelineSliderView(appState: appState)
-                } else {
-                    createFloatingButtonView(appState: appState)
-                }
-                
                 HStack {
-                    Spacer()
-                    RoundedRectangle(cornerRadius: 5.0, style: .continuous)
-                        .fill(Theme.disclaimerIconColor)
-                        .frame(width: Theme.disclaimerIconSize.width, height: Theme.disclaimerIconSize.height)
-                        .overlay(Text(Trema.text(for: "crowdsourced_sensor_data"))
-                            .foregroundColor(AppColors.black.color)
-                        )
-                        .padding(.bottom, 35)
-                        .onTapGesture {
-                            self.appState.activeSheet = .disclaimerView
-                        }
-                    
-                }.padding(.trailing, 15.0)
+                    if appState.isTimelineSliderActive {
+                        createTimelineSliderView(appState: appState)
+                    } else {
+                        createFloatingButtonView(appState: appState)
+                    }
+                }
+                .padding(.trailing, 15.0)
+                .padding(.bottom, appState.bottomSheetHeaderSize + getSafeAreaBottom() + 8)
+                
             }
             
             AverageView(viewModel: AverageUtilModel(measureId: self.appState.selectedMeasureId,
@@ -79,7 +69,6 @@ private func createTimelineSliderView(appState: AppState) -> some View {
         
         appState.sensorPins = sensorPinsForSelectedHour
     }))
-    .padding(.bottom, appState.selectedSensor != nil ? 60 : 10)
     .padding(.horizontal)
     .lineLimit(1)
     .minimumScaleFactor(0.5)
@@ -89,14 +78,27 @@ private func createTimelineSliderView(appState: AppState) -> some View {
 
 @ViewBuilder
 private func createFloatingButtonView(appState: AppState) -> some View {
-    FloatingButton(image: "access-time") {
-        appState.isTimelineSliderActive = true
+    HStack {
+        FloatingButton(image: "access-time") {
+            appState.isTimelineSliderActive = true
+        }
+        .cornerRadius(15)
+        .shadow(radius: 5)
+        .padding(.leading, 15)
+        
+        Spacer()
     }
-    .cornerRadius(15)
-    .shadow(radius: 5)
-    .padding(.leading, 15)
-    .padding(.bottom, appState.selectedSensor != nil ? 60 : 15)
 }
+
+func getSafeAreaBottom() -> CGFloat {
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first(where: { $0.isKeyWindow }) {
+            return window.safeAreaInsets.bottom
+        }
+    }
+    return 0
+}
+
 
 enum ActiveSheet: Int, Identifiable {
     var id: Int { self.rawValue }
