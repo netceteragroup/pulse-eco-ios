@@ -9,10 +9,14 @@ import SwiftUI
 
 extension UIApplication {
     func endEditing(_ force: Bool) {
-        self.windows
-            .filter { $0.isKeyWindow }
-            .first?
-            .endEditing(force)
+        guard let window = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .flatMap({ $0.windows })
+            .first(where: { $0.isKeyWindow })
+        else {
+            return
+        }
+        window.endEditing(force)
     }
 }
 

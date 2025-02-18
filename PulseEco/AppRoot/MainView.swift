@@ -77,11 +77,8 @@ struct MainView: View {
     
     var contentView: some View {
         ZStack {
-            NavigationView {
+            NavigationStack {
                 VStack(spacing: 0) {
-                    NavigationLink(destination: SettingsView(),
-                                   isActive: $isShowingSettingsView) { EmptyView () }
-                    
                     if self.appState.citySelectorClicked {
                         FavouriteCitiesView(userSettings: self.appState.userSettings)
                         .overlay(ShadowOnTopOfView())
@@ -164,15 +161,23 @@ struct MainView: View {
                     }
                 }
             menuItem
+                .navigationDestination(for: AppView.self) { view in
+                    switch view {
+                    case .settings:
+                        SettingsView()
+                    case .dashboard:
+                        Text("dashboard view")
+                    case .mapView:
+                        Text("Map View")
+                    }
+                }
         }
     }
     
     var menuItem: some View {
         Menu {
             Section {
-                Button(action: {
-                    self.appState.selectedAppView = .dashboard
-                }) {
+                NavigationLink(value: AppView.dashboard) {
                     Text(Trema.text(for: "dashboard_view"))
                     Spacer()
                     if self.appState.selectedAppView == .dashboard {
@@ -180,10 +185,7 @@ struct MainView: View {
                             .foregroundColor(Color(AppColors.darkblue))
                     }
                 }
-                
-                Button(action: {
-                    self.appState.selectedAppView = .mapView
-                }) {
+                NavigationLink(value: AppView.mapView) {
                     Text(Trema.text(for: "map_view"))
                     Spacer()
                     if self.appState.selectedAppView == .mapView {
@@ -191,11 +193,7 @@ struct MainView: View {
                             .foregroundColor(Color(AppColors.darkblue))
                     }
                 }
-                
-                Button(action: {
-                    isShowingSettingsView = true
-                    self.appState.selectedAppView = .settings
-                }) {
+                NavigationLink(value: AppView.settings) {
                     Text(Trema.text(for: "settings_view"))
                     Spacer()
                     if self.appState.selectedAppView == .settings {

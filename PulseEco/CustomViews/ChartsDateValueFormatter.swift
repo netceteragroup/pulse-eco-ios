@@ -1,7 +1,7 @@
 import Foundation
 import Charts
 
-class ChartsDateValueFormatter: DateFormatter, AxisValueFormatter {
+class ChartsDateValueFormatter: DateFormatter, AxisValueFormatter, @unchecked Sendable {
     override init() {
         super.init()
         self.dateFormat = " h a "
