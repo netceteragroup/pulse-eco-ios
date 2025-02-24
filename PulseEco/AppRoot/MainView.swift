@@ -107,7 +107,7 @@ struct MainView: View {
                                                   contentSize: $appState.bottomSheetContentSize,
                                                   headerSize: $appState.bottomSheetHeaderSize)
                                 .frame(maxWidth: .infinity)
-                                .presentationDetents([.height(appState.bottomSheetHeaderSize), .height(appState.bottomSheetContentSize + appState.bottomSheetHeaderSize)])
+                                .presentationDetents([.height(appState.bottomSheetHeaderSize), .height(appState.bottomSheetContentSize + appState.bottomSheetHeaderSize)], selection: $appState.seletionDetent)
                                 .presentationBackgroundInteraction(.enabled)
                                 .interactiveDismissDisabled()
                             }

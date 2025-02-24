@@ -17,6 +17,7 @@ class SensorSelectionViewModel: ObservableObject {
     init(appState: AppState, sensors: [SensorPinModel]) {
         self.appState = appState
         self.sensors = sensors
+        self.tmpSelectedSensors = appState.selectedSensorsForGraph
     }
     
     func toggleSelection(for sensor: SensorPinModel) {

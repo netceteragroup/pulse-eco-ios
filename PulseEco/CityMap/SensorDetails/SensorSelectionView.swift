@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SensorSelectionView: View {
-    @StateObject var viewModel: SensorSelectionViewModel
+    @ObservedObject var viewModel: SensorSelectionViewModel
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var appState: AppState
     @Binding var sensorSelectionAlertDialogIsActive: Bool

@@ -42,6 +42,7 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var isWaitingToFetchFavouriteCitiesOveralls: Bool = true
     @Published var bottomSheetContentSize: CGFloat = .zero
     @Published var bottomSheetHeaderSize: CGFloat = .zero
+    @Published var seletionDetent: PresentationDetent = PresentationDetent.height(.zero)
     
     struct CacheDictionaryKey: Hashable {
         var date: Date
