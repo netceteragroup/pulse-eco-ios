@@ -111,7 +111,7 @@ struct CalendarView: View {
                     
                     let columns = Array(repeating: GridItem(.flexible()), count: 7)
                     
-                    LazyVGrid(columns: columns, spacing: 0) {
+                    LazyVGrid(columns: columns, spacing: 5) {
                         ForEach(viewModel.monthlyData, id: \.self) { data in
                             CalendarDayButton(date: data.date,
                                           value: data.value,

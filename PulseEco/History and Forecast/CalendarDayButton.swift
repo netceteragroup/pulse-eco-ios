@@ -56,7 +56,7 @@ struct CalendarDayButton: View {
                                     .frame(width: 34, height: 12, alignment: .center)
                                     .background(RoundedRectangle(cornerRadius: 3).fill(Color(color)))
                             }
-                            .frame(width: 50, height: 50)
+                            .frame(width: 45, height: 45)
                             .foregroundColor(Color(AppColors.white))
                             .background(Color(AppColors.white))
                             .cornerRadius(3)
