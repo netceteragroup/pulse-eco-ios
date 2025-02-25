@@ -77,6 +77,7 @@ struct MainView: View {
                         FavouriteCitiesView(userSettings: self.appState.userSettings)
                             .overlay(ShadowOnTopOfView())
                             .animation(nil, value: self.appState.citySelectorClicked)
+                            .edgesIgnoringSafeArea(.bottom)
                     } else {
                         VStack(spacing: 0) {
                             let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
