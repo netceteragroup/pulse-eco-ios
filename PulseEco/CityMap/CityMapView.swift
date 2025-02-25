@@ -41,7 +41,6 @@ struct CityMapView: View {
                         createFloatingButtonView(appState: appState)
                     }
                 }
-                .padding(.trailing, 15.0)
                 .padding(.bottom, appState.bottomSheetHeaderSize + getSafeAreaBottom() + 8)
                 
             }
@@ -57,23 +56,29 @@ struct CityMapView: View {
 
 @ViewBuilder
 private func createTimelineSliderView(appState: AppState) -> some View {
-    TimelineSliderView(viewModel: TimelineSliderViewModel(onSliderValueChanged: { sliderValue in
-        guard let sensorPinsForSelectedHour = appState.hourlySensors[Int(sliderValue)] else {
-            appState.sensorPins = [SensorPinModel()]
-            return
-        }
+    HStack {
+        Spacer()
         
-        if sensorPinsForSelectedHour.isEmpty || sensorPinsForSelectedHour == appState.sensorPins {
-            return
-        }
+        TimelineSliderView(viewModel: TimelineSliderViewModel(onSliderValueChanged: { sliderValue in
+            guard let sensorPinsForSelectedHour = appState.hourlySensors[Int(sliderValue)] else {
+                appState.sensorPins = [SensorPinModel()]
+                return
+            }
+            
+            if sensorPinsForSelectedHour.isEmpty || sensorPinsForSelectedHour == appState.sensorPins {
+                return
+            }
+            
+            appState.sensorPins = sensorPinsForSelectedHour
+        }))
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
+        .environmentObject(appState)
         
-        appState.sensorPins = sensorPinsForSelectedHour
-    }))
-    .padding(.horizontal)
-    .lineLimit(1)
-    .minimumScaleFactor(0.5)
+        Spacer()
+    }
     .frame(maxWidth: .infinity, alignment: .center)
-    .environmentObject(appState)
+    .padding(.horizontal)
 }
 
 @ViewBuilder
@@ -85,6 +90,7 @@ private func createFloatingButtonView(appState: AppState) -> some View {
         .cornerRadius(15)
         .shadow(radius: 5)
         .padding(.leading, 15)
+        .padding(.trailing, 15)
         
         Spacer()
     }
