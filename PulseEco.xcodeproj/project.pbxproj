@@ -122,7 +122,6 @@
 		74E4661A2703272F0010F80E /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E466192703272F0010F80E /* LottieView.swift */; };
 		BA00D30F25D2B59600FA2C26 /* WeeklyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */; };
 		BA00D31125D2B5A000FA2C26 /* DailyAverageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */; };
-		BA013FE8261C8E500057A343 /* LineChartSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */; };
 		BA12EB0E2611E3FE005BC654 /* Trema.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB0D2611E3FE005BC654 /* Trema.swift */; };
 		BA12EB102611E503005BC654 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB0F2611E503005BC654 /* Country.swift */; };
 		BA12EB122611E520005BC654 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12EB112611E520005BC654 /* Countries.swift */; };
@@ -339,7 +338,6 @@
 		74E466192703272F0010F80E /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		BA00D30E25D2B59600FA2C26 /* WeeklyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAverageViewModel.swift; sourceTree = "<group>"; };
 		BA00D31025D2B5A000FA2C26 /* DailyAverageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageViewModel.swift; sourceTree = "<group>"; };
-		BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartSwiftUI.swift; sourceTree = "<group>"; };
 		BA12EB0D2611E3FE005BC654 /* Trema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trema.swift; sourceTree = "<group>"; };
 		BA12EB0F2611E503005BC654 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		BA12EB112611E520005BC654 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
@@ -532,7 +530,6 @@
 				59F5EFDD249CD62E0095FE71 /* SensorDetailsViewModel.swift */,
 				BA718F0C25BED6B100EC87E0 /* SensorDetailsView.swift */,
 				59B0018D24C9BC6A006EA796 /* ChartViewModel.swift */,
-				BA013FE7261C8E500057A343 /* LineChartSwiftUI.swift */,
 				132925232D51FAAB0079F1B3 /* SensorsChart.swift */,
 				136FEAC72D3FBD5B00B13BA3 /* SensorSelectionView.swift */,
 				1347279D2D4787C600647C80 /* SensorSelectionViewModel.swift */,
@@ -1061,7 +1058,6 @@
 				BA12EB122611E520005BC654 /* Countries.swift in Sources */,
 				59F5EFDC249CC5A40095FE71 /* SensorPinModel.swift in Sources */,
 				5999C7FE24ADFAC40038EED7 /* SensorTypes.swift in Sources */,
-				BA013FE8261C8E500057A343 /* LineChartSwiftUI.swift in Sources */,
 				C52F371D26F240FC007813B0 /* KeyboardDismissModifier.swift in Sources */,
 				BAC09D8525E5183400F794F9 /* SensorPin.swift in Sources */,
 				5964349F24B4853300943978 /* NoReadingsViewModel.swift in Sources */,
