@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct DayDataWrapper: Hashable {
+struct DayDataWrapper: Hashable, Identifiable {
+    let id = UUID()
     let date: Date
     let value: String
     let color: String
