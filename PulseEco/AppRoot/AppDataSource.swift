@@ -195,25 +195,53 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                currentYear: calendar.component(.year, from: appState.selectedDate))
     }
     
+    private func fetchCachedValues(dailySensorData: [SensorData], groupById: [String: [SensorData]]) {
+        if appState.cachedHourlySensorsByDay[AppState.CacheDictionaryKey(date: appState.selectedDate, type: appState.selectedMeasureId)] == nil {
+            appState.cachedHourlySensorsByDay[AppState.CacheDictionaryKey(date: appState.selectedDate, type: appState.selectedMeasureId)] = groupByHour(sensorData: dailySensorData, groupById: groupById)
+        }
+        appState.hourlySensors = appState.cachedHourlySensorsByDay[AppState.CacheDictionaryKey(date: appState.selectedDate, type: appState.selectedMeasureId)]!
+        self.appState.sensorPins = appState.hourlySensors[calendar.component(.hour, from: .now)] ?? []
+    }
+    
+    private func fetchForCurrentValues(groupById: [String: [SensorData]]) {
+        var processedSensorData: [SensorData] = []
+        
+        for (key, value) in groupById {
+            let average = String(value.averageValue())
+            if let sensor = value.first {
+                processedSensorData.append(SensorData(sensorID: key,
+                                                      stamp: sensor.stamp,
+                                                      type: sensor.type,
+                                                      position: sensor.position,
+                                                      value: average))
+            }
+        }
+        let result: [SensorPinModel] = combine(sensors: citySensors,
+                                               sensorsData: processedSensorData,
+                                               selectedMeasure:
+                                                getCurrentMeasure(selectedMeasure: self.appState.selectedMeasureId))
+        self.appState.sensorPins = result
+    }
+    
     func updatePins(selectedDate: Date) async {
         let from: Date = selectedDate
         let to: Date = calendar.date(bySettingHour: 23,
                                      minute: 59,
                                      second: 59,
                                      of: selectedDate)!
-        Task {
-            guard let dailySensorData = await networkService.fetchSensorData(cityName: UserSettings.selectedCity.cityName,
-                                                                             measureId: self.appState.selectedMeasureId,
-                                                                             from: from,
-                                                                             to: to)
-            else { return }
-            
-            let groupById = Dictionary(grouping: dailySensorData, by: \.sensorID)
-            if appState.cachedHourlySensorsByDay[AppState.CacheDictionaryKey(date: appState.selectedDate, type: appState.selectedMeasureId)] == nil {
-                appState.cachedHourlySensorsByDay[AppState.CacheDictionaryKey(date: appState.selectedDate, type: appState.selectedMeasureId)] = groupByHour(sensorData: dailySensorData, groupById: groupById)
-            }
-            appState.hourlySensors = appState.cachedHourlySensorsByDay[AppState.CacheDictionaryKey(date: appState.selectedDate, type: appState.selectedMeasureId)]!
-            self.appState.sensorPins = appState.hourlySensors[calendar.component(.hour, from: .now)] ?? []
+        guard let dailySensorData =
+                await networkService.fetchSensorData(cityName: UserSettings.selectedCity.cityName,
+                                                     measureId: self.appState.selectedMeasureId,
+                                                     from: from,
+                                                     to: to)
+        else { return }
+        let groupById = Dictionary(grouping: dailySensorData, by: \.sensorID)
+        
+        if appState.selectedDate == Date.now {
+            fetchForCurrentValues(groupById: groupById)
+        }
+        else {
+            fetchCachedValues(dailySensorData: dailySensorData, groupById: groupById)
         }
         await setAverageValueforSelectedDate(cityName: appState.selectedCity.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
     }
