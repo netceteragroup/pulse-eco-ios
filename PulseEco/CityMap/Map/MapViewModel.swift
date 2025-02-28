@@ -89,6 +89,13 @@ class MapViewModel: ObservableObject {
         Task {
             await appDataSource.fetchHistory(for: UserSettings.selectedCity.cityName, measureId: measure.id)
         }
+        self.appState.selectedDateAverageValue =
+        self.appState.weeklyDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
+                                                         sensorType: measure.id,
+                                                         from: appState.selectedDate,
+                                                         to: calendar.date(byAdding: .day,
+                                                                           value: +1,
+                                                                           to: appState.selectedDate)!).first?.value
     }
     
     private func setCity(_ city: City) {

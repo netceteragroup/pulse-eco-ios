@@ -17,7 +17,7 @@ struct AverageUtilModel {
          cityValues: CityOverallValues? = nil,
          currentValue: String? = nil ) {
         
-        if let shownValue = cityValues?.values[measureId.lowercased()] ?? currentValue,
+        if let shownValue = currentValue ?? cityValues?.values[measureId.lowercased()],
            let floatValue = Float(shownValue) {
             self.value = floatValue
             self.clickDisabled = false
