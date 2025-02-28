@@ -10,14 +10,15 @@ class ChartViewModel: ObservableObject {
     @Published var chartSensorReadings: [[ChartSensorReading]]
     @Published var selectedSensorReadings: [ChartSensorReading]
     
-    init(sensor: SensorPinModel, sensors: [SensorPinModel], sensorsData: [SensorData], selectedMeasure: Measure) {
+    init(sensor: SensorPinModel, sensors: [SensorPinModel], sensorsData: [SensorData], selectedMeasure: Measure, sensorDataForSelectedDate: [SensorData]) {
         self.sensor = sensor
         self.sensors = sensors
         self.sensorsData24h = sensorsData
         self.selectedMeasure = selectedMeasure
+        let dataFromSensors = sensorDataForSelectedDate.isEmpty ? sensorsData : sensorDataForSelectedDate
         chartSensorReadings = []
         
-        selectedSensorReadings = sensorsData.filter {
+        selectedSensorReadings = dataFromSensors.filter {
             $0.sensorID == sensor.sensorID && $0.type == selectedMeasure.id
         }
         .sorted {
@@ -41,7 +42,7 @@ class ChartViewModel: ObservableObject {
         }
         
         for sensor in sensors {
-            let tmp = sensorsData.filter {
+            let tmp = dataFromSensors.filter {
                 $0.sensorID == sensor.sensorID && $0.type == selectedMeasure.id
             }.sorted {
                 let date = DateFormatter.iso8601Full.date(from: $0.stamp) ?? Date()
@@ -88,30 +89,7 @@ class ChartViewModel: ObservableObject {
         }
     }
     
-    func minValue() -> Int {
-        
-        let selectedSensorReadingMinValue = selectedSensorReadings.map({ sensor in
-            sensor.value
-        }).min()
-        
-        if let selectedSensorReadingMinValue {
-            return selectedSensorReadingMinValue
-        }
-        
-        else {
-            let chartSensorReadingsMinValue = chartSensorReadings.joined().compactMap{
-                $0.value
-            }.min()
-            
-            if let chartSensorReadingsMinValue {
-                return chartSensorReadingsMinValue
-            }
-            
-            return selectedMeasure.legendMin
-        }
-    }
-    
-    func getMinDate() -> Date {
+    func getMinDate(selectedDate: Date) -> Date {
         let selectedSensorReadingMinDate = selectedSensorReadings.map({ sensor in
             sensor.stamp
         }).min()
@@ -128,7 +106,7 @@ class ChartViewModel: ObservableObject {
             return chartSensorReadingsMinDate
         }
         
-        return getLast24H().first ?? Date()
+        return getLast24HForGraph(selectedDate: selectedDate).first ?? Date()
     }
     
     func getMaxDate() -> Date {
@@ -160,13 +138,22 @@ class ChartViewModel: ObservableObject {
         }.sorted()))
     }
     
-    func getLast24H() -> [Date] {
-        let now = Date()
+    func getLast24HForGraph(selectedDate: Date) -> [Date] {
+        if selectedDate == Date.now {
+            return getLast24H(selectedDate: selectedDate)
+        }
+        else {
+            var date = getMinDate(selectedDate: selectedDate)
+            date = calendar.date(byAdding: .day, value: 1, to: date) ?? date
+            return getLast24H(selectedDate: date)
+        }
+    }
+    
+    func getLast24H(selectedDate: Date) -> [Date] {
         let calendar = Calendar.current
         var dates: [Date] = []
-        
         for i in stride(from: 0, through: 24, by: 4) {
-            if let date = calendar.date(byAdding: .hour, value: -i, to: now) {
+            if let date = calendar.date(byAdding: .hour, value: -i, to: selectedDate) {
                 dates.append(date)
             }
         }

@@ -10,6 +10,7 @@ import Charts
 
 struct SensorsChart: View {
     @ObservedObject var viewModel: ChartViewModel
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         if viewModel.selectedSensorReadings.isEmpty && viewModel.chartSensorReadings.isEmpty {
@@ -18,7 +19,7 @@ struct SensorsChart: View {
         else {
             Chart {
                 ForEach(viewModel.selectedMeasure.bands, id: \.self) { band in
-                    BarMark(x: .value("Time", viewModel.getMinDate()),
+                    BarMark(x: .value("Time", viewModel.getMinDate(selectedDate: appState.selectedDate)),
                             yStart: .value("Value", band.from),
                             yEnd: .value("Value", band.to),
                             width: 8)
@@ -58,7 +59,7 @@ struct SensorsChart: View {
                 }
             }
             .chartXAxis {
-                AxisMarks(values: viewModel.getLast24H()) { value in
+                AxisMarks(values: viewModel.getLast24HForGraph(selectedDate: appState.selectedDate)) { value in
                     if let date = value.as(Date.self) {
                         let hour = Calendar.current.component(.hour, from: date)
                         AxisValueLabel {

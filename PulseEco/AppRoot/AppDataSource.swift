@@ -26,6 +26,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                                      currentValue: nil,
                                                                      measures: nil)
     @Published var hourlyData: [Int: [SensorData]] = [:]
+    @Published var sensorDataForSelectedDate: [SensorData] = []
     
     var cancelables = Set<AnyCancellable>()
     var subscripiton: AnyCancellable?
@@ -309,13 +310,13 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     func selectFromCalendar () async {
-        
+        self.appState.selectedDate = self.appState.calendarSelection
         if appState.selectedDate.isSameDay(with: appState.calendarSelection) {
             await fetchWeeklyAverages(measureId: self.appState.selectedMeasureId,
-                                      selectedDate: self.appState.selectedDate)
+                                      selectedDate: self.appState.calendarSelection)
         }
-        
         await updatePins(selectedDate: appState.calendarSelection)
+        await getSensorDataForSelectedDate(cityName: self.appState.selectedCity.cityName, sensorType: self.appState.selectedMeasureId, selectedDate: self.appState.calendarSelection)
     }
     
     func updateWeeklyDataWrapper(cityName: String, measureId: String, selectedDate: Date) async {
@@ -340,5 +341,9 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                          to: calendar.date(byAdding: .day,
                                                                            value: +1,
                                                                            to: selectedDate)!).first?.value
+    }
+    
+    func getSensorDataForSelectedDate(cityName: String, sensorType: String, selectedDate: Date) async {
+        self.sensorDataForSelectedDate = await networkService.fetchSensorData(cityName: cityName, measureId: sensorType, from: selectedDate, to: calendar.date(byAdding: .day, value: +1, to: selectedDate)!) ?? []
     }
 }
