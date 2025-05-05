@@ -90,8 +90,6 @@ struct MainView: View {
                         
                         ZStack(alignment: .top) {
                             DateSelector()
-                                .padding(.horizontal)
-                                .padding(.vertical, 8)
                                 .zIndex(2)
                             
                             CityMapView(userSettings: self.appState.userSettings,

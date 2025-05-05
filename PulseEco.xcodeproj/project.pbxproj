@@ -44,6 +44,11 @@
 		3288687624B51F5E009CC56D /* MarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3288687224B51F5E009CC56D /* MarkerView.xib */; };
 		3288687724B51F5E009CC56D /* MarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288687324B51F5E009CC56D /* MarkerView.swift */; };
 		3288687924B5C053009CC56D /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288687824B5C053009CC56D /* UIViewExtension.swift */; };
+		565A2D402DC4C202001AB36F /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565A2D3C2DC4C1FD001AB36F /* ArrayExtensions.swift */; };
+		565A2D412DC4C202001AB36F /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565A2D3C2DC4C1FD001AB36F /* ArrayExtensions.swift */; };
+		565A2D422DC4C202001AB36F /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565A2D3C2DC4C1FD001AB36F /* ArrayExtensions.swift */; };
+		56DFA98F2DC24D73007E8528 /* DateSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DFA98E2DC24D6E007E8528 /* DateSlider.swift */; };
+		56DFA9912DC24DF5007E8528 /* WeekDayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DFA9902DC24DF2007E8528 /* WeekDayButton.swift */; };
 		5908ADE224AF2DA500C79BC9 /* DateFormatterUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */; };
 		59103AA024A4B64C00ED9617 /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59103A9F24A4B64C00ED9617 /* DisclaimerView.swift */; };
 		591642A52499FD70000A4F7C /* CityMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591642A42499FD70000A4F7C /* CityMapView.swift */; };
@@ -262,6 +267,9 @@
 		3288687224B51F5E009CC56D /* MarkerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MarkerView.xib; sourceTree = "<group>"; };
 		3288687324B51F5E009CC56D /* MarkerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerView.swift; sourceTree = "<group>"; };
 		3288687824B5C053009CC56D /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		565A2D3C2DC4C1FD001AB36F /* ArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
+		56DFA98E2DC24D6E007E8528 /* DateSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSlider.swift; sourceTree = "<group>"; };
+		56DFA9902DC24DF2007E8528 /* WeekDayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayButton.swift; sourceTree = "<group>"; };
 		5908ADE124AF2DA500C79BC9 /* DateFormatterUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatterUtils.swift; sourceTree = "<group>"; };
 		59103A9F24A4B64C00ED9617 /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
 		591642A42499FD70000A4F7C /* CityMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityMapView.swift; sourceTree = "<group>"; };
@@ -417,9 +425,11 @@
 		1E3A38AD280EBC4B002C4A54 /* History and Forecast */ = {
 			isa = PBXGroup;
 			children = (
+				56DFA9902DC24DF2007E8528 /* WeekDayButton.swift */,
 				13A95BA52D37E95F004F502A /* DateSelectorViewModel.swift */,
 				1E96776E280FFEB60085C37A /* CalendarDayButton.swift */,
 				1EAF05F72817E89B001C1EEA /* CalendarView.swift */,
+				56DFA98E2DC24D6E007E8528 /* DateSlider.swift */,
 				1EAF05F92817F653001C1EEA /* DateValueModel.swift */,
 				1E3B8363282E4CED00EED04D /* CalendarButtonView.swift */,
 				74A0D84C2833A9010043222E /* CalendarViewModel.swift */,
@@ -450,6 +460,14 @@
 				3288687824B5C053009CC56D /* UIViewExtension.swift */,
 			);
 			path = Markers;
+			sourceTree = "<group>";
+		};
+		565A2D432DC4C21A001AB36F /* Extenions */ = {
+			isa = PBXGroup;
+			children = (
+				565A2D3C2DC4C1FD001AB36F /* ArrayExtensions.swift */,
+			);
+			path = Extenions;
 			sourceTree = "<group>";
 		};
 		59103A9E24A4B62F00ED9617 /* Disclamer */ = {
@@ -757,6 +775,7 @@
 		D03524D22736055A0089E11C /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				565A2D432DC4C21A001AB36F /* Extenions */,
 				C52F371C26F240FC007813B0 /* KeyboardDismissModifier.swift */,
 				730B4DE3299E5E3800B32089 /* UserDefaultsEnumWrapper.swift */,
 			);
@@ -1039,8 +1058,10 @@
 				73CD1F29297AB580004E3347 /* SettingsView.swift in Sources */,
 				133B20C22CFF19120034AEF6 /* LoggerProtocol.swift in Sources */,
 				59F01AD724AC7B1300AD2802 /* AppDataSource.swift in Sources */,
+				56DFA98F2DC24D73007E8528 /* DateSlider.swift in Sources */,
 				5908ADE224AF2DA500C79BC9 /* DateFormatterUtils.swift in Sources */,
 				59103AA024A4B64C00ED9617 /* DisclaimerView.swift in Sources */,
+				565A2D402DC4C202001AB36F /* ArrayExtensions.swift in Sources */,
 				59504C1724B46CA700EA4AFF /* LineGraph.swift in Sources */,
 				74A0D84D2833A9010043222E /* CalendarViewModel.swift in Sources */,
 				593C263824BC89BE005152BE /* CityRowViewModel.swift in Sources */,
@@ -1101,6 +1122,7 @@
 				32479108261A6F7200E97C56 /* SlideOverCard.swift in Sources */,
 				59B0019024C9C269006EA796 /* ChartsDateValueFormatter.swift in Sources */,
 				59FAD1D42490C82600AC36A5 /* City.swift in Sources */,
+				56DFA9912DC24DF5007E8528 /* WeekDayButton.swift in Sources */,
 				59A35AD22498F1C800C07786 /* AppColors.swift in Sources */,
 				593C264524BCAD19005152BE /* SearchBar.swift in Sources */,
 				593C264324BC9E01005152BE /* UserSettings.swift in Sources */,
@@ -1130,6 +1152,7 @@
 				D03524CD273604D60089E11C /* UserSettings.swift in Sources */,
 				D03524D0273605410089E11C /* DateFormatterUtils.swift in Sources */,
 				D03524C8273603800089E11C /* SensorTypes.swift in Sources */,
+				565A2D412DC4C202001AB36F /* ArrayExtensions.swift in Sources */,
 				D03524C6273603800089E11C /* City.swift in Sources */,
 				D03524CB273603800089E11C /* SensorPin.swift in Sources */,
 				D03EC9052735E7EC00E6E16F /* WidgetTimelineProvider.swift in Sources */,
@@ -1154,6 +1177,7 @@
 				744A9DF128575CA700A91789 /* Calendar.swift in Sources */,
 				D0CBADFF27761A9E00526050 /* DateFormatterUtils.swift in Sources */,
 				D0CBADF62776108E00526050 /* SensorPin.swift in Sources */,
+				565A2D422DC4C202001AB36F /* ArrayExtensions.swift in Sources */,
 				1E515D0C282BC115009EFC4D /* DayDataWrapper.swift in Sources */,
 				D0CBADF52776108E00526050 /* City.swift in Sources */,
 				730B4DE629A368C900B32089 /* UserDefaultsEnumWrapper.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  CustomCalendar.swift
+//  CalendarView.swift
 //  PulseEco
 //
 //  Created by Sara Karachanakova on 26.4.22.
@@ -12,35 +12,32 @@ private enum PickerType {
 }
 
 struct CalendarView: View {
-    
     @EnvironmentObject var dataSource: AppDataSource
-    
+
     @StateObject private var viewModel: CalendarViewModel
     @State private var pickerType: PickerType = .day
-    
+
     @Binding var showingCalendar: Bool
     @Binding var selectedDate: Date
     @Binding var calendarSelection: Date
-    
+
     var onDaySelected: ((Date) -> Void)?
-    
+
     init(showingCalendar: Binding<Bool>,
          selectedDate: Binding<Date>,
          calendarSelection: Binding<Date>,
          onDaySelected: ((Date) -> Void)?,
-         viewModelClosure: @autoclosure @escaping () -> CalendarViewModel) {
-        
+         viewModelClosure: @autoclosure @escaping () -> CalendarViewModel)
+    {
         _viewModel = StateObject(wrappedValue: viewModelClosure())
         _showingCalendar = showingCalendar
         _selectedDate = selectedDate
         _calendarSelection = calendarSelection
         self.onDaySelected = onDaySelected
     }
-    
+
     var body: some View {
-        VStack {
-            pickerOptionButtonsView
-            
+        VStack(spacing: 10) {
             switch pickerType {
             case .day:
                 dayPicker
@@ -56,44 +53,36 @@ struct CalendarView: View {
         }
         .padding(.all)
         .background(Color.white)
-        .onAppear {
-            viewModel.dateValues = viewModel.extractDate()
-        }
+        .task(viewModel.setupDates)
     }
-    
-    private var pickerOptionButtonsView: some View {
-        HStack {
-            Button(action: {
-                pickerType = .day
-            }) {
-                Text("Day") //add trema (day_for_weekly_average_data)?
-                    .padding(8)
-                    .background(pickerType == .day ? Color(AppColors.firstButtonColor) : Color.white)
-                    .cornerRadius(8)
-                    .foregroundStyle(pickerType == .day ? Color.white : Color(AppColors.firstButtonColor))
-                    .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color(AppColors.firstButtonColor), lineWidth: 2)
-                    )
+
+    @ViewBuilder
+    private func calendarDaysView(value: DateValueModel, color: String) -> some View {
+        VStack {
+            if value.day != -1 {
+                Button {
+                    self.selectedDate = calendar.startOfDay(for: value.date)
+                    self.calendarSelection = calendar.startOfDay(for: value.date)
+                    Task {
+                        do {
+                            await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
+                            await viewModel.appDataSource.selectFromCalendar()
+                        }
+                    }
+                    showingCalendar = false
+                } label: {
+                    CalendarButtonView(day: value.day,
+                                       date: value.date,
+                                       color: color,
+                                       highlighted: value.date.isSameDay(with: selectedDate))
+                }
+                .disabled(value.date > calendar.startOfDay(for: Date.now) ? true : false)
             }
-            
-            Button(action: {
-                pickerType = .month
-            }) {
-                Text("Month") // add trema
-                    .padding(8)
-                    .background(pickerType == .month ? Color(AppColors.firstButtonColor) : Color.white)
-                    .cornerRadius(8)
-                    .foregroundStyle(pickerType == .month ? Color.white : Color(AppColors.firstButtonColor))
-                    .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color(AppColors.firstButtonColor), lineWidth: 2)
-                    )
-            }
-            Spacer()
         }
+        .padding(.vertical, 5)
+        .frame(height: 20, alignment: .top)
     }
-    
+
     @ViewBuilder
     var dayPicker: some View {
         VStack {
@@ -101,26 +90,17 @@ struct CalendarView: View {
             VStack {
                 HStack(spacing: 0) {
                     ForEach(viewModel.daysOfWeekShort, id: \.self) { day in
-                        Text( String(day.prefix(1)).capitalized )
+                        Text(String(day.prefix(1)).capitalized)
                             .frame(maxWidth: .infinity)
                             .font(.system(size: 12, weight: .regular))
                             .foregroundColor(Color(AppColors.greyColor))
                     }
                 }
                 HStack(spacing: 0) {
-                    
                     let columns = Array(repeating: GridItem(.flexible()), count: 7)
-                    
-                    LazyVGrid(columns: columns, spacing: 5) {
-                        ForEach(viewModel.monthlyData, id: \.self) { data in
-                            CalendarDayButton(date: data.date,
-                                          value: data.value,
-                                          color: data.color,
-                                          highlighted: selectedDate.isSameDay(with: data.date)) {
-                                self.selectedDate = calendar.startOfDay(for: data.date)
-                                self.calendarSelection = calendar.startOfDay(for: data.date)
-                                onDaySelected?(selectedDate)
-                            }
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(viewModel.dateValues, id: \.id) { value in
+                            calendarDaysView(value: value, color: value.color)
                         }
                     }
                 }
@@ -128,7 +108,7 @@ struct CalendarView: View {
             okAndCancelStack
         }
     }
-    
+
     private var okAndCancelStack: some View {
         HStack {
             Spacer()
@@ -141,8 +121,9 @@ struct CalendarView: View {
             }
             .padding(.top)
         }
+        .padding(.all)
     }
-    
+
     @ViewBuilder
     private var monthSelectionStack: some View {
         HStack {
@@ -175,7 +156,7 @@ struct CalendarView: View {
                     .padding(.leading)
             }
             .padding(.all)
-            
+
             Button {
                 Task {
                     await viewModel.nextMonth()
@@ -191,13 +172,12 @@ struct CalendarView: View {
             .padding(.all)
         }
     }
-    
+
     @ViewBuilder
     private var yearPicker: some View {
-        
         let currentYear = calendar.component(.year, from: Date())
-        let years = 2017...currentYear
-        
+        let years = 2017 ... currentYear
+
         VStack {
             HStack {
                 Button {
@@ -210,7 +190,7 @@ struct CalendarView: View {
                 Spacer()
             }
             .padding(.top, 0)
-            
+
             let columns = Array(repeating: GridItem(.flexible()), count: 4)
             LazyVGrid(columns: columns, spacing: 20) {
                 ForEach(years, id: \.self) { year in
@@ -233,7 +213,7 @@ struct CalendarView: View {
                 }
             }
             .padding(.top)
-            
+
             HStack {
                 Spacer()
                 Button {
@@ -249,7 +229,7 @@ struct CalendarView: View {
         }
         .padding(.top)
     }
-    
+
     @ViewBuilder
     private var monthPicker: some View {
         VStack {
@@ -267,9 +247,9 @@ struct CalendarView: View {
                 Spacer()
             }
             .padding(.top, 0)
-            
+
             let columns = Array(repeating: GridItem(.flexible()), count: 4)
-            
+
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(viewModel.monthValues, id: \.self) { val in
                     Button {
@@ -288,7 +268,7 @@ struct CalendarView: View {
                 }
             }
             .padding(.top)
-            
+
             okAndCancelStack
         }
         .padding(.top)
