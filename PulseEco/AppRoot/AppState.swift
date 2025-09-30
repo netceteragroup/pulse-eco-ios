@@ -5,6 +5,9 @@ import Combine
 class AppState: ObservableObject, ViewModelDependency {
     var cancelables = Set<AnyCancellable>()
     
+    /// Feature flags
+    let showMenu: Bool = false
+    
     @Published var selectedMeasureId: String = "pm10"
     @Published var citySelectorClicked: Bool = false
     @Published var selectedCity: City = UserSettings.selectedCity {

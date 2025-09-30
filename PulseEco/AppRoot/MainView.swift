@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
@@ -63,6 +64,11 @@ struct MainView: View {
                 }
             }
         }
+        .onChange(of: scenePhase) { _, new in
+            if new == .active {
+                self.refreshService.refreshData()
+            }
+        }
     }
     
     var loadingView: some View {
@@ -115,11 +121,26 @@ struct MainView: View {
                 }
                 .navigationBarTitle("", displayMode: .inline)
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        leadingNavigationItems
+                    ToolbarItem(placement: .topBarLeading) {
+                        HStack {
+                            Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
+                                .imageScale(.large)
+                                .onTapGesture {
+                                    if self.appState.citySelectorClicked == false {
+                                        self.appState.selectedSensor = nil
+                                        self.refreshService.refreshData()
+                                    }
+                                }
+                            leadingNavigationItems
+                        }
                     }
+
                     ToolbarItemGroup(placement: .primaryAction) {
-                        trailingNavigationItem
+                        if appState.showMenu {
+                            menuTrailingNavigationItem
+                        } else {
+                            languageChangeButton
+                        }
                     }
                 }
             }
@@ -137,29 +158,18 @@ struct MainView: View {
         )
     }
     
-    var trailingNavigationItem: some View {
-        HStack {
-            Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
-                .imageScale(.large)
-                .padding(.trailing, (UIWidth)/4)
-                .onTapGesture {
-                    if self.appState.citySelectorClicked == false {
-                        self.appState.selectedSensor = nil
-                        self.refreshService.refreshData()
-                    }
+    var menuTrailingNavigationItem: some View {
+        menuItem
+            .navigationDestination(for: AppView.self) { view in
+                switch view {
+                case .settings:
+                    SettingsView()
+                case .dashboard:
+                    Text("dashboard view")
+                case .mapView:
+                    Text("Map View")
                 }
-            menuItem
-                .navigationDestination(for: AppView.self) { view in
-                    switch view {
-                    case .settings:
-                        SettingsView()
-                    case .dashboard:
-                        Text("dashboard view")
-                    case .mapView:
-                        Text("Map View")
-                    }
-                }
-        }
+            }
     }
     
     var menuItem: some View {
@@ -201,6 +211,29 @@ struct MainView: View {
         }
     }
     
+    var languageChangeButton: some View {
+        Menu {
+            ForEach(Countries.countries(language: Trema.appLanguage), id: \.self) { country in
+                Button {
+                    selectCountry(country: country)
+                } label: {
+                    HStack {
+                        Text(country.languageName)
+                        if country.shortName == Trema.appLanguage {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(Color(AppColors.darkblue))
+                        }
+                    }
+                }
+            }
+        } label: {
+            Image(systemName: "globe")
+                .resizable()
+                .frame(width: 20, height: 20)
+                .foregroundColor(Color(AppColors.darkblue))
+        }
+    }
+    
     var leadingNavigationItems: some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) {
@@ -225,3 +258,13 @@ extension View {
     }
 }
 
+extension MainView {
+    private func selectCountry(country: Country) {
+        Trema.appLanguage = country.shortName
+        appState.selectedLanguage = Trema.appLanguage
+        dataSource.getMeasures()
+        appState.loadingMeasures = true
+        refreshService.updateRefreshDate()
+        dataSource.getValuesForCity(cityName: appState.selectedCity.cityName)
+    }
+}

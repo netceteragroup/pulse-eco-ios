@@ -51,7 +51,7 @@ struct SensorsChart: View {
                 }
                 
             }
-            .chartYScale(domain: 0...viewModel.maxValue())
+            .chartYScale(domain: viewModel.selectedMeasure.showMin...viewModel.selectedMeasure.showMax)
             .chartYAxis {
                 AxisMarks(position: .leading) {
                     AxisValueLabel()

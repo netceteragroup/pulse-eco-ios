@@ -19,6 +19,16 @@ struct CitySearchContentView: View {
     
     var searchText: String
     
+    var body: some View {
+        if isSearching || (viewModel.cities.isEmpty && !locationManager.isAuthorizationGranted()) {
+            CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities), userSettings: userSettings, searchText: searchText)
+                .padding(.vertical, 1)
+        }
+        else {
+            favoriteCitiesList()
+        }
+    }
+    
     var allFavoritesAndLocation: [FavouriteCityRowViewModel] {
         var tmpAllCities: [FavouriteCityRowViewModel] = []
         if let currentCity = locationManager.currentCity {
@@ -28,16 +38,6 @@ struct CitySearchContentView: View {
         }
         tmpAllCities.append(contentsOf: viewModel.getCities())
         return tmpAllCities
-    }
-    
-    var body: some View {
-        if isSearching || (viewModel.cities.isEmpty && !locationManager.isAuthorizationGranted()) {
-            CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities), userSettings: userSettings, searchText: searchText)
-                .padding(.vertical, 1)
-        }
-        else {
-            favoriteCitiesList()
-        }
     }
     
     @ViewBuilder
@@ -96,4 +96,17 @@ struct CitySearchContentView: View {
             }
         }
     }
+}
+
+#Preview {
+    CitySearchContentView(
+        userSettings: UserSettings(),
+        viewModel:
+            CitySearchContentViewModel(
+                selectedMeasure: "",
+                favouriteCities: [],
+                cityValues: [],
+                measureList: []
+            ),
+        searchText: "")
 }

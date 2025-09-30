@@ -47,7 +47,7 @@ struct CalendarView: View {
                 yearPicker
             }
         }
-        .onChange(of: [viewModel.currentMonthOffset, viewModel.selectedYear]) { _ in
+        .onChange(of: [viewModel.currentMonthOffset, viewModel.selectedYear]) {
             viewModel.currentDate = viewModel.getCurrentMonth()
             viewModel.dateValues = viewModel.extractDate()
         }

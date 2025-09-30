@@ -115,10 +115,11 @@ struct SensorDetailsView: View {
                                 Text(Trema.text(for: "default_no_sensors_selected"))
                                     .foregroundStyle(.black)
                             } else {
-                                Text("Graph data for selected sensors") // add trema
+                                Text(Trema.text(for: "graph_data_for_selected_sensors"))
                                     .foregroundStyle(.black)
                             }
                         }
+                        .padding(10)
                     }
                 }
                 .padding(.top, 24)
@@ -140,7 +141,7 @@ struct SensorDetailsView: View {
                         .padding(.vertical, 20)
                         .padding(.horizontal, 10)
                     
-                    Text("You can select up to 5 sensors.")
+                    Text(Trema.text(for: "select_up_to_5_sensors"))
                         .font(.caption)
                         .foregroundStyle(Color(AppColors.darkblue))
                         .multilineTextAlignment(.center)
@@ -178,7 +179,7 @@ struct SensorDetailsView: View {
         Button(action: {
             sensorSelectionAlertDialogIsActive = true
         }) {
-            Text("SELECT SENSORS") //add trema
+            Text(Trema.text(for: "select_sensors_button"))
                 .font(.caption)
                 .padding(12)
                 .foregroundStyle(Color(AppColors.darkblue))

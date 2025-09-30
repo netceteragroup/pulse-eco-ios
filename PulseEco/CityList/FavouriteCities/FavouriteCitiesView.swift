@@ -24,9 +24,8 @@ struct FavouriteCitiesView: View {
                                                                         cityValues: self.appState.userSettings.cityValues,
                                                                         measureList: self.dataSource.measures),
                                   searchText: searchText)
-                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Trema.text(for: "search_city_or_country"))
+            .searchable(text: $searchText, placement: .toolbarPrincipal, prompt: Trema.text(for: "search_city_or_country"))
                 .listStyle(InsetGroupedListStyle())
-                .overlay(ShadowOnBottomOfView())
         }
     }
 }
