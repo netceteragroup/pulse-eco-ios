@@ -23,7 +23,7 @@ struct SensorSelectionView: View {
                     }
                 
                 VStack {
-                    Text("You can add up to 5 sensors") //add trema
+                    Text(Trema.text(for: "tooltip_maximum_sensors_reached"))
                         .font(.title3)
                         .padding()
                     

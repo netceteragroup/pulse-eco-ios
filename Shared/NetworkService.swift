@@ -3,7 +3,8 @@ import Combine
 import SwiftUI
 
 class NetworkService {
-    
+    private let logger = SystemLoggerAdapter(category: "NetworkService")
+
     let appURLSession: URLSession = {
         let config = URLSessionConfiguration.default
         config.httpAdditionalHeaders = ["User-Agent": "pulse-eco-ios"]
@@ -24,15 +25,19 @@ class NetworkService {
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
         guard let url = URL(string: formattedRequest) else { return nil }
         
+        logger.logDebug("[NetworkService] Request URL: \(url.absoluteString)")
+        
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let response = try JSONDecoder().decode([Sensor].self, from: data)
+            logger.logDebug("[NetworkService] Download Sendors - Response for: \(cityName)")
             return response
         } catch {
+            logger.logError("[NetworkService] Error: \(error.localizedDescription)")
             return nil
         }
     }
-    
+
     func downloadAverageData(for cityName: String,
                              from startDate: Date,
                              to endDate: Date,
@@ -45,39 +50,69 @@ class NetworkService {
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
         guard let url = URL(string: formattedRequest) else { return nil }
         
+        logger.logDebug("[NetworkService] Request URL: \(url.absoluteString)")
+        
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let response = try JSONDecoder().decode([SensorData].self, from: data)
+            logger.logDebug("[NetworkService] Download average data - Response for city: \(cityName)")
             return response
         } catch {
+            logger.logError("[NetworkService] Error: \(error.localizedDescription)")
             return nil
         }
     }
-    
+
     func downloadCurrentData(for cityName: String) async -> CityOverallValues? {
         let path = "https://\(cityName).pulse.eco/rest/overall"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
         guard let url = URL(string: formattedRequest) else { return nil }
         
+        logger.logDebug("[NetworkService] Request URL: \(url.absoluteString)")
+        
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let response = try JSONDecoder().decode(CityOverallValues.self, from: data)
+            logger.logDebug("[NetworkService] Download current data - Response for city: \(cityName)")
             return response
         } catch {
+            logger.logError("[NetworkService] Error: \(error.localizedDescription)")
             return nil
         }
     }
     
+    func downloadCurrentData(cityNames: [String]) async -> [CityOverallValues] {
+        let cityNames = cityNames.joined(separator: ",")
+        let path = "https://pulse.eco/rest/overall?cityNames=\(cityNames)"
+        guard let url = URL(string: path) else { return [] }
+        
+        logger.logDebug("[NetworkService] Request URL: \(url.absoluteString)")
+
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let response = try JSONDecoder().decode([CityOverallValues].self, from: data)
+            logger.logDebug("[NetworkService] Download current data - Response for cities: \(cityNames)")
+            return response
+        } catch {
+            logger.logError("[NetworkService] Error: \(error.localizedDescription)")
+            return []
+        }
+    }
+
     func fetchMeasures() async -> [Measure]? {
         let path = "https://pulse.eco/rest/measures?\(language)"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
         guard let url = URL(string: formattedRequest) else { return nil }
         
+        logger.logDebug("[NetworkService] Request URL: \(url.absoluteString)")
+        
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let response = try JSONDecoder().decode([Measure].self, from: data)
+            logger.logDebug("[NetworkService] Fetched measuers")
             return response
         } catch {
+            logger.logError("[NetworkService] Error: \(error.localizedDescription)")
             return nil
         }
     }
@@ -101,24 +136,30 @@ class NetworkService {
                               sensorType: String,
                               selectedMonth: Int,
                               selectedYear: Int) async -> CityDataWrapper {
-        
-        let currentComponents = Calendar.current.dateComponents([.month, .year], from: Date())
+        let calendar = Calendar.current
+        let currentComponents = calendar.dateComponents([.month, .year, .day], from: Date())
         let currentMonth = currentComponents.month ?? 1
         let currentYear = currentComponents.year ?? 1
+        let currentDay = currentComponents.day ?? 1
         
         async let currentMonthSensorData = fetchDataForSelectedMonth(cityName: cityName,
                                                                      sensorType: sensorType,
                                                                      selectedMonth: currentMonth,
                                                                      selectedYear: currentYear)
-        var allSensorData: [SensorData] = await currentMonthSensorData
         
-        if !(selectedYear == currentYear && selectedMonth == currentMonth) {
-            async let selectedMonthSensorData = fetchDataForSelectedMonth(cityName: cityName,
-                                                                          sensorType: sensorType,
-                                                                          selectedMonth: selectedMonth,
-                                                                          selectedYear: selectedYear)
-            await allSensorData.append(contentsOf: selectedMonthSensorData)
-        }
+        let shouldFetchPreviousMonthData = currentYear == selectedYear && currentMonth == selectedMonth && currentDay < 7
+        let previousMonthComponents = calendar.dateComponents([.year, .month, .day], from: calendar.date(byAdding: .month, value: -1, to: Date()) ?? Date())
+        async let previousMonthSensorData = shouldFetchPreviousMonthData ? await fetchDataForSelectedMonth(cityName: cityName,
+                                                                                                           sensorType: sensorType,
+                                                                                                           selectedMonth: previousMonthComponents.month ?? 0,
+                                                                                                           selectedYear: previousMonthComponents.year ?? 0) : []
+        
+        let shouldFetchSelectedMonthData = !(selectedYear == currentYear && selectedMonth == currentMonth)
+        async let selectedMonthSensorData = shouldFetchSelectedMonthData ? await fetchDataForSelectedMonth(cityName: cityName,
+                                                                                                           sensorType: sensorType,
+                                                                                                           selectedMonth: selectedMonth,
+                                                                                                           selectedYear: selectedYear) : []
+        let allSensorData = await currentMonthSensorData + previousMonthSensorData + selectedMonthSensorData
         
         async let current = downloadCurrentData(for: cityName)
         async let measures = fetchMeasures()

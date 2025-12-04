@@ -13,7 +13,6 @@ struct MapView: UIViewRepresentable {
     @ObservedObject var viewModel: MapViewModel
     let appState: AppState
     @State var boundryAndZoomEnabled = true
-    @ObservedObject var locationManager = LocationManager.shared
     
     func makeCoordinator() -> MapViewCoordinator {
         MapViewCoordinator(self, $boundryAndZoomEnabled)
@@ -28,30 +27,38 @@ struct MapView: UIViewRepresentable {
         addAnotations(to: mapView)
         
         let city: City = viewModel.selectedCity
-        
         let zoomLevel = city.intialZoomLevel
         
-        var region: MKCoordinateRegion = MKCoordinateRegion()
+        var initialRegion: MKCoordinateRegion
         
-        if city.cityBorderPoints.count == 0 {
-            locationManager.fetchCityRegion(cityName: city.cityName)
-            if let currentRegion = locationManager.region {
-                region = currentRegion
+        if city.cityBorderPoints.isEmpty {
+            // fallback region until async region is fetched
+            initialRegion = MKCoordinateRegion(
+                center: City.defaultCity().center,
+                latitudinalMeters: 10000,
+                longitudinalMeters: 10000
+            )
+            
+            // async fetch city region
+            Task {
+                if let fetchedRegion = await CityMapper.fetchCityRegion(cityName: city.cityName) {
+                    DispatchQueue.main.async {
+                        let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: Double((23 - zoomLevel) * 8000))
+                        mapView.setCameraZoomRange(zoomRange, animated: true)
+                        mapView.setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: fetchedRegion), animated: true)
+                        mapView.setRegion(fetchedRegion, animated: true)
+                    }
+                }
             }
-            else {
-                region = MKCoordinateRegion(center: City.defaultCity().center, latitudinalMeters: 10000.0, longitudinalMeters: 10000.0)
-            }
-        }
-        else {
-            region = MKCoordinateRegion(center: city.center, span: viewModel.span)
+        } else {
+            initialRegion = MKCoordinateRegion(center: city.center, span: viewModel.span)
         }
         
-        let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: Double((23-zoomLevel)*8000))
-        mapView.setCameraZoomRange(zoomRange, animated: true)
-        mapView.setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: region),
-                                 animated: true)
-        mapView.setRegion(region, animated: true)
-
+        let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: Double((23 - zoomLevel) * 8000))
+        mapView.setCameraZoomRange(zoomRange, animated: false)
+        mapView.setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: initialRegion), animated: false)
+        mapView.setRegion(initialRegion, animated: false)
+        
         return mapView
     }
     

@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class AppState: ObservableObject, ViewModelDependency {
+class AppState: ObservableObject {
     var cancelables = Set<AnyCancellable>()
     
     /// Feature flags
@@ -16,7 +16,7 @@ class AppState: ObservableObject, ViewModelDependency {
         }
     }
     
-    @Published var selectedAppView: AppView = UserSettings().selectedAppView
+    @Published var selectedAppView: AppView = UserSettings.selectedAppView
     @Published var showSensorDetails: Bool = true
     @Published var selectedSensor: SensorPinModel?
     @Published var selectedSensorsForGraph: [SensorPinModel] = []
@@ -27,7 +27,6 @@ class AppState: ObservableObject, ViewModelDependency {
     @Published var sensorPins: [SensorPinModel] = []
     @Published var loadingCityData: Bool = true
     @Published var loadingMeasures: Bool = true
-    @Published var userSettings: UserSettings = UserSettings()
     @Published var showingCalendar = false
     @Published var selectedDateAverageValue: String?
     @Published var selectedDate: Date = calendar.startOfDay(for: Date.now)
@@ -64,7 +63,6 @@ class AppState: ObservableObject, ViewModelDependency {
     
     func addSubscribers() {
         selectedCitySubscriber()
-        cityValuesSubscriber()
     }
     
     private func selectedCitySubscriber() {
@@ -75,22 +73,5 @@ class AppState: ObservableObject, ViewModelDependency {
                 hourlySensors.removeAll()
             }
             .store(in: &cancelables)
-    }
-    
-    private func cityValuesSubscriber() {
-        userSettings.$cityValues
-            .dropFirst()
-            .sink { [weak self] values in
-                guard let self else { return }
-                for city in self.userSettings.favouriteCities {
-                    if !values.contains(where: { city.cityName == $0.cityName }) {
-                        self.isWaitingToFetchFavouriteCitiesOveralls = true
-                        return
-                    }
-                }
-                self.isWaitingToFetchFavouriteCitiesOveralls = false
-                cancellables.removeAll()
-            }
-            .store(in: &cancellables)
     }
 }

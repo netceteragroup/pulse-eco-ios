@@ -42,14 +42,6 @@ class MapViewModel: ObservableObject {
             self?.setCity(city)
         }.store(in: &cancellables)
         
-        self.appState.$selectedMeasureId.sink { [weak self] selectedMeasure in
-            self?.findSelectedMeasure(selectedMeasure)
-        }.store(in: &cancellables)
-        
-        self.appDataSource.$measures.sink { [weak self] measures in
-            self?.findSelectedMeasure(self?.measure?.id, measures: measures)
-        }.store(in: &cancellables)
-        
         self.appState.$loadingCityData.sink { [unowned self] isLoading in
             guard !isLoading, let selectedMeasure = self.measure else { return }
             
@@ -75,27 +67,6 @@ class MapViewModel: ObservableObject {
             self.shouldUpdateSensors = true
             self.sensors = pins
         }.store(in: &cancellables)
-    }
-    
-    private func findSelectedMeasure(_ measure: String?, measures: [Measure]? = nil) {
-        guard let measureName = measure else { return }
-        let measures = measures ?? appDataSource.measures
-        
-        let selectedMeasure = measures.filter { $0.id.lowercased() == measureName.lowercased()}.first
-        
-        defer { self.measure = selectedMeasure }
-        
-        guard let measure = selectedMeasure else { return }
-        Task {
-            await appDataSource.fetchHistory(for: UserSettings.selectedCity.cityName, measureId: measure.id)
-        }
-        self.appState.selectedDateAverageValue =
-        self.appState.weeklyDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
-                                                         sensorType: measure.id,
-                                                         from: appState.selectedDate,
-                                                         to: calendar.date(byAdding: .day,
-                                                                           value: +1,
-                                                                           to: appState.selectedDate)!).first?.value
     }
     
     private func setCity(_ city: City) {

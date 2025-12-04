@@ -81,3 +81,9 @@ struct City: Codable, Identifiable, Hashable {
 struct CityCoordinates: Codable {
     let latitude, longitute: String
 }
+
+extension Array where Element == City {
+    func checkFavorites() -> Bool {
+        self.first { favoriteCity in !UserSettings.cityValues.contains(where: { $0.cityName == favoriteCity.cityName }) } == nil
+    }
+}
