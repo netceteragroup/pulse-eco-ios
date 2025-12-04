@@ -29,7 +29,7 @@ class ChartViewModel: ObservableObject {
             if let lastDate = DateFormatter.iso8601Full.date(from: partialResult.last?.stamp ?? ""),
                let date = DateFormatter.iso8601Full.date(from: nextData.stamp) {
                 let diff = date.timeIntervalSince(lastDate)
-                if diff >= 30 * 60 {
+                if diff >= 5 * 60 {
                     partialResult.append(nextData)
                 }
             }

@@ -14,7 +14,8 @@ struct SensorsChart: View {
     
     var body: some View {
         if viewModel.selectedSensorReadings.isEmpty && viewModel.chartSensorReadings.isEmpty {
-            Text("No sensors selected")
+            Text(Trema.text(for: "no_sensors_selected"))
+                .multilineTextAlignment(.center)
         }
         else {
             Chart {

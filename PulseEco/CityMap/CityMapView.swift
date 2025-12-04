@@ -17,7 +17,6 @@ struct CityMapView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
-    @ObservedObject var userSettings: UserSettings
     
     let mapViewModel: MapViewModel
     
@@ -114,8 +113,7 @@ enum ActiveSheet: Int, Identifiable {
 
 #Preview {
     VStack {
-        CityMapView(userSettings: AppState().userSettings,
-                    mapViewModel: MapViewModel(
+        CityMapView(mapViewModel: MapViewModel(
                         appState: AppState(),
                         appDataSource: AppDataSource(appState: AppState())
                     )

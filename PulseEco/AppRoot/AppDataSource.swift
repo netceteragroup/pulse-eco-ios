@@ -3,7 +3,9 @@ import Combine
 import UIKit
 
 @MainActor
-class AppDataSource: ObservableObject, ViewModelDependency {
+class AppDataSource: ObservableObject {
+    private let logger = SystemLoggerAdapter(category: "AppDataSource")
+
     let appState: AppState
     @Published var measures: [Measure] = [Measure.empty("PM10"),
                                           Measure.empty("PM25"),
@@ -63,6 +65,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
     }
     
     func getValuesForCity(cityName: String = UserSettings.selectedCity.cityName) {
+        logger.logDebug("Fetching values for city: \(cityName)")
         self.appState.loadingCityData = true
         Task {
             async let cityOverall = self.networkService.downloadCurrentData(for: cityName)
@@ -70,7 +73,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             async let sensorsData = self.networkService.currentDataSensor(cityName: cityName,
                                                                           measureId: self.appState.selectedMeasureId) ?? []
             async let sensorsData24h = self.networkService.fetch24hDataForSensors(cityName: cityName) ?? []
-            
+
             let wrapper = await CityValueWrapper(cityOverall: cityOverall,
                                                  citySensors: citySensors,
                                                  sensorsData: sensorsData,
@@ -79,37 +82,24 @@ class AppDataSource: ObservableObject, ViewModelDependency {
             self.citySensors = wrapper.citySensors
             self.sensorsData = wrapper.sensorsData
             self.sensorsData24h = wrapper.sensorsData24h
-            
+            logger.logDebug("City data fetched: cityOverall = \(wrapper.cityOverall?.cityName ?? "nil"), sensors = \(wrapper.citySensors.count)")
+
             await updatePins(selectedDate: appState.selectedDate)
-            
             self.appState.loadingCityData = false
-            
-            self.monthlyAverage = await networkService.fetchMonthAverages(cityName: cityName,
-                                                                          measureType: self.appState.selectedMeasureId,
-                                                                          selectedDate: self.appState.selectedDate)
         }
     }
     
     func emptyCityOverallValueList() {
-        self.appState.userSettings.cityValues.removeAll()
+        UserSettings.cityValues.removeAll()
     }
     
     func getCities() {
         Task {
             let cities = await networkService.fetchCities() ?? []
             self.cities = cities
-            try await withThrowingTaskGroup(of: CityOverallValues.self) { group in
-                for city in cities {
-                    group.addTask {
-                        let value = await NetworkService().downloadCurrentData(for: city.cityName)
-                        return value ?? CityOverallValues(cityName: city.cityName, values: [:])
-                    }
-                }
-                
-                for try await overallValue in group {
-                    self.appState.userSettings.cityValues.append(overallValue)
-                }
-            }
+            let overallCities = await networkService.downloadCurrentData(cityNames: cities.map { $0.cityName.lowercased() })
+            UserSettings.cityValues.append(contentsOf: overallCities)
+            appState.isWaitingToFetchFavouriteCitiesOveralls = false
         }
     }
     
@@ -243,7 +233,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
         else {
             fetchCachedValues(dailySensorData: dailySensorData, groupById: groupById)
         }
-        await setAverageValueforSelectedDate(cityName: appState.selectedCity.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
+        await setAverageValueForSelectedDate(cityName: appState.selectedCity.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
     }
     
     private func groupByHour(sensorData: [SensorData],
@@ -354,7 +344,7 @@ class AppDataSource: ObservableObject, ViewModelDependency {
                                                        selectedDate: appState.calendarSelection)
     }
     
-    func setAverageValueforSelectedDate(cityName: String, sensorType: String, selectedDate: Date) async {
+    func setAverageValueForSelectedDate(cityName: String, sensorType: String, selectedDate: Date) async {
         if Date().isSameDay(with: selectedDate) {
             let averageValues = await self.networkService.downloadCurrentData(for: cityName)
             if let averageValueForSensorType = averageValues?.values[sensorType] {

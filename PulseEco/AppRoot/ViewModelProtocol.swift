@@ -16,5 +16,3 @@ protocol ViewWithViewModel: View {
     init(viewModelClosure: @autoclosure @escaping () -> ViewModel)
     
 }
-
-protocol ViewModelDependency: AnyObject {}
