@@ -58,7 +58,7 @@ struct MainView: View {
     
     private func changeLocation(city: City) {
         appState.currentLocationIsSelected = true
-        guard appState.selectedCity != .defaultCity() && city != .defaultCity() else { return }
+        guard appState.selectedCity != city else { return }
         logger.logDebug("City updated: \(city.cityName)")
         appState.selectedCity = city
         dataSource.getValuesForCity(cityName: city.cityName)

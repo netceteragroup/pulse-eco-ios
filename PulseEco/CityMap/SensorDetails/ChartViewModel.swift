@@ -10,6 +10,18 @@ class ChartViewModel: ObservableObject {
     @Published var chartSensorReadings: [[ChartSensorReading]]
     @Published var selectedSensorReadings: [ChartSensorReading]
     
+    var maxValue: Int {
+        let allChartData = chartSensorReadings.flatMap { $0 } + selectedSensorReadings
+        guard let maxValue = allChartData.map({ $0.value }).max() else { return selectedMeasure.showMax }
+        return max(maxValue, selectedMeasure.showMax)
+    }
+    
+    var minValue: Int {
+        let allChartData = chartSensorReadings.flatMap { $0 } + selectedSensorReadings
+        guard let minValue = allChartData.map({ $0.value }).min() else { return selectedMeasure.showMin }
+        return min(minValue, selectedMeasure.showMin)
+    }
+    
     init(sensor: SensorPinModel, sensors: [SensorPinModel], sensorsData: [SensorData], selectedMeasure: Measure, sensorDataForSelectedDate: [SensorData]) {
         self.sensor = sensor
         self.sensors = sensors
@@ -64,28 +76,6 @@ class ChartViewModel: ObservableObject {
                 ChartSensorReading(sensorData: $0, title: sensor.title)
             }
             chartSensorReadings.append(tmp)
-        }
-    }
-    
-    func maxValue() -> Int {
-        let selectedSensorReadingMaxValue = selectedSensorReadings.map({ sensor in
-            sensor.value
-        }).max()
-        
-        if let selectedSensorReadingMaxValue {
-            return selectedSensorReadingMaxValue
-        }
-        
-        else {
-            let chartSensorReadingsMaxValue = chartSensorReadings.joined().compactMap{
-                $0.value
-            }.max()
-            
-            if let chartSensorReadingsMaxValue {
-                return chartSensorReadingsMaxValue
-            }
-            
-            return selectedMeasure.legendMax
         }
     }
     

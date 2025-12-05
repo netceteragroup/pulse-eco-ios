@@ -40,7 +40,7 @@ struct SensorsChart: View {
                     }
                 }
                 else {
-                    ForEach(Array(viewModel.chartSensorReadings.enumerated()), id:\.offset) { index, sensor in
+                    ForEach(Array(viewModel.chartSensorReadings.enumerated()), id:\.offset) { _, sensor in
                         ForEach(sensor) { reading in
                             LineMark(x: .value("Time",
                                                reading.stamp),
@@ -52,7 +52,7 @@ struct SensorsChart: View {
                 }
                 
             }
-            .chartYScale(domain: viewModel.selectedMeasure.showMin...viewModel.selectedMeasure.showMax)
+            .chartYScale(domain: viewModel.minValue...viewModel.maxValue)
             .chartYAxis {
                 AxisMarks(position: .leading) {
                     AxisValueLabel()
