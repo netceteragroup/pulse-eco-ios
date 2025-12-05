@@ -27,7 +27,7 @@ struct SlideOverCard<Content: View>: View {
                         .onAppear() {
                             self.topLimit = geometry.size.height
                         }
-                        .onChange(of: geometry.size) { newValue in
+                        .onChange(of: geometry.size) { _, newValue in
                             self.topLimit = newValue.height
                         }
                 })
@@ -47,7 +47,7 @@ struct SlideOverCard<Content: View>: View {
         .onAppear {
             updatePosition()
         }
-        .onChange(of: [height, proxy.size.height]) { _ in
+        .onChange(of: [height, proxy.size.height]) {
             updatePosition()
         }
     }

@@ -28,7 +28,7 @@ struct DateSelector: View {
                                                                  appDataSource: self.appDataSource))
                 .padding(.horizontal)
                 .padding(.vertical, 8)
-                .onChange(of: appState.selectedMeasureId) { newValue in
+                .onChange(of: appState.selectedMeasureId) { _, newValue in
                     viewModel.isDatePickerPressed = false
                     viewModel.onSelectedMeasureChange?.cancel()
                     viewModel.onSelectedMeasureChange = Task {

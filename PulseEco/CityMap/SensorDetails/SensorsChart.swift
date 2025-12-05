@@ -14,7 +14,8 @@ struct SensorsChart: View {
     
     var body: some View {
         if viewModel.selectedSensorReadings.isEmpty && viewModel.chartSensorReadings.isEmpty {
-            Text("No sensors selected")
+            Text(Trema.text(for: "no_sensors_selected"))
+                .multilineTextAlignment(.center)
         }
         else {
             Chart {
@@ -39,7 +40,7 @@ struct SensorsChart: View {
                     }
                 }
                 else {
-                    ForEach(Array(viewModel.chartSensorReadings.enumerated()), id:\.offset) { index, sensor in
+                    ForEach(Array(viewModel.chartSensorReadings.enumerated()), id:\.offset) { _, sensor in
                         ForEach(sensor) { reading in
                             LineMark(x: .value("Time",
                                                reading.stamp),
@@ -51,7 +52,7 @@ struct SensorsChart: View {
                 }
                 
             }
-            .chartYScale(domain: 0...viewModel.maxValue())
+            .chartYScale(domain: viewModel.minValue...viewModel.maxValue)
             .chartYAxis {
                 AxisMarks(position: .leading) {
                     AxisValueLabel()

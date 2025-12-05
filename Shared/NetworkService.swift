@@ -3,7 +3,8 @@ import Combine
 import SwiftUI
 
 class NetworkService {
-    
+    private let logger = SystemLoggerAdapter(category: "NetworkService")
+
     let appURLSession: URLSession = {
         let config = URLSessionConfiguration.default
         config.httpAdditionalHeaders = ["User-Agent": "pulse-eco-ios"]
@@ -22,68 +23,96 @@ class NetworkService {
     func downloadSensorsAsync(cityName: String) async -> [Sensor]? {
         let path = "https://\(cityName).pulse.eco/rest/sensor"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
-        let url = URL(string: formattedRequest)!
-        let urlSession = URLSession.shared
+        guard let url = URL(string: formattedRequest) else { return nil }
+        
+        logger.logDebug("[NetworkService] Request URL: \(url.absoluteString)")
+        
         do {
-            let (data, _) = try await urlSession.data(from: url)
-            let response: [Sensor] = try JSONDecoder().decode([Sensor].self, from: data)
-            
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let response = try JSONDecoder().decode([Sensor].self, from: data)
+            logger.logDebug("[NetworkService] Download Sendors - Response for: \(cityName)")
             return response
         } catch {
+            logger.logError("[NetworkService] Error: \(error.localizedDescription)")
             return nil
         }
     }
-    
+
     func downloadAverageData(for cityName: String,
                              from startDate: Date,
                              to endDate: Date,
                              timeUnit: AverageTimeUnit,
                              sensorType: String) async -> [SensorData]? {
         let sensorId = -1
-        let from = DateFormatter.iso8601Full.string(from: startDate)
-        let to = DateFormatter.iso8601Full.string(from: endDate)
-        
-        let path = "https://\(cityName).pulse.eco/rest/avgData/" +
-        "\(timeUnit)?sensorId=\(sensorId)&type=\(sensorType)&from=\(from)&to=\(to)"
+        let fromString = DateFormatter.iso8601Full.string(from: startDate)
+        let toString = DateFormatter.iso8601Full.string(from: endDate)
+        let path = "https://\(cityName).pulse.eco/rest/avgData/\(timeUnit)?sensorId=\(sensorId)&type=\(sensorType)&from=\(fromString)&to=\(toString)"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
-        let url = URL(string: formattedRequest)!
-        let urlSession = URLSession.shared
+        guard let url = URL(string: formattedRequest) else { return nil }
+        
+        logger.logDebug("[NetworkService] Request URL: \(url.absoluteString)")
+        
         do {
-            let (data, _) = try await urlSession.data(from: url)
-            let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
-            
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let response = try JSONDecoder().decode([SensorData].self, from: data)
+            logger.logDebug("[NetworkService] Download average data - Response for city: \(cityName)")
             return response
         } catch {
+            logger.logError("[NetworkService] Error: \(error.localizedDescription)")
             return nil
         }
     }
-    
+
     func downloadCurrentData(for cityName: String) async -> CityOverallValues? {
         let path = "https://\(cityName).pulse.eco/rest/overall"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
-        let url = URL(string: formattedRequest)!
-        let urlSession = URLSession.shared
+        guard let url = URL(string: formattedRequest) else { return nil }
+        
+        logger.logDebug("[NetworkService] Request URL: \(url.absoluteString)")
+        
         do {
-            let (data, _) = try await urlSession.data(from: url)
-            let response: CityOverallValues = try JSONDecoder().decode(CityOverallValues.self, from: data)
-            
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let response = try JSONDecoder().decode(CityOverallValues.self, from: data)
+            logger.logDebug("[NetworkService] Download current data - Response for city: \(cityName)")
             return response
         } catch {
+            logger.logError("[NetworkService] Error: \(error.localizedDescription)")
             return nil
         }
     }
     
+    func downloadCurrentData(cityNames: [String]) async -> [CityOverallValues] {
+        let cityNames = cityNames.joined(separator: ",")
+        let path = "https://pulse.eco/rest/overall?cityNames=\(cityNames)"
+        guard let url = URL(string: path) else { return [] }
+        
+        logger.logDebug("[NetworkService] Request URL: \(url.absoluteString)")
+
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let response = try JSONDecoder().decode([CityOverallValues].self, from: data)
+            logger.logDebug("[NetworkService] Download current data - Response for cities: \(cityNames)")
+            return response
+        } catch {
+            logger.logError("[NetworkService] Error: \(error.localizedDescription)")
+            return []
+        }
+    }
+
     func fetchMeasures() async -> [Measure]? {
         let path = "https://pulse.eco/rest/measures?\(language)"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
-        let url = URL(string: formattedRequest)!
-        let urlSession = URLSession.shared
+        guard let url = URL(string: formattedRequest) else { return nil }
+        
+        logger.logDebug("[NetworkService] Request URL: \(url.absoluteString)")
+        
         do {
-            let (data, _) = try await urlSession.data(from: url)
-            let response: [Measure] = try JSONDecoder().decode([Measure].self, from: data)
-            
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let response = try JSONDecoder().decode([Measure].self, from: data)
+            logger.logDebug("[NetworkService] Fetched measuers")
             return response
         } catch {
+            logger.logError("[NetworkService] Error: \(error.localizedDescription)")
             return nil
         }
     }
@@ -91,9 +120,11 @@ class NetworkService {
     func fetchAndWrapCityData(cityName: String,
                               sensorType: String,
                               selectedDate: Date) async -> CityDataWrapper {
-        
-        let selectedMonth = calendar.dateComponents([.month], from: selectedDate).month!
-        let selectedYear = calendar.dateComponents([.year], from: selectedDate).year!
+        let components = Calendar.current.dateComponents([.month, .year], from: selectedDate)
+        guard let selectedMonth = components.month,
+              let selectedYear = components.year else {
+            return CityDataWrapper(sensorData: [], currentValue: nil, measures: nil)
+        }
         
         return await fetchAndWrapCityData(cityName: cityName,
                                           sensorType: sensorType,
@@ -105,26 +136,30 @@ class NetworkService {
                               sensorType: String,
                               selectedMonth: Int,
                               selectedYear: Int) async -> CityDataWrapper {
-        
-        let currentMonth = calendar.dateComponents([.month], from: Date.now).month!
-        let currentYear = calendar.dateComponents([.year], from: Date.now).year!
+        let calendar = Calendar.current
+        let currentComponents = calendar.dateComponents([.month, .year, .day], from: Date())
+        let currentMonth = currentComponents.month ?? 1
+        let currentYear = currentComponents.year ?? 1
+        let currentDay = currentComponents.day ?? 1
         
         async let currentMonthSensorData = fetchDataForSelectedMonth(cityName: cityName,
                                                                      sensorType: sensorType,
                                                                      selectedMonth: currentMonth,
                                                                      selectedYear: currentYear)
         
-        var allSensorData: [SensorData] = await currentMonthSensorData
+        let shouldFetchPreviousMonthData = currentYear == selectedYear && currentMonth == selectedMonth && currentDay < 7
+        let previousMonthComponents = calendar.dateComponents([.year, .month, .day], from: calendar.date(byAdding: .month, value: -1, to: Date()) ?? Date())
+        async let previousMonthSensorData = shouldFetchPreviousMonthData ? await fetchDataForSelectedMonth(cityName: cityName,
+                                                                                                           sensorType: sensorType,
+                                                                                                           selectedMonth: previousMonthComponents.month ?? 0,
+                                                                                                           selectedYear: previousMonthComponents.year ?? 0) : []
         
-        if !(selectedYear == currentYear && selectedMonth == currentMonth) {
-            async let selectedMonthSensorData = fetchDataForSelectedMonth(cityName: cityName,
-                                                                          sensorType: sensorType,
-                                                                          selectedMonth: selectedMonth,
-                                                                          selectedYear: selectedYear)
-            
-            await allSensorData.append(contentsOf: selectedMonthSensorData)
-            
-        }
+        let shouldFetchSelectedMonthData = !(selectedYear == currentYear && selectedMonth == currentMonth)
+        async let selectedMonthSensorData = shouldFetchSelectedMonthData ? await fetchDataForSelectedMonth(cityName: cityName,
+                                                                                                           sensorType: sensorType,
+                                                                                                           selectedMonth: selectedMonth,
+                                                                                                           selectedYear: selectedYear) : []
+        let allSensorData = await currentMonthSensorData + previousMonthSensorData + selectedMonthSensorData
         
         async let current = downloadCurrentData(for: cityName)
         async let measures = fetchMeasures()
@@ -138,38 +173,31 @@ class NetworkService {
                          measureId: String,
                          from: Date,
                          to: Date) async -> [SensorData]? {
-        
-        let fromDate = calendar.startOfDay(for: from)
-        let from = DateFormatter.iso8601Full.string(from: fromDate)
-        let to = DateFormatter.iso8601Full.string(from: to)
-        let path = "https://\(cityName).pulse.eco/rest/dataRaw?type=\(measureId)&from=\(from)&to=\(to)"
+        let fromDate = Calendar.current.startOfDay(for: from)
+        let fromString = DateFormatter.iso8601Full.string(from: fromDate)
+        let toString = DateFormatter.iso8601Full.string(from: to)
+        let path = "https://\(cityName).pulse.eco/rest/dataRaw?type=\(measureId)&from=\(fromString)&to=\(toString)"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
-        let url = URL(string: formattedRequest)!
-        let urlSession = URLSession.shared
+        guard let url = URL(string: formattedRequest) else { return nil }
+        
         do {
-            let (data, _) = try await urlSession.data(from: url)
-            let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let response = try JSONDecoder().decode([SensorData].self, from: data)
             return response
         } catch {
             return nil
         }
     }
     
-    func currentDataSensor (cityName: String, measureId: String) async -> [SensorData]? {
-        
+    func currentDataSensor(cityName: String, measureId: String) async -> [SensorData]? {
         let path = "https://\(cityName).pulse.eco/rest/current"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
-        let url = URL(string: formattedRequest)!
-        let urlSession = URLSession.shared
+        guard let url = URL(string: formattedRequest) else { return nil }
+        
         do {
-            let (data, _) = try await urlSession.data(from: url)
-            var response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
-            
-            response = response.filter {
-                $0.type == measureId
-            }
-            return response
-            
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let response = try JSONDecoder().decode([SensorData].self, from: data)
+            return response.filter { $0.type == measureId }
         } catch {
             return nil
         }
@@ -181,36 +209,31 @@ class NetworkService {
                                    selectedYear: Int) async -> [SensorData] {
         var endYear = selectedYear
         var endMonth = selectedMonth + 1
-        var history: [SensorData] = []
         
         if selectedMonth == 12 {
             endYear += 1
             endMonth = 1
         }
         
-        let startDate = Date.from(1, selectedMonth, selectedYear) 
-        let endDate = Date.from(1, endMonth, endYear)
+        guard let startDate = Date.from(1, selectedMonth, selectedYear),
+              let endDate = Date.from(1, endMonth, endYear) else { return [] }
+        
         let result = await downloadAverageData(for: cityName,
-                                               from: startDate!,
-                                               to: endDate!,
+                                               from: startDate,
+                                               to: endDate,
                                                timeUnit: .day,
                                                sensorType: sensorType)
-        if let result = result {
-            history.append(contentsOf: result)
-        }
-        return history
+        return result ?? []
     }
     
     func fetch24hDataForSensors(cityName: String) async -> [SensorData]? {
-        
         let path = "https://\(cityName).pulse.eco/rest/data24h"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
-        let url = URL(string: formattedRequest)!
-        let urlSession = URLSession.shared
+        guard let url = URL(string: formattedRequest) else { return nil }
+        
         do {
-            let (data, _) = try await urlSession.data(from: url)
-            let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
-            
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let response = try JSONDecoder().decode([SensorData].self, from: data)
             return response
         } catch {
             return nil
@@ -218,15 +241,13 @@ class NetworkService {
     }
     
     func fetchCities() async -> [City]? {
-        
         let path = "https://skopje.pulse.eco/rest/city"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
-        let url = URL(string: formattedRequest)!
-        let urlSession = URLSession.shared
+        guard let url = URL(string: formattedRequest) else { return nil }
+        
         do {
-            let (data, _) = try await urlSession.data(from: url)
-            let response: [City] = try JSONDecoder().decode([City].self, from: data)
-            
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let response = try JSONDecoder().decode([City].self, from: data)
             return response
         } catch {
             return nil
@@ -234,32 +255,27 @@ class NetworkService {
     }
     
     func fetchCity(cityName: String) async -> City? {
-        let cities = await fetchCities()
-        let city = cities?.filter { $0.cityName == cityName }.first ?? nil
-        return city
+        guard let cities = await fetchCities() else { return nil }
+        return cities.first { $0.cityName == cityName }
     }
     
     func downloadDailyAverageDataForSensor(cityName: String,
                                            measureType: String,
                                            sensorId: String) async -> [SensorData]? {
         let time = DateFormatter.getTime.string(from: Date())
-        var daysAgo: Int {
-            time >= "13:00" ? -8 : -7
-        }
-        let from = DateFormatter.iso8601Full.string(from: calendar.date(byAdding: .day,
-                                                                        value: daysAgo,
-                                                                        to: Date())!)
-        let to = DateFormatter.iso8601Full.string(from: Date())
-        let requestString =
-        "https://\(cityName).pulse.eco/rest/avgData/day?" +
-        "sensorId=\(sensorId)&type=\(measureType)&from=\(from)&to=\(to)"
-        let formattedRequest = requestString.replacingOccurrences(of: "+", with: "%2b")
-        let url = URL(string: formattedRequest)!
-        let urlSession = URLSession.shared
+        let daysAgo: Int = time >= "13:00" ? -8 : -7
+        
+        guard let fromDate = Calendar.current.date(byAdding: .day, value: daysAgo, to: Date()) else { return nil }
+        let fromString = DateFormatter.iso8601Full.string(from: fromDate)
+        let toString = DateFormatter.iso8601Full.string(from: Date())
+        
+        let path = "https://\(cityName).pulse.eco/rest/avgData/day?sensorId=\(sensorId)&type=\(measureType)&from=\(fromString)&to=\(toString)"
+        let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
+        guard let url = URL(string: formattedRequest) else { return nil }
+        
         do {
-            let (data, _) = try await urlSession.data(from: url)
-            let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
-            
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let response = try JSONDecoder().decode([SensorData].self, from: data)
             return response
         } catch {
             return nil
@@ -270,24 +286,21 @@ class NetworkService {
                              measureType: String,
                              selectedDate: Date) async -> [SensorData]? {
         
-        let currentYear = Calendar.current.dateComponents([.year], from: selectedDate).year!
-        let from = Date.from(1, 1, currentYear)!
-        let to = Date.from(31, 12, currentYear)!
+        let currentYear = Calendar.current.dateComponents([.year], from: selectedDate).year ?? 0
+        guard let from = Date.from(1, 1, currentYear),
+              let to = Date.from(31, 12, currentYear) else { return nil }
         
-        let fromDate = DateFormatter.iso8601Full.string(from: from)
-        let toDate = DateFormatter.iso8601Full.string(from: to)
+        let fromString = DateFormatter.iso8601Full.string(from: from)
+        let toString = DateFormatter.iso8601Full.string(from: to)
         let sensorId = -1
         
-        let path = "https://\(cityName).pulse.eco/rest/avgData/month?" +
-        "sensorId=\(sensorId)&type=\(measureType)&from=\(fromDate)&to=\(toDate)"
-        
+        let path = "https://\(cityName).pulse.eco/rest/avgData/month?sensorId=\(sensorId)&type=\(measureType)&from=\(fromString)&to=\(toString)"
         let formattedRequest = path.replacingOccurrences(of: "+", with: "%2b")
-        let url = URL(string: formattedRequest)!
-        let urlSession = URLSession.shared
+        guard let url = URL(string: formattedRequest) else { return nil }
+        
         do {
-            let (data, _) = try await urlSession.data(from: url)
-            let response: [SensorData] = try JSONDecoder().decode([SensorData].self, from: data)
-            
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let response = try JSONDecoder().decode([SensorData].self, from: data)
             return response
         } catch {
             return nil
@@ -297,11 +310,10 @@ class NetworkService {
     func fetchMonthAverages(cityName: String,
                             measureType: String,
                             selectedDate: Date) async -> CityDataWrapper {
-        let measures = await self.fetchMeasures()
-        let sensorData = await self.fetchMonthlyAverage(cityName: cityName,
-                                                        measureType: measureType,
-                                                        selectedDate: selectedDate)
-        
+        let measures = await fetchMeasures()
+        let sensorData = await fetchMonthlyAverage(cityName: cityName,
+                                                   measureType: measureType,
+                                                   selectedDate: selectedDate)
         return CityDataWrapper(sensorData: sensorData,
                                currentValue: nil,
                                measures: measures)

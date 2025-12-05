@@ -17,7 +17,7 @@ struct TimelineSliderView: View {
             Text("\(viewModel.formatTime(for: viewModel.sliderValue))")
                 .font(.headline)
                 .padding(6)
-                .background(Capsule().fill(Color.blue))
+                .background(Capsule().fill(Color(AppColors.firstButtonColor)))
                 .foregroundColor(.white)
                 .offset(y: 5)
                 .frame(maxWidth: .infinity)
@@ -75,29 +75,37 @@ struct TimelineSliderView: View {
                 .fill(.white)
                 .opacity(0.90)
         )
-        .onChange(of: appState.selectedDate) { _ in
+        .onChange(of: appState.selectedDate) {
             viewModel.assignSliderValue(newValue: viewModel.sliderValue, selectedDate: appState.selectedDate)
         }
     }
     
     private func sliderWithClamping() -> some View {
-        Slider(value: Binding(
-            get: {
-                viewModel.sliderValue
-            },
-            set: { newValue in
-                viewModel.assignSliderValue(newValue: newValue,
-                                            selectedDate: appState.selectedDate)
-            }),
-               in: Double(timeRange.lowerBound)...Double(timeRange.upperBound), step: 1)
-            .accentColor(.blue)
-            .padding(.horizontal, 14)
-            .padding(.bottom, 10)
-            .onAppear {
-                let progressCircleConfig = UIImage.SymbolConfiguration(scale: .small)
-                UISlider.appearance()
-                    .setThumbImage(UIImage(systemName: "circle.fill",
-                                           withConfiguration: progressCircleConfig), for: .normal)
-            }
+        Slider(
+            value: Binding(
+                get: {
+                    Double(viewModel.sliderValue)
+                },
+                set: { newValue in
+                    let clampedValue = round(newValue)
+                    viewModel.assignSliderValue(newValue: clampedValue,
+                                                selectedDate: appState.selectedDate)
+                }
+            ),
+            in: Double(timeRange.lowerBound)...Double(timeRange.upperBound),
+            step: 1
+        )
+        .accentColor(Color(AppColors.firstButtonColor))
+        .padding(.horizontal, 14)
+        .padding(.bottom, 10)
+        .onAppear {
+            let progressCircleConfig = UIImage.SymbolConfiguration(scale: .small)
+            UISlider.appearance()
+                .setThumbImage(
+                    UIImage(systemName: "circle.fill",
+                            withConfiguration: progressCircleConfig),
+                    for: .normal
+                )
+        }
     }
 }

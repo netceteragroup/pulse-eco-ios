@@ -20,6 +20,7 @@ struct FloatingButton: View {
         Image(uiImage: UIImage(named: image) ?? UIImage())
             .padding()
             .background(Color(AppColors.white))
+            .tint(Color(AppColors.firstButtonColor))
             .onTapGesture {
                 withAnimation(.easeInOut(duration: 0.25)) {
                     onPress()

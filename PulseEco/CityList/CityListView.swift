@@ -4,8 +4,8 @@
 //
 //  Created by Darko Skerlevski on 23.9.21.
 //
-
 import SwiftUI
+import Factory
 
 struct CityListView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -15,8 +15,9 @@ struct CityListView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var viewModel: CityListViewModel
-    @ObservedObject var userSettings: UserSettings
-    @ObservedObject var locationManager: LocationManager = LocationManager.shared
+    
+    @Injected(\.locationService) private var locationService
+    
     var searchText: String
     
     var body: some View {
@@ -29,10 +30,10 @@ struct CityListView: View {
     
     @ViewBuilder
     private func filteredCitiesList() -> some View {
-        
         let favouriteCitiesNames = getFavouriteCitiesNames()
         let foundCities = viewModel.getCities().filter {
-            $0.cityName.lowercased().contains(self.searchText.lowercased()) || $0.countryName.lowercased().contains(self.searchText.lowercased())
+            $0.cityName.lowercased().contains(self.searchText.lowercased()) ||
+            $0.countryName.lowercased().contains(self.searchText.lowercased())
         }
         
         ScrollView {
@@ -47,21 +48,18 @@ struct CityListView: View {
                     })
                     
                     if city != foundCities.last {
-                        Divider()
-                            .background(AppColors.gray.color)
+                        Divider().background(AppColors.gray.color)
                     }
                 }
                 
                 if foundCities.count > 0 {
-                    Divider()
-                        .background(AppColors.gray.color)
+                    Divider().background(AppColors.gray.color)
                 }
                 
                 missingCityText()
             }
             .resignKeyboardOnDragGesture()
         }
-        
     }
     
     @ViewBuilder
@@ -127,8 +125,8 @@ struct CityListView: View {
     
     private func addToFavourites(city: CityRowViewModel) {
         if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-            if locationManager.currentCity?.cityName != city.cityName {
-                self.userSettings.addFavoriteCity(city)
+            if locationService.lastLocation?.cityName != city.cityName {
+                UserSettings.addFavoriteCity(city)
             }
             self.appState.citySelectorClicked = false
             if self.appState.selectedCity != city {
@@ -140,11 +138,10 @@ struct CityListView: View {
             dismissSearch()
         }
     }
-
     
     private func getFavouriteCitiesNames() -> Set<String> {
-        var favouriteCitiesNames = Set(self.userSettings.favouriteCities.map { $0.cityName })
-        if let currentCity = self.locationManager.currentCity {
+        var favouriteCitiesNames = Set(UserSettings.favouriteCities.map { $0.cityName })
+        if let currentCity = locationService.lastLocation {
             favouriteCitiesNames.insert(currentCity.cityName)
         }
         return favouriteCitiesNames

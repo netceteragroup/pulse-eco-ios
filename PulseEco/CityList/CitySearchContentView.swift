@@ -5,39 +5,46 @@
 //  Created by Nikola Jankovikj on 5.12.24.
 //
 
-import Foundation
 import SwiftUI
+import Factory
 
 struct CitySearchContentView: View {
     @Environment(\.isSearching) private var isSearching
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var refreshService: RefreshService
-    @ObservedObject var userSettings: UserSettings
     @ObservedObject var viewModel: CitySearchContentViewModel
-    @ObservedObject var locationManager: LocationManager = LocationManager.shared
+    
+    @Injected(\.locationService) private var locationService
     
     var searchText: String
     
+    var body: some View {
+        if isSearching || (viewModel.cities.isEmpty && locationService.currentAuthorizationStatus() != .authorized) {
+            CityListView(
+                viewModel: CityListViewModel(cities: self.dataSource.cities),
+                searchText: searchText
+            )
+            .padding(.vertical, 1)
+        } else {
+            favoriteCitiesList()
+        }
+    }
+    
     var allFavoritesAndLocation: [FavouriteCityRowViewModel] {
         var tmpAllCities: [FavouriteCityRowViewModel] = []
-        if let currentCity = locationManager.currentCity {
-            let favouriteCityRowViewModel = viewModel.createFavouriteCityRowViewModelFromCityAndCityValues(city: currentCity, cityValues: appState.userSettings.cityValues, selectedMeasure: appState.selectedMeasureId, measureList: dataSource.measures, isCurrentCity: true)
+        if let currentCity = locationService.lastLocation {
+            let favouriteCityRowViewModel = viewModel.createFavouriteCityRowViewModelFromCityAndCityValues(
+                city: currentCity,
+                cityValues: UserSettings.cityValues,
+                selectedMeasure: appState.selectedMeasureId,
+                measureList: dataSource.measures,
+                isCurrentCity: true
+            )
             tmpAllCities.append(favouriteCityRowViewModel)
-
         }
         tmpAllCities.append(contentsOf: viewModel.getCities())
         return tmpAllCities
-    }
-    
-    var body: some View {
-        if isSearching || (viewModel.cities.isEmpty && !locationManager.isAuthorizationGranted()) {
-            CityListView(viewModel: CityListViewModel(cities: self.dataSource.cities), userSettings: userSettings, searchText: searchText)
-                .padding(.vertical, 1)
-        }
-        else {
-            favoriteCitiesList()
-        }
     }
     
     @ViewBuilder
@@ -66,11 +73,10 @@ struct CitySearchContentView: View {
             Button(action: {
                 self.appState.citySelectorClicked = false
                 if self.appState.selectedCity != favouriteCity.city {
-                    if locationManager.currentCity?.cityName == favouriteCity.city.cityName {
+                    if locationService.lastLocation?.cityName == favouriteCity.city.cityName {
                         appState.currentLocationIsSelected = true
-                    }
-                    else {
-                        self.userSettings.addFavoriteCity(favouriteCity.city)
+                    } else {
+                        UserSettings.addFavoriteCity(favouriteCity.city)
                         appState.currentLocationIsSelected = false
                     }
                     self.appState.selectedCity = favouriteCity.city
@@ -81,6 +87,7 @@ struct CitySearchContentView: View {
                 FavouriteCityRowView(viewModel: favouriteCity)
                     .contentShape(Rectangle())
             }).padding()
+            
             if favouriteCity != array.last {
                 Divider()
             }
@@ -91,9 +98,21 @@ struct CitySearchContentView: View {
     private func delete(at offsets: IndexSet) {
         offsets.forEach {
             let delRow = allFavoritesAndLocation[$0 + 1]
-            if let city = self.userSettings.favouriteCities.first(where: { $0.cityName == delRow.cityName }) {
-                self.userSettings.removeFavouriteCity(city)
+            if let city = UserSettings.favouriteCities.first(where: { $0.cityName == delRow.cityName }) {
+                UserSettings.removeFavouriteCity(city)
             }
         }
     }
+}
+
+#Preview {
+    CitySearchContentView(
+        viewModel: CitySearchContentViewModel(
+            selectedMeasure: "",
+            favouriteCities: [],
+            cityValues: [],
+            measureList: []
+        ),
+        searchText: ""
+    )
 }

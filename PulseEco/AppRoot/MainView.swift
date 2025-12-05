@@ -8,33 +8,39 @@
 import SwiftUI
 
 struct MainView: View {
+    private let logger = SystemLoggerAdapter(category: "MainView")
+    
+    @StateObject private var viewModel = MainViewModel()
+    
+    @Environment(\.scenePhase) private var scenePhase
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataSource: AppDataSource
-    @State private var isShowingSettingsView = false
-    @State var sensorSelectionAlertDialogIsActive: Bool = false
-    @ObservedObject var locationManager: LocationManager = LocationManager.shared
     
+    @State private var sensorSelectionAlertDialogIsActive = false
     let mapViewModel: MapViewModel
-    
-    private let backgroundColor: Color = AppColors.white.color
-    
+        
     private var sensorDetailsViewModel: SensorDetailsViewModel {
         let selectedMeasure = dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId)
-        return SensorDetailsViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
-                                      selectedMeasure: selectedMeasure,
-                                      sensorData24h: dataSource.sensorsData24h,
-                                      dailyAverages: dataSource.sensorsDailyAverageData)
+        return SensorDetailsViewModel(
+            sensor: appState.selectedSensor ?? SensorPinModel(),
+            selectedMeasure: selectedMeasure,
+            sensorData24h: dataSource.sensorsData24h,
+            dailyAverages: dataSource.sensorsDailyAverageData
+        )
     }
     
-    private func isLoading() -> Bool {
-        return (appState.loadingCityData || appState.loadingMeasures || (locationManager.isAuthorizationGranted() && locationManager.isWaitingToFetchRegion) || appState.isWaitingToFetchFavouriteCitiesOveralls)
+    private var isLoading: Bool {
+        return viewModel.isLoading ||
+               appState.loadingCityData ||
+               appState.loadingMeasures ||
+               appState.isWaitingToFetchFavouriteCitiesOveralls
     }
     
     var body: some View {
         Group {
-            if isLoading() {
+            if isLoading {
                 loadingView
             } else {
                 contentView
@@ -43,26 +49,19 @@ struct MainView: View {
         .edgesIgnoringSafeArea(.top)
         .sheet(item: $appState.activeSheet) { sheet in
             switch sheet {
-            case .disclaimerView: DisclaimerView()
+            case .disclaimerView:
+                DisclaimerView()
             }
         }
-        .onAppear() {
-            locationManager.requestLocation()
-            locationManager.didSetCurrentCity = { newCity in
-                if let newCity {
-                    var favoriteCities = appState.userSettings.favouriteCities
-                    favoriteCities.removeAll { $0.cityName == newCity.cityName }
-                    appState.userSettings.favouriteCities = favoriteCities
-                    if appState.selectedCity == locationManager.currentCity {
-                        appState.currentLocationIsSelected = true
-                    }
-                    if appState.currentLocationIsSelected {
-                        appState.selectedCity = newCity
-                        dataSource.getValuesForCity(cityName: newCity.cityName)
-                    }
-                }
-            }
-        }
+        .onReceive(viewModel.onLocationSetSubject, perform: { city in changeLocation(city: city) })
+    }
+    
+    private func changeLocation(city: City) {
+        appState.currentLocationIsSelected = true
+        guard appState.selectedCity != city else { return }
+        logger.logDebug("City updated: \(city.cityName)")
+        appState.selectedCity = city
+        dataSource.getValuesForCity(cityName: city.cityName)
     }
     
     var loadingView: some View {
@@ -73,40 +72,47 @@ struct MainView: View {
         ZStack {
             NavigationStack {
                 VStack(spacing: 0) {
-                    if self.appState.citySelectorClicked {
-                        FavouriteCitiesView(userSettings: self.appState.userSettings)
+                    if appState.citySelectorClicked {
+                        FavouriteCitiesView()
                             .overlay(ShadowOnTopOfView())
-                            .animation(nil, value: self.appState.citySelectorClicked)
+                            .animation(nil, value: appState.citySelectorClicked)
                             .edgesIgnoringSafeArea(.bottom)
                     } else {
                         VStack(spacing: 0) {
-                            let viewModel = MeasureListViewModel(selectedMeasure: appState.selectedMeasureId,
-                                                                 cityName: appState.selectedCity.cityName,
-                                                                 measuresList: dataSource.measures,
-                                                                 cityValues: dataSource.cityOverall,
-                                                                 citySelectorClicked: appState.citySelectorClicked)
-                            MeasureListView(viewModel: viewModel)
+                            let measureViewModel = MeasureListViewModel(
+                                selectedMeasure: appState.selectedMeasureId,
+                                cityName: appState.selectedCity.cityName,
+                                measuresList: dataSource.measures,
+                                cityValues: dataSource.cityOverall,
+                                citySelectorClicked: appState.citySelectorClicked
+                            )
+                            MeasureListView(viewModel: measureViewModel)
                         }
                         
                         ZStack(alignment: .top) {
                             DateSelector()
                                 .zIndex(2)
                             
-                            CityMapView(userSettings: self.appState.userSettings,
-                                        mapViewModel: mapViewModel)
+                            CityMapView(
+                                mapViewModel: mapViewModel
+                            )
                             .id("CityMapView")
                             .edgesIgnoringSafeArea([.horizontal, .bottom])
                             .padding(.top, 60)
                             .zIndex(1)
                             .sheet(isPresented: $appState.showSensorDetails) {
                                 Spacer()
-                                
-                                SensorDetailsView(viewModel: sensorDetailsViewModel,
-                                                  sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive,
-                                                  contentSize: $appState.bottomSheetContentSize,
-                                                  headerSize: $appState.bottomSheetHeaderSize)
+                                SensorDetailsView(
+                                    viewModel: sensorDetailsViewModel,
+                                    sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive,
+                                    contentSize: $appState.bottomSheetContentSize,
+                                    headerSize: $appState.bottomSheetHeaderSize
+                                )
                                 .frame(maxWidth: .infinity)
-                                .presentationDetents([.height(appState.bottomSheetHeaderSize), .height(appState.bottomSheetContentSize + appState.bottomSheetHeaderSize)], selection: $appState.seletionDetent)
+                                .presentationDetents([
+                                    .height(appState.bottomSheetHeaderSize),
+                                    .height(appState.bottomSheetContentSize + appState.bottomSheetHeaderSize)
+                                ], selection: $appState.seletionDetent)
                                 .presentationBackgroundInteraction(.enabled)
                                 .interactiveDismissDisabled()
                             }
@@ -115,11 +121,25 @@ struct MainView: View {
                 }
                 .navigationBarTitle("", displayMode: .inline)
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        leadingNavigationItems
+                    ToolbarItem(placement: .topBarLeading) {
+                        HStack {
+                            Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
+                                .imageScale(.large)
+                                .onTapGesture {
+                                    if !appState.citySelectorClicked {
+                                        appState.selectedSensor = nil
+                                        refreshService.refreshData()
+                                    }
+                                }
+                            leadingNavigationItems
+                        }
                     }
                     ToolbarItemGroup(placement: .primaryAction) {
-                        trailingNavigationItem
+                        if appState.showMenu {
+                            menuTrailingNavigationItem
+                        } else {
+                            languageChangeButton
+                        }
                     }
                 }
             }
@@ -128,38 +148,31 @@ struct MainView: View {
             .zIndex(1)
         }
         .overlay(
-            SensorSelectionView(viewModel: SensorSelectionViewModel(appState: self.appState,
-                                                                    sensors: combine(sensors: dataSource.citySensors,
-                                                                                     sensorsData: dataSource.sensorsData,
-                                                                                     selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId))),
-                                sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive)
+            SensorSelectionView(
+                viewModel: SensorSelectionViewModel(
+                    appState: appState,
+                    sensors: combine(
+                        sensors: dataSource.citySensors,
+                        sensorsData: dataSource.sensorsData,
+                        selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId)
+                    )
+                ),
+                sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive
+            )
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         )
     }
     
-    var trailingNavigationItem: some View {
-        HStack {
-            Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
-                .imageScale(.large)
-                .padding(.trailing, (UIWidth)/4)
-                .onTapGesture {
-                    if self.appState.citySelectorClicked == false {
-                        self.appState.selectedSensor = nil
-                        self.refreshService.refreshData()
-                    }
+    // MARK: - Toolbar & Navigation
+    var menuTrailingNavigationItem: some View {
+        menuItem
+            .navigationDestination(for: AppView.self) { view in
+                switch view {
+                case .settings: SettingsView()
+                case .dashboard: Text("dashboard view")
+                case .mapView: Text("Map View")
                 }
-            menuItem
-                .navigationDestination(for: AppView.self) { view in
-                    switch view {
-                    case .settings:
-                        SettingsView()
-                    case .dashboard:
-                        Text("dashboard view")
-                    case .mapView:
-                        Text("Map View")
-                    }
-                }
-        }
+            }
     }
     
     var menuItem: some View {
@@ -168,7 +181,7 @@ struct MainView: View {
                 NavigationLink(value: AppView.dashboard) {
                     Text(Trema.text(for: "dashboard_view"))
                     Spacer()
-                    if self.appState.selectedAppView == .dashboard {
+                    if appState.selectedAppView == .dashboard {
                         Image(systemName: "checkmark")
                             .foregroundColor(Color(AppColors.darkblue))
                     }
@@ -176,7 +189,7 @@ struct MainView: View {
                 NavigationLink(value: AppView.mapView) {
                     Text(Trema.text(for: "map_view"))
                     Spacer()
-                    if self.appState.selectedAppView == .mapView {
+                    if appState.selectedAppView == .mapView {
                         Image(systemName: "checkmark")
                             .foregroundColor(Color(AppColors.darkblue))
                     }
@@ -184,44 +197,75 @@ struct MainView: View {
                 NavigationLink(value: AppView.settings) {
                     Text(Trema.text(for: "settings_view"))
                     Spacer()
-                    if self.appState.selectedAppView == .settings {
+                    if appState.selectedAppView == .settings {
                         Image(systemName: "checkmark")
                             .foregroundColor(Color(AppColors.darkblue))
                     }
                 }
             }
-        }
-        
-        label: {
+        } label: {
             Image(systemName: "line.horizontal.3")
                 .resizable()
-                .frame(width: 25, height: 15, alignment: .center)
+                .frame(width: 25, height: 15)
                 .foregroundColor(Color(AppColors.darkblue))
                 .padding(.leading, 15)
+        }
+    }
+    
+    var languageChangeButton: some View {
+        Menu {
+            ForEach(Countries.countries(language: Trema.appLanguage), id: \.self) { country in
+                Button {
+                    selectCountry(country: country)
+                } label: {
+                    HStack {
+                        Text(country.languageName)
+                        if country.shortName == Trema.appLanguage {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(Color(AppColors.darkblue))
+                        }
+                    }
+                }
+            }
+        } label: {
+            Image(systemName: "globe")
+                .resizable()
+                .frame(width: 20, height: 20)
+                .foregroundColor(Color(AppColors.darkblue))
         }
     }
     
     var leadingNavigationItems: some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) {
-                self.appState.citySelectorClicked.toggle()
-                self.appState.selectedSensor = nil
+                appState.citySelectorClicked.toggle()
+                appState.selectedSensor = nil
             }
         }) {
             HStack {
-                Text(self.appState.selectedCity.cityName.uppercased())
+                Text(appState.selectedCity.cityName.uppercased())
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(Color(AppColors.darkblue))
-                self.appState.cityIcon.foregroundColor(Color(AppColors.darkblue))
+                appState.cityIcon.foregroundColor(Color(AppColors.darkblue))
             }
         }
         .accentColor(AppColors.black.color)
     }
 }
 
-extension View {
-    func navigationBarColor(_ backgroundColor: UIColor?) -> some View {
-        self.modifier(NavigationBarModifier(backgroundColor: backgroundColor))
+extension MainView {
+    private func selectCountry(country: Country) {
+        Trema.appLanguage = country.shortName
+        appState.selectedLanguage = Trema.appLanguage
+        dataSource.getMeasures()
+        appState.loadingMeasures = true
+        refreshService.updateRefreshDate()
+        dataSource.getValuesForCity(cityName: appState.selectedCity.cityName)
     }
 }
 
+extension View {
+    func navigationBarColor(_ backgroundColor: UIColor?) -> some View {
+        modifier(NavigationBarModifier(backgroundColor: backgroundColor))
+    }
+}
