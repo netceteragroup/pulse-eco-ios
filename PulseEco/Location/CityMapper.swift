@@ -68,7 +68,7 @@ class CityMapper {
         
         return await withCheckedContinuation { continuation in
             search.start { response, error in
-                if let error {
+                if error != nil {
                     continuation.resume(returning: nil)
                     return
                 }

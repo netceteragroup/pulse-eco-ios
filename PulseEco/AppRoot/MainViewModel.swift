@@ -42,7 +42,6 @@ class MainViewModel: ObservableObject {
     private func observeAuthorization() {
         locationService
             .authorizationStatusObserver()
-            .observe()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
                 guard let self = self else { return }
@@ -61,7 +60,6 @@ class MainViewModel: ObservableObject {
     private func fetchLocation() {
         locationService
             .locationObserver()
-            .observe()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newCity in
                 guard let self = self else { return }

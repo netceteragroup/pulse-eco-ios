@@ -16,13 +16,13 @@ enum AuthorizationStatus {
 
 protocol LocationService {
     /// Observer for location changes
-    func locationObserver() -> any StateObservable<City>
+    func locationObserver() -> AnyPublisher<City, Never>
     
     /// Last location obtained by the service
     var lastLocation: City? { get }
     
     /// Observer for authorization status changes
-    func authorizationStatusObserver() -> any StateObservable<AuthorizationStatus>
+    func authorizationStatusObserver() -> AnyPublisher<AuthorizationStatus, Never>
     
     /// Get the current authorization status
     func currentAuthorizationStatus() -> AuthorizationStatus

@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 @MainActor
-class CalendarViewModel: ViewModelProtocol {
+class CalendarViewModel: ObservableObject {
     @Published var monthlyData: [DayDataWrapper] = []
     @Published var currentDate: Date
     @Published var currentMonthOffset: Int
