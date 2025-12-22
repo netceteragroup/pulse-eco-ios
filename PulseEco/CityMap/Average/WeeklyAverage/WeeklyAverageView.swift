@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct WeeklyAverageView: View {
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var dataSource: AppDataSource
     var viewModel: WeeklyAverageViewModel
     
     var body: some View {

@@ -16,17 +16,17 @@ class CalendarViewModel: ObservableObject {
     @Published var selectedMonth: Int
     @Published var monthValues: [DayDataWrapper] = []
 
-    private let appState: AppState
-    let appDataSource: AppDataSource
+    private let appData: AppData
+    let appDataManager: AppDataManager
     private var selectedDate = Date.now
 
-    init(appState: AppState, appDataSource: AppDataSource) {
-        self.appState = appState
-        self.appDataSource = appDataSource
-        currentDate = appState.selectedDate
-        selectedYear = calendar.component(.year, from: appState.selectedDate)
-        selectedMonth = calendar.component(.month, from: appState.selectedDate)
-        currentMonthOffset = calendar.component(.month, from: appState.selectedDate) - calendar.component(.month, from: Date())
+    init(appData: AppData, appDataManager: AppDataManager) {
+        self.appData = appData
+        self.appDataManager = appDataManager
+        currentDate = appData.selectedDate
+        selectedYear = calendar.component(.year, from: appData.selectedDate)
+        selectedMonth = calendar.component(.month, from: appData.selectedDate)
+        currentMonthOffset = calendar.component(.month, from: appData.selectedDate) - calendar.component(.month, from: Date())
     }
     
     var dateValues: [DateValueModel] {
@@ -34,7 +34,7 @@ class CalendarViewModel: ObservableObject {
         var days = currentMonth.getDaysOfMonth().compactMap { date -> DateValueModel in
             var color = "gray"
             let day = calendar.component(.day, from: date)
-            if let matchingMonthlyData = appDataSource.monthlyData.first(where: { $0.date.isSameDay(with: date) }) {
+            if let matchingMonthlyData = appData.monthlyData.first(where: { $0.date.isSameDay(with: date) }) {
                 color = matchingMonthlyData.color
             }
             return DateValueModel(day: day,
@@ -97,12 +97,12 @@ class CalendarViewModel: ObservableObject {
         currentMonthOffset = selectedMonth - calendar.component(.month, from: Date())
         if yearChange {
             Task {
-                await appDataSource.updateMonthlyColors(selectedYear: selectedYear)
+                await appDataManager.updateMonthlyColors(selectedYear: selectedYear)
                 colorMonths()
             }
         }
         Task {
-            await appDataSource.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+            await appDataManager.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
         }
     }
 
@@ -118,12 +118,12 @@ class CalendarViewModel: ObservableObject {
         currentMonthOffset = selectedMonth - calendar.component(.month, from: Date())
         if yearChange {
             Task {
-                await appDataSource.updateMonthlyColors(selectedYear: selectedYear)
+                await appDataManager.updateMonthlyColors(selectedYear: selectedYear)
                 colorMonths()
             }
         }
         Task {
-            await appDataSource.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+            await appDataManager.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
         }
     }
 
@@ -136,11 +136,11 @@ class CalendarViewModel: ObservableObject {
     func dateSelected(date: Date) {
         let monthChanged = !selectedDate.isSameMonth(with: date)
         selectedDate = date
-        appDataSource.selectFromCalendar(monthChange: monthChanged)
+        appDataManager.selectFromCalendar(monthChange: monthChanged)
     }
 
     func colorMonths() {
-        monthValues = appDataSource.monthlyAverage
+        monthValues = appData.monthlyAverage
         let allMonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         var containing = [Int]()
         for val in monthValues {
@@ -152,7 +152,7 @@ class CalendarViewModel: ObservableObject {
         }
         monthValues = monthValues.sorted(by: { $0.month < $1.month })
         Task {
-            await appDataSource.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+            await appDataManager.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
         }
     }
 

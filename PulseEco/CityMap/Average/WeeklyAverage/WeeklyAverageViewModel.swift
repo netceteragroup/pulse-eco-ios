@@ -10,27 +10,28 @@ import SwiftUI
 
 @MainActor
 class WeeklyAverageViewModel: ObservableObject {
-    let dataSource: AppDataSource
-    let appState: AppState
+    let appDataManager: AppDataManager
+    let appData: AppData
     var title: String = ""
     var dailyAverageViewModels: [DailyAverageViewModel] = []
     
-    init(appState: AppState, dataSource: AppDataSource, averages: [SensorData]) {
-        self.appState = appState
-        self.dataSource = dataSource
+    init(appData: AppData, appDataManager: AppDataManager, averages: [SensorData]) {
+        self.appData = appData
+        self.appDataManager = appDataManager
         let pastWeekLocalized = Trema.text(for: "past_week")
-        let suffix = "(\(dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId).unit))"
+        let suffix = "(\(appDataManager.getCurrentMeasure(selectedMeasure: appData.selectedMeasureId).unit))"
         title = pastWeekLocalized + suffix
-        dailyAverageViewModels = transformInfoSensorToViewModel(appState: appState,
-                                                                dataSource: dataSource,
+        dailyAverageViewModels = transformInfoSensorToViewModel(appData: appData,
+                                                                appDataManager: appDataManager,
                                                                 averages: averages)
     }
     
-    func transformInfoSensorToViewModel(appState: AppState, dataSource: AppDataSource,
+    func transformInfoSensorToViewModel(appData: AppData,
+                                        appDataManager: AppDataManager,
                                         averages: [SensorData]) -> [DailyAverageViewModel] {
         let dailyAverageSensorValues = dailyAverages(averages: averages)
         return dailyAverageSensorValues.compactMap {
-            DailyAverageViewModel(sensor: $0, appState: appState, dataSource: dataSource)}
+            DailyAverageViewModel(sensor: $0, appData: appData, appDataManager: appDataManager)}
     }
     
     func dailyAverages(averages: [SensorData]) -> [DailyInfoSensor] {
@@ -38,7 +39,7 @@ class WeeklyAverageViewModel: ObservableObject {
      
         let week = (-7...(-1)).compactMap {
             DateFormatter.iso8601Full
-                .string(from: calendar.date(byAdding: .day, value: $0, to: appState.selectedDate) ?? Date())
+                .string(from: calendar.date(byAdding: .day, value: $0, to: appData.selectedDate) ?? Date())
         }
         
         for date in week {

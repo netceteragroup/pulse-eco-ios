@@ -9,17 +9,16 @@ import SwiftUI
 
 struct MeasureListView: View {
     @ObservedObject var viewModel: MeasureListViewModel
-    @EnvironmentObject var appDataSource: AppDataSource
-    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var appData: AppData
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { scrollProxy in
                 VStack {
                     buttonStack
-                        .onReceive(appState.$loadingMeasures) { value in
+                        .onReceive(appData.$loadingMeasures) { value in
                             if !value {
-                                scrollProxy.scrollTo(appState.selectedMeasureId)
+                                scrollProxy.scrollTo(appData.selectedMeasureId)
                             }
                         }
                 }

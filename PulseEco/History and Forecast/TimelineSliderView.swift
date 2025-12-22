@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TimelineSliderView: View {
     @StateObject var viewModel: TimelineSliderViewModel
-    @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var appData: AppData
     private let timeRange = 0...24
 
     var body: some View {
@@ -27,7 +27,7 @@ struct TimelineSliderView: View {
                         .offset(y: 5)
                         .onTapGesture {
                             withAnimation(.easeInOut(duration: 0.25)) {
-                                appState.isTimelineSliderActive = false
+                                appData.isTimelineSliderActive = false
                             }
                         }
                 }
@@ -75,8 +75,8 @@ struct TimelineSliderView: View {
                 .fill(.white)
                 .opacity(0.90)
         )
-        .onChange(of: appState.selectedDate) {
-            viewModel.assignSliderValue(newValue: viewModel.sliderValue, selectedDate: appState.selectedDate)
+        .onChange(of: appData.selectedDate) {
+            viewModel.assignSliderValue(newValue: viewModel.sliderValue, selectedDate: appData.selectedDate)
         }
     }
     
@@ -89,7 +89,7 @@ struct TimelineSliderView: View {
                 set: { newValue in
                     let clampedValue = round(newValue)
                     viewModel.assignSliderValue(newValue: clampedValue,
-                                                selectedDate: appState.selectedDate)
+                                                selectedDate: appData.selectedDate)
                 }
             ),
             in: Double(timeRange.lowerBound)...Double(timeRange.upperBound),

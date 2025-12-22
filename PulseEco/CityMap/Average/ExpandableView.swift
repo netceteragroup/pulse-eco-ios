@@ -2,7 +2,6 @@ import SwiftUI
 import Combine
 
 struct ExpandableView: View {
-    @EnvironmentObject var appState: AppState
     
     @State var isExpanded = false
     @State var width: CGFloat = 115

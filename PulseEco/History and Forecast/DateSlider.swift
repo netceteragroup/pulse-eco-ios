@@ -9,8 +9,8 @@ import SwiftUI
 
 struct DateSlider: View {
     
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var dataSource: AppDataSource
+    @EnvironmentObject var appData: AppData
+    @EnvironmentObject var appDataManager: AppDataManager
     
     @Binding var unimplementedAlert: Bool
     @Binding var unimplementedPicker: Bool
@@ -41,13 +41,13 @@ struct DateSlider: View {
                         .padding(.leading, 10)
                     }
                     LazyHStack {
-                        ForEach(dataSource.weeklyData, id: \.dateId) { item in
+                        ForEach(appData.weeklyData, id: \.dateId) { item in
                             WeekDayButton(date: item.date,
                                           value: item.value,
                                           color: item.color,
                                           highlighted: selectedDate.isSameDay(with: item.date)) {
                                 selectedDate = calendar.startOfDay(for: item.date)
-                                dataSource.selectFromDateSlider(selectedDate: selectedDate)
+                                appDataManager.selectFromDateSlider(selectedDate: selectedDate)
                             }
                         }
                         .onAppear {

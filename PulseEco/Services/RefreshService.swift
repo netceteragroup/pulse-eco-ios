@@ -10,13 +10,13 @@ import SwiftUI
 
 class RefreshService: ObservableObject {
     
-    let appViewModel: AppState
-    let appDataSource: AppDataSource
+    let appViewModel: AppData
+    let appDataManager: AppDataManager
     private var refreshDate: Date = Date()
     
-    init(appViewModel: AppState, appDataSource: AppDataSource) {
+    init(appViewModel: AppData, appDataManager: AppDataManager) {
         self.appViewModel = appViewModel
-        self.appDataSource = appDataSource
+        self.appDataManager = appDataManager
     }
     
     func refreshDataIfNeeded() {
@@ -38,8 +38,8 @@ class RefreshService: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.appViewModel.selectedSensor = nil
             self.appViewModel.loadingMeasures = true
-            self.appDataSource.getMeasures()
-            self.appDataSource.fetchData(cityName: UserSettings.selectedCity.cityName, sensorType: self.appViewModel.selectedMeasureId, selectedDate: self.appViewModel.selectedDate)
+            self.appDataManager.getMeasures()
+            self.appDataManager.fetchData(cityName: UserSettings.selectedCity.cityName, sensorType: self.appViewModel.selectedMeasureId, selectedDate: self.appViewModel.selectedDate)
         }
     }
     

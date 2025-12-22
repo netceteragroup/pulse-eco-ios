@@ -18,27 +18,27 @@ struct MainView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var refreshService: RefreshService
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var dataSource: AppDataSource
+    @EnvironmentObject var appData: AppData
+    @EnvironmentObject var appDataManager: AppDataManager
     
     @State private var sensorSelectionAlertDialogIsActive = false
     let mapViewModel: MapViewModel
         
     private var sensorDetailsViewModel: SensorDetailsViewModel {
-        let selectedMeasure = dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId)
+        let selectedMeasure = appDataManager.getCurrentMeasure(selectedMeasure: appData.selectedMeasureId)
         return SensorDetailsViewModel(
-            dataSource: dataSource,
-            sensor: appState.selectedSensor ?? SensorPinModel(),
+            appData: appData,
+            sensor: appData.selectedSensor ?? SensorPinModel(),
             selectedMeasure: selectedMeasure,
-            sensorData24h: dataSource.sensorsData24h
+            sensorData24h: appData.sensorsData24h
         )
     }
     
     private var isLoading: Bool {
         return viewModel.isLoading ||
-               appState.loadingCityData ||
-               appState.loadingMeasures ||
-               appState.isWaitingToFetchFavouriteCitiesOveralls
+               appData.loadingCityData ||
+               appData.loadingMeasures ||
+               appData.isWaitingToFetchFavouriteCitiesOveralls
     }
     
     var body: some View {
@@ -57,7 +57,7 @@ struct MainView: View {
         guard UserSettings.selectedCity != city else { return }
         logger.logDebug("City updated: \(city.cityName)")
         UserSettings.selectedCity = city
-        dataSource.fetchData(cityName: city.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
+        appDataManager.fetchData(cityName: city.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
     }
     
     var loadingView: some View {
@@ -68,19 +68,19 @@ struct MainView: View {
         ZStack {
             NavigationStack {
                 VStack(spacing: 0) {
-                    if appState.citySelectorClicked {
+                    if appData.citySelectorClicked {
                         FavouriteCitiesView()
                             .overlay(ShadowOnTopOfView())
-                            .animation(nil, value: appState.citySelectorClicked)
+                            .animation(nil, value: appData.citySelectorClicked)
                             .edgesIgnoringSafeArea(.bottom)
                     } else {
                         VStack(spacing: 0) {
                             let measureViewModel = MeasureListViewModel(
-                                selectedMeasure: appState.selectedMeasureId,
+                                selectedMeasure: appData.selectedMeasureId,
                                 cityName: UserSettings.selectedCity.cityName,
-                                measuresList: dataSource.measures,
-                                cityValues: dataSource.cityOverall,
-                                citySelectorClicked: appState.citySelectorClicked
+                                measuresList: appData.measures,
+                                cityValues: appData.cityOverall,
+                                citySelectorClicked: appData.citySelectorClicked
                             )
                             MeasureListView(viewModel: measureViewModel)
                         }
@@ -96,7 +96,7 @@ struct MainView: View {
                             .edgesIgnoringSafeArea([.horizontal, .bottom])
                             .padding(.top, 60)
                             .zIndex(1)
-                            .sheet(isPresented: $appState.showSensorDetails) {
+                            .sheet(isPresented: $appData.showSensorDetails) {
                                 Spacer()
                                 SensorDetailsView(
                                     viewModel: sensorDetailsViewModel,
@@ -122,8 +122,8 @@ struct MainView: View {
                             Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
                                 .imageScale(.large)
                                 .onTapGesture {
-                                    if !appState.citySelectorClicked {
-                                        appState.selectedSensor = nil
+                                    if !appData.citySelectorClicked {
+                                        appData.selectedSensor = nil
                                         refreshService.refreshData()
                                     }
                                 }
@@ -142,8 +142,8 @@ struct MainView: View {
         .overlay(
             SensorSelectionView(
                 viewModel: SensorSelectionViewModel(
-                    appState: appState,
-                    sensors: appState.sensorPins
+                    appData: appData,
+                    sensors: appData.sensorPins
                 ),
                 sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive
             )
@@ -178,15 +178,15 @@ struct MainView: View {
     var leadingNavigationItems: some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) {
-                appState.citySelectorClicked.toggle()
-                appState.selectedSensor = nil
+                appData.citySelectorClicked.toggle()
+                appData.selectedSensor = nil
             }
         }) {
             HStack {
                 Text(UserSettings.selectedCity.cityName.uppercased())
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(Color(AppColors.darkblue))
-                appState.cityIcon.foregroundColor(Color(AppColors.darkblue))
+                appData.cityIcon.foregroundColor(Color(AppColors.darkblue))
             }
         }
         .accentColor(AppColors.black.color)
@@ -196,10 +196,10 @@ struct MainView: View {
 extension MainView {
     private func selectCountry(country: Country) {
         Trema.appLanguage = country.shortName
-        dataSource.getMeasures()
-        appState.loadingMeasures = true
+        appDataManager.getMeasures()
+        appData.loadingMeasures = true
         refreshService.updateRefreshDate()
-        dataSource.fetchData(cityName: UserSettings.selectedCity.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
+        appDataManager.fetchData(cityName: UserSettings.selectedCity.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
     }
 }
 

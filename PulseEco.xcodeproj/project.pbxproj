@@ -84,7 +84,7 @@
 		59A35AD62498F6AD00C07786 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A35AD52498F6AD00C07786 /* MapView.swift */; };
 		59A35AD82498F6E300C07786 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A35AD72498F6E300C07786 /* MapViewModel.swift */; };
 		59A35ADA2499057C00C07786 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A35AD92499057C00C07786 /* Constants.swift */; };
-		59A3954E24A206F400D39D64 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A3954D24A206F400D39D64 /* AppState.swift */; };
+		59A3954E24A206F400D39D64 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A3954D24A206F400D39D64 /* AppData.swift */; };
 		59A4F695247FD2160089D523 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59A4F694247FD2160089D523 /* Assets.xcassets */; };
 		59A4F698247FD2160089D523 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59A4F697247FD2160089D523 /* Preview Assets.xcassets */; };
 		59A4F69B247FD2160089D523 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59A4F699247FD2160089D523 /* LaunchScreen.storyboard */; };
@@ -101,7 +101,7 @@
 		59E4992024C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991424C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf */; };
 		59E4992124C5A2E000E89746 /* TitilliumWeb-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991524C5A2E000E89746 /* TitilliumWeb-Italic.ttf */; };
 		59E4992224C5A2E000E89746 /* TitilliumWeb-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59E4991624C5A2E000E89746 /* TitilliumWeb-Light.ttf */; };
-		59F01AD724AC7B1300AD2802 /* AppDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F01AD624AC7B1300AD2802 /* AppDataSource.swift */; };
+		59F01AD724AC7B1300AD2802 /* AppDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F01AD624AC7B1300AD2802 /* AppDataManager.swift */; };
 		59F5EFDC249CC5A40095FE71 /* SensorPinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F5EFDB249CC5A40095FE71 /* SensorPinModel.swift */; };
 		59F5EFDE249CD62E0095FE71 /* SensorDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F5EFDD249CD62E0095FE71 /* SensorDetailsViewModel.swift */; };
 		59FAD1D22490C27200AC36A5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FAD1D12490C27200AC36A5 /* NetworkService.swift */; };
@@ -302,7 +302,7 @@
 		59A35AD52498F6AD00C07786 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		59A35AD72498F6E300C07786 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		59A35AD92499057C00C07786 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		59A3954D24A206F400D39D64 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		59A3954D24A206F400D39D64 /* AppData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		59A4F68B247FD2150089D523 /* pulse.eco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pulse.eco.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59A4F694247FD2160089D523 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59A4F697247FD2160089D523 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 		59E4991424C5A2E000E89746 /* TitilliumWeb-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TitilliumWeb-LightItalic.ttf"; sourceTree = "<group>"; };
 		59E4991524C5A2E000E89746 /* TitilliumWeb-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TitilliumWeb-Italic.ttf"; sourceTree = "<group>"; };
 		59E4991624C5A2E000E89746 /* TitilliumWeb-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TitilliumWeb-Light.ttf"; sourceTree = "<group>"; };
-		59F01AD624AC7B1300AD2802 /* AppDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDataSource.swift; sourceTree = "<group>"; };
+		59F01AD624AC7B1300AD2802 /* AppDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDataManager.swift; sourceTree = "<group>"; };
 		59F5EFDB249CC5A40095FE71 /* SensorPinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorPinModel.swift; sourceTree = "<group>"; };
 		59F5EFDD249CD62E0095FE71 /* SensorDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDetailsViewModel.swift; sourceTree = "<group>"; };
 		59FAD1D12490C27200AC36A5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -571,8 +571,8 @@
 			children = (
 				B43A201A2EBA019500506A6C /* MainViewModel.swift */,
 				59A35AC12498EBB600C07786 /* MainView.swift */,
-				59A3954D24A206F400D39D64 /* AppState.swift */,
-				59F01AD624AC7B1300AD2802 /* AppDataSource.swift */,
+				59A3954D24A206F400D39D64 /* AppData.swift */,
+				59F01AD624AC7B1300AD2802 /* AppDataManager.swift */,
 				744A9DEE28575C3000A91789 /* Calendar.swift */,
 			);
 			path = AppRoot;
@@ -1051,7 +1051,7 @@
 				133B20C82CFF19730034AEF6 /* SystemLoggerAdapter.swift in Sources */,
 				1E3B8364282E4CED00EED04D /* CalendarButtonView.swift in Sources */,
 				133B20C22CFF19120034AEF6 /* LoggerProtocol.swift in Sources */,
-				59F01AD724AC7B1300AD2802 /* AppDataSource.swift in Sources */,
+				59F01AD724AC7B1300AD2802 /* AppDataManager.swift in Sources */,
 				56DFA98F2DC24D73007E8528 /* DateSlider.swift in Sources */,
 				5908ADE224AF2DA500C79BC9 /* DateFormatterUtils.swift in Sources */,
 				565A2D402DC4C202001AB36F /* ArrayExtensions.swift in Sources */,
@@ -1096,7 +1096,7 @@
 				B4926FB12EA2743600C714A6 /* LocationServiceImpl.swift in Sources */,
 				1384B6852D14613D00A22BD0 /* TimelineSliderViewModel.swift in Sources */,
 				744A9DEF28575C3000A91789 /* Calendar.swift in Sources */,
-				59A3954E24A206F400D39D64 /* AppState.swift in Sources */,
+				59A3954E24A206F400D39D64 /* AppData.swift in Sources */,
 				1347279E2D4787C600647C80 /* SensorSelectionViewModel.swift in Sources */,
 				BAA692F625E3E7C6002E0B2F /* DailyInfoSensor.swift in Sources */,
 				564146EB2EF18EF600CFC026 /* DataFromRangeMapper.swift in Sources */,

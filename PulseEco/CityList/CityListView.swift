@@ -11,8 +11,8 @@ struct CityListView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.isSearching) private var isSearching
     @Environment(\.dismissSearch) private var dismissSearch
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var dataSource: AppDataSource
+    @EnvironmentObject var appData: AppData
+    @EnvironmentObject var appDataManager: AppDataManager
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var viewModel: CityListViewModel
     
@@ -128,12 +128,12 @@ struct CityListView: View {
             if locationService.lastLocation?.cityName != city.cityName {
                 UserSettings.addFavoriteCity(city)
             }
-            self.appState.citySelectorClicked = false
+            self.appData.citySelectorClicked = false
             if UserSettings.selectedCity != city {
                 UserSettings.selectedCity = city
             }
             self.presentationMode.wrappedValue.dismiss()
-            dataSource.fetchData(cityName: city.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
+            appDataManager.fetchData(cityName: city.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
             dismissSearch()
         }
     }

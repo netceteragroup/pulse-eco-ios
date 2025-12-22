@@ -9,8 +9,7 @@ import SwiftUI
 
 struct SensorSelectionView: View {
     @ObservedObject var viewModel: SensorSelectionViewModel
-    @EnvironmentObject var dataSource: AppDataSource
-    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var appData: AppData
     @Binding var sensorSelectionAlertDialogIsActive: Bool
     
     var body: some View {
@@ -43,7 +42,7 @@ struct SensorSelectionView: View {
                         
                         Button(Trema.text(for: "cancel")) {
                             viewModel.cancel(sensorSelectionAlertDialogIsActive: &sensorSelectionAlertDialogIsActive)
-                            appState.showSensorDetails = true
+                            appData.showSensorDetails = true
                         }
                         .font(.headline)
                         .foregroundStyle(Color(AppColors.gray))
@@ -51,7 +50,7 @@ struct SensorSelectionView: View {
                         
                         Button(Trema.text(for: "ok")) {
                             viewModel.addToSelectedSensors(sensorSelectionAlertDialogIsActive: &sensorSelectionAlertDialogIsActive)
-                            appState.showSensorDetails = true
+                            appData.showSensorDetails = true
                         }
                         .font(.headline)
                         .foregroundStyle(Color(AppColors.firstButtonColor))
@@ -66,7 +65,7 @@ struct SensorSelectionView: View {
                 .padding(.horizontal)
             }
             .onAppear() {
-                appState.showSensorDetails = false
+                appData.showSensorDetails = false
             }
         }
     }

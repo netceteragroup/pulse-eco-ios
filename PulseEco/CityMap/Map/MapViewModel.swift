@@ -12,17 +12,15 @@ import SwiftUI
 
 class MapViewModel: ObservableObject {
     
-    let appState: AppState
-    @ObservedObject var appDataSource: AppDataSource
+    @ObservedObject var appDataManager: AppDataManager
     
     @Published private(set) var sensors: [SensorPinModel] = []
     var shouldUpdateSensors = false
     
     private(set) var span: MKCoordinateSpan!
     
-    init(appState: AppState, appDataSource: AppDataSource) {
-        self.appState = appState
-        self.appDataSource = appDataSource
+    init(appDataManager: AppDataManager) {
+        self.appDataManager = appDataManager
         self.span = span(for: UserSettings.selectedCity)
         observeStateChanges()
     }
@@ -30,7 +28,7 @@ class MapViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     private func observeStateChanges() {
-        self.appDataSource.onSensorPinsUpdated.sink { [weak self] sensorPins in
+        self.appDataManager.onSensorPinsUpdated.sink { [weak self] sensorPins in
             self?.sensors = sensorPins
             self?.shouldUpdateSensors = true
         }.store(in: &cancellables)

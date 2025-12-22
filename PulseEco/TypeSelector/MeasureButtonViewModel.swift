@@ -20,12 +20,8 @@ class MeasureButtonViewModel: ObservableObject {
         self.icon = icon
     }
     
-    func measurePressed(appState: AppState, appDataSource: AppDataSource) {
-        setAsSelectedMeasure(appState: appState)
-        appDataSource.selectFromSensorType()
-    }
-    
-    private func setAsSelectedMeasure(appState: AppState) {
-        appState.selectedMeasureId = id
+    func measurePressed(appData: AppData, appDataManager: AppDataManager) {
+        appData.selectedMeasureId = id
+        appDataManager.selectFromSensorType()
     }
 }

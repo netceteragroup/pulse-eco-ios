@@ -12,16 +12,16 @@ class SensorSelectionViewModel: ObservableObject {
     @Published var selectedSensors: [SensorPinModel] = []
     @Published var tmpSelectedSensors: [SensorPinModel] = []
     var sensors: [SensorPinModel] = []
-    var appState: AppState
+    var appData: AppData
     
-    init(appState: AppState, sensors: [SensorPinModel]) {
-        self.appState = appState
+    init(appData: AppData, sensors: [SensorPinModel]) {
+        self.appData = appData
         self.sensors = sensors
-        self.tmpSelectedSensors = appState.selectedSensorsForGraph
+        self.tmpSelectedSensors = appData.selectedSensorsForGraph
     }
     
     var filteredSensors: [SensorPinModel] {
-        sensors.filter { $0.measureId == appState.selectedMeasureId }
+        sensors.filter { $0.measureId == appData.selectedMeasureId }
     }
     
     func toggleSelection(for sensor: SensorPinModel) {
@@ -40,7 +40,7 @@ class SensorSelectionViewModel: ObservableObject {
     func addToSelectedSensors(sensorSelectionAlertDialogIsActive: inout Bool) {
         selectedSensors = tmpSelectedSensors
         sensorSelectionAlertDialogIsActive = false
-        appState.selectedSensorsForGraph = selectedSensors
+        appData.selectedSensorsForGraph = selectedSensors
     }
     
     func isDisabled(sensor: SensorPinModel) -> Bool {

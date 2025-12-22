@@ -10,8 +10,8 @@ import Factory
 
 struct CitySearchContentView: View {
     @Environment(\.isSearching) private var isSearching
-    @EnvironmentObject var dataSource: AppDataSource
-    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var appDataManager: AppDataManager
+    @EnvironmentObject var appData: AppData
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var viewModel: CitySearchContentViewModel
     
@@ -22,7 +22,7 @@ struct CitySearchContentView: View {
     var body: some View {
         if isSearching || (viewModel.cities.isEmpty && locationService.currentAuthorizationStatus() != .authorized) {
             CityListView(
-                viewModel: CityListViewModel(cities: self.dataSource.cities),
+                viewModel: CityListViewModel(cities: appData.cities),
                 searchText: searchText
             )
             .padding(.vertical, 1)
@@ -37,8 +37,8 @@ struct CitySearchContentView: View {
             let favouriteCityRowViewModel = viewModel.createFavouriteCityRowViewModelFromCityAndCityValues(
                 city: currentCity,
                 cityValues: UserSettings.cityValues,
-                selectedMeasure: appState.selectedMeasureId,
-                measureList: dataSource.measures,
+                selectedMeasure: appData.selectedMeasureId,
+                measureList: appData.measures,
                 isCurrentCity: true
             )
             tmpAllCities.append(favouriteCityRowViewModel)
@@ -71,14 +71,14 @@ struct CitySearchContentView: View {
                          from array: [FavouriteCityRowViewModel]) -> some View {
         VStack(spacing: 0) {
             Button(action: {
-                self.appState.citySelectorClicked = false
+                self.appData.citySelectorClicked = false
                 if UserSettings.selectedCity != favouriteCity.city {
                     if locationService.lastLocation?.cityName != favouriteCity.city.cityName {
                         UserSettings.addFavoriteCity(favouriteCity.city)
                     }
                     UserSettings.selectedCity = favouriteCity.city
                     self.refreshService.updateRefreshDate()
-                    self.dataSource.fetchData(cityName: favouriteCity.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
+                    self.appDataManager.fetchData(cityName: favouriteCity.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
                 }
             }, label: {
                 FavouriteCityRowView(viewModel: favouriteCity)

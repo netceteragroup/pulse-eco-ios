@@ -14,8 +14,7 @@ struct CityMapView: View {
         static let disclaimerIconSize: CGSize = CGSize(width: 220, height: 25)
     }
     
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var dataSource: AppDataSource
+    @EnvironmentObject var appData: AppData
     @EnvironmentObject var refreshService: RefreshService
     
     @Binding private var bottomSheetHeaderSize: CGFloat
@@ -30,7 +29,7 @@ struct CityMapView: View {
     var body: some View {
         
         ZStack {
-            MapView(viewModel: mapViewModel, appState: appState)
+            MapView(viewModel: mapViewModel, appData: appData)
                 .id("MapView")
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
@@ -41,45 +40,45 @@ struct CityMapView: View {
                 Spacer()
                 
                 HStack {
-                    if appState.isTimelineSliderActive {
-                        createTimelineSliderView(appState: appState)
+                    if appData.isTimelineSliderActive {
+                        createTimelineSliderView(appData: appData)
                     } else {
-                        createFloatingButtonView(appState: appState)
+                        createFloatingButtonView(appData: appData)
                     }
                 }
                 .padding(.bottom, bottomSheetHeaderSize + getSafeAreaBottom() + 8)
                 
             }
             
-            AverageView(viewModel: AverageUtilModel(measureId: self.appState.selectedMeasureId,
+            AverageView(viewModel: AverageUtilModel(measureId: self.appData.selectedMeasureId,
                                                     cityName: UserSettings.selectedCity.cityName,
-                                                    measuresList: self.dataSource.measures,
-                                                    cityValues: self.dataSource.cityOverall,
-                                                    currentValue: self.appState.selectedDateAverageValue))
+                                                    measuresList: self.appData.measures,
+                                                    cityValues: self.appData.cityOverall,
+                                                    currentValue: self.appData.selectedDateAverageValue))
         }
     }
 }
 
 @ViewBuilder
-private func createTimelineSliderView(appState: AppState) -> some View {
+private func createTimelineSliderView(appData: AppData) -> some View {
     HStack {
         Spacer()
         
         TimelineSliderView(viewModel: TimelineSliderViewModel(onSliderValueChanged: { sliderValue in
-            guard let sensorPinsForSelectedHour = appState.hourlySensors[Int(sliderValue)] else {
-                appState.sensorPins = [SensorPinModel()]
+            guard let sensorPinsForSelectedHour = appData.hourlySensors[Int(sliderValue)] else {
+                appData.sensorPins = [SensorPinModel()]
                 return
             }
             
-            if sensorPinsForSelectedHour.isEmpty || sensorPinsForSelectedHour == appState.sensorPins {
+            if sensorPinsForSelectedHour.isEmpty || sensorPinsForSelectedHour == appData.sensorPins {
                 return
             }
             
-            appState.sensorPins = sensorPinsForSelectedHour
+            appData.sensorPins = sensorPinsForSelectedHour
         }))
         .lineLimit(1)
         .minimumScaleFactor(0.5)
-        .environmentObject(appState)
+        .environmentObject(appData)
         
         Spacer()
     }
@@ -88,10 +87,10 @@ private func createTimelineSliderView(appState: AppState) -> some View {
 }
 
 @ViewBuilder
-private func createFloatingButtonView(appState: AppState) -> some View {
+private func createFloatingButtonView(appData: AppData) -> some View {
     HStack {
         FloatingButton(image: "access-time") {
-            appState.isTimelineSliderActive = true
+            appData.isTimelineSliderActive = true
         }
         .cornerRadius(15)
         .shadow(radius: 5)
@@ -115,11 +114,9 @@ func getSafeAreaBottom() -> CGFloat {
     VStack {
         CityMapView(bottomSheetHeaderSize: .constant(.zero),
                     mapViewModel: MapViewModel(
-                        appState: AppState(),
-                        appDataSource: AppDataSource(appState: AppState())
+                        appDataManager: AppDataManager(appData: AppData())
                     )
         )
-        .environmentObject(AppState())
-        .environmentObject(AppDataSource(appState: AppState()))
+        .environmentObject(AppDataManager(appData: AppData()))
     }
 }

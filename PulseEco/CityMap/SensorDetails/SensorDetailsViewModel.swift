@@ -10,7 +10,7 @@ import SwiftUI
 
 @MainActor
 class SensorDetailsViewModel: ObservableObject {
-    let dataSource: AppDataSource
+    let appData: AppData
     var sensorID: String
     var sensorType: SensorType
     var title: String
@@ -23,11 +23,11 @@ class SensorDetailsViewModel: ObservableObject {
     var color = Color(AppColors.darkblue)
     @Published var sensorData24h: [SensorData]
 
-    init(dataSource: AppDataSource,
+    init(appData: AppData,
          sensor: SensorPinModel,
          selectedMeasure: Measure,
          sensorData24h: [SensorData]) {
-        self.dataSource = dataSource
+        self.appData = appData
         self.sensorID = sensor.sensorID
         self.sensorType = sensor.type
         self.title = sensor.title ?? "Sensor"
@@ -41,6 +41,6 @@ class SensorDetailsViewModel: ObservableObject {
     }
     
     var pastWeekAverages: [SensorData] {
-        dataSource.weeklyAverageForSensors.filter { $0.sensorID == sensorID }
+        appData.weeklyAverageForSensors.filter { $0.sensorID == sensorID }
     }
 }

@@ -9,18 +9,17 @@ import SwiftUI
 import MapKit
 
 struct FavouriteCitiesView: View {
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var dataSource: AppDataSource
+    @EnvironmentObject var appData: AppData
     @EnvironmentObject var refreshService: RefreshService
     @State var searchText = ""
     @State var isSearching = false
     
     var body: some View {
         VStack(spacing: 0) {
-            CitySearchContentView(viewModel: CitySearchContentViewModel(selectedMeasure: appState.selectedMeasureId,
+            CitySearchContentView(viewModel: CitySearchContentViewModel(selectedMeasure: appData.selectedMeasureId,
                                                                         favouriteCities: UserSettings.favouriteCities,
                                                                         cityValues: UserSettings.cityValues,
-                                                                        measureList: self.dataSource.measures),
+                                                                        measureList: appData.measures),
                                   searchText: searchText)
             .searchable(text: $searchText, placement: .toolbarPrincipal, prompt: Trema.text(for: "search_city_or_country"))
                 .listStyle(InsetGroupedListStyle())

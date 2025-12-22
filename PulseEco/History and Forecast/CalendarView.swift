@@ -12,7 +12,7 @@ private enum PickerType {
 }
 
 struct CalendarView: View {
-    @EnvironmentObject var dataSource: AppDataSource
+    @EnvironmentObject var appDataManager: AppDataManager
 
     @StateObject private var viewModel: CalendarViewModel
     @State private var pickerType: PickerType = .day
@@ -119,7 +119,7 @@ struct CalendarView: View {
             Button {
                 pickerType = .month
                 Task {
-                    await dataSource.updateMonthlyColors(selectedYear: viewModel.selectedYear)
+                    await appDataManager.updateMonthlyColors(selectedYear: viewModel.selectedYear)
                     viewModel.colorMonths()
                 }
             } label: {
@@ -187,7 +187,7 @@ struct CalendarView: View {
                         pickerType = .month
                         viewModel.selectedYear = year
                         Task {
-                            await dataSource.updateMonthlyColors(selectedYear: year)
+                            await appDataManager.updateMonthlyColors(selectedYear: year)
                             viewModel.colorMonths()
                         }
                     } label: {
@@ -262,7 +262,7 @@ struct CalendarView: View {
         }
         .padding(.top)
         .task {
-            await dataSource.updateMonthlyColors(selectedYear: viewModel.selectedYear)
+            await appDataManager.updateMonthlyColors(selectedYear: viewModel.selectedYear)
             viewModel.colorMonths()
         }
     }
