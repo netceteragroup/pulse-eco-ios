@@ -11,7 +11,6 @@ struct UserSettings {
         static let favouriteCities = "pulseco.favouriteCities"
         static let cityValues = "pulseeco.cityValues"
         static let selectedCity = "puseleco.selectedCity"
-        static let selectedAppView = "puseleco.selectedAppView"
     }
     
     private init() {
@@ -26,9 +25,6 @@ struct UserSettings {
     
     @UserDefaultsWrapper(key: Keys.selectedCity, defaultValue: City.defaultCity(), shouldCache: true)
     static var selectedCity: City
-    
-    @UserDefaultsEnumWrapper(key: Keys.selectedAppView, defaultValue: AppView.dashboard)
-    static var selectedAppView: AppView
 
     static func removeFavouriteCity(_ city: City) {
         var favouriteCitiesCopy = favouriteCities

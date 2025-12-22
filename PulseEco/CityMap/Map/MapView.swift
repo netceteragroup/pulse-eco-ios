@@ -26,7 +26,7 @@ struct MapView: UIViewRepresentable {
         mapView.mapType = .standard
         addAnotations(to: mapView)
         
-        let city: City = viewModel.selectedCity
+        let city: City = UserSettings.selectedCity
         let zoomLevel = city.intialZoomLevel
         
         var initialRegion: MKCoordinateRegion
@@ -127,7 +127,6 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
             self.map.appState.selectedSensor = annotationView.pin
             self.map.appState.selectedSensorsForGraph = []
         }
-        map.viewModel.getDailyAverageDataForSensor(annotationView.pin?.sensorID ?? "")
         let region = MKCoordinateRegion(center: view.annotation!.coordinate, span: mapView.region.span)
         mapView.animatedSetRegion(region, duration: 0.2)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {

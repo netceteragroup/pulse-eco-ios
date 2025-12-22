@@ -19,20 +19,17 @@ struct CalendarView: View {
 
     @Binding var showingCalendar: Bool
     @Binding var selectedDate: Date
-    @Binding var calendarSelection: Date
 
     var onDaySelected: ((Date) -> Void)?
 
     init(showingCalendar: Binding<Bool>,
          selectedDate: Binding<Date>,
-         calendarSelection: Binding<Date>,
          onDaySelected: ((Date) -> Void)?,
          viewModelClosure: @autoclosure @escaping () -> CalendarViewModel)
     {
         _viewModel = StateObject(wrappedValue: viewModelClosure())
         _showingCalendar = showingCalendar
         _selectedDate = selectedDate
-        _calendarSelection = calendarSelection
         self.onDaySelected = onDaySelected
     }
 
@@ -49,11 +46,9 @@ struct CalendarView: View {
         }
         .onChange(of: [viewModel.currentMonthOffset, viewModel.selectedYear]) {
             viewModel.currentDate = viewModel.getCurrentMonth()
-            viewModel.dateValues = viewModel.extractDate()
         }
         .padding(.all)
         .background(Color.white)
-        .task(viewModel.setupDates)
     }
 
     @ViewBuilder
@@ -62,13 +57,7 @@ struct CalendarView: View {
             if value.day != -1 {
                 Button {
                     self.selectedDate = calendar.startOfDay(for: value.date)
-                    self.calendarSelection = calendar.startOfDay(for: value.date)
-                    Task {
-                        do {
-                            await viewModel.appDataSource.updatePins(selectedDate: selectedDate)
-                            await viewModel.appDataSource.selectFromCalendar()
-                        }
-                    }
+                    viewModel.dateSelected(date: value.date)
                     showingCalendar = false
                 } label: {
                     CalendarButtonView(day: value.day,

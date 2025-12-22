@@ -8,13 +8,16 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 class WeeklyAverageViewModel: ObservableObject {
-    @EnvironmentObject var dataSource: AppDataSource
-    @EnvironmentObject var appState: AppState
+    let dataSource: AppDataSource
+    let appState: AppState
     var title: String = ""
     var dailyAverageViewModels: [DailyAverageViewModel] = []
     
     init(appState: AppState, dataSource: AppDataSource, averages: [SensorData]) {
+        self.appState = appState
+        self.dataSource = dataSource
         let pastWeekLocalized = Trema.text(for: "past_week")
         let suffix = "(\(dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId).unit))"
         title = pastWeekLocalized + suffix
@@ -35,7 +38,7 @@ class WeeklyAverageViewModel: ObservableObject {
      
         let week = (-7...(-1)).compactMap {
             DateFormatter.iso8601Full
-                .string(from: calendar.date(byAdding: .day, value: $0, to: Date()) ?? Date())
+                .string(from: calendar.date(byAdding: .day, value: $0, to: appState.selectedDate) ?? Date())
         }
         
         for date in week {

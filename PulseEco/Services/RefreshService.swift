@@ -39,7 +39,7 @@ class RefreshService: ObservableObject {
             self.appViewModel.selectedSensor = nil
             self.appViewModel.loadingMeasures = true
             self.appDataSource.getMeasures()
-            self.appDataSource.getValuesForCity(cityName: self.appViewModel.selectedCity.cityName)
+            self.appDataSource.fetchData(cityName: UserSettings.selectedCity.cityName, sensorType: self.appViewModel.selectedMeasureId, selectedDate: self.appViewModel.selectedDate)
         }
     }
     

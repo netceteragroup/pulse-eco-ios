@@ -42,6 +42,7 @@ struct PulseEcoApp: App {
                 .environmentObject(dataSource)
                 .environmentObject(refreshService)
                 .onAppear {
+                    dataSource.startInitialFetch()
                     refreshService.refreshDataIfNeeded()
                 }
         }

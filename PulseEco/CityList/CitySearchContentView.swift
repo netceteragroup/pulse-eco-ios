@@ -72,16 +72,13 @@ struct CitySearchContentView: View {
         VStack(spacing: 0) {
             Button(action: {
                 self.appState.citySelectorClicked = false
-                if self.appState.selectedCity != favouriteCity.city {
-                    if locationService.lastLocation?.cityName == favouriteCity.city.cityName {
-                        appState.currentLocationIsSelected = true
-                    } else {
+                if UserSettings.selectedCity != favouriteCity.city {
+                    if locationService.lastLocation?.cityName != favouriteCity.city.cityName {
                         UserSettings.addFavoriteCity(favouriteCity.city)
-                        appState.currentLocationIsSelected = false
                     }
-                    self.appState.selectedCity = favouriteCity.city
+                    UserSettings.selectedCity = favouriteCity.city
                     self.refreshService.updateRefreshDate()
-                    self.dataSource.getValuesForCity(cityName: favouriteCity.cityName)
+                    self.dataSource.fetchData(cityName: favouriteCity.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
                 }
             }, label: {
                 FavouriteCityRowView(viewModel: favouriteCity)

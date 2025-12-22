@@ -22,12 +22,12 @@ class ChartViewModel: ObservableObject {
         return min(minValue, selectedMeasure.showMin)
     }
     
-    init(sensor: SensorPinModel, sensors: [SensorPinModel], sensorsData: [SensorData], selectedMeasure: Measure, sensorDataForSelectedDate: [SensorData]) {
+    init(sensor: SensorPinModel, sensors: [SensorPinModel], sensorsData: [SensorData], selectedMeasure: Measure) {
         self.sensor = sensor
         self.sensors = sensors
         self.sensorsData24h = sensorsData
         self.selectedMeasure = selectedMeasure
-        let dataFromSensors = sensorDataForSelectedDate.isEmpty ? sensorsData : sensorDataForSelectedDate
+        let dataFromSensors = sensorsData
         chartSensorReadings = []
         
         selectedSensorReadings = dataFromSensors.filter {

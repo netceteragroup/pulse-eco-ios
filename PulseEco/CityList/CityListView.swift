@@ -129,12 +129,11 @@ struct CityListView: View {
                 UserSettings.addFavoriteCity(city)
             }
             self.appState.citySelectorClicked = false
-            if self.appState.selectedCity != city {
-                self.appState.selectedCity = city
-                self.appState.newCitySelected = true
+            if UserSettings.selectedCity != city {
+                UserSettings.selectedCity = city
             }
             self.presentationMode.wrappedValue.dismiss()
-            self.dataSource.getValuesForCity(cityName: city.cityName)
+            dataSource.fetchData(cityName: city.cityName, sensorType: appState.selectedMeasureId, selectedDate: appState.selectedDate)
             dismissSearch()
         }
     }

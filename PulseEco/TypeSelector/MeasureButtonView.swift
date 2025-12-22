@@ -8,9 +8,7 @@ struct MeasureButtonView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
             Button(action: {
-                Task {
-                    await viewModel.measurePressed(appState: appState, appDataSource: appDataSource)
-                }
+                viewModel.measurePressed(appState: appState, appDataSource: appDataSource)
             }) {
                 VStack(spacing: 0) {
                     Text(self.viewModel.title)

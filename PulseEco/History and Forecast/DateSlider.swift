@@ -47,11 +47,7 @@ struct DateSlider: View {
                                           color: item.color,
                                           highlighted: selectedDate.isSameDay(with: item.date)) {
                                 selectedDate = calendar.startOfDay(for: item.date)
-                                Task {
-                                    do {
-                                        await dataSource.updatePins(selectedDate: selectedDate)
-                                    }
-                                }
+                                dataSource.selectFromDateSlider(selectedDate: selectedDate)
                             }
                         }
                         .onAppear {

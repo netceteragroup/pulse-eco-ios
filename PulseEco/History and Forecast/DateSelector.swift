@@ -22,7 +22,6 @@ struct DateSelector: View {
             if viewModel.isDatePickerPressed {
                 CalendarView(showingCalendar: $viewModel.isDatePickerPressed,
                              selectedDate: $appState.selectedDate,
-                             calendarSelection: $appState.calendarSelection,
                              onDaySelected: { newDate in viewModel.selectedDate = newDate },
                              viewModelClosure: CalendarViewModel(appState: self.appState,
                                                                  appDataSource: self.appDataSource))

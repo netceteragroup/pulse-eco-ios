@@ -20,8 +20,7 @@ struct SensorDetailsView: View {
         ChartViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
                        sensors: appState.selectedSensorsForGraph,
                        sensorsData: dataSource.sensorsData24h,
-                       selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId),
-                       sensorDataForSelectedDate: dataSource.sensorDataForSelectedDate)
+                       selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId))
     }
     
     var body: some View {
@@ -78,7 +77,7 @@ struct SensorDetailsView: View {
                     
                     WeeklyAverageView(viewModel: WeeklyAverageViewModel(appState: appState,
                                                                         dataSource: dataSource,
-                                                                        averages: self.viewModel.dailyAverages))
+                                                                        averages: viewModel.pastWeekAverages))
                         .padding(.bottom, 20)
                     
                     Text(self.viewModel.disclaimerMessage)

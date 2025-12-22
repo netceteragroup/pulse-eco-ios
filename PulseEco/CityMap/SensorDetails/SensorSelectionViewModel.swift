@@ -20,6 +20,10 @@ class SensorSelectionViewModel: ObservableObject {
         self.tmpSelectedSensors = appState.selectedSensorsForGraph
     }
     
+    var filteredSensors: [SensorPinModel] {
+        sensors.filter { $0.measureId == appState.selectedMeasureId }
+    }
+    
     func toggleSelection(for sensor: SensorPinModel) {
         if let index = tmpSelectedSensors.firstIndex(where: { $0.sensorID == sensor.sensorID }) {
             tmpSelectedSensors.remove(at: index)

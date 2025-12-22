@@ -29,7 +29,7 @@ struct SensorSelectionView: View {
                     
                     ScrollView {
                         VStack(spacing: 32) {
-                            ForEach(viewModel.sensors, id: \.self) { sensor in
+                            ForEach(viewModel.filteredSensors, id: \.self) { sensor in
                                 button(for: sensor)
                                     .buttonStyle(PlainButtonStyle())
                             }

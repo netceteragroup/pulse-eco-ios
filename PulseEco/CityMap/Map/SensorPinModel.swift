@@ -12,13 +12,14 @@ import Combine
 class SensorPinModel: NSObject, MKAnnotation {
     var title: String?
     var sensorID: String
+    var measureId: String
     var value: String
     var coordinate: CLLocationCoordinate2D
     var type: SensorType
     var color: UIColor
     var stamp: String
     
-    static func isIdentical(lhs: SensorPinModel, rhs: SensorPinModel) -> Bool {
+    static func == (lhs: SensorPinModel, rhs: SensorPinModel) -> Bool {
         lhs.sensorID == rhs.sensorID &&
         lhs.value == rhs.value &&
         lhs.type == rhs.type &&
@@ -31,6 +32,7 @@ class SensorPinModel: NSObject, MKAnnotation {
 
     init(title: String = "",
          sensorID: String = "",
+         measureId: String = "",
          value: String = "",
          position: String = "",
          type: String = "",
@@ -45,6 +47,7 @@ class SensorPinModel: NSObject, MKAnnotation {
         }
         self.title = title
         self.sensorID = sensorID
+        self.measureId = measureId
         self.value = value
         self.type = SensorType(rawValue: type) ?? SensorType.undefined
         self.color = color

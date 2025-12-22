@@ -18,6 +18,13 @@ struct CityMapView: View {
     @EnvironmentObject var dataSource: AppDataSource
     @EnvironmentObject var refreshService: RefreshService
     
+    @Binding private var bottomSheetHeaderSize: CGFloat
+    
+    init(bottomSheetHeaderSize: Binding<CGFloat>, mapViewModel: MapViewModel) {
+        self._bottomSheetHeaderSize = bottomSheetHeaderSize
+        self.mapViewModel = mapViewModel
+    }
+    
     let mapViewModel: MapViewModel
     
     var body: some View {
@@ -40,12 +47,12 @@ struct CityMapView: View {
                         createFloatingButtonView(appState: appState)
                     }
                 }
-                .padding(.bottom, appState.bottomSheetHeaderSize + getSafeAreaBottom() + 8)
+                .padding(.bottom, bottomSheetHeaderSize + getSafeAreaBottom() + 8)
                 
             }
             
             AverageView(viewModel: AverageUtilModel(measureId: self.appState.selectedMeasureId,
-                                                    cityName: self.appState.selectedCity.cityName,
+                                                    cityName: UserSettings.selectedCity.cityName,
                                                     measuresList: self.dataSource.measures,
                                                     cityValues: self.dataSource.cityOverall,
                                                     currentValue: self.appState.selectedDateAverageValue))
@@ -104,16 +111,10 @@ func getSafeAreaBottom() -> CGFloat {
     return 0
 }
 
-
-enum ActiveSheet: Int, Identifiable {
-    var id: Int { self.rawValue }
-    
-    case disclaimerView
-}
-
 #Preview {
     VStack {
-        CityMapView(mapViewModel: MapViewModel(
+        CityMapView(bottomSheetHeaderSize: .constant(.zero),
+                    mapViewModel: MapViewModel(
                         appState: AppState(),
                         appDataSource: AppDataSource(appState: AppState())
                     )
