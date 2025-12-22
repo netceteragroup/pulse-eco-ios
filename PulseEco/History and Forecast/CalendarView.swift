@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import Factory
 
 private enum PickerType {
     case day, month, year
 }
 
 struct CalendarView: View {
-    @EnvironmentObject var appDataManager: AppDataManager
+    @Injected(\.appDataManager) private var appDataManager
 
     @StateObject private var viewModel: CalendarViewModel
     @State private var pickerType: PickerType = .day

@@ -7,9 +7,10 @@
 
 import SwiftUI
 import MapKit
+import Factory
 
 struct FavouriteCitiesView: View {
-    @EnvironmentObject var appData: AppData
+    @Injected(\.appData) var appData: AppDataProtocol
     @EnvironmentObject var refreshService: RefreshService
     @State var searchText = ""
     @State var isSearching = false

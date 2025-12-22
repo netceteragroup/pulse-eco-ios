@@ -12,6 +12,9 @@ import Factory
 @MainActor
 class MainViewModel: ObservableObject {
     @Injected(\.locationService) private var locationService
+    @Injected(\.appData) private var appData
+    @Injected(\.refreshService) private var refreshService
+    @Injected(\.appDataManager) private var appDataManager
     
     @Published var isLoading: Bool = true
     
@@ -22,6 +25,31 @@ class MainViewModel: ObservableObject {
     
     init() {
         checkLocation()
+    }
+    
+    func onMainViewAppear() {
+        appDataManager.startInitialFetch()
+        refreshService.refreshDataIfNeeded()
+    }
+    
+    func onPulseLogoTap() {
+        if !appData.citySelectorClicked {
+            appData.selectedSensor = nil
+            refreshService.refreshData()
+        }
+    }
+    
+    func onLeadingNavigationItemTap() {
+        appData.citySelectorClicked.toggle()
+        appData.selectedSensor = nil
+    }
+    
+    func selectCountry(country: Country) {
+        Trema.appLanguage = country.shortName
+        appDataManager.getMeasures()
+        appData.loadingMeasures = true
+        refreshService.updateRefreshDate()
+        appDataManager.fetchData(cityName: UserSettings.selectedCity.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
     }
     
     private func checkLocation() {

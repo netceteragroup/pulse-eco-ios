@@ -11,7 +11,7 @@ import Factory
 struct CitySearchContentView: View {
     @Environment(\.isSearching) private var isSearching
     @EnvironmentObject var appDataManager: AppDataManager
-    @EnvironmentObject var appData: AppData
+    @Injected(\.appData) var appData: AppDataProtocol
     @EnvironmentObject var refreshService: RefreshService
     @ObservedObject var viewModel: CitySearchContentViewModel
     
@@ -71,15 +71,7 @@ struct CitySearchContentView: View {
                          from array: [FavouriteCityRowViewModel]) -> some View {
         VStack(spacing: 0) {
             Button(action: {
-                self.appData.citySelectorClicked = false
-                if UserSettings.selectedCity != favouriteCity.city {
-                    if locationService.lastLocation?.cityName != favouriteCity.city.cityName {
-                        UserSettings.addFavoriteCity(favouriteCity.city)
-                    }
-                    UserSettings.selectedCity = favouriteCity.city
-                    self.refreshService.updateRefreshDate()
-                    self.appDataManager.fetchData(cityName: favouriteCity.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
-                }
+                viewModel.onFavouriteCityTapped(favouriteCity: favouriteCity)
             }, label: {
                 FavouriteCityRowView(viewModel: favouriteCity)
                     .contentShape(Rectangle())

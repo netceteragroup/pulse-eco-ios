@@ -11,9 +11,8 @@ struct CityListView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.isSearching) private var isSearching
     @Environment(\.dismissSearch) private var dismissSearch
-    @EnvironmentObject var appData: AppData
-    @EnvironmentObject var appDataManager: AppDataManager
-    @EnvironmentObject var refreshService: RefreshService
+    @Injected(\.appData) private var appData
+    @Injected(\.appDataManager) private var appDataManager
     @ObservedObject var viewModel: CityListViewModel
     
     @Injected(\.locationService) private var locationService
@@ -124,18 +123,9 @@ struct CityListView: View {
     }
     
     private func addToFavourites(city: CityRowViewModel) {
-        if let city = self.viewModel.cityModel.first(where: { $0.cityName == city.cityName }) {
-            if locationService.lastLocation?.cityName != city.cityName {
-                UserSettings.addFavoriteCity(city)
-            }
-            self.appData.citySelectorClicked = false
-            if UserSettings.selectedCity != city {
-                UserSettings.selectedCity = city
-            }
-            self.presentationMode.wrappedValue.dismiss()
-            appDataManager.fetchData(cityName: city.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
-            dismissSearch()
-        }
+        viewModel.addToFavourites(city: city)
+        self.presentationMode.wrappedValue.dismiss()
+        dismissSearch()
     }
     
     private func getFavouriteCitiesNames() -> Set<String> {

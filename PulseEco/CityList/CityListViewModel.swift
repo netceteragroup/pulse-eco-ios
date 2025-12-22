@@ -1,6 +1,10 @@
 import Foundation
+import Factory
 
 class CityListViewModel: ObservableObject {
+    @Injected(\.locationService) private var locationService
+    @Injected(\.appData) private var appData
+    @Injected(\.appDataManager) private var appDataManager
     @Published var cities: [CityRowViewModel] = []
     @Published var cityModel: [City] = []
     @Published var countries = Set<String>()
@@ -13,6 +17,19 @@ class CityListViewModel: ObservableObject {
                                                 countryName: city.countryName,
                                                 countryCode: city.countryCode))
             self.countries.insert(city.countryName)
+        }
+    }
+    
+    func addToFavourites(city: CityRowViewModel) {
+        if let city = self.cityModel.first(where: { $0.cityName == city.cityName }) {
+            if locationService.lastLocation?.cityName != city.cityName {
+                UserSettings.addFavoriteCity(city)
+            }
+            self.appData.citySelectorClicked = false
+            if UserSettings.selectedCity != city {
+                UserSettings.selectedCity = city
+            }
+            appDataManager.fetchData(cityName: city.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
         }
     }
     

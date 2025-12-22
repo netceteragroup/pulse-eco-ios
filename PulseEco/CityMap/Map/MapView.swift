@@ -7,11 +7,12 @@
 
 import SwiftUI
 import MapKit
+import Factory
 
 struct MapView: UIViewRepresentable {
     
     @ObservedObject var viewModel: MapViewModel
-    let appData: AppData
+    @Injected(\.appData) var appData: AppDataProtocol
     @State var boundryAndZoomEnabled = true
     
     func makeCoordinator() -> MapViewCoordinator {

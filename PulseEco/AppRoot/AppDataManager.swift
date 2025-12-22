@@ -1,12 +1,27 @@
 import Foundation
 import Combine
 import UIKit
+import Factory
 
-@MainActor
-class AppDataManager: ObservableObject {
+protocol AppDataManagerProtocol {
+    func getMeasures()
+    func startInitialFetch()
+    func fetchData(cityName: String, sensorType: String, selectedDate: Date)
+    func selectFromCalendar(monthChange: Bool)
+    func selectFromDateSlider(selectedDate: Date)
+    func selectFromSensorType()
+    func getCurrentMeasure(selectedMeasure: String) -> Measure
+    func fetchMonthlyDayData(selectedMonth: Int, selectedYear: Int) async
+    func updatePins(selectedDate: Date) async
+    func updateWeeklyAverageForSensors(selectedDate: Date) async
+    func updateMonthlyColors(selectedYear: Int) async
+    var onSensorPinsUpdated: PassthroughSubject<[SensorPinModel], Never> { get }
+}
+
+class AppDataManager: ObservableObject, AppDataManagerProtocol {
     private let logger = SystemLoggerAdapter(category: "AppDataManager")
 
-    private let appData: AppData
+    @Injected(\.appData) private var appData: AppDataProtocol
     
     let onSensorPinsUpdated = PassthroughSubject<[SensorPinModel], Never>()
         
@@ -14,13 +29,9 @@ class AppDataManager: ObservableObject {
     
     private let networkService = NetworkService()
     
-    init(appData: AppData) {
-        self.appData = appData
-    }
-    
     func getMeasures() {
         self.appData.loadingMeasures = true
-        measuresTask = Task {
+        measuresTask = Task { @MainActor in
             let measures = await networkService.fetchMeasures() ?? []
             appData.measures = measures
             if let firstMeasureId = measures.first?.id {
@@ -111,6 +122,7 @@ class AppDataManager: ObservableObject {
         appData.measures.first { $0.id.lowercased() == selectedMeasure.lowercased() } ?? Measure.empty()
     }
     
+    @MainActor
     func fetchMonthlyDayData(selectedMonth: Int, selectedYear: Int) async {
         appData.dailySensorData = await fetchDataForSelectedMonth(cityName: UserSettings.selectedCity.cityName,
                                                           sensorType: appData.selectedMeasureId,
@@ -119,6 +131,7 @@ class AppDataManager: ObservableObject {
         mapMonthlyData(selectedMonth: selectedMonth, selectedYear: selectedYear)
     }
     
+    @MainActor
     func updatePins(selectedDate: Date) async {
         guard let to: Date = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: selectedDate) else { return }
         let sensorsData24h =  await networkService.fetchSensorData(cityName: UserSettings.selectedCity.cityName,
@@ -138,6 +151,7 @@ class AppDataManager: ObservableObject {
         onSensorPinsUpdated.send(self.appData.sensorPins)
     }
     
+    @MainActor
     func updateWeeklyAverageForSensors(selectedDate: Date) async {
         guard let from = calendar.date(byAdding: .day, value: -7, to: selectedDate) else { return }
         let weeklyAverageForSensors = await networkService.fetchSensorData(cityName: UserSettings.selectedCity.cityName,
@@ -147,6 +161,7 @@ class AppDataManager: ObservableObject {
         appData.weeklyAverageForSensors = weeklyAverageForSensors
     }
     
+    @MainActor
     func updateMonthlyColors(selectedYear: Int) async {
         guard let from = Date.from(1, 1, selectedYear),
               let to = Date.from(31, 12, selectedYear) else { return }

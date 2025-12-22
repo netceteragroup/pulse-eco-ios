@@ -7,8 +7,13 @@
 
 import Foundation
 import SwiftUI
+import Factory
 
 class CitySearchContentViewModel: ObservableObject {
+    @Injected(\.appData) private var appData
+    @Injected(\.appDataManager) private var appDataManager
+    @Injected(\.locationService) private var locationService
+    @Injected(\.refreshService) private var refreshService
     @Published var cityList: [FavouriteCityRowViewModel] = []
     var selectedMeasure: String
     var cities: [FavouriteCityRowViewModel] { getCities() }
@@ -26,6 +31,18 @@ class CitySearchContentViewModel: ObservableObject {
 
     func valueInBand(from: Int, to: Int, value: Float) -> Bool {
         return Int(value) >= from && Int(value) <= to
+    }
+    
+    func onFavouriteCityTapped(favouriteCity: FavouriteCityRowViewModel) {
+        self.appData.citySelectorClicked = false
+        if UserSettings.selectedCity != favouriteCity.city {
+            if locationService.lastLocation?.cityName != favouriteCity.city.cityName {
+                UserSettings.addFavoriteCity(favouriteCity.city)
+            }
+            UserSettings.selectedCity = favouriteCity.city
+            refreshService.updateRefreshDate()
+            self.appDataManager.fetchData(cityName: favouriteCity.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
+        }
     }
 
     func getCities() -> [FavouriteCityRowViewModel] {

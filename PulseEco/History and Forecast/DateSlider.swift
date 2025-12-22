@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Factory
 
 struct DateSlider: View {
     
-    @EnvironmentObject var appData: AppData
-    @EnvironmentObject var appDataManager: AppDataManager
-    
+    @Injected(\.appData) private var appData
+    @Injected(\.appDataManager) private var appDataManager
+
     @Binding var unimplementedAlert: Bool
     @Binding var unimplementedPicker: Bool
     @Binding var selectedDate: Date

@@ -6,8 +6,10 @@
 //
 import SwiftUI
 import Combine
+import Factory
 
 class TimelineSliderViewModel: ObservableObject {
+    @Injected(\.appData) private var appData
     @Published var sliderValue: Double
     var onSliderValueChanged: ((Double) -> Void)?
     var currentDate: Date
@@ -22,6 +24,10 @@ class TimelineSliderViewModel: ObservableObject {
         sliderValue = Double(hour)
         self.onSliderValueChanged = onSliderValueChanged
         addSubscribers()
+    }
+    
+    func closeTimelineSlider() {
+        appData.isTimelineSliderActive = false
     }
     
     func addSubscribers() {

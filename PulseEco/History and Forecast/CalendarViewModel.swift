@@ -7,22 +7,21 @@
 
 import Combine
 import Foundation
+import Factory
 
 @MainActor
 class CalendarViewModel: ObservableObject {
-    @Published var currentDate: Date
-    @Published var currentMonthOffset: Int
-    @Published var selectedYear: Int
-    @Published var selectedMonth: Int
+    @Published var currentMonthOffset: Int = 0
+    @Published var selectedYear: Int = 0
+    @Published var selectedMonth: Int = 0
+    @Published var currentDate: Date = Date()
     @Published var monthValues: [DayDataWrapper] = []
 
-    private let appData: AppData
-    let appDataManager: AppDataManager
+    @Injected(\.appData) private var appData
+    @Injected(\.appDataManager) private var appDataManager
     private var selectedDate = Date.now
 
-    init(appData: AppData, appDataManager: AppDataManager) {
-        self.appData = appData
-        self.appDataManager = appDataManager
+    init() {
         currentDate = appData.selectedDate
         selectedYear = calendar.component(.year, from: appData.selectedDate)
         selectedMonth = calendar.component(.month, from: appData.selectedDate)
@@ -73,7 +72,7 @@ class CalendarViewModel: ObservableObject {
         formatter.dateFormat = "MMMM yyy"
         formatter.locale = Locale(identifier: Trema.appLanguageLocale)
 
-        let date = formatter.string(from: currentDate)
+        let date = formatter.string(from: appData.selectedDate)
 
         return shortDate(from: date)
     }
@@ -157,7 +156,7 @@ class CalendarViewModel: ObservableObject {
     }
 
     func isCurrentMonthSelected() -> Bool {
-        return calendar.component(.month, from: currentDate) == calendar.component(.month, from: .now)
+        return calendar.component(.month, from: appData.selectedDate) == calendar.component(.month, from: .now)
     }
 }
 

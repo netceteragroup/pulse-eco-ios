@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import Factory
 
 struct SensorDetailsView: View {
     
-    @EnvironmentObject var appData: AppData
-    @EnvironmentObject var appDataManager: AppDataManager
+    @Injected(\.appData) private var appData
+    @Injected(\.appDataManager) private var appDataManager
     @ObservedObject var viewModel: SensorDetailsViewModel
     @Binding var sensorSelectionAlertDialogIsActive: Bool
     @Binding var contentSize: CGFloat
@@ -75,9 +76,7 @@ struct SensorDetailsView: View {
                         .padding(.vertical, 20)
                         .padding(.horizontal, 10)
                     
-                    WeeklyAverageView(viewModel: WeeklyAverageViewModel(appData: appData,
-                                                                        appDataManager: appDataManager,
-                                                                        averages: viewModel.pastWeekAverages))
+                    WeeklyAverageView(viewModel: WeeklyAverageViewModel(averages: viewModel.pastWeekAverages))
                         .padding(.bottom, 20)
                     
                     Text(self.viewModel.disclaimerMessage)

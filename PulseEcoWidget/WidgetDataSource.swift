@@ -6,7 +6,6 @@ typealias WidgetData = (measures: [Measure], cityOverall: CityOverallValues)
 class WidgetDataSource {
     static let sharedInstance = WidgetDataSource()
     
-    private var cancelables = Set<AnyCancellable>()
     private let networkService = NetworkService()
 
     func getValuesForCity(cityName: String,

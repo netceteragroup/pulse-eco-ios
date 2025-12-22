@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Factory
 
 struct MainView: View {
     private let logger = SystemLoggerAdapter(category: "MainView")
@@ -14,12 +15,14 @@ struct MainView: View {
     @State private var bottomSheetContentSize: CGFloat = .zero
     @State private var bottomSheetHeaderSize: CGFloat = .zero
     @State private var selectionDetent = PresentationDetent.height(.zero)
+    @State private var showingCalendar: Bool = false
+    @State private var selectedDate: Date = Date()
+    @State private var showSensorDetails: Bool = true
     
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var refreshService: RefreshService
-    @EnvironmentObject var appData: AppData
-    @EnvironmentObject var appDataManager: AppDataManager
+    @Injected(\.appData) private var appData
+    @Injected(\.appDataManager) private var appDataManager
     
     @State private var sensorSelectionAlertDialogIsActive = false
     let mapViewModel: MapViewModel
@@ -27,7 +30,6 @@ struct MainView: View {
     private var sensorDetailsViewModel: SensorDetailsViewModel {
         let selectedMeasure = appDataManager.getCurrentMeasure(selectedMeasure: appData.selectedMeasureId)
         return SensorDetailsViewModel(
-            appData: appData,
             sensor: appData.selectedSensor ?? SensorPinModel(),
             selectedMeasure: selectedMeasure,
             sensorData24h: appData.sensorsData24h
@@ -51,6 +53,10 @@ struct MainView: View {
         }
         .edgesIgnoringSafeArea(.top)
         .onReceive(viewModel.onLocationSetSubject, perform: { city in changeLocation(city: city) })
+        .onAppear {
+            viewModel.onMainViewAppear()
+            selectedDate = appData.selectedDate
+        }
     }
     
     private func changeLocation(city: City) {
@@ -86,7 +92,7 @@ struct MainView: View {
                         }
                         
                         ZStack(alignment: .top) {
-                            DateSelector()
+                            DateSelector(showingCalendar: $showingCalendar, selectedDate: $selectedDate)
                                 .zIndex(2)
                             
                             CityMapView(
@@ -96,7 +102,7 @@ struct MainView: View {
                             .edgesIgnoringSafeArea([.horizontal, .bottom])
                             .padding(.top, 60)
                             .zIndex(1)
-                            .sheet(isPresented: $appData.showSensorDetails) {
+                            .sheet(isPresented: $showSensorDetails) {
                                 Spacer()
                                 SensorDetailsView(
                                     viewModel: sensorDetailsViewModel,
@@ -122,10 +128,7 @@ struct MainView: View {
                             Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
                                 .imageScale(.large)
                                 .onTapGesture {
-                                    if !appData.citySelectorClicked {
-                                        appData.selectedSensor = nil
-                                        refreshService.refreshData()
-                                    }
+                                    viewModel.onPulseLogoTap()
                                 }
                             leadingNavigationItems
                         }
@@ -142,7 +145,6 @@ struct MainView: View {
         .overlay(
             SensorSelectionView(
                 viewModel: SensorSelectionViewModel(
-                    appData: appData,
                     sensors: appData.sensorPins
                 ),
                 sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive
@@ -156,7 +158,7 @@ struct MainView: View {
         Menu {
             ForEach(Countries.countries(language: Trema.appLanguage), id: \.self) { country in
                 Button {
-                    selectCountry(country: country)
+                    viewModel.selectCountry(country: country)
                 } label: {
                     HStack {
                         Text(country.languageName)
@@ -178,8 +180,7 @@ struct MainView: View {
     var leadingNavigationItems: some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) {
-                appData.citySelectorClicked.toggle()
-                appData.selectedSensor = nil
+                viewModel.onLeadingNavigationItemTap()
             }
         }) {
             HStack {
@@ -190,16 +191,6 @@ struct MainView: View {
             }
         }
         .accentColor(AppColors.black.color)
-    }
-}
-
-extension MainView {
-    private func selectCountry(country: Country) {
-        Trema.appLanguage = country.shortName
-        appDataManager.getMeasures()
-        appData.loadingMeasures = true
-        refreshService.updateRefreshDate()
-        appDataManager.fetchData(cityName: UserSettings.selectedCity.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
     }
 }
 

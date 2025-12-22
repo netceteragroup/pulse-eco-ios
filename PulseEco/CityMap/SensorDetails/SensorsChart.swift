@@ -7,11 +7,12 @@
 
 import SwiftUI
 import Charts
+import Factory
 
 struct SensorsChart: View {
     @ObservedObject var viewModel: ChartViewModel
-    @EnvironmentObject var appData: AppData
-    
+    @Injected(\.appData) private var appData: AppDataProtocol
+
     var body: some View {
         if viewModel.selectedSensorReadings.isEmpty && viewModel.chartSensorReadings.isEmpty {
             Text(Trema.text(for: "no_sensors_selected"))

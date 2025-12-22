@@ -7,10 +7,11 @@
 
 import Foundation
 import SwiftUI
+import Factory
 
 @MainActor
 class SensorDetailsViewModel: ObservableObject {
-    let appData: AppData
+    @Injected(\.appData) private var appData: AppDataProtocol
     var sensorID: String
     var sensorType: SensorType
     var title: String
@@ -23,11 +24,9 @@ class SensorDetailsViewModel: ObservableObject {
     var color = Color(AppColors.darkblue)
     @Published var sensorData24h: [SensorData]
 
-    init(appData: AppData,
-         sensor: SensorPinModel,
+    init(sensor: SensorPinModel,
          selectedMeasure: Measure,
          sensorData24h: [SensorData]) {
-        self.appData = appData
         self.sensorID = sensor.sensorID
         self.sensorType = sensor.type
         self.title = sensor.title ?? "Sensor"

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Factory
 
 struct CityMapView: View {
     
@@ -14,7 +15,7 @@ struct CityMapView: View {
         static let disclaimerIconSize: CGSize = CGSize(width: 220, height: 25)
     }
     
-    @EnvironmentObject var appData: AppData
+    @Injected(\.appData) private var appData: AppDataProtocol
     @EnvironmentObject var refreshService: RefreshService
     
     @Binding private var bottomSheetHeaderSize: CGFloat
@@ -29,7 +30,7 @@ struct CityMapView: View {
     var body: some View {
         
         ZStack {
-            MapView(viewModel: mapViewModel, appData: appData)
+            MapView(viewModel: mapViewModel)
                 .id("MapView")
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
@@ -41,9 +42,9 @@ struct CityMapView: View {
                 
                 HStack {
                     if appData.isTimelineSliderActive {
-                        createTimelineSliderView(appData: appData)
+                        createTimelineSliderView()
                     } else {
-                        createFloatingButtonView(appData: appData)
+                        createFloatingButtonView()
                     }
                 }
                 .padding(.bottom, bottomSheetHeaderSize + getSafeAreaBottom() + 8)
@@ -57,47 +58,38 @@ struct CityMapView: View {
                                                     currentValue: self.appData.selectedDateAverageValue))
         }
     }
-}
-
-@ViewBuilder
-private func createTimelineSliderView(appData: AppData) -> some View {
-    HStack {
-        Spacer()
-        
-        TimelineSliderView(viewModel: TimelineSliderViewModel(onSliderValueChanged: { sliderValue in
-            guard let sensorPinsForSelectedHour = appData.hourlySensors[Int(sliderValue)] else {
-                appData.sensorPins = [SensorPinModel()]
-                return
+    
+    @ViewBuilder
+    private func createFloatingButtonView() -> some View {
+        HStack {
+            FloatingButton(image: "access-time") {
+                mapViewModel.onFloatingButtonTap()
             }
+            .cornerRadius(15)
+            .shadow(radius: 5)
+            .padding(.leading, 15)
+            .padding(.trailing, 15)
             
-            if sensorPinsForSelectedHour.isEmpty || sensorPinsForSelectedHour == appData.sensorPins {
-                return
-            }
-            
-            appData.sensorPins = sensorPinsForSelectedHour
-        }))
-        .lineLimit(1)
-        .minimumScaleFactor(0.5)
-        .environmentObject(appData)
-        
-        Spacer()
-    }
-    .frame(maxWidth: .infinity, alignment: .center)
-    .padding(.horizontal)
-}
-
-@ViewBuilder
-private func createFloatingButtonView(appData: AppData) -> some View {
-    HStack {
-        FloatingButton(image: "access-time") {
-            appData.isTimelineSliderActive = true
+            Spacer()
         }
-        .cornerRadius(15)
-        .shadow(radius: 5)
-        .padding(.leading, 15)
-        .padding(.trailing, 15)
-        
-        Spacer()
+    }
+    
+    @ViewBuilder
+    private func createTimelineSliderView() -> some View {
+        HStack {
+            Spacer()
+            
+            TimelineSliderView(viewModel: TimelineSliderViewModel(onSliderValueChanged: { sliderValue in
+                mapViewModel.onSliderChanged(value: sliderValue)
+            }))
+            .lineLimit(1)
+            .minimumScaleFactor(0.5)
+            
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.horizontal)
+
     }
 }
 
@@ -113,10 +105,8 @@ func getSafeAreaBottom() -> CGFloat {
 #Preview {
     VStack {
         CityMapView(bottomSheetHeaderSize: .constant(.zero),
-                    mapViewModel: MapViewModel(
-                        appDataManager: AppDataManager(appData: AppData())
-                    )
+                    mapViewModel: MapViewModel()
         )
-        .environmentObject(AppDataManager(appData: AppData()))
+        .environmentObject(AppDataManager())
     }
 }

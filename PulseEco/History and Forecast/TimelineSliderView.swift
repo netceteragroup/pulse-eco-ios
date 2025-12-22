@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import Factory
 
 struct TimelineSliderView: View {
     @StateObject var viewModel: TimelineSliderViewModel
-    @EnvironmentObject private var appData: AppData
+    @Injected(\.appData) private var appData: AppDataProtocol
     private let timeRange = 0...24
 
     var body: some View {
@@ -27,7 +28,7 @@ struct TimelineSliderView: View {
                         .offset(y: 5)
                         .onTapGesture {
                             withAnimation(.easeInOut(duration: 0.25)) {
-                                appData.isTimelineSliderActive = false
+                                viewModel.closeTimelineSlider()
                             }
                         }
                 }

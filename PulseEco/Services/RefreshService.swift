@@ -7,39 +7,41 @@
 
 import Foundation
 import SwiftUI
+import Factory
 
-class RefreshService: ObservableObject {
+protocol RefreshServiceProtocol {
+    func refreshDataIfNeeded()
+    func updateRefreshDate()
+    func refreshData()
+}
+
+class RefreshService: ObservableObject, RefreshServiceProtocol {
     
-    let appViewModel: AppData
-    let appDataManager: AppDataManager
+    @Injected(\.appData) private var appData
+    @Injected(\.appDataManager) private var appDataManager
     private var refreshDate: Date = Date()
-    
-    init(appViewModel: AppData, appDataManager: AppDataManager) {
-        self.appViewModel = appViewModel
-        self.appDataManager = appDataManager
-    }
     
     func refreshDataIfNeeded() {
         if let diff = calendar.dateComponents([.minute], from: refreshDate, to: Date()).minute, diff >= 15 {
-            self.appViewModel.selectedSensor = nil
+            self.appData.selectedSensor = nil
             self.refreshData()
         }
     }
 
     func updateRefreshDate() {
         refreshDate = Date()
-        appViewModel.selectedDate = calendar.startOfDay(for: Date.now)
-        appViewModel.showingCalendar = false
-        appViewModel.selectedMeasureId = "pm10"
+        appData.selectedDate = calendar.startOfDay(for: Date.now)
+        appData.showingCalendar = false
+        appData.selectedMeasureId = "pm10"
     }
     
     func refreshData() {
         updateRefreshDate()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.appViewModel.selectedSensor = nil
-            self.appViewModel.loadingMeasures = true
+            self.appData.selectedSensor = nil
+            self.appData.loadingMeasures = true
             self.appDataManager.getMeasures()
-            self.appDataManager.fetchData(cityName: UserSettings.selectedCity.cityName, sensorType: self.appViewModel.selectedMeasureId, selectedDate: self.appViewModel.selectedDate)
+            self.appDataManager.fetchData(cityName: UserSettings.selectedCity.cityName, sensorType: self.appData.selectedMeasureId, selectedDate: self.appData.selectedDate)
         }
     }
     

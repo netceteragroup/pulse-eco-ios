@@ -1,8 +1,11 @@
 import Foundation
 import SwiftUI
+import Factory
 
 @MainActor
 class MeasureButtonViewModel: ObservableObject {
+    @Injected(\.appData) private var appData: AppDataProtocol
+    @Injected(\.appDataManager) private var appDataManager
     var id: String
     var title: String
     var selectedMeasure: String
@@ -20,7 +23,7 @@ class MeasureButtonViewModel: ObservableObject {
         self.icon = icon
     }
     
-    func measurePressed(appData: AppData, appDataManager: AppDataManager) {
+    func measurePressed() {
         appData.selectedMeasureId = id
         appDataManager.selectFromSensorType()
     }

@@ -9,20 +9,38 @@ import Foundation
 import MapKit
 import Combine
 import SwiftUI
+import Factory
 
 class MapViewModel: ObservableObject {
     
-    @ObservedObject var appDataManager: AppDataManager
+    @Injected(\.appData) private var appData
+    @Injected(\.appDataManager) private var appDataManager
     
     @Published private(set) var sensors: [SensorPinModel] = []
     var shouldUpdateSensors = false
     
     private(set) var span: MKCoordinateSpan!
     
-    init(appDataManager: AppDataManager) {
-        self.appDataManager = appDataManager
+    init() {
         self.span = span(for: UserSettings.selectedCity)
         observeStateChanges()
+    }
+    
+    func onFloatingButtonTap() {
+        appData.isTimelineSliderActive = true
+    }
+    
+    func onSliderChanged(value: Double) {
+        guard let sensorPinsForSelectedHour = appData.hourlySensors[Int(value)] else {
+            appData.sensorPins = [SensorPinModel()]
+            return
+        }
+        
+        if sensorPinsForSelectedHour.isEmpty || sensorPinsForSelectedHour == appData.sensorPins {
+            return
+        }
+        
+        appData.sensorPins = sensorPinsForSelectedHour
     }
     
     private var cancellables = Set<AnyCancellable>()

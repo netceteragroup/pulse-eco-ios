@@ -1,14 +1,13 @@
 import SwiftUI
+import Factory
 
 struct MeasureButtonView: View {
     @ObservedObject var viewModel: MeasureButtonViewModel
-    @EnvironmentObject var appData: AppData
-    @EnvironmentObject var appDataManager: AppDataManager
 
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
             Button(action: {
-                viewModel.measurePressed(appData: appData, appDataManager: appDataManager)
+                viewModel.measurePressed()
             }) {
                 VStack(spacing: 0) {
                     Text(self.viewModel.title)

@@ -6,17 +6,18 @@
 //
 
 import SwiftUI
+import Factory
 
 struct MeasureListView: View {
     @ObservedObject var viewModel: MeasureListViewModel
-    @EnvironmentObject var appData: AppData
-    
+    @Injected(\.appData) private var appData: AppDataProtocol
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { scrollProxy in
                 VStack {
                     buttonStack
-                        .onReceive(appData.$loadingMeasures) { value in
+                        .onReceive(appData.loadingMeasuresPublisher) { value in
                             if !value {
                                 scrollProxy.scrollTo(appData.selectedMeasureId)
                             }

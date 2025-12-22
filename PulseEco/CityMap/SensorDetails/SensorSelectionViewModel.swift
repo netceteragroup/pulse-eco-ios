@@ -6,16 +6,16 @@
 //
 
 import Foundation
+import Factory
 
 @MainActor
 class SensorSelectionViewModel: ObservableObject {
     @Published var selectedSensors: [SensorPinModel] = []
     @Published var tmpSelectedSensors: [SensorPinModel] = []
     var sensors: [SensorPinModel] = []
-    var appData: AppData
-    
-    init(appData: AppData, sensors: [SensorPinModel]) {
-        self.appData = appData
+    @Injected(\.appData) private var appData: AppDataProtocol
+
+    init(sensors: [SensorPinModel]) {
         self.sensors = sensors
         self.tmpSelectedSensors = appData.selectedSensorsForGraph
     }
@@ -32,6 +32,10 @@ class SensorSelectionViewModel: ObservableObject {
         }
     }
     
+    func setShowSensorDetails(_ showDetails: Bool) {
+        appData.showSensorDetails = showDetails
+    }
+        
     func cancel(sensorSelectionAlertDialogIsActive: inout Bool) {
         tmpSelectedSensors = selectedSensors
         sensorSelectionAlertDialogIsActive = false
