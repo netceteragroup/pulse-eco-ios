@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import Factory
 
 @MainActor
 class CalendarViewModel: ObservableObject {
@@ -17,12 +18,11 @@ class CalendarViewModel: ObservableObject {
     @Published var monthValues: [DayDataWrapper] = []
 
     private let appData: AppData
-    let appDataManager: AppDataManager
+    @Injected(\.appDataManager) private var appDataManager
     private var selectedDate = Date.now
 
-    init(appData: AppData, appDataManager: AppDataManager) {
+    init(appData: AppData) {
         self.appData = appData
-        self.appDataManager = appDataManager
         currentDate = appData.selectedDate
         selectedYear = calendar.component(.year, from: appData.selectedDate)
         selectedMonth = calendar.component(.month, from: appData.selectedDate)
@@ -134,9 +134,8 @@ class CalendarViewModel: ObservableObject {
     }
     
     func dateSelected(date: Date) {
-        let monthChanged = !selectedDate.isSameMonth(with: date)
         selectedDate = date
-        appDataManager.selectFromCalendar(monthChange: monthChanged)
+        appDataManager.selectFromCalendar(selectedDate: date)
     }
 
     func colorMonths() {

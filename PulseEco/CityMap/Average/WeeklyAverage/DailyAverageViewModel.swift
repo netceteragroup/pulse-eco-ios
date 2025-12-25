@@ -7,10 +7,11 @@
 
 import Foundation
 import SwiftUI
+import Factory
 
 class DailyAverageViewModel: Identifiable {
    
-    @EnvironmentObject var appDataManager: AppDataManager
+    @Injected(\.appDataManager) private var appDataManager
     var foregroundColor: Color = Color(AppColors.gray)
     let sensor: DailyInfoSensor
     var sensorValue: String {
@@ -26,7 +27,7 @@ class DailyAverageViewModel: Identifiable {
         return String(Trema.text(for: dateString.lowercased() + "-short"))
     }
     
-    init(sensor: DailyInfoSensor, appData: AppData, appDataManager: AppDataManager) {
+    init(sensor: DailyInfoSensor, appData: AppData) {
         self.sensor = sensor
         self.foregroundColor = colorForValue(type: appData.selectedMeasureId,
                                              value: sensor.value,

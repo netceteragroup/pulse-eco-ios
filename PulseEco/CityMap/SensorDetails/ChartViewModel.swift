@@ -96,7 +96,7 @@ class ChartViewModel: ObservableObject {
             return chartSensorReadingsMinDate
         }
         
-        return getLast24HForGraph(selectedDate: selectedDate).first ?? Date()
+        return selectedDate
     }
     
     func getMaxDate() -> Date {

@@ -8,12 +8,13 @@
 import Foundation
 import SwiftUI
 import Combine
+import Factory
 
 struct DateSelector: View {
     @StateObject private var viewModel = DateSelectorViewModel()
     @EnvironmentObject var appData: AppData
-    @EnvironmentObject var appDataManager: AppDataManager
-    
+    @Injected(\.appDataManager) private var appDataManager
+
     var body: some View {
         VStack {
             DateSlider(unimplementedAlert: $appData.showingCalendar,
@@ -23,8 +24,7 @@ struct DateSelector: View {
                 CalendarView(showingCalendar: $viewModel.isDatePickerPressed,
                              selectedDate: $appData.selectedDate,
                              onDaySelected: { newDate in viewModel.selectedDate = newDate },
-                             viewModelClosure: CalendarViewModel(appData: self.appData,
-                                                                 appDataManager: self.appDataManager))
+                             viewModelClosure: CalendarViewModel(appData: self.appData))
                 .padding(.horizontal)
                 .padding(.vertical, 8)
                 .onChange(of: appData.selectedMeasureId) { _, newValue in

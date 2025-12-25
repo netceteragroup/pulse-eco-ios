@@ -1,14 +1,28 @@
 //
 //  CityMapViewModel.swift
-//  PulseEcoSwiftUI
+//  PulseEco
 //
-//  Created by Monika Dimitrova on 6/17/20.
-//  Copyright © 2020 Monika Dimitrova. All rights reserved.
+//  Created by Ljuben Angelkoski on 23.12.25.
 //
 
-import Foundation
-import SwiftUI
+import Combine
+import Factory
 
+@MainActor
 class CityMapViewModel: ObservableObject {
-
+    let mapViewModel = MapViewModel()
+    let timelineSliderViewModel = TimelineSliderViewModel()
+    
+    func formatTime(for hour: Int) -> String {
+        if hour == 12 {
+            return "\(hour) PM"
+        }
+        else if hour == 0 || hour == 24 {
+            return "12 AM"
+        }
+        
+        let displayTime = hour % 12
+        
+        return hour > 12 ? "\(displayTime) PM" : "\(displayTime) AM"
+    }
 }

@@ -8,8 +8,8 @@
 import SwiftUI
 import CoreLocation
 
-struct FavouriteCityRowView: View {
-    var viewModel: FavouriteCityRowViewModel
+struct FavoriteCityRowView: View {
+    var viewModel: FavoriteCityRowViewModel
 
     var body: some View {
         VStack {

@@ -1,30 +1,50 @@
 import Foundation
+import Factory
 
+@MainActor
 class CityListViewModel: ObservableObject {
-    @Published var cities: [CityRowViewModel] = []
-    @Published var cityModel: [City] = []
-    @Published var countries = Set<String>()
+    private let cities: [CityRowViewModel]
+    private let cityModel: [City]
+    let countries: [String]
+    
+    @Injected(\.locationService) private var locationService
+    @Injected(\.appDataManager) private var appDataManager
+    @Injected(\.refreshService) private var refreshService
     
     init(cities: [City]) {
         self.cityModel = cities
-        for city in cities {
-            self.cities.append(CityRowViewModel(cityName: city.cityName,
-                                                siteName: city.siteName,
-                                                countryName: city.countryName,
-                                                countryCode: city.countryCode))
-            self.countries.insert(city.countryName)
+        self.cities = cities.map { CityRowViewModel(cityName: $0.cityName,
+                                                    siteName: $0.siteName,
+                                                    countryName: $0.countryName,
+                                                    countryCode: $0.countryCode) }.sorted { $0.siteName < $1.siteName }
+        countries = Set(cities.map { $0.countryName }).sorted { $0 < $1 }
+    }
+    
+    func citiesFromCountry(_ country: String) -> [CityRowViewModel] {
+        cities.filter { $0.countryName == country }
+    }
+    
+    func addToFavorites(city: CityRowViewModel) {
+        if let city = self.cityModel.first(where: { $0.cityName == city.cityName }) {
+            if locationService.lastLocation?.cityName != city.cityName {
+                UserSettings.addFavoriteCity(city)
+            }
+            if UserSettings.selectedCity != city {
+                UserSettings.selectedCity = city
+            }
+            refreshService.updateRefreshDate()
+            appDataManager.fetchData()
         }
     }
     
-    func getCountries() -> [String] {
-        return self.countries.sorted {
-            $0 < $1
+    func getFilteredCities(searchText: String) -> [CityRowViewModel] {
+        cities.filter {
+            $0.cityName.lowercased().contains(searchText.lowercased()) ||
+            $0.countryName.lowercased().contains(searchText.lowercased())
         }
     }
     
-    func getCities() -> [CityRowViewModel] {
-        return self.cities.sorted {
-            $0.siteName < $1.siteName
-        }
+    func shouldAddCheckmark(city: CityRowViewModel) -> Bool {
+        UserSettings.favoriteCities.contains(where: { $0.cityName == city.cityName })
     }
 }

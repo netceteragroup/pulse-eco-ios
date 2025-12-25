@@ -7,31 +7,29 @@
 
 import Foundation
 import SwiftUI
+import Factory
 
 @MainActor
 class WeeklyAverageViewModel: ObservableObject {
-    let appDataManager: AppDataManager
+    @Injected(\.appDataManager) private var appDataManager
     let appData: AppData
     var title: String = ""
     var dailyAverageViewModels: [DailyAverageViewModel] = []
     
-    init(appData: AppData, appDataManager: AppDataManager, averages: [SensorData]) {
+    init(appData: AppData, averages: [SensorData]) {
         self.appData = appData
-        self.appDataManager = appDataManager
         let pastWeekLocalized = Trema.text(for: "past_week")
         let suffix = "(\(appDataManager.getCurrentMeasure(selectedMeasure: appData.selectedMeasureId).unit))"
         title = pastWeekLocalized + suffix
         dailyAverageViewModels = transformInfoSensorToViewModel(appData: appData,
-                                                                appDataManager: appDataManager,
                                                                 averages: averages)
     }
     
     func transformInfoSensorToViewModel(appData: AppData,
-                                        appDataManager: AppDataManager,
                                         averages: [SensorData]) -> [DailyAverageViewModel] {
         let dailyAverageSensorValues = dailyAverages(averages: averages)
         return dailyAverageSensorValues.compactMap {
-            DailyAverageViewModel(sensor: $0, appData: appData, appDataManager: appDataManager)}
+            DailyAverageViewModel(sensor: $0, appData: appData)}
     }
     
     func dailyAverages(averages: [SensorData]) -> [DailyInfoSensor] {

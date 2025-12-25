@@ -11,6 +11,7 @@ struct SensorSelectionView: View {
     @ObservedObject var viewModel: SensorSelectionViewModel
     @EnvironmentObject var appData: AppData
     @Binding var sensorSelectionAlertDialogIsActive: Bool
+    @Binding var showSensorDetails: Bool
     
     var body: some View {
         if sensorSelectionAlertDialogIsActive {
@@ -42,7 +43,7 @@ struct SensorSelectionView: View {
                         
                         Button(Trema.text(for: "cancel")) {
                             viewModel.cancel(sensorSelectionAlertDialogIsActive: &sensorSelectionAlertDialogIsActive)
-                            appData.showSensorDetails = true
+                            showSensorDetails = true
                         }
                         .font(.headline)
                         .foregroundStyle(Color(AppColors.gray))
@@ -50,7 +51,7 @@ struct SensorSelectionView: View {
                         
                         Button(Trema.text(for: "ok")) {
                             viewModel.addToSelectedSensors(sensorSelectionAlertDialogIsActive: &sensorSelectionAlertDialogIsActive)
-                            appData.showSensorDetails = true
+                            showSensorDetails = true
                         }
                         .font(.headline)
                         .foregroundStyle(Color(AppColors.firstButtonColor))
@@ -65,7 +66,7 @@ struct SensorSelectionView: View {
                 .padding(.horizontal)
             }
             .onAppear() {
-                appData.showSensorDetails = false
+                showSensorDetails = false
             }
         }
     }

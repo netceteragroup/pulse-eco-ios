@@ -1,0 +1,95 @@
+//
+//  FavouriteCitiesViewModel.swift
+//  PulseEco
+//
+//  Created by Ljuben Angelkoski on 24.12.25.
+//
+
+import Combine
+import Factory
+import SwiftUI
+
+@MainActor
+class FavoriteCitiesViewModel: ObservableObject {
+    @Injected(\.locationService) private var locationService
+    @Injected(\.refreshService) private var refreshService
+    @Injected(\.appDataManager) private var appDataManager
+    let appData: AppData
+    
+    @Published var cityList: [FavoriteCityRowViewModel] = []
+    
+    init(appData: AppData) {
+        self.appData = appData
+        for city in UserSettings.favouriteCities {
+            let favouriteCityRowViewModel = createFavouriteCityRowViewModelFromCityAndCityValues(city: city, cityValues: appData.cityOverallValues, selectedMeasure: appData.selectedMeasureId, measureList: appData.measures, isCurrentCity: false)
+            self.cityList.append(favouriteCityRowViewModel)
+        }
+    }
+    
+    var allFavoritesAndLocation: [FavoriteCityRowViewModel] {
+        var tmpAllCities: [FavoriteCityRowViewModel] = []
+        if let currentCity = locationService.lastLocation {
+            let favouriteCityRowViewModel = createFavouriteCityRowViewModelFromCityAndCityValues(
+                city: currentCity,
+                cityValues: appData.cityOverallValues,
+                selectedMeasure: appData.selectedMeasureId,
+                measureList: appData.measures,
+                isCurrentCity: true
+            )
+            tmpAllCities.append(favouriteCityRowViewModel)
+        }
+        tmpAllCities.append(contentsOf: cityList)
+        return tmpAllCities
+    }
+    
+    func onCityRowTap(favouriteCity: FavoriteCityRowViewModel) {
+        if UserSettings.selectedCity != favouriteCity.city {
+            if locationService.lastLocation?.cityName != favouriteCity.city.cityName {
+                UserSettings.addFavoriteCity(favouriteCity.city)
+            }
+            UserSettings.selectedCity = favouriteCity.city
+            refreshService.updateRefreshDate()
+            appDataManager.fetchData()
+        }
+    }
+
+    private func createFavouriteCityRowViewModelFromCityAndCityValues(city: City, cityValues: [CityOverallValues], selectedMeasure: String, measureList: [Measure], isCurrentCity: Bool) -> FavoriteCityRowViewModel {
+        let cityName = city.cityName
+        var value: String?
+        value = nil
+        if let cityValue = cityValues.last(where: { $0.cityName == cityName
+        }) {
+            if let averageValue = cityValue.values[selectedMeasure.lowercased()] {
+                if let floatValue = Float(averageValue) {
+                    value = String(floatValue)
+                }
+            }
+        }
+        let selMeasure = measureList
+            .filter { $0.id.lowercased() == selectedMeasure.lowercased() }.first ?? Measure.empty()
+        var message = Trema.text(for: "no_data_available")
+        var color = AppColors.gray.color
+        if let val = Float(value ?? "") {
+            if Int(val) < selMeasure.legendMin {
+                message = selMeasure.bands[0].shortGrade
+                color = Color(AppColors.colorFrom(string: selMeasure.bands[0].legendColor))
+            } else if Int(val) > selMeasure.legendMax {
+                message = selMeasure.bands[selMeasure.bands.count - 1].shortGrade
+                color = Color(AppColors.colorFrom(string: selMeasure.bands[selMeasure.bands.count - 1].legendColor))
+            } else {
+                selMeasure.bands.forEach { band in
+                    if valueInBand(from: band.from, to: band.to, value: val) {
+                        message = band.shortGrade
+                        color = Color(AppColors.colorFrom(string: band.legendColor))
+                        return
+                    }
+                }
+            }
+        }
+        return FavoriteCityRowViewModel(city: city, message: message, value: value, unit: selMeasure.unit, color: color, isCurrentCity: isCurrentCity)
+    }
+    
+    private func valueInBand(from: Int, to: Int, value: Float) -> Bool {
+        return Int(value) >= from && Int(value) <= to
+    }
+}

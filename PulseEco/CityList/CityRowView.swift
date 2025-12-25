@@ -8,7 +8,6 @@ struct CityRowView: View {
     var showCountryName: Bool
     
     var body: some View {
-        VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .leading) {
                     Text(self.viewModel.siteName).foregroundColor(AppColors.black.color)
@@ -24,10 +23,8 @@ struct CityRowView: View {
                         .padding(.trailing, 10)
                 }
             }
-        }
         .frame(height: showCountryName ? 50 : 36)
         .padding(.horizontal, 10)
         .contentShape(Rectangle())
-        .resignKeyboardOnDragGesture()
     }
 }

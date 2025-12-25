@@ -1,5 +1,5 @@
 //
-//  FavouriteCitiesView.swift
+//  FavoriteCitiesView.swift
 //  PulseEco
 //
 //  Created by Ljuben Angelkoski on 24.12.25.
@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct FavoriteCitiesView: View {
-    @ObservedObject var viewModel: FavouriteCitiesViewModel
+    @ObservedObject var viewModel: FavoriteCitiesViewModel
     @Binding var citySelectorClicked: Bool
     @State private var addNewCityClicked: Bool = false
-    @EnvironmentObject var appData: AppData
     
     var body: some View {
         VStack(spacing: 0) {
@@ -21,8 +20,7 @@ struct FavoriteCitiesView: View {
         }
         .sheet(isPresented: $addNewCityClicked) {
             NavigationStack {
-                CitySearchContentView(viewModel: CitySearchContentViewModel(appData: appData),
-                                      citySelectorClicked: $citySelectorClicked,
+                CitySearchContentView(citySelectorClicked: $citySelectorClicked,
                                       addNewCityClicked: $addNewCityClicked)
             }
         }
@@ -43,16 +41,13 @@ struct FavoriteCitiesView: View {
     
     private var favoriteCitiesList: some View {
         List {
-            if let first = viewModel.allFavoritesAndLocation.first {
+            if let first = viewModel.cityList.first {
                 ForEach([first], id: \.id) {
-                    cityRow(favouriteCity: $0)
-                }
-                if viewModel.allFavoritesAndLocation.count > 1 {
-                    Divider()
+                    cityRow(favoriteCity: $0)
                 }
                 Section(header: EmptyView()) {
-                    ForEach(Array(viewModel.allFavoritesAndLocation.dropFirst()), id: \.id) { city in
-                        cityRow(favouriteCity: city)
+                    ForEach(Array(viewModel.cityList.dropFirst()), id: \.id) { city in
+                        cityRow(favoriteCity: city)
                     }
                     .onDelete(perform: self.delete)
                 }
@@ -61,13 +56,13 @@ struct FavoriteCitiesView: View {
         .padding(.vertical, 1)
     }
     
-    private func cityRow(favouriteCity: FavoriteCityRowViewModel) -> some View {
+    private func cityRow(favoriteCity: FavoriteCityRowViewModel) -> some View {
         VStack(spacing: 0) {
             Button(action: {
                 citySelectorClicked = false
-                viewModel.onCityRowTap(favouriteCity: favouriteCity)
+                viewModel.onCityRowTap(favoriteCity: favoriteCity)
             }, label: {
-                FavoriteCityRowView(viewModel: favouriteCity)
+                FavoriteCityRowView(viewModel: favoriteCity)
                     .contentShape(Rectangle())
             }).padding()
         }
@@ -75,9 +70,9 @@ struct FavoriteCitiesView: View {
     
     private func delete(at offsets: IndexSet) {
         offsets.forEach {
-            let delRow = viewModel.allFavoritesAndLocation[$0 + 1]
-            if let city = UserSettings.favouriteCities.first(where: { $0.cityName == delRow.cityName }) {
-                UserSettings.removeFavouriteCity(city)
+            let delRow = viewModel.cityList[$0 + 1]
+            if let city = UserSettings.favoriteCities.first(where: { $0.cityName == delRow.cityName }) {
+                UserSettings.removeFavoriteCity(city)
             }
         }
     }

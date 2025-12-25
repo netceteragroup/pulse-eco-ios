@@ -2,14 +2,10 @@ import SwiftUI
 
 struct MeasureButtonView: View {
     @ObservedObject var viewModel: MeasureButtonViewModel
-    @EnvironmentObject var appData: AppData
-    @EnvironmentObject var appDataManager: AppDataManager
 
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
-            Button(action: {
-                viewModel.measurePressed(appData: appData, appDataManager: appDataManager)
-            }) {
+            Button(action: viewModel.measurePressed) {
                 VStack(spacing: 0) {
                     Text(self.viewModel.title)
                         .font(.system(size: 13, weight: .regular))

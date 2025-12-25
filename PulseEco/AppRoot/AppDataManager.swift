@@ -1,23 +1,41 @@
 import Foundation
 import Combine
 import UIKit
+import Factory
 
 @MainActor
-class AppDataManager: ObservableObject {
+protocol AppDataManagerProtocol {
+    func getMeasures()
+    func startInitialFetch()
+    func fetchData()
+    func selectFromCalendar(selectedDate: Date)
+    func selectFromDateSlider(selectedDate: Date)
+    func selectFromHourlySlider(selectedHour: Int)
+    func selectFromSensorType(selectedMeasureId: String)
+    func getCurrentMeasure(selectedMeasure: String) -> Measure
+    func fetchMonthlyDayData(selectedMonth: Int, selectedYear: Int) async
+    func updatePins(selectedDate: Date) async
+    func updateWeeklyAverageForSensors(selectedDate: Date) async
+    func updateMonthlyColors(selectedYear: Int) async
+    var appData: AppData { get }
+    var onSensorPinsUpdated: PassthroughSubject<[SensorPinModel], Never> { get }
+}
+
+class AppDataManager: AppDataManagerProtocol {
+    @Injected(\.networkService) private var networkService
     private let logger = SystemLoggerAdapter(category: "AppDataManager")
 
-    private let appData: AppData
+    let appData: AppData
     
     let onSensorPinsUpdated = PassthroughSubject<[SensorPinModel], Never>()
         
     private var measuresTask = Task {}
-    
-    private let networkService = NetworkService()
-    
+        
     init(appData: AppData) {
         self.appData = appData
     }
     
+    @MainActor
     func getMeasures() {
         self.appData.loadingMeasures = true
         measuresTask = Task {
@@ -32,11 +50,14 @@ class AppDataManager: ObservableObject {
     
     func startInitialFetch() {
         scheduleFetchCitiesOnRepeat()
-        fetchData(cityName: UserSettings.selectedCity.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
+        fetchData()
         getMeasures()
     }
         
-    func fetchData(cityName: String, sensorType: String, selectedDate: Date) {
+    func fetchData() {
+        let cityName = UserSettings.selectedCity.cityName
+        let sensorType = appData.selectedMeasureId
+        let selectedDate = appData.selectedDate
         logger.logDebug("Fetching values for city: \(cityName)")
         guard let selectedMonth = selectedDate.getMonth,
               let selectedYear = selectedDate.getYear else { return }
@@ -64,10 +85,15 @@ class AppDataManager: ObservableObject {
         }
     }
     
-    func selectFromCalendar(monthChange: Bool) {
-        let day = calendar.component(.day, from: appData.selectedDate)
+    func selectFromCalendar(selectedDate: Date) {
+        let monthChanged = !selectedDate.isSameMonth(with: appData.selectedDate)
+        appData.selectedDate = selectedDate
+        if selectedDate.isSameDay(with: Date.now) {
+            appData.selectedHour = calendar.component(.hour, from: Date.now)
+        }
+        let day = calendar.component(.day, from: selectedDate)
         Task {
-            if monthChange || day < 4 {
+            if monthChanged || day < 4 {
                 let components = calendar.dateComponents([.month, .year, .day], from: appData.selectedDate)
                 let selectedMonth = components.month ?? 1
                 let selectedYear = components.year ?? 1
@@ -85,6 +111,10 @@ class AppDataManager: ObservableObject {
     }
     
     func selectFromDateSlider(selectedDate: Date) {
+        appData.selectedDate = selectedDate
+        if selectedDate.isSameDay(with: Date.now) {
+            appData.selectedHour = calendar.component(.hour, from: Date.now)
+        }
         Task {
             await updatePins(selectedDate: selectedDate)
         }
@@ -93,7 +123,8 @@ class AppDataManager: ObservableObject {
         }
     }
     
-    func selectFromSensorType() {
+    func selectFromSensorType(selectedMeasureId: String) {
+        appData.selectedMeasureId = selectedMeasureId
         let components = Calendar.current.dateComponents([.month, .year], from: appData.selectedDate)
         guard let selectedMonth = components.month,
               let selectedYear = components.year else { return }
@@ -105,6 +136,11 @@ class AppDataManager: ObservableObject {
         Task {
             await updateWeeklyAverageForSensors(selectedDate: appData.selectedDate)
         }
+    }
+    
+    func selectFromHourlySlider(selectedHour: Int) {
+        appData.selectedHour = selectedHour
+        mapPins()
     }
     
     func getCurrentMeasure(selectedMeasure: String) -> Measure {
@@ -126,16 +162,9 @@ class AppDataManager: ObservableObject {
                                                                from: selectedDate,
                                                                to: to) ?? []
         appData.sensorsData24h = sensorsData24h
-        let groupById = Dictionary(grouping: sensorsData24h, by: \.sensorID)
-        appData.hourlySensors = groupByHour(sensorData: sensorsData24h, groupById: groupById)
-        appData.sensorPins = appData.hourlySensors[calendar.component(.hour, from: .now)] ?? []
-        appData.selectedDateAverageValue = DataFromRangeMapper.getDataFromRange(sensorType: appData.selectedMeasureId,
-                                                                                 sensorData: appData.dailySensorData,
-                                                                                 measures: appData.measures,
-                                                                                 cityOverall: appData.cityOverall,
-                                                                                 from: appData.selectedDate,
-                                                                                 to: calendar.date(byAdding: .day, value: +1, to: appData.selectedDate)!).first?.value ?? ""
-        onSensorPinsUpdated.send(self.appData.sensorPins)
+        let selectedMeasure = getCurrentMeasure(selectedMeasure: appData.selectedMeasureId)
+        appData.hourlySensors = SensorMapper.groupByHour(sensorData: sensorsData24h, sensors: appData.citySensors, selectedMeasure: selectedMeasure)
+        mapPins()
     }
     
     func updateWeeklyAverageForSensors(selectedDate: Date) async {
@@ -165,11 +194,22 @@ class AppDataManager: ObservableObject {
     private func scheduleFetchCitiesOnRepeat() {
         Task {
             while !Task.isCancelled {
-                UserSettings.cityValues.removeAll()
+                appData.cityOverallValues.removeAll()
                 await getCities()
                 try? await Task.sleep(nanoseconds: 600 * 1_000_000_000)
             }
         }
+    }
+    
+    private func mapPins() {
+        appData.sensorPins = appData.hourlySensors[appData.selectedHour] ?? []
+        appData.selectedDateAverageValue = DataFromRangeMapper.getDataFromRange(sensorType: appData.selectedMeasureId,
+                                                                                 sensorData: appData.dailySensorData,
+                                                                                 measures: appData.measures,
+                                                                                 cityOverall: appData.cityOverall,
+                                                                                 from: appData.selectedDate,
+                                                                                 to: calendar.date(byAdding: .day, value: +1, to: appData.selectedDate)!).first?.value ?? ""
+        onSensorPinsUpdated.send(self.appData.sensorPins)
     }
     
     private func mapCityData(cityOverall: CityOverallValues?, citySensors: [Sensor], overallSensorData: [SensorData]) async {
@@ -181,8 +221,9 @@ class AppDataManager: ObservableObject {
     private func getCities() async {
         let cities = await networkService.fetchCities() ?? []
         let overallCities = await networkService.downloadCurrentData(cityNames: cities.map { $0.cityName.lowercased() })
-        UserSettings.cityValues.append(contentsOf: overallCities)
-        appData.isWaitingToFetchFavouriteCitiesOveralls = false
+        appData.cities = cities
+        appData.cityOverallValues = overallCities
+        appData.isWaitingToFetchFavoriteCitiesOveralls = false
     }
     
     private func mapWeeklyAverages() {
@@ -238,82 +279,6 @@ class AppDataManager: ObservableObject {
                                                     cityOverall: appData.cityOverall,
                                                     from: calendar.startOfDay(for: Date.now),
                                                     to: calendar.date(byAdding: .day, value: +1, to: Date.now)!).first
-    }
-    
-    private func groupByHour(sensorData: [SensorData],
-                             groupById: [String: [SensorData]]) -> [Int: [SensorPinModel]] {
-        
-        struct SensorIdHour: Hashable {
-            let hour: Int
-            let sensorId: String
-        }
-        
-        var result: [Int: [SensorData]] = [:]
-        var seen: Set<SensorIdHour> = []
-        let calendar = Calendar.current
-        
-        for data in sensorData {
-            guard let date = DateFormatter.iso8601Full.date(from: data.stamp) else { continue }
-            
-            let hour = calendar.component(.hour, from: date)
-            
-            if !seen.contains(SensorIdHour(hour: hour, sensorId: data.sensorID)) {
-                seen.insert(SensorIdHour(hour: hour, sensorId: data.sensorID))
-                
-                if result[hour] == nil {
-                    result[hour] = []
-                }
-                result[hour]?.append(data)
-            }
-        }
-        
-        addFor12Pm(result: &result, sensorData: sensorData)
-        
-        var sensorPinModelsByHour: [Int: [SensorPinModel]] = [:]
-        
-        for pair in result {
-            sensorPinModelsByHour[pair.key] = mapSensorPins(sensors: appData.citySensors, sensorsData: result[pair.key]!)
-        }
-        
-        return sensorPinModelsByHour
-    }
-    
-    private func addFor12Pm(result: inout [Int: [SensorData]], sensorData: [SensorData]) {
-        var seen: Set<String> = []
-        
-        for sensor in sensorData.reversed() {
-            guard let date = DateFormatter.iso8601Full.date(from: sensor.stamp) else { continue }
-            let hourAndMinutes = calendar.dateComponents([.hour, .minute], from: date)
-            if hourAndMinutes.hour ?? 0 < 23 || hourAndMinutes.minute ?? 0 < 30 {
-               break
-            }
-            if !seen.contains(sensor.sensorID) {
-                seen.insert(sensor.sensorID)
-                if result[24] == nil {
-                    result[24] = []
-                }
-                result[24]?.append(sensor)
-            }
-        }
-    }
-    
-    private func mapSensorPins(sensors: [Sensor], sensorsData: [SensorData]) -> [SensorPinModel] {
-        let selectedMeasure = getCurrentMeasure(selectedMeasure: appData.selectedMeasureId)
-        return sensors.flatMap { sensor -> [SensorPinModel] in
-            let filteredSensorData = sensorsData.filter { $0.sensorID == sensor.sensorID }
-            return filteredSensorData.map { sensorData in
-                let color = AppColors.colorFrom(string: selectedMeasure.bands.first { band in
-                    Int(sensorData.value) ?? 0 >= band.from && Int(sensorData.value) ?? 0 <= band.to
-                }?.legendColor ?? "gray")
-                return SensorPinModel(title: sensor.description,
-                                                           sensorID: sensor.sensorID,
-                                                           measureId: sensorData.type,
-                                                           value: sensorData.value,
-                                                           position: sensor.position,
-                                                           type: sensor.type,
-                                                           color: color,
-                                                           stamp: sensorData.stamp) }
-        }
     }
     
     private func fetchDataForSelectedMonth(cityName: String,

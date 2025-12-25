@@ -6,29 +6,26 @@
 //
 
 import SwiftUI
+import Factory
 
 @main
 struct PulseEcoApp: App {
     
     // MARK: - State Objects
     @StateObject private var appData: AppData
-    @StateObject private var appDataManager: AppDataManager
-    @StateObject private var refreshService: RefreshService
-    @StateObject private var mapViewModel: MapViewModel
+    @StateObject private var cityMapViewModel: CityMapViewModel
+    @Injected(\.appDataManager) private var appDataManager
 
     // MARK: - Initialization
     init() {
         // 1. Initialize app state and data sources
-        let appData = AppData()
-        let appDataManager = AppDataManager(appData: appData)
-        let mapVM = MapViewModel(appDataManager: appDataManager)
-        let refreshSvc = RefreshService(appViewModel: appData, appDataManager: appDataManager)
+        let appDataManager = Container.shared.appDataManager.resolve()
+        let appData = appDataManager.appData
+        let cityMapViewModel = CityMapViewModel()
         
         // 2. Assign to @StateObjects
         _appData = StateObject(wrappedValue: appData)
-        _appDataManager = StateObject(wrappedValue: appDataManager)
-        _mapViewModel = StateObject(wrappedValue: mapVM)
-        _refreshService = StateObject(wrappedValue: refreshSvc)
+        _cityMapViewModel = StateObject(wrappedValue: cityMapViewModel)
         
         // 3. Customize UITableView appearance globally (optional)
         UITableView.appearance().separatorColor = .clear
@@ -37,14 +34,8 @@ struct PulseEcoApp: App {
     // MARK: - Scene
     var body: some Scene {
         WindowGroup {
-            MainView(mapViewModel: mapViewModel)
+            MainView(cityMapViewModel: cityMapViewModel)
                 .environmentObject(appData)
-                .environmentObject(appDataManager)
-                .environmentObject(refreshService)
-                .onAppear {
-                    appDataManager.startInitialFetch()
-                    refreshService.refreshDataIfNeeded()
-                }
         }
     }
 }

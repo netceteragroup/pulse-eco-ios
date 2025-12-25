@@ -11,6 +11,13 @@ struct TimelineSliderView: View {
     @StateObject var viewModel: TimelineSliderViewModel
     @EnvironmentObject private var appData: AppData
     private let timeRange = 0...24
+    
+    @Binding private var isTimelineSliderActive: Bool
+    
+    init(viewModel: TimelineSliderViewModel, isTimelineSliderActive: Binding<Bool>) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self._isTimelineSliderActive = isTimelineSliderActive
+    }
 
     var body: some View {
         VStack {
@@ -27,7 +34,7 @@ struct TimelineSliderView: View {
                         .offset(y: 5)
                         .onTapGesture {
                             withAnimation(.easeInOut(duration: 0.25)) {
-                                appData.isTimelineSliderActive = false
+                                isTimelineSliderActive = false
                             }
                         }
                 }
@@ -75,9 +82,6 @@ struct TimelineSliderView: View {
                 .fill(.white)
                 .opacity(0.90)
         )
-        .onChange(of: appData.selectedDate) {
-            viewModel.assignSliderValue(newValue: viewModel.sliderValue, selectedDate: appData.selectedDate)
-        }
     }
     
     private func sliderWithClamping() -> some View {

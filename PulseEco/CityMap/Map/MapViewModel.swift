@@ -9,18 +9,19 @@ import Foundation
 import MapKit
 import Combine
 import SwiftUI
+import Factory
 
+@MainActor
 class MapViewModel: ObservableObject {
     
-    @ObservedObject var appDataManager: AppDataManager
-    
+    @Injected(\.appDataManager) private var appDataManager
+
     @Published private(set) var sensors: [SensorPinModel] = []
     var shouldUpdateSensors = false
     
     private(set) var span: MKCoordinateSpan!
     
-    init(appDataManager: AppDataManager) {
-        self.appDataManager = appDataManager
+    init() {
         self.span = span(for: UserSettings.selectedCity)
         observeStateChanges()
     }

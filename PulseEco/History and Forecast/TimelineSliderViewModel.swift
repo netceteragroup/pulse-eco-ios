@@ -6,21 +6,22 @@
 //
 import SwiftUI
 import Combine
+import Factory
 
+@MainActor
 class TimelineSliderViewModel: ObservableObject {
+    @Injected(\.appDataManager) private var appDataManager
     @Published var sliderValue: Double
-    var onSliderValueChanged: ((Double) -> Void)?
     var currentDate: Date
     var hour: Int
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(onSliderValueChanged: @escaping (Double) -> Void) {
+    init() {
         currentDate = Date()
         let calendar = Calendar.current
         self.hour = calendar.component(.hour, from: currentDate)
         sliderValue = Double(hour)
-        self.onSliderValueChanged = onSliderValueChanged
         addSubscribers()
     }
     
@@ -30,9 +31,16 @@ class TimelineSliderViewModel: ObservableObject {
             .removeDuplicates()
             .sink { [weak self] newValue in
                 guard let self = self else { return }
-                onSliderValueChanged?(newValue)
+                self.sliderValueChanged(newValue: newValue)
             }
             .store(in: &cancellables)
+    }
+    
+    private func sliderValueChanged(newValue: Double) {
+        let hour = Int(newValue)
+        guard self.hour != hour else { return }
+        self.hour = hour
+        appDataManager.selectFromHourlySlider(selectedHour: hour)
     }
     
     func assignSliderValue(newValue: Double, selectedDate: Date) {

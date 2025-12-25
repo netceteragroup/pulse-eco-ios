@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Factory
 
 struct MainView: View {
     private let logger = SystemLoggerAdapter(category: "MainView")
@@ -15,14 +16,14 @@ struct MainView: View {
     @State private var bottomSheetHeaderSize: CGFloat = .zero
     @State private var selectionDetent = PresentationDetent.height(.zero)
     
-    @Environment(\.scenePhase) private var scenePhase
-    @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var refreshService: RefreshService
     @EnvironmentObject var appData: AppData
-    @EnvironmentObject var appDataManager: AppDataManager
-    
-    @State private var sensorSelectionAlertDialogIsActive = false
-    let mapViewModel: MapViewModel
+    @Injected(\.refreshService) private var refreshService
+    @Injected(\.appDataManager) private var appDataManager
+
+    @State private var sensorSelectionAlertDialogIsActive: Bool = false
+    @State private var showSensorDetails: Bool = true
+    @State private var citySelectorClicked: Bool = false
+    let cityMapViewModel: CityMapViewModel
         
     private var sensorDetailsViewModel: SensorDetailsViewModel {
         let selectedMeasure = appDataManager.getCurrentMeasure(selectedMeasure: appData.selectedMeasureId)
@@ -38,7 +39,7 @@ struct MainView: View {
         return viewModel.isLoading ||
                appData.loadingCityData ||
                appData.loadingMeasures ||
-               appData.isWaitingToFetchFavouriteCitiesOveralls
+               appData.isWaitingToFetchFavoriteCitiesOveralls
     }
     
     var body: some View {
@@ -51,13 +52,18 @@ struct MainView: View {
         }
         .edgesIgnoringSafeArea(.top)
         .onReceive(viewModel.onLocationSetSubject, perform: { city in changeLocation(city: city) })
+        .onAppear {
+            appDataManager.startInitialFetch()
+            refreshService.refreshDataIfNeeded()
+        }
     }
     
     private func changeLocation(city: City) {
         guard UserSettings.selectedCity != city else { return }
         logger.logDebug("City updated: \(city.cityName)")
         UserSettings.selectedCity = city
-        appDataManager.fetchData(cityName: city.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
+        refreshService.updateRefreshDate()
+        appDataManager.fetchData()
     }
     
     var loadingView: some View {
@@ -68,10 +74,11 @@ struct MainView: View {
         ZStack {
             NavigationStack {
                 VStack(spacing: 0) {
-                    if appData.citySelectorClicked {
-                        FavouriteCitiesView()
+                    if citySelectorClicked {
+                        FavoriteCitiesView(viewModel: FavoriteCitiesViewModel(appData: appData),
+                                            citySelectorClicked: $citySelectorClicked)
                             .overlay(ShadowOnTopOfView())
-                            .animation(nil, value: appData.citySelectorClicked)
+                            .animation(nil, value: citySelectorClicked)
                             .edgesIgnoringSafeArea(.bottom)
                     } else {
                         VStack(spacing: 0) {
@@ -79,8 +86,7 @@ struct MainView: View {
                                 selectedMeasure: appData.selectedMeasureId,
                                 cityName: UserSettings.selectedCity.cityName,
                                 measuresList: appData.measures,
-                                cityValues: appData.cityOverall,
-                                citySelectorClicked: appData.citySelectorClicked
+                                cityValues: appData.cityOverall
                             )
                             MeasureListView(viewModel: measureViewModel)
                         }
@@ -89,14 +95,12 @@ struct MainView: View {
                             DateSelector()
                                 .zIndex(2)
                             
-                            CityMapView(
-                                bottomSheetHeaderSize: $bottomSheetHeaderSize, mapViewModel: mapViewModel
-                            )
+                            CityMapView(bottomSheetHeaderSize: $bottomSheetHeaderSize, viewModel: cityMapViewModel)
                             .id("CityMapView")
                             .edgesIgnoringSafeArea([.horizontal, .bottom])
                             .padding(.top, 60)
                             .zIndex(1)
-                            .sheet(isPresented: $appData.showSensorDetails) {
+                            .sheet(isPresented: $showSensorDetails) {
                                 Spacer()
                                 SensorDetailsView(
                                     viewModel: sensorDetailsViewModel,
@@ -122,7 +126,7 @@ struct MainView: View {
                             Image(uiImage: UIImage(named: "logo-pulse") ?? UIImage())
                                 .imageScale(.large)
                                 .onTapGesture {
-                                    if !appData.citySelectorClicked {
+                                    if !citySelectorClicked {
                                         appData.selectedSensor = nil
                                         refreshService.refreshData()
                                     }
@@ -145,7 +149,8 @@ struct MainView: View {
                     appData: appData,
                     sensors: appData.sensorPins
                 ),
-                sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive
+                sensorSelectionAlertDialogIsActive: $sensorSelectionAlertDialogIsActive,
+                showSensorDetails: $showSensorDetails
             )
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         )
@@ -178,7 +183,7 @@ struct MainView: View {
     var leadingNavigationItems: some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) {
-                appData.citySelectorClicked.toggle()
+                citySelectorClicked.toggle()
                 appData.selectedSensor = nil
             }
         }) {
@@ -186,10 +191,14 @@ struct MainView: View {
                 Text(UserSettings.selectedCity.cityName.uppercased())
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(Color(AppColors.darkblue))
-                appData.cityIcon.foregroundColor(Color(AppColors.darkblue))
+                cityIcon.foregroundColor(Color(AppColors.darkblue))
             }
         }
         .accentColor(AppColors.black.color)
+    }
+    
+    private var cityIcon: some View {
+        citySelectorClicked ? Image(systemName: "chevron.up") : Image(systemName: "chevron.down")
     }
 }
 
@@ -199,7 +208,7 @@ extension MainView {
         appDataManager.getMeasures()
         appData.loadingMeasures = true
         refreshService.updateRefreshDate()
-        appDataManager.fetchData(cityName: UserSettings.selectedCity.cityName, sensorType: appData.selectedMeasureId, selectedDate: appData.selectedDate)
+        appDataManager.fetchData()
     }
 }
 

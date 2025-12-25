@@ -15,21 +15,22 @@ struct CityMapView: View {
     }
     
     @EnvironmentObject var appData: AppData
-    @EnvironmentObject var refreshService: RefreshService
     
     @Binding private var bottomSheetHeaderSize: CGFloat
+    @State private var isTimelineSliderActive: Bool = false
     
-    init(bottomSheetHeaderSize: Binding<CGFloat>, mapViewModel: MapViewModel) {
+    init(bottomSheetHeaderSize: Binding<CGFloat>,
+         viewModel: CityMapViewModel) {
         self._bottomSheetHeaderSize = bottomSheetHeaderSize
-        self.mapViewModel = mapViewModel
+        self.viewModel = viewModel
     }
     
-    let mapViewModel: MapViewModel
+    let viewModel: CityMapViewModel
     
     var body: some View {
         
         ZStack {
-            MapView(viewModel: mapViewModel, appData: appData)
+            MapView(viewModel: viewModel.mapViewModel, appData: appData)
                 .id("MapView")
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
@@ -40,10 +41,10 @@ struct CityMapView: View {
                 Spacer()
                 
                 HStack {
-                    if appData.isTimelineSliderActive {
-                        createTimelineSliderView(appData: appData)
+                    if isTimelineSliderActive {
+                        timelineSliderView
                     } else {
-                        createFloatingButtonView(appData: appData)
+                        floatingButtonView
                     }
                 }
                 .padding(.bottom, bottomSheetHeaderSize + getSafeAreaBottom() + 8)
@@ -57,47 +58,33 @@ struct CityMapView: View {
                                                     currentValue: self.appData.selectedDateAverageValue))
         }
     }
-}
-
-@ViewBuilder
-private func createTimelineSliderView(appData: AppData) -> some View {
-    HStack {
-        Spacer()
-        
-        TimelineSliderView(viewModel: TimelineSliderViewModel(onSliderValueChanged: { sliderValue in
-            guard let sensorPinsForSelectedHour = appData.hourlySensors[Int(sliderValue)] else {
-                appData.sensorPins = [SensorPinModel()]
-                return
-            }
+    
+    private var timelineSliderView: some View {
+        HStack {
+            Spacer()
+            TimelineSliderView(viewModel: viewModel.timelineSliderViewModel, isTimelineSliderActive: $isTimelineSliderActive)
+            .lineLimit(1)
+            .minimumScaleFactor(0.5)
+            .environmentObject(appData)
             
-            if sensorPinsForSelectedHour.isEmpty || sensorPinsForSelectedHour == appData.sensorPins {
-                return
-            }
-            
-            appData.sensorPins = sensorPinsForSelectedHour
-        }))
-        .lineLimit(1)
-        .minimumScaleFactor(0.5)
-        .environmentObject(appData)
-        
-        Spacer()
-    }
-    .frame(maxWidth: .infinity, alignment: .center)
-    .padding(.horizontal)
-}
-
-@ViewBuilder
-private func createFloatingButtonView(appData: AppData) -> some View {
-    HStack {
-        FloatingButton(image: "access-time") {
-            appData.isTimelineSliderActive = true
+            Spacer()
         }
-        .cornerRadius(15)
-        .shadow(radius: 5)
-        .padding(.leading, 15)
-        .padding(.trailing, 15)
-        
-        Spacer()
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.horizontal)
+    }
+    
+    private var floatingButtonView: some View {
+        HStack {
+            FloatingButton(text: viewModel.formatTime(for: appData.selectedHour)) {
+                isTimelineSliderActive = true
+            }
+            .cornerRadius(15)
+            .shadow(radius: 5)
+            .padding(.leading, 15)
+            .padding(.trailing, 15)
+            
+            Spacer()
+        }
     }
 }
 
@@ -113,10 +100,7 @@ func getSafeAreaBottom() -> CGFloat {
 #Preview {
     VStack {
         CityMapView(bottomSheetHeaderSize: .constant(.zero),
-                    mapViewModel: MapViewModel(
-                        appDataManager: AppDataManager(appData: AppData())
-                    )
+                    viewModel: CityMapViewModel()
         )
-        .environmentObject(AppDataManager(appData: AppData()))
     }
 }

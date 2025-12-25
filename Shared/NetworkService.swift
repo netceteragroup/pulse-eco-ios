@@ -2,7 +2,33 @@ import Foundation
 import Combine
 import SwiftUI
 
-class NetworkService {
+enum AverageTimeUnit {
+    case day, week, month
+}
+
+protocol NetworkServiceProtocol {
+    func downloadSensorsAsync(cityName: String) async -> [Sensor]?
+    func downloadAverageData(for cityName: String,
+                             from startDate: Date,
+                             to endDate: Date,
+                             timeUnit: AverageTimeUnit,
+                             sensorType: String) async -> [SensorData]?
+
+    func downloadCurrentData(for cityName: String) async -> CityOverallValues?
+    func downloadCurrentData(cityNames: [String]) async -> [CityOverallValues]
+    func fetchMeasures() async -> [Measure]?
+    func fetchSensorData(cityName: String,
+                         measureId: String,
+                         from: Date,
+                         to: Date) async -> [SensorData]?
+    func fetchCities() async -> [City]?
+    func fetchCity(cityName: String) async -> City?
+    func fetchMonthlyAverage(cityName: String,
+                             measureType: String,
+                             selectedDate: Date) async -> [SensorData]?
+}
+
+class NetworkService: NetworkServiceProtocol {
     private let logger = SystemLoggerAdapter(category: "NetworkService")
 
     let appURLSession: URLSession = {
@@ -15,10 +41,6 @@ class NetworkService {
     
     // MARK: - New
     var language: String { "lang=\(Trema.appLanguage)" }
-    
-    enum AverageTimeUnit {
-        case day, week, month
-    }
     
     func downloadSensorsAsync(cityName: String) async -> [Sensor]? {
         let path = "https://\(cityName).pulse.eco/rest/sensor"
