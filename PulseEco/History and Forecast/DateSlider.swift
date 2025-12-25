@@ -13,7 +13,6 @@ struct DateSlider: View {
     @EnvironmentObject var appData: AppData
     @Injected(\.appDataManager) private var appDataManager
 
-    @Binding var unimplementedAlert: Bool
     @Binding var unimplementedPicker: Bool
     @Binding var selectedDate: Date
     
@@ -22,7 +21,6 @@ struct DateSlider: View {
             ScrollViewReader { proxy in
                 HStack {
                     Button {
-                        unimplementedAlert.toggle()
                         unimplementedPicker.toggle()
                         
                     } label: {
@@ -48,6 +46,7 @@ struct DateSlider: View {
                                           color: item.color,
                                           highlighted: selectedDate.isSameDay(with: item.date)) {
                                 selectedDate = calendar.startOfDay(for: item.date)
+                                unimplementedPicker = false
                                 appDataManager.selectFromDateSlider(selectedDate: selectedDate)
                             }
                         }

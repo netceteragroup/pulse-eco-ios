@@ -86,22 +86,11 @@ class AppDataManager: AppDataManagerProtocol {
     }
     
     func selectFromCalendar(selectedDate: Date) {
-        let monthChanged = !selectedDate.isSameMonth(with: appData.selectedDate)
         appData.selectedDate = selectedDate
         if selectedDate.isSameDay(with: Date.now) {
             appData.selectedHour = calendar.component(.hour, from: Date.now)
         }
-        let day = calendar.component(.day, from: selectedDate)
         Task {
-            if monthChanged || day < 4 {
-                let components = calendar.dateComponents([.month, .year, .day], from: appData.selectedDate)
-                let selectedMonth = components.month ?? 1
-                let selectedYear = components.year ?? 1
-                appData.dailySensorData = await fetchDataForSelectedMonth(cityName: UserSettings.selectedCity.cityName,
-                                                                           sensorType: appData.selectedMeasureId,
-                                                                           selectedMonth: selectedMonth,
-                                                                           selectedYear: selectedYear)
-            }
             mapWeeklyAverages()
             await updatePins(selectedDate: appData.selectedDate)
         }
@@ -111,6 +100,11 @@ class AppDataManager: AppDataManagerProtocol {
     }
     
     func selectFromDateSlider(selectedDate: Date) {
+        if selectedDate.isSameDay(with: Date.now) && !appData.selectedDate.isSameMonth(with: selectedDate) {
+            Task {
+                await fetchMonthlyDayData(selectedMonth: selectedDate.getMonth ?? 0, selectedYear: selectedDate.getYear ?? 0)
+            }
+        }
         appData.selectedDate = selectedDate
         if selectedDate.isSameDay(with: Date.now) {
             appData.selectedHour = calendar.component(.hour, from: Date.now)

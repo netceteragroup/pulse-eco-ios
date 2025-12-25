@@ -21,17 +21,13 @@ struct CalendarView: View {
     @Binding var showingCalendar: Bool
     @Binding var selectedDate: Date
 
-    var onDaySelected: ((Date) -> Void)?
-
     init(showingCalendar: Binding<Bool>,
          selectedDate: Binding<Date>,
-         onDaySelected: ((Date) -> Void)?,
          viewModelClosure: @autoclosure @escaping () -> CalendarViewModel)
     {
         _viewModel = StateObject(wrappedValue: viewModelClosure())
         _showingCalendar = showingCalendar
         _selectedDate = selectedDate
-        self.onDaySelected = onDaySelected
     }
 
     var body: some View {
@@ -103,7 +99,10 @@ struct CalendarView: View {
         HStack {
             Spacer()
             Button {
-                showingCalendar = false
+                Task {
+                    await viewModel.onCancelTap()
+                    showingCalendar = false
+                }
             } label: {
                 Text(Trema.text(for: "cancel"))
                     .font(.system(size: 14, weight: .semibold))
@@ -148,9 +147,7 @@ struct CalendarView: View {
             .padding(.all)
 
             Button {
-                Task {
-                    await viewModel.nextMonth()
-                }
+                viewModel.nextMonth()
             } label: {
                 Image(systemName: "chevron.right")
                     .resizable()
@@ -243,10 +240,8 @@ struct CalendarView: View {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(viewModel.monthValues, id: \.self) { val in
                     Button {
-                        Task {
-                            await viewModel.selectNewMonth(month: val.monthName)
-                            viewModel.colorMonths()
-                        }
+                        viewModel.selectNewMonth(month: val.monthName)
+                        viewModel.colorMonths()
                         pickerType = .day
                     } label: {
                         MonthButtonView(month: val.monthName,

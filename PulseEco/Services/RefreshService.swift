@@ -35,7 +35,6 @@ class RefreshService: RefreshServiceProtocol {
     func updateRefreshDate() {
         refreshDate = Date()
         appData.selectedDate = calendar.startOfDay(for: Date.now)
-        appData.showingCalendar = false
         appData.selectedMeasureId = "pm10"
         appData.selectedHour = calendar.component(.hour, from: Date.now)
         appData.selectedSensorsForGraph.removeAll()

@@ -88,7 +88,7 @@ struct TimelineSliderView: View {
         Slider(
             value: Binding(
                 get: {
-                    Double(viewModel.sliderValue)
+                    viewModel.sliderValue
                 },
                 set: { newValue in
                     let clampedValue = round(newValue)

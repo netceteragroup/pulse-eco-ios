@@ -92,7 +92,7 @@ struct MainView: View {
                         }
                         
                         ZStack(alignment: .top) {
-                            DateSelector()
+                            DateSelector(selectedDate: appData.selectedDate)
                                 .zIndex(2)
                             
                             CityMapView(bottomSheetHeaderSize: $bottomSheetHeaderSize, viewModel: cityMapViewModel)

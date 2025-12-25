@@ -8,7 +8,6 @@ import SwiftUI
 import Factory
 
 struct CityListView: View {
-    @EnvironmentObject var appData: AppData
     @ObservedObject var viewModel: CityListViewModel
     
     var searchText: String

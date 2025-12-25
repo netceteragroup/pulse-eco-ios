@@ -106,7 +106,7 @@ class CalendarViewModel: ObservableObject {
         }
     }
 
-    func nextMonth() async {
+    func nextMonth() {
         let yearChange = selectedMonth >= 11
         if yearChange {
             selectedMonth -= 11
@@ -127,15 +127,21 @@ class CalendarViewModel: ObservableObject {
         }
     }
 
-    func selectNewMonth(month: String) async {
+    func selectNewMonth(month: String) {
         selectedMonth = calendar.shortMonthSymbols.firstIndex(of: month) ?? selectedMonth
         currentMonthOffset = selectedMonth - calendar.component(.month, from: Date())
-        await nextMonth()
+        nextMonth()
     }
     
     func dateSelected(date: Date) {
         selectedDate = date
         appDataManager.selectFromCalendar(selectedDate: date)
+    }
+    
+    func onCancelTap() async {
+        selectedMonth = appData.selectedDate.getMonth ?? 0
+        selectedYear = appData.selectedDate.getYear ?? 0
+        await appDataManager.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
     }
 
     func colorMonths() {

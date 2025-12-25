@@ -12,15 +12,14 @@ import Factory
 class TimelineSliderViewModel: ObservableObject {
     @Injected(\.appDataManager) private var appDataManager
     @Published var sliderValue: Double
-    var currentDate: Date
+    let currentDate: Date
     var hour: Int
     
     private var cancellables = Set<AnyCancellable>()
     
-    init() {
+    init(appData: AppData) {
         currentDate = Date()
-        let calendar = Calendar.current
-        self.hour = calendar.component(.hour, from: currentDate)
+        self.hour = appData.selectedHour
         sliderValue = Double(hour)
         addSubscribers()
     }
@@ -46,7 +45,7 @@ class TimelineSliderViewModel: ObservableObject {
     func assignSliderValue(newValue: Double, selectedDate: Date) {
         if isTryingToSelectFutureTime(selectedDate: selectedDate,
                                       newValue: newValue) {
-            sliderValue = Double(hour)
+            sliderValue = Double(calendar.component(.hour, from: Date.now))
         }
         else {
             sliderValue = newValue
@@ -54,7 +53,7 @@ class TimelineSliderViewModel: ObservableObject {
     }
     
     func isTryingToSelectFutureTime(selectedDate: Date, newValue: Double) -> Bool {
-        selectedDate >= calendar.startOfDay(for: currentDate) && newValue > Double(hour)
+        selectedDate.isSameDay(with: Date.now) && Int(newValue) > calendar.component(.hour, from: Date.now)
     }
     
     func formatTime(for time: Double) -> String {

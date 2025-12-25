@@ -62,7 +62,8 @@ struct CityMapView: View {
     private var timelineSliderView: some View {
         HStack {
             Spacer()
-            TimelineSliderView(viewModel: viewModel.timelineSliderViewModel, isTimelineSliderActive: $isTimelineSliderActive)
+            TimelineSliderView(viewModel: TimelineSliderViewModel(appData: appData),
+                               isTimelineSliderActive: $isTimelineSliderActive)
             .lineLimit(1)
             .minimumScaleFactor(0.5)
             .environmentObject(appData)

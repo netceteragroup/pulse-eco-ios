@@ -10,8 +10,11 @@ import Factory
 
 @MainActor
 class CityMapViewModel: ObservableObject {
-    let mapViewModel = MapViewModel()
-    let timelineSliderViewModel = TimelineSliderViewModel()
+    let mapViewModel: MapViewModel
+    
+    init() {
+        mapViewModel = MapViewModel()
+    }
     
     func formatTime(for hour: Int) -> String {
         if hour == 12 {

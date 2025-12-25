@@ -9,7 +9,6 @@ class AppData: ObservableObject {
     @Published var sensorPins: [SensorPinModel] = []
     @Published var loadingCityData: Bool = true
     @Published var loadingMeasures: Bool = true
-    @Published var showingCalendar = false
     @Published var selectedDateAverageValue: String?
     @Published var selectedDate: Date = calendar.startOfDay(for: Date.now)
     @Published var selectedHour: Int = calendar.component(.hour, from: Date.now)
