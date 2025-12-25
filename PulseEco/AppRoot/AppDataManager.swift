@@ -100,9 +100,10 @@ class AppDataManager: AppDataManagerProtocol {
     }
     
     func selectFromDateSlider(selectedDate: Date) {
-        if selectedDate.isSameDay(with: Date.now) && !appData.selectedDate.isSameMonth(with: selectedDate) {
+        let shouldFetchMonthlyData = selectedDate.isSameDay(with: Date.now) && !appData.selectedDate.isSameMonth(with: selectedDate)
+        if shouldFetchMonthlyData, let selectedMonth = selectedDate.getMonth, let selectedYear = selectedDate.getYear {
             Task {
-                await fetchMonthlyDayData(selectedMonth: selectedDate.getMonth ?? 0, selectedYear: selectedDate.getYear ?? 0)
+                await fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
             }
         }
         appData.selectedDate = selectedDate
