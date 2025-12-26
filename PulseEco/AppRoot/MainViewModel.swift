@@ -21,6 +21,10 @@ class MainViewModel: ObservableObject {
     private var firstTimeLoad: Bool = false
     
     init() {
+        
+    }
+    
+    func start() {
         checkLocation()
     }
     
@@ -59,11 +63,10 @@ class MainViewModel: ObservableObject {
     
     private func fetchLocation() {
         locationService
-            .locationObserver()
+            .onLocationChangeSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newCity in
-                guard let self = self else { return }
-                
+                guard let self else { return }
                 if !newCity.cityName.isEmpty {
                     self.onLocationSetSubject.send(newCity)
                 } else {

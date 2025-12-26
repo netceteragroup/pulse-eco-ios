@@ -10,7 +10,7 @@ import Factory
 
 extension Container {
     var locationService: Factory<any LocationService> {
-        Factory(self) { LocationServiceImpl() }
+        Factory(self) { LocationServiceImpl() }.singleton
     }
     
     var appDataManager: Factory<any AppDataManagerProtocol> {

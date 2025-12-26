@@ -10,11 +10,12 @@ import Foundation
 import Combine
 
 final class LocationServiceImpl: NSObject, LocationService {
+    let onLocationChangeSubject = PassthroughSubject<City, Never>()
     private let locationManager = CLLocationManager()
     private let logger = SystemLoggerAdapter(category: "LocationService")
 
     // MARK: - Observables
-    @Published private var location: City = .defaultCity()
+    @Published private var location: City?
     @Published private var authorizationStatus: AuthorizationStatus = .notDetermined
     
     private var isUpdatingLocation = false
@@ -34,11 +35,6 @@ final class LocationServiceImpl: NSObject, LocationService {
     var lastLocation: City? {
         guard authorizationStatus == .authorized else { return nil }
         return location
-    }
-
-    func locationObserver() -> AnyPublisher<City, Never> {
-        startLocationUpdatesIfNeeded()
-        return $location.eraseToAnyPublisher()
     }
     
     func authorizationStatusObserver() -> AnyPublisher<AuthorizationStatus, Never> {
@@ -100,12 +96,13 @@ extension LocationServiceImpl: CLLocationManagerDelegate {
         Task { @MainActor in
             if let newCity = await CityMapper.reverseGeocode(location: location.coordinate) {
                 // Check if city actually changed
-                let oldCityName = self.location.cityName.lowercased()
+                let oldCityName = self.location?.cityName.lowercased()
                 let newCityName = newCity.cityName.lowercased()
 
                 if oldCityName != newCityName {
                     logger.logDebug("New city detected: \(newCity.cityName)")
                     self.location = newCity
+                    onLocationChangeSubject.send(newCity)
                 } else {
                     // same city – no need to notify observers
                     logger.logDebug("Location updated within same city (\(newCityName)), skipping update.")
@@ -113,6 +110,7 @@ extension LocationServiceImpl: CLLocationManagerDelegate {
             } else {
                 logger.logError("Failed to reverse geocode location")
                 self.location = .defaultCity()
+                onLocationChangeSubject.send(.defaultCity())
             }
         }
     }

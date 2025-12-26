@@ -9,21 +9,20 @@ class AppData: ObservableObject {
     @Published var sensorPins: [SensorPinModel] = []
     @Published var loadingCityData: Bool = true
     @Published var loadingMeasures: Bool = true
+    @Published var isWaitingToFetchFavoriteCitiesOveralls: Bool = true
     @Published var selectedDateAverageValue: String?
     @Published var selectedDate: Date = calendar.startOfDay(for: Date.now)
     @Published var selectedHour: Int = calendar.component(.hour, from: Date.now)
-    @Published var hourlySensors: [Int: [SensorPinModel]] = [:]
-    @Published var isWaitingToFetchFavoriteCitiesOveralls: Bool = true
+    @Published var sensorsData24h: [SensorData] = []
+    @Published var weeklyData: [DayDataWrapper] = []
+    @Published var monthlyData: [DayDataWrapper] = []
+    @Published var monthlyAverage: [DayDataWrapper] = []
+    @Published var dailySensorData: [SensorData] = []
+    @Published var weeklyAverageForSensors: [SensorData] = []
     var cities: [City] = []
     var cityOverallValues: [CityOverallValues] = []
     var measures: [Measure] = []
     var citySensors: [Sensor] = []
     var cityOverall: CityOverallValues?
-    @Published var sensorsData24h: [SensorData] = []
-    @Published var weeklyData: [DayDataWrapper] = []
-    @Published var monthlyData: [DayDataWrapper] = []
-    @Published var monthlyAverage: [DayDataWrapper] = []
-    @Published var sensorDataForSelectedDate: [SensorData] = []
-    @Published var dailySensorData: [SensorData] = []
-    @Published var weeklyAverageForSensors: [SensorData] = []
+    var hourlySensors: [Int: [SensorPinModel]] = [:]
 }

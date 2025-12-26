@@ -50,7 +50,6 @@ class AppDataManager: AppDataManagerProtocol {
     
     func startInitialFetch() {
         scheduleFetchCitiesOnRepeat()
-        fetchData()
         getMeasures()
     }
         

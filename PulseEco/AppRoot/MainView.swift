@@ -54,12 +54,11 @@ struct MainView: View {
         .onReceive(viewModel.onLocationSetSubject, perform: { city in changeLocation(city: city) })
         .onAppear {
             appDataManager.startInitialFetch()
-            refreshService.refreshDataIfNeeded()
+            viewModel.start()
         }
     }
     
     private func changeLocation(city: City) {
-        guard UserSettings.selectedCity != city else { return }
         logger.logDebug("City updated: \(city.cityName)")
         UserSettings.selectedCity = city
         refreshService.updateRefreshDate()
