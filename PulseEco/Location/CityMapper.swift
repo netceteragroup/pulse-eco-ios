@@ -9,10 +9,11 @@ import Foundation
 import CoreLocation
 import MapKit
 import Combine
+import Factory
 
 class CityMapper {
     private static let logger = SystemLoggerAdapter(category: "CityMapper")
-    private static let networkService = NetworkService()
+    private static let networkService = Container.shared.networkService.resolve()
     
     // Reverse geocode a coordinate to City
     static func reverseGeocode(location: CLLocationCoordinate2D) async -> City? {
@@ -68,7 +69,7 @@ class CityMapper {
         
         return await withCheckedContinuation { continuation in
             search.start { response, error in
-                if let error {
+                if error != nil {
                     continuation.resume(returning: nil)
                     return
                 }

@@ -14,7 +14,6 @@ class LocationAnnotationView: MKAnnotationView {
     var pin: SensorPinModel?
     var markerView: MarkerView?
     var selectedSensor: SelectedSensorView?
-    @EnvironmentObject var appState: AppState
 
     // MARK: - Initialization
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {

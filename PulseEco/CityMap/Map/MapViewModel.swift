@@ -9,106 +9,30 @@ import Foundation
 import MapKit
 import Combine
 import SwiftUI
+import Factory
 
+@MainActor
 class MapViewModel: ObservableObject {
     
-    let appState: AppState
-    @ObservedObject var appDataSource: AppDataSource
-    
-    @Published private(set) var selectedCity: City = UserSettings.selectedCity
-    @Published private(set) var measure: Measure?
+    @Injected(\.appDataManager) private var appDataManager
+
     @Published private(set) var sensors: [SensorPinModel] = []
     var shouldUpdateSensors = false
     
     private(set) var span: MKCoordinateSpan!
     
-    init(appState: AppState, appDataSource: AppDataSource) {
-        self.appState = appState
-        self.appDataSource = appDataSource
-        self.span = span(for: selectedCity)
+    init() {
+        self.span = span(for: UserSettings.selectedCity)
         observeStateChanges()
-    }
-    
-    func getDailyAverageDataForSensor(_ sensorId: String) {
-        appDataSource.fetchDailyAverageDataForSensor(city: selectedCity,
-                                                     measure: measure,
-                                                     sensorId: sensorId)
     }
     
     private var cancellables = Set<AnyCancellable>()
     
     private func observeStateChanges() {
-        self.appState.$selectedCity.sink { [weak self] city in
-            self?.setCity(city)
+        self.appDataManager.onSensorPinsUpdated.sink { [weak self] sensorPins in
+            self?.sensors = sensorPins
+            self?.shouldUpdateSensors = true
         }.store(in: &cancellables)
-        
-        self.appState.$selectedMeasureId.sink { [weak self] selectedMeasure in
-            self?.findSelectedMeasure(selectedMeasure)
-        }.store(in: &cancellables)
-        
-        self.appDataSource.$measures.sink { [weak self] measures in
-            self?.findSelectedMeasure(self?.measure?.id, measures: measures)
-        }.store(in: &cancellables)
-        
-        self.appState.$loadingCityData.sink { [unowned self] isLoading in
-            guard !isLoading, let selectedMeasure = self.measure else { return }
-            
-            let sensors = combine(sensors: self.appDataSource.citySensors,
-                                  sensorsData: self.appDataSource.sensorsData,
-                                  selectedMeasure: selectedMeasure)
-            guard !areIdentical(self.sensors, sensors) else { return }
-            self.shouldUpdateSensors = true
-            self.sensors = sensors
-        }.store(in: &cancellables)
-        
-        self.appDataSource.$sensorsData.sink { [unowned self] data in
-            guard let selectedMeasure = self.measure else { return }
-            let sensors = combine(sensors: self.appDataSource.citySensors,
-                                  sensorsData: data,
-                                  selectedMeasure: selectedMeasure)
-            guard !areIdentical(self.sensors, sensors) else { return }
-            self.shouldUpdateSensors = true
-            self.sensors = sensors
-        }.store(in: &cancellables)
-        
-        self.appState.$sensorPins.sink { [unowned self] pins in
-            self.shouldUpdateSensors = true
-            self.sensors = pins
-        }.store(in: &cancellables)
-    }
-    
-    private func findSelectedMeasure(_ measure: String?, measures: [Measure]? = nil) {
-        guard let measureName = measure else { return }
-        let measures = measures ?? appDataSource.measures
-        
-        let selectedMeasure = measures.filter { $0.id.lowercased() == measureName.lowercased()}.first
-        
-        defer { self.measure = selectedMeasure }
-        
-        guard let measure = selectedMeasure else { return }
-        Task {
-            await appDataSource.fetchHistory(for: UserSettings.selectedCity.cityName, measureId: measure.id)
-        }
-        self.appState.selectedDateAverageValue =
-        self.appState.weeklyDataWrapper.getDataFromRange(cityName: appState.selectedCity.cityName,
-                                                         sensorType: measure.id,
-                                                         from: appState.selectedDate,
-                                                         to: calendar.date(byAdding: .day,
-                                                                           value: +1,
-                                                                           to: appState.selectedDate)!).first?.value
-    }
-    
-    private func setCity(_ city: City) {
-        guard city != self.selectedCity
-        else {
-            self.shouldUpdateSensors = true
-            return
-        }
-        defer {
-            self.selectedCity = city
-        }
-        self.span = span(for: city)
-        self.shouldUpdateSensors = true
     }
 
     private func span(for city: City) -> MKCoordinateSpan {
@@ -122,44 +46,4 @@ class MapViewModel: ObservableObject {
         let lonDelta = abs((longitudes.max() ?? 0) - (longitudes.min() ?? 0))
         return MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
     }
-
-    private func areIdentical(_ lhs: [SensorPinModel]?, _ rhs: [SensorPinModel]?) -> Bool {
-        guard let lhs = lhs, let rhs = rhs, lhs.count == rhs.count else { return false }
-        for (index, value) in lhs.enumerated() {
-            if !SensorPinModel.isIdentical(lhs: value, rhs: rhs[index]) { return false }
-        }
-        return true
-    }
-}
-
-private func pinColorForSensorValue(selectedMeasure: Measure, sensorValue: String) -> UIColor {
-    return AppColors.colorFrom(string: selectedMeasure.bands.first { band in
-        Int(sensorValue) ?? 0 >= band.from && Int(sensorValue) ?? 0 <= band.to
-    }?.legendColor ?? "gray")
-}
-
-func combine(sensors: [Sensor],
-             sensorsData: [SensorData],
-             selectedMeasure: Measure) -> [SensorPinModel] {
-    var commonSensors = [SensorPinModel]()
-    let sensorMeasurements = sensorsData.filter { sensor in
-        sensor.type.lowercased() == selectedMeasure.id.lowercased()
-    }
-    _ = sensors.compactMap { sensor in
-        sensorMeasurements.compactMap { sensorMeasurement in
-            if sensorMeasurement.sensorID == sensor.sensorID {
-                commonSensors.append(
-                    SensorPinModel(title: sensor.description,
-                                   sensorID: sensor.sensorID,
-                                   value: sensorMeasurement.value,
-                                   position: sensor.position,
-                                   type: sensor.type,
-                                   color: pinColorForSensorValue(selectedMeasure: selectedMeasure,
-                                                                 sensorValue: sensorMeasurement.value),
-                                   stamp: sensorMeasurement.stamp)
-                )
-            }
-        }
-    }
-    return commonSensors
 }

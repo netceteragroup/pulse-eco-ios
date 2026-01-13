@@ -11,7 +11,7 @@ import MapKit
 struct MapView: UIViewRepresentable {
     
     @ObservedObject var viewModel: MapViewModel
-    let appState: AppState
+    let appData: AppData
     @State var boundryAndZoomEnabled = true
     
     func makeCoordinator() -> MapViewCoordinator {
@@ -26,7 +26,7 @@ struct MapView: UIViewRepresentable {
         mapView.mapType = .standard
         addAnotations(to: mapView)
         
-        let city: City = viewModel.selectedCity
+        let city: City = UserSettings.selectedCity
         let zoomLevel = city.intialZoomLevel
         
         var initialRegion: MKCoordinateRegion
@@ -124,10 +124,9 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
         }
         annotationView.showCallout()
         DispatchQueue.main.async {
-            self.map.appState.selectedSensor = annotationView.pin
-            self.map.appState.selectedSensorsForGraph = []
+            self.map.appData.selectedSensor = annotationView.pin
+            self.map.appData.selectedSensorsForGraph = []
         }
-        map.viewModel.getDailyAverageDataForSensor(annotationView.pin?.sensorID ?? "")
         let region = MKCoordinateRegion(center: view.annotation!.coordinate, span: mapView.region.span)
         mapView.animatedSetRegion(region, duration: 0.2)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -141,7 +140,7 @@ class MapViewCoordinator: NSObject, MKMapViewDelegate {
             return
         }
         DispatchQueue.main.async {
-            self.map.appState.selectedSensor = nil
+            self.map.appData.selectedSensor = nil
         }
         annotationView.hideCallout()
     }

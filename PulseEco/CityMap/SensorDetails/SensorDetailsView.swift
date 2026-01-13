@@ -6,22 +6,22 @@
 //
 
 import SwiftUI
+import Factory
 
 struct SensorDetailsView: View {
     
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var dataSource: AppDataSource
+    @EnvironmentObject var appData: AppData
+    @Injected(\.appDataManager) private var appDataManager
     @ObservedObject var viewModel: SensorDetailsViewModel
     @Binding var sensorSelectionAlertDialogIsActive: Bool
     @Binding var contentSize: CGFloat
     @Binding var headerSize: CGFloat
     @State var isExpanded: Bool = false
     private var chartViewModel: ChartViewModel {
-        ChartViewModel(sensor: appState.selectedSensor ?? SensorPinModel(),
-                       sensors: appState.selectedSensorsForGraph,
-                       sensorsData: dataSource.sensorsData24h,
-                       selectedMeasure: dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId),
-                       sensorDataForSelectedDate: dataSource.sensorDataForSelectedDate)
+        ChartViewModel(sensor: appData.selectedSensor ?? SensorPinModel(),
+                       sensors: appData.selectedSensorsForGraph,
+                       sensorsData: appData.sensorsData24h,
+                       selectedMeasure: appDataManager.getCurrentMeasure(selectedMeasure: appData.selectedMeasureId))
     }
     
     var body: some View {
@@ -76,9 +76,8 @@ struct SensorDetailsView: View {
                         .padding(.vertical, 20)
                         .padding(.horizontal, 10)
                     
-                    WeeklyAverageView(viewModel: WeeklyAverageViewModel(appState: appState,
-                                                                        dataSource: dataSource,
-                                                                        averages: self.viewModel.dailyAverages))
+                    WeeklyAverageView(viewModel: WeeklyAverageViewModel(appData: appData,
+                                                                        averages: viewModel.pastWeekAverages))
                         .padding(.bottom, 20)
                     
                     Text(self.viewModel.disclaimerMessage)
@@ -111,7 +110,7 @@ struct SensorDetailsView: View {
                 VStack {
                     HStack(alignment: .top) {
                         VStack(alignment: .leading) {
-                            if appState.selectedSensorsForGraph.isEmpty {
+                            if appData.selectedSensorsForGraph.isEmpty {
                                 Text(Trema.text(for: "default_no_sensors_selected"))
                                     .foregroundStyle(.black)
                             } else {

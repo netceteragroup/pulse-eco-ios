@@ -1,8 +1,8 @@
 import Foundation
 import SwiftUI
 
-class FavouriteCityRowViewModel: ObservableObject, Identifiable, Equatable {
-    static func == (lhs: FavouriteCityRowViewModel, rhs: FavouriteCityRowViewModel) -> Bool {
+class FavoriteCityRowViewModel: ObservableObject, Identifiable, Equatable {
+    static func == (lhs: FavoriteCityRowViewModel, rhs: FavoriteCityRowViewModel) -> Bool {
         lhs.id == rhs.id
     }
     

@@ -1,37 +1,22 @@
 //
-//  CityDataWrapperModel.swift
+//  DataFromRangeMapper.swift
 //  PulseEco
 //
-//  Created by Sara Karachanakova on 10.5.22.
+//  Created by Ljuben Angelkoski on 16.12.25.
 //
 
 import Foundation
 
-class CityDataWrapper: ObservableObject {
-    
-    private(set) var sensorData: [SensorData]?
-    private(set) var currentValue: CityOverallValues?
-    private(set) var measures: [Measure]?
-    
-    init (sensorData: [SensorData]?,
-          currentValue: CityOverallValues?,
-          measures: [Measure]?) {
-        self.sensorData = sensorData
-        self.currentValue = currentValue
-        self.measures = measures
-    }
-    
-    func updateSensorData(_ sensorData: [SensorData]) {
-        self.sensorData = sensorData
-    }
-    
-    func getDataFromRange(cityName: String,
-                          sensorType: String,
-                          from: Date,
-                          to: Date) -> [DayDataWrapper] {
-        let measure = measures?.first { $0.id == sensorType }
+final class DataFromRangeMapper {
+    static func getDataFromRange(sensorType: String,
+                                 sensorData: [SensorData],
+                                 measures: [Measure],
+                                 cityOverall: CityOverallValues?,
+                                 from: Date,
+                                 to: Date) -> [DayDataWrapper] {
+        let measure = measures.first { $0.id == sensorType }
         
-        guard let measure = measure, let sensorData = sensorData else {
+        guard let measure = measure else {
             return []
         }
         
@@ -51,7 +36,7 @@ class CityDataWrapper: ObservableObject {
             return DayDataWrapper(date: date, value: $0.value, color: color)
         }
         if Date.now >= from && Date.now <= to,
-           let today = currentValue?.values[sensorType],
+           let today = cityOverall?.values[sensorType],
            let color = measure.bands.color(for: Int(today)) {
             history.append(DayDataWrapper(date: Date.now, value: today, color: color))
         }

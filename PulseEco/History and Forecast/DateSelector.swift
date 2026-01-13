@@ -8,32 +8,28 @@
 import Foundation
 import SwiftUI
 import Combine
+import Factory
 
 struct DateSelector: View {
-    @StateObject private var viewModel = DateSelectorViewModel()
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var appDataSource: AppDataSource
+    @EnvironmentObject var appData: AppData
+    @State var selectedDate: Date
+
+    @Injected(\.appDataManager) private var appDataManager
     
+    @State private var isDatePickerPressed: Bool = false
+
     var body: some View {
         VStack {
-            DateSlider(unimplementedAlert: $appState.showingCalendar,
-                       unimplementedPicker: $viewModel.isDatePickerPressed,
-                       selectedDate: $appState.selectedDate)
-            if viewModel.isDatePickerPressed {
-                CalendarView(showingCalendar: $viewModel.isDatePickerPressed,
-                             selectedDate: $appState.selectedDate,
-                             calendarSelection: $appState.calendarSelection,
-                             onDaySelected: { newDate in viewModel.selectedDate = newDate },
-                             viewModelClosure: CalendarViewModel(appState: self.appState,
-                                                                 appDataSource: self.appDataSource))
+            DateSlider(unimplementedPicker: $isDatePickerPressed,
+                       selectedDate: $selectedDate)
+            if isDatePickerPressed {
+                CalendarView(showingCalendar: $isDatePickerPressed,
+                             selectedDate: $selectedDate,
+                             viewModelClosure: CalendarViewModel(appData: self.appData))
                 .padding(.horizontal)
                 .padding(.vertical, 8)
-                .onChange(of: appState.selectedMeasureId) { _, newValue in
-                    viewModel.isDatePickerPressed = false
-                    viewModel.onSelectedMeasureChange?.cancel()
-                    viewModel.onSelectedMeasureChange = Task {
-                        await appDataSource.fetchMonthlyDayData(selectedMonth: calendar.component(.month, from: viewModel.selectedDate), selectedYear: calendar.component(.year, from: viewModel.selectedDate))
-                    }
+                .onChange(of: appData.selectedMeasureId) { _, _ in
+                    isDatePickerPressed = false
                 }
             }
         }
@@ -42,7 +38,7 @@ struct DateSelector: View {
 
 #Preview {
     VStack {
-        DateSelector()
+        DateSelector(selectedDate: AppData().selectedDate)
             .padding(.horizontal)
             .padding(.vertical, 8)
         

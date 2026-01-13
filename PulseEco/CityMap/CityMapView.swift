@@ -14,16 +14,23 @@ struct CityMapView: View {
         static let disclaimerIconSize: CGSize = CGSize(width: 220, height: 25)
     }
     
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var dataSource: AppDataSource
-    @EnvironmentObject var refreshService: RefreshService
+    @EnvironmentObject var appData: AppData
     
-    let mapViewModel: MapViewModel
+    @Binding private var bottomSheetHeaderSize: CGFloat
+    @State private var isTimelineSliderActive: Bool = false
+    
+    init(bottomSheetHeaderSize: Binding<CGFloat>,
+         viewModel: CityMapViewModel) {
+        self._bottomSheetHeaderSize = bottomSheetHeaderSize
+        self.viewModel = viewModel
+    }
+    
+    let viewModel: CityMapViewModel
     
     var body: some View {
         
         ZStack {
-            MapView(viewModel: mapViewModel, appState: appState)
+            MapView(viewModel: viewModel.mapViewModel, appData: appData)
                 .id("MapView")
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
@@ -34,64 +41,51 @@ struct CityMapView: View {
                 Spacer()
                 
                 HStack {
-                    if appState.isTimelineSliderActive {
-                        createTimelineSliderView(appState: appState)
+                    if isTimelineSliderActive {
+                        timelineSliderView
                     } else {
-                        createFloatingButtonView(appState: appState)
+                        floatingButtonView
                     }
                 }
-                .padding(.bottom, appState.bottomSheetHeaderSize + getSafeAreaBottom() + 8)
+                .padding(.bottom, bottomSheetHeaderSize + getSafeAreaBottom() + 8)
                 
             }
             
-            AverageView(viewModel: AverageUtilModel(measureId: self.appState.selectedMeasureId,
-                                                    cityName: self.appState.selectedCity.cityName,
-                                                    measuresList: self.dataSource.measures,
-                                                    cityValues: self.dataSource.cityOverall,
-                                                    currentValue: self.appState.selectedDateAverageValue))
+            AverageView(viewModel: AverageUtilModel(measureId: self.appData.selectedMeasureId,
+                                                    cityName: UserSettings.selectedCity.cityName,
+                                                    measuresList: self.appData.measures,
+                                                    cityValues: self.appData.cityOverall,
+                                                    currentValue: self.appData.selectedDateAverageValue))
         }
     }
-}
-
-@ViewBuilder
-private func createTimelineSliderView(appState: AppState) -> some View {
-    HStack {
-        Spacer()
-        
-        TimelineSliderView(viewModel: TimelineSliderViewModel(onSliderValueChanged: { sliderValue in
-            guard let sensorPinsForSelectedHour = appState.hourlySensors[Int(sliderValue)] else {
-                appState.sensorPins = [SensorPinModel()]
-                return
-            }
+    
+    private var timelineSliderView: some View {
+        HStack {
+            Spacer()
+            TimelineSliderView(viewModel: TimelineSliderViewModel(appData: appData),
+                               isTimelineSliderActive: $isTimelineSliderActive)
+            .lineLimit(1)
+            .minimumScaleFactor(0.5)
+            .environmentObject(appData)
             
-            if sensorPinsForSelectedHour.isEmpty || sensorPinsForSelectedHour == appState.sensorPins {
-                return
-            }
-            
-            appState.sensorPins = sensorPinsForSelectedHour
-        }))
-        .lineLimit(1)
-        .minimumScaleFactor(0.5)
-        .environmentObject(appState)
-        
-        Spacer()
-    }
-    .frame(maxWidth: .infinity, alignment: .center)
-    .padding(.horizontal)
-}
-
-@ViewBuilder
-private func createFloatingButtonView(appState: AppState) -> some View {
-    HStack {
-        FloatingButton(image: "access-time") {
-            appState.isTimelineSliderActive = true
+            Spacer()
         }
-        .cornerRadius(15)
-        .shadow(radius: 5)
-        .padding(.leading, 15)
-        .padding(.trailing, 15)
-        
-        Spacer()
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.horizontal)
+    }
+    
+    private var floatingButtonView: some View {
+        HStack {
+            FloatingButton(text: viewModel.formatTime(for: appData.selectedHour)) {
+                isTimelineSliderActive = true
+            }
+            .cornerRadius(15)
+            .shadow(radius: 5)
+            .padding(.leading, 15)
+            .padding(.trailing, 15)
+            
+            Spacer()
+        }
     }
 }
 
@@ -104,21 +98,10 @@ func getSafeAreaBottom() -> CGFloat {
     return 0
 }
 
-
-enum ActiveSheet: Int, Identifiable {
-    var id: Int { self.rawValue }
-    
-    case disclaimerView
-}
-
 #Preview {
     VStack {
-        CityMapView(mapViewModel: MapViewModel(
-                        appState: AppState(),
-                        appDataSource: AppDataSource(appState: AppState())
-                    )
+        CityMapView(bottomSheetHeaderSize: .constant(.zero),
+                    viewModel: CityMapViewModel()
         )
-        .environmentObject(AppState())
-        .environmentObject(AppDataSource(appState: AppState()))
     }
 }

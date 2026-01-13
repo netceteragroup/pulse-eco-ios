@@ -7,76 +7,35 @@
 
 import Combine
 import Foundation
+import Factory
 
 @MainActor
-class CalendarViewModel: ViewModelProtocol {
-    @Published var monthlyData: [DayDataWrapper] = []
+class CalendarViewModel: ObservableObject {
     @Published var currentDate: Date
     @Published var currentMonthOffset: Int
     @Published var selectedYear: Int
     @Published var selectedMonth: Int
-    @Published var dateValues: [DateValueModel] = []
     @Published var monthValues: [DayDataWrapper] = []
 
-    private let appState: AppState
-    let appDataSource: AppDataSource
-    private var cancelables = Set<AnyCancellable>()
+    private let appData: AppData
+    @Injected(\.appDataManager) private var appDataManager
+    private var selectedDate = Date.now
 
-    init(appState: AppState, appDataSource: AppDataSource) {
-        self.appState = appState
-        self.appDataSource = appDataSource
-        currentDate = appState.selectedDate
-        selectedYear = calendar.component(.year, from: appState.selectedDate)
-        selectedMonth = calendar.component(.month, from: appState.selectedDate)
-        currentMonthOffset = calendar.component(.month, from: appState.selectedDate) - calendar.component(.month, from: Date())
-
-        self.appDataSource.$monthlyData.sink { [weak self] in
-            guard let self else { return }
-            self.monthlyData = self.getMonthlyValuesForPresentation(monthlyData: $0)
-            self.colorDays()
-        }
-        .store(in: &cancelables)
-    }
-
-    func getCurrentMonth() -> Date {
-        let yearOffset = selectedYear - calendar.component(.year, from: Date())
-
-        guard let newDate = calendar.date(byAdding: .year,
-                                          value: yearOffset,
-                                          to: Date())
-        else {
-            return Date()
-        }
-
-        guard let currentMonth = calendar.date(byAdding: .month,
-                                               value: currentMonthOffset,
-                                               to: newDate)
-        else {
-            return Date()
-        }
-
-        return currentMonth
+    init(appData: AppData) {
+        self.appData = appData
+        currentDate = appData.selectedDate
+        selectedYear = calendar.component(.year, from: appData.selectedDate)
+        selectedMonth = calendar.component(.month, from: appData.selectedDate)
+        currentMonthOffset = calendar.component(.month, from: appData.selectedDate) - calendar.component(.month, from: Date())
     }
     
-    @Sendable
-    func setupDates() async {
-        let monthlyDataMonth = monthlyData.map { calendar.component(.month, from: $0.date) }.mostFrequentValue
-        let currentMonth = calendar.component(.month, from: currentDate)
-        dateValues = extractDate()
-        if currentMonth != monthlyDataMonth {
-            let currentYear = calendar.component(.year, from: currentDate)
-            await appDataSource.fetchMonthlyDayData(selectedMonth: currentMonth, selectedYear: currentYear)
-        }
-    }
-
-    func extractDate() -> [DateValueModel] {
+    var dateValues: [DateValueModel] {
         let currentMonth = getCurrentMonth()
-
         var days = currentMonth.getDaysOfMonth().compactMap { date -> DateValueModel in
             var color = "gray"
             let day = calendar.component(.day, from: date)
-            for element in monthlyData where isSameDay(date1: element.date, date2: date) {
-                color = element.color
+            if let matchingMonthlyData = appData.monthlyData.first(where: { $0.date.isSameDay(with: date) }) {
+                color = matchingMonthlyData.color
             }
             return DateValueModel(day: day,
                                   date: date,
@@ -92,66 +51,11 @@ class CalendarViewModel: ViewModelProtocol {
         return days
     }
 
-    func colorDays() {
-        dateValues = dateValues.map { dateValue in
-            var color = "gray"
-            for element in monthlyData where isSameDay(date1: element.date, date2: dateValue.date) {
-                color = element.color
-            }
-            return DateValueModel(day: dateValue.day, date: dateValue.date, color: color)
-        }
-    }
+    func getCurrentMonth() -> Date {
+        guard let newDate = calendar.date(byAdding: .year, value: selectedYear - calendar.component(.year, from: Date()), to: Date()),
+              let currentMonth = calendar.date(byAdding: .month, value: currentMonthOffset, to: newDate) else { return Date() }
 
-    func getMonthlyValuesForPresentation(monthlyData: [DayDataWrapper]) -> [DayDataWrapper] {
-        let daysOfMonthCount = getCurrentMonth().getDaysOfMonth().count
-
-        let firstWeekDay: Int = {
-            let first = calendar.component(.weekday, from: monthlyData.first?.date ?? Date()) - 1
-            return first > 0 ? first : 7
-        }()
-
-        var presentableValues: [DayDataWrapper] = []
-        var monthlyDataCopy = monthlyData
-        let dayNow = calendar.component(.day, from: .now)
-        for i in 1 ..< daysOfMonthCount + 1 {
-            guard let data = monthlyDataCopy.first,
-                  let date = monthlyDataCopy.first?.date
-            else {
-                if i == dayNow {
-                    let today = appDataSource.fetchTodayValue(cityName: appState.selectedCity.cityName,
-                                                              sensorType: appState.selectedMeasureId)
-
-                    if let todayData = today {
-                        presentableValues.append(DayDataWrapper(date: todayData.date, value: todayData.value, color: todayData.color))
-                        continue
-                    } else {
-                        presentableValues.append(DayDataWrapper(date: calendar.date(bySetting: .day, value: i, of: currentDate)!, value: "", color: "gray"))
-                        continue
-                    }
-                }
-
-                presentableValues.append(DayDataWrapper(date: calendar.date(bySetting: .day, value: i, of: currentDate)!, value: "", color: "gray"))
-                continue
-            }
-            let day = calendar.component(.day, from: date)
-            if i == day {
-                presentableValues.append(DayDataWrapper(date: date, value: data.value, color: data.color))
-                monthlyDataCopy.removeFirst()
-            } else {
-                presentableValues.append(DayDataWrapper(date: calendar.date(bySetting: .day, value: i, of: currentDate)!, value: "", color: "gray"))
-            }
-        }
-
-        for _ in 1 ..< firstWeekDay {
-            presentableValues.insert(DayDataWrapper(date: .distantPast, value: "-1", color: "gray"), at: 0)
-        }
-
-        return presentableValues
-    }
-
-    func isSameDay(date1: Date, date2: Date) -> Bool {
-        let diff = calendar.dateComponents([.day], from: date1, to: date2)
-        return diff.day == 0
+        return currentMonth
     }
 
     var daysOfWeekShort: [String] = [
@@ -193,16 +97,16 @@ class CalendarViewModel: ViewModelProtocol {
         currentMonthOffset = selectedMonth - calendar.component(.month, from: Date())
         if yearChange {
             Task {
-                await appDataSource.updateMonthlyColors(selectedYear: selectedYear)
+                await appDataManager.updateMonthlyColors(selectedYear: selectedYear)
                 colorMonths()
             }
         }
         Task {
-            await appDataSource.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+            await appDataManager.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
         }
     }
 
-    func nextMonth() async {
+    func nextMonth() {
         let yearChange = selectedMonth >= 11
         if yearChange {
             selectedMonth -= 11
@@ -214,29 +118,34 @@ class CalendarViewModel: ViewModelProtocol {
         currentMonthOffset = selectedMonth - calendar.component(.month, from: Date())
         if yearChange {
             Task {
-                await appDataSource.updateMonthlyColors(selectedYear: selectedYear)
+                await appDataManager.updateMonthlyColors(selectedYear: selectedYear)
                 colorMonths()
             }
         }
         Task {
-            await appDataSource.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+            await appDataManager.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
         }
     }
 
-    func selectNewMonth(month: String) async {
+    func selectNewMonth(month: String) {
         selectedMonth = calendar.shortMonthSymbols.firstIndex(of: month) ?? selectedMonth
         currentMonthOffset = selectedMonth - calendar.component(.month, from: Date())
-        await nextMonth()
+        nextMonth()
+    }
+    
+    func dateSelected(date: Date) {
+        selectedDate = date
+        appDataManager.selectFromCalendar(selectedDate: date)
+    }
+    
+    func onCancelTap() async {
+        selectedMonth = appData.selectedDate.getMonth ?? 0
+        selectedYear = appData.selectedDate.getYear ?? 0
+        await appDataManager.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
     }
 
     func colorMonths() {
-        let currentYear = selectedYear
-        let from = Date.from(1, 1, currentYear)!
-        let to = Date.from(31, 12, currentYear)!
-
-        monthValues = appDataSource.monthlyAverage.getDataFromRange(cityName: appState.selectedCity.cityName,
-                                                                    sensorType: appState.selectedMeasureId,
-                                                                    from: from, to: to)
+        monthValues = appData.monthlyAverage
         let allMonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         var containing = [Int]()
         for val in monthValues {
@@ -244,11 +153,11 @@ class CalendarViewModel: ViewModelProtocol {
         }
         let missingMonths = allMonths.difference(from: containing)
         for month in missingMonths {
-            monthValues.append(DayDataWrapper(date: Date.from(1, month, currentYear)!, value: "", color: "darkblue"))
+            monthValues.append(DayDataWrapper(date: Date.from(1, month, selectedYear)!, value: "", color: "darkblue"))
         }
         monthValues = monthValues.sorted(by: { $0.month < $1.month })
         Task {
-            await appDataSource.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
+            await appDataManager.fetchMonthlyDayData(selectedMonth: selectedMonth, selectedYear: selectedYear)
         }
     }
 

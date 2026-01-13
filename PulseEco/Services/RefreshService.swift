@@ -7,40 +7,47 @@
 
 import Foundation
 import SwiftUI
+import Factory
 
-class RefreshService: ObservableObject {
+protocol RefreshServiceProtocol {
+    func refreshDataIfNeeded()
+    func updateRefreshDate()
+    func refreshData()
+}
+
+class RefreshService: RefreshServiceProtocol {
     
-    let appViewModel: AppState
-    let appDataSource: AppDataSource
+    let appData: AppData
+    @Injected(\.appDataManager) private var appDataManager
     private var refreshDate: Date = Date()
     
-    init(appViewModel: AppState, appDataSource: AppDataSource) {
-        self.appViewModel = appViewModel
-        self.appDataSource = appDataSource
+    init(appData: AppData) {
+        self.appData = appData
     }
     
     func refreshDataIfNeeded() {
         if let diff = calendar.dateComponents([.minute], from: refreshDate, to: Date()).minute, diff >= 15 {
-            self.appViewModel.selectedSensor = nil
+            self.appData.selectedSensor = nil
             self.refreshData()
         }
     }
 
     func updateRefreshDate() {
         refreshDate = Date()
-        appViewModel.selectedDate = calendar.startOfDay(for: Date.now)
-        appViewModel.showingCalendar = false
-        appViewModel.selectedMeasureId = "pm10"
+        appData.selectedDate = calendar.startOfDay(for: Date.now)
+        appData.selectedMeasureId = "pm10"
+        appData.selectedHour = calendar.component(.hour, from: Date.now)
+        appData.selectedSensorsForGraph.removeAll()
+        appData.selectedSensor = nil
     }
     
     func refreshData() {
         updateRefreshDate()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.appViewModel.selectedSensor = nil
-            self.appViewModel.loadingMeasures = true
-            self.appDataSource.getMeasures()
-            self.appDataSource.getValuesForCity(cityName: self.appViewModel.selectedCity.cityName)
+            self.appData.selectedSensor = nil
+            self.appData.loadingMeasures = true
+            self.appDataManager.getMeasures()
+            self.appDataManager.fetchData()
         }
     }
-    
 }

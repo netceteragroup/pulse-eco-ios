@@ -32,6 +32,18 @@ extension DateFormatter {
 }
 
 extension Date {
+    var getDay: Int? {
+        calendar.component(.day, from: self)
+    }
+    
+    var getMonth: Int? {
+        calendar.component(.month, from: self)
+    }
+    
+    var getYear: Int? {
+        calendar.component(.year, from: self)
+    }
+    
     static func from(_ day: Int, _ month: Int, _ year: Int) -> Date? {
         let calendar = Calendar(identifier: .iso8601)
         var dateComponents = DateComponents()
@@ -50,9 +62,13 @@ extension Date {
         let components2 = calendar.dateComponents([.day, .month, .year], from: date)
         return components1 == components2
     }
-}
-
-extension Date {
+    
+    func isSameMonth(with date: Date) -> Bool {
+        let components1 = calendar.dateComponents([.month, .year], from: self)
+        let components2 = calendar.dateComponents([.month, .year], from: date)
+        return components1 == components2
+    }
+    
     func getDaysOfMonth() -> [Date] {
         
         let calendar = calendar

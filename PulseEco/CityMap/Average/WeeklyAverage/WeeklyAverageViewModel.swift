@@ -7,27 +7,29 @@
 
 import Foundation
 import SwiftUI
+import Factory
 
+@MainActor
 class WeeklyAverageViewModel: ObservableObject {
-    @EnvironmentObject var dataSource: AppDataSource
-    @EnvironmentObject var appState: AppState
+    @Injected(\.appDataManager) private var appDataManager
+    let appData: AppData
     var title: String = ""
     var dailyAverageViewModels: [DailyAverageViewModel] = []
     
-    init(appState: AppState, dataSource: AppDataSource, averages: [SensorData]) {
+    init(appData: AppData, averages: [SensorData]) {
+        self.appData = appData
         let pastWeekLocalized = Trema.text(for: "past_week")
-        let suffix = "(\(dataSource.getCurrentMeasure(selectedMeasure: appState.selectedMeasureId).unit))"
+        let suffix = "(\(appDataManager.getCurrentMeasure(selectedMeasure: appData.selectedMeasureId).unit))"
         title = pastWeekLocalized + suffix
-        dailyAverageViewModels = transformInfoSensorToViewModel(appState: appState,
-                                                                dataSource: dataSource,
+        dailyAverageViewModels = transformInfoSensorToViewModel(appData: appData,
                                                                 averages: averages)
     }
     
-    func transformInfoSensorToViewModel(appState: AppState, dataSource: AppDataSource,
+    func transformInfoSensorToViewModel(appData: AppData,
                                         averages: [SensorData]) -> [DailyAverageViewModel] {
         let dailyAverageSensorValues = dailyAverages(averages: averages)
         return dailyAverageSensorValues.compactMap {
-            DailyAverageViewModel(sensor: $0, appState: appState, dataSource: dataSource)}
+            DailyAverageViewModel(sensor: $0, appData: appData)}
     }
     
     func dailyAverages(averages: [SensorData]) -> [DailyInfoSensor] {
@@ -35,7 +37,7 @@ class WeeklyAverageViewModel: ObservableObject {
      
         let week = (-7...(-1)).compactMap {
             DateFormatter.iso8601Full
-                .string(from: calendar.date(byAdding: .day, value: $0, to: Date()) ?? Date())
+                .string(from: calendar.date(byAdding: .day, value: $0, to: appData.selectedDate) ?? Date())
         }
         
         for date in week {

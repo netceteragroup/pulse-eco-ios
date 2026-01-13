@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
+import Factory
 
 struct DateSlider: View {
     
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var dataSource: AppDataSource
-    
-    @Binding var unimplementedAlert: Bool
+    @EnvironmentObject var appData: AppData
+    @Injected(\.appDataManager) private var appDataManager
+
     @Binding var unimplementedPicker: Bool
     @Binding var selectedDate: Date
     
@@ -21,7 +21,6 @@ struct DateSlider: View {
             ScrollViewReader { proxy in
                 HStack {
                     Button {
-                        unimplementedAlert.toggle()
                         unimplementedPicker.toggle()
                         
                     } label: {
@@ -41,17 +40,14 @@ struct DateSlider: View {
                         .padding(.leading, 10)
                     }
                     LazyHStack {
-                        ForEach(dataSource.weeklyData, id: \.dateId) { item in
+                        ForEach(appData.weeklyData, id: \.dateId) { item in
                             WeekDayButton(date: item.date,
                                           value: item.value,
                                           color: item.color,
                                           highlighted: selectedDate.isSameDay(with: item.date)) {
                                 selectedDate = calendar.startOfDay(for: item.date)
-                                Task {
-                                    do {
-                                        await dataSource.updatePins(selectedDate: selectedDate)
-                                    }
-                                }
+                                unimplementedPicker = false
+                                appDataManager.selectFromDateSlider(selectedDate: selectedDate)
                             }
                         }
                         .onAppear {

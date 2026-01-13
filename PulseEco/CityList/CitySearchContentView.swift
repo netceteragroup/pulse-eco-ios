@@ -9,110 +9,56 @@ import SwiftUI
 import Factory
 
 struct CitySearchContentView: View {
-    @Environment(\.isSearching) private var isSearching
-    @EnvironmentObject var dataSource: AppDataSource
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var refreshService: RefreshService
-    @ObservedObject var viewModel: CitySearchContentViewModel
+    @EnvironmentObject var appData: AppData
     
-    @Injected(\.locationService) private var locationService
-    
-    var searchText: String
+    @Binding var citySelectorClicked: Bool
+    @Binding var addNewCityClicked: Bool
+    @State private var searchText: String = ""
     
     var body: some View {
-        if isSearching || (viewModel.cities.isEmpty && locationService.currentAuthorizationStatus() != .authorized) {
-            CityListView(
-                viewModel: CityListViewModel(cities: self.dataSource.cities),
-                searchText: searchText
-            )
-            .padding(.vertical, 1)
-        } else {
-            favoriteCitiesList()
-        }
-    }
-    
-    var allFavoritesAndLocation: [FavouriteCityRowViewModel] {
-        var tmpAllCities: [FavouriteCityRowViewModel] = []
-        if let currentCity = locationService.lastLocation {
-            let favouriteCityRowViewModel = viewModel.createFavouriteCityRowViewModelFromCityAndCityValues(
-                city: currentCity,
-                cityValues: UserSettings.cityValues,
-                selectedMeasure: appState.selectedMeasureId,
-                measureList: dataSource.measures,
-                isCurrentCity: true
-            )
-            tmpAllCities.append(favouriteCityRowViewModel)
-        }
-        tmpAllCities.append(contentsOf: viewModel.getCities())
-        return tmpAllCities
-    }
-    
-    @ViewBuilder
-    private func favoriteCitiesList() -> some View {
-        List {
-            if let first = allFavoritesAndLocation.first {
-                ForEach([first], id: \.id) {
-                    cityRow(favouriteCity: $0, from: [first])
-                }
-                Section(header: EmptyView()) {
-                    ForEach(Array(allFavoritesAndLocation.dropFirst()), id: \.id) { city in
-                        cityRow(favouriteCity: city, from: Array(allFavoritesAndLocation.dropFirst()))
-                    }
-                    .onDelete(perform: self.delete)
-                }
-                .listRowInsets(EdgeInsets())
-            }
-        }
-        .padding(.vertical, 1)
-    }
-    
-    @ViewBuilder
-    private func cityRow(favouriteCity: FavouriteCityRowViewModel,
-                         from array: [FavouriteCityRowViewModel]) -> some View {
         VStack(spacing: 0) {
-            Button(action: {
-                self.appState.citySelectorClicked = false
-                if self.appState.selectedCity != favouriteCity.city {
-                    if locationService.lastLocation?.cityName == favouriteCity.city.cityName {
-                        appState.currentLocationIsSelected = true
-                    } else {
-                        UserSettings.addFavoriteCity(favouriteCity.city)
-                        appState.currentLocationIsSelected = false
-                    }
-                    self.appState.selectedCity = favouriteCity.city
-                    self.refreshService.updateRefreshDate()
-                    self.dataSource.getValuesForCity(cityName: favouriteCity.cityName)
-                }
-            }, label: {
-                FavouriteCityRowView(viewModel: favouriteCity)
-                    .contentShape(Rectangle())
-            }).padding()
-            
-            if favouriteCity != array.last {
-                Divider()
-            }
+            searchTextField
+            contentView
         }
-        .listRowInsets(EdgeInsets())
     }
     
-    private func delete(at offsets: IndexSet) {
-        offsets.forEach {
-            let delRow = allFavoritesAndLocation[$0 + 1]
-            if let city = UserSettings.favouriteCities.first(where: { $0.cityName == delRow.cityName }) {
-                UserSettings.removeFavouriteCity(city)
+    private var contentView: some View {
+        CityListView(viewModel: CityListViewModel(cities: appData.cities),
+                     searchText: searchText,
+                     citySelectorClicked: $citySelectorClicked)
+    }
+    
+    private var searchTextField: some View {
+        HStack {
+            ZStack {
+                Capsule()
+                    .fill(AppColors.gray2.color)
+                    .frame(height: 48)
+                if searchText.isEmpty {
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                        Text(Trema.text(for: "search_city_or_country"))
+                        Spacer()
+                    }
+                    .foregroundStyle(AppColors.black.color)
+                    .padding(.leading, 16)
+                }
+                TextField("", text: $searchText)
+                    .frame(maxWidth: .infinity)
+                    .padding(.leading, 16)
+            }
+            if !searchText.isEmpty {
+                Image(systemName: "xmark")
+                    .onTapGesture {
+                        addNewCityClicked = false
+                    }
             }
         }
+        .padding(16)
     }
 }
 
 #Preview {
-    CitySearchContentView(
-        viewModel: CitySearchContentViewModel(
-            selectedMeasure: "",
-            favouriteCities: [],
-            cityValues: [],
-            measureList: []
-        ),
-        searchText: ""
-    )
+    CitySearchContentView(citySelectorClicked: .constant(false),
+                          addNewCityClicked: .constant(false))
 }

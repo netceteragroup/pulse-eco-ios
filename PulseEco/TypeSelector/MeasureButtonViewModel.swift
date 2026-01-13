@@ -1,8 +1,10 @@
 import Foundation
 import SwiftUI
+import Factory
 
 @MainActor
 class MeasureButtonViewModel: ObservableObject {
+    @Injected(\.appDataManager) private var appDataManager
     var id: String
     var title: String
     var selectedMeasure: String
@@ -20,14 +22,7 @@ class MeasureButtonViewModel: ObservableObject {
         self.icon = icon
     }
     
-    func measurePressed(appState: AppState, appDataSource: AppDataSource) async {
-        await appDataSource.updateWeeklyDataWrapper(cityName: appState.selectedCity.cityName, measureId: id, selectedDate: appState.calendarSelection)
-        setAsSelectedMeasure(appState: appState)
-        await appDataSource.updatePins(selectedDate: appState.selectedDate)
-        await appDataSource.setAverageValueForSelectedDate(cityName: appState.selectedCity.cityName, sensorType: id, selectedDate: appState.selectedDate)
-    }
-    
-    private func setAsSelectedMeasure(appState: AppState) {
-        appState.selectedMeasureId = id
+    func measurePressed() {
+        appDataManager.selectFromSensorType(selectedMeasureId: id)
     }
 }

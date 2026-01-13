@@ -8,7 +8,9 @@
 import Foundation
 
 struct DailyInfoSensor: Identifiable {
-    var id = UUID()
+    var id: String {
+        dayOfWeek
+    }
     var dayOfWeek: String
     var value: String
 }

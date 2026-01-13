@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SensorSelectionView: View {
     @ObservedObject var viewModel: SensorSelectionViewModel
-    @EnvironmentObject var dataSource: AppDataSource
-    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var appData: AppData
     @Binding var sensorSelectionAlertDialogIsActive: Bool
+    @Binding var showSensorDetails: Bool
     
     var body: some View {
         if sensorSelectionAlertDialogIsActive {
@@ -29,7 +29,7 @@ struct SensorSelectionView: View {
                     
                     ScrollView {
                         VStack(spacing: 32) {
-                            ForEach(viewModel.sensors, id: \.self) { sensor in
+                            ForEach(viewModel.filteredSensors, id: \.self) { sensor in
                                 button(for: sensor)
                                     .buttonStyle(PlainButtonStyle())
                             }
@@ -43,7 +43,7 @@ struct SensorSelectionView: View {
                         
                         Button(Trema.text(for: "cancel")) {
                             viewModel.cancel(sensorSelectionAlertDialogIsActive: &sensorSelectionAlertDialogIsActive)
-                            appState.showSensorDetails = true
+                            showSensorDetails = true
                         }
                         .font(.headline)
                         .foregroundStyle(Color(AppColors.gray))
@@ -51,7 +51,7 @@ struct SensorSelectionView: View {
                         
                         Button(Trema.text(for: "ok")) {
                             viewModel.addToSelectedSensors(sensorSelectionAlertDialogIsActive: &sensorSelectionAlertDialogIsActive)
-                            appState.showSensorDetails = true
+                            showSensorDetails = true
                         }
                         .font(.headline)
                         .foregroundStyle(Color(AppColors.firstButtonColor))
@@ -66,7 +66,7 @@ struct SensorSelectionView: View {
                 .padding(.horizontal)
             }
             .onAppear() {
-                appState.showSensorDetails = false
+                showSensorDetails = false
             }
         }
     }

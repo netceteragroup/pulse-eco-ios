@@ -8,7 +8,9 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 class SensorDetailsViewModel: ObservableObject {
+    let appData: AppData
     var sensorID: String
     var sensorType: SensorType
     var title: String
@@ -20,12 +22,12 @@ class SensorDetailsViewModel: ObservableObject {
     var disclaimerMessage = Trema.text(for: "disclaimer_short_message")
     var color = Color(AppColors.darkblue)
     @Published var sensorData24h: [SensorData]
-    @Published var dailyAverages: [SensorData]
 
-    init(sensor: SensorPinModel,
+    init(appData: AppData,
+         sensor: SensorPinModel,
          selectedMeasure: Measure,
-         sensorData24h: [SensorData],
-         dailyAverages: [SensorData]) {
+         sensorData24h: [SensorData]) {
+        self.appData = appData
         self.sensorID = sensor.sensorID
         self.sensorType = sensor.type
         self.title = sensor.title ?? "Sensor"
@@ -36,6 +38,9 @@ class SensorDetailsViewModel: ObservableObject {
         self.time = DateFormatter.getTime.string(from: date)
         self.image = sensorType.imageForType ?? UIImage()
         self.sensorData24h = sensorData24h
-        self.dailyAverages = dailyAverages
+    }
+    
+    var pastWeekAverages: [SensorData] {
+        appData.weeklyAverageForSensors.filter { $0.sensorID == sensorID }
     }
 }
